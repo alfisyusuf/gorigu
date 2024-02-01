@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penilaian Performa Presentasi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Penilaian Performa Presentasi</h2>
+
+        <form action="" method="post">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Kriteria</th>
+                        <th scope="col">Deskripsi</th>
+                        <th scope="col">Skor (1-5)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Penjelasan Materi</th>
+                        <td>Jelas, terstruktur, dan terkait dengan topik presentasi</td>
+                        <td contenteditable="true" oninput="validateScore(this)"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Kemampuan Berbicara</th>
+                        <td>Artikulasi yang baik, volume suara sesuai, dan bahasa tubuh positif</td>
+                        <td contenteditable="true" oninput="validateScore(this)"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Interaksi dengan Audiens</th>
+                        <td>Melibatkan audiens, menjawab pertanyaan dengan baik</td>
+                        <td contenteditable="true" oninput="validateScore(this)"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Penggunaan Media</th>
+                        <td>Presentasi slide yang menarik dan mendukung materi</td>
+                        <td contenteditable="true" oninput="validateScore(this)"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Waktu Presentasi</th>
+                        <td>Sesuai dengan batas waktu yang ditentukan</td>
+                        <td contenteditable="true" oninput="validateScore(this)"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Kesimpulan dan Ringkasan</th>
+                        <td>Kesimpulan yang kuat dan ringkasan materi</td>
+                        <td contenteditable="true" oninput="validateScore(this)"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Tanggapan Audiens</th>
+                        <td>Menerima tanggapan dengan baik dan tanggap terhadap pertanyaan</td>
+                        <td contenteditable="true" oninput="validateScore(this)"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Kreativitas</th>
+                        <td>Pendekatan kreatif dalam menyampaikan materi</td>
+                        <td contenteditable="true" oninput="validateScore(this)"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="button" class="btn btn-primary" onclick="submitScores()">Submit</button>
+        </form>
+
+        <p class="mt-4">Total Skor: <span id="totalScore">_____</span></p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function validateScore(input) {
+            // Ensure the input is a number between 1 and 5
+            var score = parseInt(input.innerText);
+            if (isNaN(score) || score < 1 || score > 5) {
+                alert("Skor harus antara 1 dan 5.");
+                input.innerText = '';
+            }
+        }
+
+        function submitScores() {
+            // Calculate and display the total score
+            var totalScore = 0;
+            var scoreElements = document.querySelectorAll('[contenteditable="true"]');
+            scoreElements.forEach(function (element) {
+                totalScore += parseInt(element.innerText) || 0;
+            });
+
+            document.getElementById('totalScore').innerText = totalScore;
+        }
+    </script>
+
+</body>
+
+</html>
