@@ -1,0 +1,29 @@
+/*
+Color Palette
+#FFF67E
+#BFEA7C
+#9BCF53
+#9BCF53
+*/
+
+
+header,footer {
+  background-color: #9BCF53 !important; /* Warna latar belakang header */
+}
+
+body {
+  background-color: #FFF67E !important; /* Warna latar belakang halaman */
+}
+
+.btn-primary {
+  background-color: #416D19 !important;
+  border-color: #416D19 !important;
+}
+
+.btn-lemon {
+  width: 50%;
+}
+
+.card {
+  margin-bottom: 20px; /* Atur jarak antara setiap card */
+}
