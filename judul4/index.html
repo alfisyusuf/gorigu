@@ -6,6 +6,12 @@
   <title>Praktikum Fisika: Rangkaian Seri dan Paralel</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .img-responsive {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
 <body>
 
@@ -42,13 +48,13 @@
         <p>
           1. Persiapkan semua peralatan yang diperlukan: protoboard, 2 lampu LED untuk setiap rangkaian, baterai 9 volt, dan kabel jumper male to male.<br>
           2. Bangun sirkuit listrik seri dengan menghubungkan baterai 9 volt, lampu LED, dan kabel jumper secara berurutan.<br>
-          <figure>
-            <img src="./seri.png" alt="Contoh Rangkaian Seri">
+          <figure class="text-center">
+            <img src="./seri.png" alt="Contoh Rangkaian Seri" class="img-fluid">
             <figcaption>Contoh Rangkaian Seri</figcaption>
           </figure>
           3. Bangun sirkuit listrik paralel dengan menghubungkan baterai 9 volt, lampu LED, dan kabel jumper secara paralel.<br>
-          <figure>
-            <img src="./paralel.png" alt="Contoh Rangkaian Paralel">
+          <figure class="text-center">
+            <img src="./paralel.png" alt="Contoh Rangkaian Paralel" class="img-fluid">
             <figcaption>Contoh Rangkaian Paralel</figcaption>
           </figure>
           4. Gunakan multimeter untuk mengukur tegangan pada setiap lampu LED dan baterai dalam kedua rangkaian. Catat hasil pengamatan dalam tabel data pengamatan.
@@ -57,30 +63,32 @@
 
       <div class="section">
         <h4>Data Pengamatan:</h4>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col">Rangkaian</th>
-              <th scope="col">Tegangan Baterai (V)</th>
-              <th scope="col">Tegangan Lampu 1 (V)</th>
-              <th scope="col">Tegangan Lampu 2 (V)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Seri</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Paralel</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Rangkaian</th>
+                <th scope="col">Tegangan Baterai (V)</th>
+                <th scope="col">Tegangan Lampu 1 (V)</th>
+                <th scope="col">Tegangan Lampu 2 (V)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Seri</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Paralel</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="section">
