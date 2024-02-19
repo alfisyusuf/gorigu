@@ -1,0 +1,34 @@
+[
+    {
+        "imageUrl": "https://images.pexels.com/photos/20187061/pexels-photo-20187061/free-photo-of-women-in-the-village-grow-rice-together-for-the-family.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+        "alt": "Gambar Lomba 1",
+        "title": "Judul Lomba 1",
+        "description": "Deskripsi singkat tentang Lomba 1.",
+        "buttonText": "Detail",
+        "buttonLink" : "https://gorigu.my.id"
+    },
+    {
+        "imageUrl": "https://images.pexels.com/photos/20187061/pexels-photo-20187061/free-photo-of-women-in-the-village-grow-rice-together-for-the-family.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+        "alt": "Gambar Lomba 2",
+        "title": "Judul Lomba 2",
+        "description": "Deskripsi singkat tentang Lomba 2.",
+        "buttonText": "Detail",
+        "buttonLink" : "https://gorigu.my.id"
+    },
+    {
+        "imageUrl": "https://images.pexels.com/photos/20187061/pexels-photo-20187061/free-photo-of-women-in-the-village-grow-rice-together-for-the-family.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+        "alt": "Gambar Lomba 3",
+        "title": "Judul Lomba 3",
+        "description": "Deskripsi singkat tentang Lomba 3.",
+        "buttonText": "Detail",
+        "buttonLink" : "https://gorigu.my.id"
+    },
+    {
+        "imageUrl": "https://images.pexels.com/photos/20187061/pexels-photo-20187061/free-photo-of-women-in-the-village-grow-rice-together-for-the-family.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+        "alt": "Gambar Lomba 4",
+        "title": "Judul Lomba 4",
+        "description": "Deskripsi singkat tentang Lomba 4.",
+        "buttonText": "Detail",
+        "buttonLink" : "https://gorigu.my.id"
+    }
+]

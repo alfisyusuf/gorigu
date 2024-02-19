@@ -1,0 +1,14 @@
+[
+    {
+        "imageUrl": "sponsor1.jpg",
+        "alt": "Sponsor 1"
+    },
+    {
+        "imageUrl": "sponsor2.jpg",
+        "alt": "Sponsor 2"
+    },
+    {
+        "imageUrl": "sponsor3.jpg",
+        "alt": "Sponsor 3"
+    }
+]
