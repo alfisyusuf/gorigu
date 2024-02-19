@@ -66,8 +66,11 @@ body {
 /* Media query untuk menyesuaikan posisi tombol WhatsApp pada layar yang lebih kecil */
 @media (max-width: 768px) {
   .float {
-    bottom: 20px;
-    right: 20px;
+    width: 15%; /* ubah ukuran tombol pada layar yang lebih kecil */
+    height: auto; /* biarkan tinggi diatur otomatis */
+    bottom: 5%; /* ubah menjadi persentase */
+    right: 5%; /* ubah menjadi persentase */
+    font-size: 4vw; /* ubah menjadi unit viewport */
   }
 }
 
