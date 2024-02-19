@@ -28,9 +28,4 @@ body {
   margin-bottom: 20px; /* Atur jarak antara setiap card */
 }
 
-.floating-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
 
