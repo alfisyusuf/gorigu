@@ -1,0 +1,9 @@
+body {
+  background-color: #FFBE98;
+}
+.section {
+  background-color: #FEECE2;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
