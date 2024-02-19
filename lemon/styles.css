@@ -62,4 +62,13 @@ body {
       box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
   }
 }
+
+/* Media query untuk menyesuaikan posisi tombol WhatsApp pada layar yang lebih kecil */
+@media (max-width: 768px) {
+  .float {
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
 /*End Whatsapp*/
