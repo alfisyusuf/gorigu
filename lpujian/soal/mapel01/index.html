@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Ujian</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="countdown">Countdown 90 Menit</div>
+        <div class="judul-mapel">Judul Mata Pelajaran - Jenjang Kelas</div>
+        <div class="nama-peserta">Nama Peserta Ujian</div>
+    </header>
+    <div class="soal-pdf">
+        <!-- Tampilan embed PDF untuk soal -->
+        <iframe src="soal.pdf" width="100%" height="70%"></iframe>
+    </div>
+    <div class="input-jawaban">
+        <form action="submit_jawaban.php" method="post">
+            <!-- Input jawaban peserta -->
+            <label for="jawaban1">Jawaban No. 1</label>
+            <input type="text" id="jawaban1" name="jawaban1" maxlength="1" required>
+            <!-- Tambahkan input untuk nomor-nomor soal lainnya -->
+            <!-- Contoh: -->
+            <!-- <label for="jawaban2">Jawaban No. 2</label>
+            <input type="text" id="jawaban2" name="jawaban2" maxlength="1" required> -->
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
