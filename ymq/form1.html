@@ -13,12 +13,27 @@
     body {
       padding: 50px;
       font-family: 'Roboto', sans-serif; /* Menggunakan font Roboto */
+      background-color: #f8f9fa; /* Warna latar belakang */
     }
 
     .form-title {
-      font-size: 24px; /* Ukuran font judul */
+      font-size: 32px; /* Ukuran font judul */
       font-weight: 700; /* Ketebalan font judul */
       text-align: center; /* Posisi teks ke tengah */
+      color: #343a40; /* Warna teks */
+      margin-bottom: 50px; /* Margin bawah untuk memberikan ruang */
+    }
+
+    .form-group label {
+      font-weight: 600; /* Ketebalan font label */
+    }
+
+    .form-control {
+      border-radius: 20px; /* Sudut bulat pada input */
+    }
+
+    .btn-primary {
+      border-radius: 20px; /* Sudut bulat pada tombol */
     }
   </style>
 </head>
@@ -46,7 +61,7 @@
         <label for="pagesInput">Jumlah Halaman Al Quran yang Dibaca:</label>
         <input type="number" class="form-control" id="pagesInput" placeholder="Masukkan jumlah halaman">
       </div>
-      <button type="submit" class="btn btn-primary">Kirim</button>
+      <button type="submit" class="btn btn-primary btn-block">Kirim</button>
     </form>
   </div>
 
