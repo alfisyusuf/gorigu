@@ -62,10 +62,10 @@
       <!-- Judul Form -->
       <h2 class="form-title">Form Laporan Jumlah Halaman Al Quran</h2>
 
-      <form id="reportForm">
+      <form id="reportForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdml-C88Lpp3nrLTK0SLxufNhMK4ditN8a62Kgvi6WENINiAA/formResponse" method="POST" target="_blank">
         <div class="form-group">
           <label for="unitSelect">Unit:</label>
-          <select class="form-control" id="unitSelect">
+          <select class="form-control" id="unitSelect" name="entry.23248849">
             <option value="SDII">Unit SDII Surakarta</option>
             <option value="SDTQ">Unit SDTQ Surakarta</option>
             <option value="SDICT">Unit SDICT Surakarta</option>
@@ -73,12 +73,12 @@
         </div>
         <div class="form-group">
           <label for="employeeSelect">Nama Karyawan:</label>
-          <select class="form-control" id="employeeSelect">
+          <select class="form-control" id="employeeSelect" name="entry.1496297916">
           </select>
         </div>
         <div class="form-group">
           <label for="pagesInput">Jumlah Halaman Al Quran yang Dibaca:</label>
-          <input type="number" class="form-control" id="pagesInput" placeholder="Masukkan jumlah halaman">
+          <input type="number" class="form-control" id="pagesInput" placeholder="Masukkan jumlah halaman" name="entry.617641208">
         </div>
         <button type="submit" class="btn btn-primary btn-block">Kirim</button>
       </form>
@@ -129,22 +129,6 @@
 
       // Initialize employee options based on default unit
       updateEmployeeOptions($('#unitSelect').val());
-
-      // Form submission handling
-      $('#reportForm').submit(function(event){
-        event.preventDefault(); // Prevent default form submission
-        // Get form values
-        var unit = $('#unitSelect').val();
-        var employee = $('#employeeSelect').val();
-        var pages = $('#pagesInput').val();
-        // You can perform further validation or processing here
-        // For now, just log the values
-        console.log("Unit: " + unit);
-        console.log("Nama Karyawan: " + employee);
-        console.log("Jumlah Halaman: " + pages);
-        // Clear form fields
-        $('#pagesInput').val('');
-      });
     });
   </script>
 </body>
