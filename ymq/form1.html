@@ -6,16 +6,35 @@
   <title>Form Laporan Jumlah Halaman Al Quran</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <!-- Custom CSS -->
   <style>
     body {
-      padding: 50px;
+      padding-top: 70px; /* Padding untuk mencegah judul tertutup oleh header */
+      font-family: 'Montserrat', sans-serif; /* Menggunakan font Montserrat */
+    }
+
+    .navbar {
+      background-color: #f8f9fa; /* Warna latar belakang header */
+    }
+
+    .navbar-brand {
+      font-size: 24px; /* Ukuran font judul */
+      font-weight: 700; /* Ketebalan font judul */
     }
   </style>
 </head>
 <body>
+  <!-- Header Navigasi -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Form Laporan Jumlah Halaman Al Quran</a>
+    </div>
+  </nav>
+
+  <!-- Konten Form -->
   <div class="container">
-    <h2 class="text-center mb-4">Form Laporan Jumlah Halaman Al Quran</h2>
     <form id="reportForm">
       <div class="form-group">
         <label for="unitSelect">Unit:</label>
@@ -45,28 +64,5 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-  <!-- Custom JavaScript -->
-  <script>
-    // JavaScript to handle form submission
-    $(document).ready(function(){
-      $('#reportForm').submit(function(event){
-        event.preventDefault(); // Prevent default form submission
-        // Get form values
-        var unit = $('#unitSelect').val();
-        var employee = $('#employeeSelect').val();
-        var pages = $('#pagesInput').val();
-        // You can perform further validation or processing here
-        // For now, just log the values
-        console.log("Unit: " + unit);
-        console.log("Nama Karyawan: " + employee);
-        console.log("Jumlah Halaman: " + pages);
-        // Clear form fields
-        $('#unitSelect').val('');
-        $('#employeeSelect').val('');
-        $('#pagesInput').val('');
-      });
-    });
-  </script>
 </body>
 </html>
