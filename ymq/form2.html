@@ -64,13 +64,17 @@
 
             <form action="https://docs.google.com/forms/d/e/1FAIpQLSdml-C88Lpp3nrLTK0SLxufNhMK4ditN8a62Kgvi6WENINiAA/formResponse" method="post">
                 <div class="form-group">
-                    <label for="input1">Unit:</label><br>
-                    <input type="text" id="input1" class="form-control" name="entry.23248849"><br>
+                    <label for="unitSelect">Unit:</label><br>
+                    <select class="form-control" id="unitSelect" name="entry.23248849">
+                        <option value="SDII">SDII</option>
+                        <option value="SDICT">SDICT</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="input2">Nama:</label><br>
-                    <input type="text" id="input2" class="form-control" name="entry.1496297916"><br>
+                    <label for="employeeSelect">Nama:</label><br>
+                    <select class="form-control" id="employeeSelect" name="entry.1496297916">
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -87,5 +91,41 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        $(document).ready(function(){
+            // Function to update employee options based on selected unit
+            function updateEmployeeOptions(unit) {
+                var employeeSelect = $('#employeeSelect');
+                // Clear previous options
+                employeeSelect.empty();
+                // Add new options based on selected unit
+                switch(unit) {
+                    case 'SDII':
+                        employeeSelect.append('<option>Karyawan SDII 1</option>');
+                        employeeSelect.append('<option>Karyawan SDII 2</option>');
+                        employeeSelect.append('<option>Karyawan SDII 3</option>');
+                        break;
+                    case 'SDICT':
+                        employeeSelect.append('<option>Karyawan SDICT 1</option>');
+                        employeeSelect.append('<option>Karyawan SDICT 2</option>');
+                        employeeSelect.append('<option>Karyawan SDICT 3</option>');
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            // Event listener for unit select change
+            $('#unitSelect').change(function(){
+                var selectedUnit = $(this).val();
+                // Update employee options based on selected unit
+                updateEmployeeOptions(selectedUnit);
+            });
+
+            // Initialize employee options based on default unit
+            updateEmployeeOptions($('#unitSelect').val());
+        });
+    </script>
 </body>
 </html>
