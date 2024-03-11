@@ -75,6 +75,7 @@
           <label for="employeeSelect">Nama Karyawan:</label>
           <select class="form-control" id="employeeSelect" name="entry.1496297916">
           </select>
+          <p id="linkText" style="text-align: center; color: #fff;">Nama Anda tidak ditemukan, klik <a href="javascript:void(0)" onclick="changeInputType()">di sini</a>.</p>
         </div>
         <div class="form-group">
           <label for="pagesInput">Jumlah Halaman Al Quran yang Dibaca:</label>
@@ -83,6 +84,7 @@
         <button type="submit" class="btn btn-primary btn-block">Kirim</button>
       </form>
     </div>
+    
   </div>
 
   <!-- Bootstrap JS and jQuery -->
@@ -181,6 +183,12 @@
       // Initialize employee options based on default unit
       updateEmployeeOptions($('#unitSelect').val());
     });
+
+    // Function to change input type to text
+    function changeInputType() {
+      var employeeInput = $('#employeeSelect');
+      employeeInput.replaceWith('<input type="text" class="form-control" id="employeeInput" placeholder="Masukkan nama lengkap karyawan" name="entry.1496297916">');
+    }
   </script>
 </body>
 </html>
