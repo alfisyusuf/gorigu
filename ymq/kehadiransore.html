@@ -17,8 +17,8 @@
   <div class="container">
     <div class="form-container">
       <!-- Judul Form -->
-      <h2 class="form-title">Tilawah 1</h2>
-      <h3 class="subtitle">Senin ba'da maghrib - Selasa 09.00 WIB</h3>
+      <h2 class="form-title">Presensi</h2>
+      <h3 class="subtitle">Kode bisa diperoleh di zoom meeting</h3>
 
       <form action="https://docs.google.com/forms/d/e/1FAIpQLSdml-C88Lpp3nrLTK0SLxufNhMK4ditN8a62Kgvi6WENINiAA/formResponse" method="POST">
         <div class="form-group">
@@ -47,9 +47,11 @@
           <p id="linkText" style="text-align: center; color: #fff;">Jika nama Anda tidak ditemukan, klik <a href="javascript:void(0)" onclick="changeInputType()">di sini</a>.</p>
         </div>
         <div class="form-group">
-          <label for="pagesInput">Jumlah Halaman Al Quran yang Dibaca:</label>
-          <input type="number" class="form-control" id="pagesInput" placeholder="Masukkan jumlah halaman" name="entry.617641208">
-        </div>
+					<label for="attendanceCodeInput">Kode Hadir:</label>
+					<input type="text" class="form-control" id="attendanceCodeInput" placeholder="Masukkan kode hadir" name="attendanceCode">
+					<small id="attendanceCodeError" class="text-danger"></small>
+				</div>				
+          
         <button type="submit" class="btn btn-primary btn-block">Kirim</button>
       </form>
     </div>
@@ -62,7 +64,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <!-- Custom JavaScript -->
-  <script src="./script-til.js"></script>
+  <script src="./script-ke2.js"></script>
   
 </body>
 </html>
