@@ -1,0 +1,53 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('pic.jpg'); /* Tambahkan gambar latar belakang */
+    background-size: cover; /* Untuk memastikan gambar meliputi seluruh background */
+    background-repeat: no-repeat; /* Menghindari pengulangan gambar */
+    background-position: center; /* Posisi gambar di tengah-tengah */
+}
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: rgba(255, 255, 255, 0.8); /* Menggunakan warna latar belakang semi-transparan untuk kontainer agar teks lebih mudah dibaca */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+input[type="text"], select, input[type="date"], input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+input[type="submit"], .btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+input[type="submit"]:hover, .btn:hover {
+    background-color: #45a049;
+}
+.btn-container {
+    overflow: hidden;
+}
+.btn-container .btn {
+    float: right;
+}
