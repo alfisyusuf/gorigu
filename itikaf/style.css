@@ -1,11 +1,12 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 0 20px 0;
     background-image: url('pic.jpg'); /* Tambahkan gambar latar belakang */
     background-size: cover; /* Untuk memastikan gambar meliputi seluruh background */
     background-repeat: no-repeat; /* Menghindari pengulangan gambar */
     background-position: center; /* Posisi gambar di tengah-tengah */
+    min-height: 100vh;
 }
 .container {
     max-width: 600px;
@@ -34,7 +35,7 @@ input[type="text"], select, input[type="date"], input[type="number"] {
     font-size: 16px;
 }
 input[type="submit"], .btn {
-    background-color: #4CAF50;
+    background-color: #266f9a;
     color: white;
     padding: 14px 20px;
     border: none;
@@ -43,7 +44,7 @@ input[type="submit"], .btn {
     font-size: 16px;
 }
 input[type="submit"]:hover, .btn:hover {
-    background-color: #45a049;
+    background-color: #4a8eb6;
 }
 .btn-container {
     overflow: hidden;
