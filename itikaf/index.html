@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Pemantauan Itikaf</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        display: block;
+        margin-bottom: 8px;
+    }
+    input[type="text"], select, input[type="date"], input[type="number"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    input[type="submit"], .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    input[type="submit"]:hover, .btn:hover {
+        background-color: #45a049;
+    }
+    .btn-container {
+        overflow: hidden;
+    }
+    .btn-container .btn {
+        float: right;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1 style="text-align: center; margin-bottom: 30px;">Form Pemantauan Itikaf</h1>
+    <form id="itikafForm" action="#" method="post">
+        <div class="form-group">
+            <label for="unit">Pilih Unit:</label>
+            <select id="unit" name="unit">
+                <option value="">Pilih Unit</option>
+                <option value="SD">SD</option>
+                <option value="SMP">SMP</option>
+                <option value="SMA">SMA</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="employee">Pilih Karyawan:</label>
+            <select id="employee" name="employee">
+                <option value="">Pilih Karyawan</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="date">Tanggal Itikaf:</label>
+            <input type="date" id="date" name="date">
+        </div>
+        <div class="form-group">
+            <label for="location">Lokasi Itikaf:</label>
+            <input type="text" id="location" name="location">
+        </div>
+        <div class="form-group">
+            <label for="pages">Jumlah Halaman Alquran yang Dibaca:</label>
+            <input type="number" id="pages" name="pages">
+        </div>
+        <div class="btn-container">
+            <input type="submit" class="btn" value="Submit">
+        </div>
+    </form>
+</div>
+
+<script>
+    var employeesData = {
+        "SD": ["Karyawan 1", "Karyawan 2", "Karyawan 3"],
+        "SMP": ["Karyawan 4", "Karyawan 5", "Karyawan 6"],
+        "SMA": ["Karyawan 7", "Karyawan 8", "Karyawan 9"]
+    };
+
+    var unitSelect = document.getElementById("unit");
+    var employeeSelect = document.getElementById("employee");
+
+    // Populate employees based on selected unit
+    unitSelect.addEventListener("change", function() {
+        var unit = unitSelect.value;
+        employeeSelect.innerHTML = ""; // Clear existing options
+        if (unit !== "") {
+            employeesData[unit].forEach(function(employee) {
+                var option = document.createElement("option");
+                option.text = employee;
+                option.value = employee;
+                employeeSelect.appendChild(option);
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
