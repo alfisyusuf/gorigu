@@ -55,6 +55,11 @@
     .btn-container .btn {
         float: right;
     }
+    #map {
+        height: 300px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
 </style>
 </head>
 <body>
@@ -81,8 +86,9 @@
             <input type="date" id="date" name="date">
         </div>
         <div class="form-group">
-            <label for="location">Lokasi Itikaf:</label>
-            <input type="text" id="location" name="location">
+            <label for="location">Pilih Lokasi Itikaf:</label>
+            <input type="text" id="location" name="location" placeholder="Klik di peta untuk memilih lokasi" readonly>
+            <div id="map"></div>
         </div>
         <div class="form-group">
             <label for="pages">Jumlah Halaman Alquran yang Dibaca:</label>
@@ -95,29 +101,26 @@
 </div>
 
 <script>
-    var employeesData = {
-        "SD": ["Karyawan 1", "Karyawan 2", "Karyawan 3"],
-        "SMP": ["Karyawan 4", "Karyawan 5", "Karyawan 6"],
-        "SMA": ["Karyawan 7", "Karyawan 8", "Karyawan 9"]
-    };
+    var map;
+    var marker;
 
-    var unitSelect = document.getElementById("unit");
-    var employeeSelect = document.getElementById("employee");
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: -6.2088, lng: 106.8456},
+            zoom: 12
+        });
 
-    // Populate employees based on selected unit
-    unitSelect.addEventListener("change", function() {
-        var unit = unitSelect.value;
-        employeeSelect.innerHTML = ""; // Clear existing options
-        if (unit !== "") {
-            employeesData[unit].forEach(function(employee) {
-                var option = document.createElement("option");
-                option.text = employee;
-                option.value = employee;
-                employeeSelect.appendChild(option);
-            });
-        }
-    });
+        marker = new google.maps.Marker({
+            position: {lat: -6.2088, lng: 106.8456},
+            map: map,
+            draggable: true
+        });
+
+        marker.addListener('dragend', function(event) {
+            document.getElementById('location').value = event.latLng.lat() + ',' + event.latLng.lng();
+        });
+    }
 </script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3HhjIdw2S5aYSwg52dtQYEQF20TB-Zgk&callback=initMap" async defer></script>
 </body>
 </html>
