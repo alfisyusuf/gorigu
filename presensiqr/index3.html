@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Code Scanner</title>
+<style>
+    #video {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+    }
+</style>
+</head>
+<body>
+<h1>QR Code Scanner</h1>
+<div>
+    <video id="video" playsinline></video>
+</div>
+<div id="output"></div>
+
+<!-- Include the HTML QR code reader library -->
+<script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+
+<script>
+    // Get access to the camera
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+            .then(function (stream) {
+                var video = document.getElementById('video');
+                video.srcObject = stream;
+                video.play();
+                scanQRCode();
+            });
+    }
+
+    // Function to continuously scan for QR codes
+    function scanQRCode() {
+        var video = document.getElementById('video');
+        var output = document.getElementById('output');
+
+        var canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        var context = canvas.getContext('2d');
+
+        setInterval(function () {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            var code = jsQR(imageData.data, imageData.width, imageData.height, { inversionAttempts: 'dontInvert' });
+
+            if (code) {
+                output.innerText = 'QR Code scanned: ' + code.data;
+                // Perform any action with the scanned QR code data here
+            } else {
+                output.innerText = 'No QR code detected';
+            }
+        }, 1000); // Adjust the interval as needed
+    }
+</script>
+</body>
+</html>
