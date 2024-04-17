@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form dengan Input QR Code</title>
+    <style>
+        #qrVideo {
+            width: 100%;
+            max-width: 400px; /* Sesuaikan lebar sesuai kebutuhan */
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/quagga/dist/quagga.min.js"></script>
 </head>
 <body>
@@ -26,7 +32,10 @@
         <button type="submit">Submit</button>
     </form>
 
-    <video id="qrVideo" style="display: none;"></video>
+    <div id="qrScanner" style="position: relative; width: 100%; max-width: 400px;"> <!-- Container untuk video dan overlay -->
+        <video id="qrVideo" style="width: 100%; height: 100%;"></video> <!-- Video untuk tampilan kamera -->
+        <div id="scanOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 2px dashed red; box-sizing: border-box;"></div> <!-- Overlay untuk area scan -->
+    </div>
 
     <script>
         document.getElementById("qrForm").addEventListener("submit", function(event){
@@ -55,6 +64,7 @@
         function startQrScanner() {
             const video = document.getElementById('qrVideo');
             const qrCodeElem = document.getElementById('qrCode');
+            const scanOverlay = document.getElementById('scanOverlay');
 
             Quagga.init({
                 inputStream: {
@@ -72,13 +82,14 @@
                 }
                 console.log("QuaggaJS initialization succeeded");
                 Quagga.start();
+                scanOverlay.style.display = 'block'; // Tampilkan overlay saat mulai pemindaian
             });
 
             Quagga.onDetected(function(result) {
                 if (result && result.codeResult && result.codeResult.code) {
                     qrCodeElem.value = result.codeResult.code;
                     Quagga.stop();
-                    video.style.display = 'none'; // Menyembunyikan video setelah scan berhasil
+                    scanOverlay.style.display = 'none'; // Sembunyikan overlay saat scan berhasil
                 }
             });
         }
