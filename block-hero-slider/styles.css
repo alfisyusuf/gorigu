@@ -28,11 +28,24 @@ body, html {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 3s ease;
+    transition: transform 10s ease;
 }
 
 .slide.active img {
     transform: scale(1.1);
+}
+
+.slide img.first-load {
+    animation: zoom 10s ease forwards;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.1);
+    }
 }
 
 .content {
