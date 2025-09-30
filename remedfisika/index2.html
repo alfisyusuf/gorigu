@@ -194,59 +194,48 @@
     <!-- Result Container -->
     <div x-show="currentView === 'result'" class="fade-in">
         <div class="bg-white rounded-2xl card-shadow overflow-hidden">
-            <div class="bg-gradient-to-r from-green-500 to-emerald-600 p-8 text-white text-center">
-                <i class="fas fa-check-circle text-6xl mb-4"></i>
-                <h2 class="text-3xl font-bold">Selamat!</h2>
-                <p class="text-green-100 mt-2">Anda telah menyelesaikan remediasi</p>
-            </div>
             
-            <div class="p-8">
-                <div class="text-center space-y-6">
-                    <div class="bg-blue-50 rounded-xl p-6">
-                        <p class="text-gray-700 text-lg mb-2">
-                            <i class="fas fa-user text-blue-600 mr-2"></i>
-                            <strong x-text="studentData.nama"></strong>
-                        </p>
-                        <p class="text-gray-600">
-                            <i class="fas fa-school text-blue-600 mr-2"></i>
-                            Kelas <span x-text="studentData.kelas"></span>
-                        </p>
+            <template x-if="resultData.score > 50">
+                <div class="text-center">
+                    <div class="bg-gradient-to-r from-green-500 to-emerald-600 p-8 text-white">
+                        <i class="fas fa-award text-6xl mb-4"></i>
+                        <h2 class="text-3xl font-bold">Luar Biasa, Anda Tuntas!</h2>
+                        <p class="text-green-100 mt-2" x-text="studentData.nama"></p>
                     </div>
-                    
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="bg-green-50 rounded-xl p-6">
-                            <i class="fas fa-check-double text-3xl text-green-600 mb-2"></i>
-                            <p class="text-gray-600 text-sm">Jawaban Benar</p>
-                            <p class="text-3xl font-bold text-green-600" x-text="resultData.correctAnswers"></p>
-                        </div>
-                        <div class="bg-purple-50 rounded-xl p-6">
-                            <i class="fas fa-list-ol text-3xl text-purple-600 mb-2"></i>
-                            <p class="text-gray-600 text-sm">Total Soal</p>
-                            <p class="text-3xl font-bold text-purple-600" x-text="resultData.totalQuestions"></p>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-                        <p class="text-xl mb-2">Skor Akhir Anda</p>
-                        <p class="text-6xl font-bold" x-text="resultData.score"></p>
-                    </div>
-                    
-                    <div class="flex gap-3">
-                        <button 
-                            @click="window.print()" 
-                            class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all"
-                        >
-                            <i class="fas fa-print mr-2"></i>Cetak Hasil
-                        </button>
-                        <button 
-                            @click="location.reload()" 
-                            class="flex-1 bg-gray-600 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition-all"
-                        >
-                            <i class="fas fa-home mr-2"></i>Kembali
+                    <div class="p-8 space-y-4">
+                        <p class="text-gray-700 text-lg">Anda telah memenuhi Kriteria Ketuntasan Minimal (KKM). Hasil pengerjaan Anda telah direkam.</p>
+                        <button @click="location.reload()" class="w-full bg-gray-600 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition-all">
+                            <i class="fas fa-home mr-2"></i>Kembali ke Halaman Awal
                         </button>
                     </div>
                 </div>
-            </div>
+            </template>
+            
+            <template x-if="resultData.score <= 50">
+                <div class="text-center">
+                    <div class="bg-gradient-to-r from-red-500 to-orange-500 p-8 text-white">
+                        <i class="fas fa-times-circle text-6xl mb-4"></i>
+                        <h2 class="text-3xl font-bold">Maaf, Anda Belum Tuntas</h2>
+                        <p class="text-red-100 mt-2" x-text="studentData.nama"></p>
+                    </div>
+                    <div class="p-8 space-y-6">
+                        <p class="text-gray-700 text-lg">Skor Anda adalah <strong class="text-red-600 text-xl" x-text="resultData.score"></strong>. Anda perlu mencoba lagi untuk mencapai Kriteria Ketuntasan Minimal.</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-50 rounded-xl p-4">
+                                <p class="text-gray-600 text-sm">Jawaban Benar</p>
+                                <p class="text-2xl font-bold text-blue-600" x-text="resultData.correctAnswers"></p>
+                            </div>
+                            <div class="bg-purple-50 rounded-xl p-4">
+                                <p class="text-gray-600 text-sm">Total Soal</p>
+                                <p class="text-2xl font-bold text-purple-600" x-text="resultData.totalQuestions"></p>
+                            </div>
+                        </div>
+                        <button @click="location.reload()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+                            <i class="fas fa-redo-alt mr-2"></i>Coba Lagi Remediasi
+                        </button>
+                    </div>
+                </div>
+            </template>
         </div>
     </div>
 
