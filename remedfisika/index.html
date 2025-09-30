@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remediasi Online Fisika</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { background-color: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 800px; }
+        h1, h2 { text-align: center; color: #0056b3; }
+        #login-form, #quiz-container, #result-container { margin-top: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        button:hover { background-color: #0056b3; }
+        #message { margin-top: 15px; text-align: center; font-weight: bold; }
+        .question { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .options label { display: block; margin: 5px 0; padding: 10px; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; }
+        .options input[type="radio"] { margin-right: 10px; }
+        .options label:hover { background-color: #f0f8ff; }
+        .hidden { display: none; }
+        #student-info, #result-summary { text-align: center; background-color: #e9f5ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .loader { text-align: center; font-size: 18px; color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="login-container">
+        <h1>Login Siswa</h1>
+        <p style="text-align:center;">Silakan masuk menggunakan NIS atau NISN dan password yang telah diberikan.</p>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="loginId">NIS / NISN</label>
+                <input type="text" id="loginId" name="loginId" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+            <p id="login-message" style="text-align:center; color:red; margin-top:15px;"></p>
+        </form>
+    </div>
+
+    <div id="quiz-container" class="hidden">
+        <h1>REMEDIAL TEST - MIDTERM ASSESSMENT (PTS)</h1>
+        <div id="student-info"></div>
+        <form id="quiz-form">
+            <div id="questions-wrapper">
+                <p class="loader">Memuat soal, mohon tunggu...</p>
+            </div>
+            <button type="submit">Kirim Jawaban</button>
+        </form>
+    </div>
+
+    <div id="result-container" class="hidden">
+        <h2>Hasil Remediasi</h2>
+        <div id="result-summary"></div>
+    </div>
+</div>
+
+<script>
+    const SCRIPT_URL = 'PASTE_URL_ANDA_DI_SINI'; // <-- GANTI DENGAN URL WEB APP ANDA
+    const loginForm = document.getElementById('login-form');
+    const quizForm = document.getElementById('quiz-form');
+    const loginContainer = document.getElementById('login-container');
+    const quizContainer = document.getElementById('quiz-container');
+    const resultContainer = document.getElementById('result-container');
+    const loginMessage = document.getElementById('login-message');
+    const studentInfoDiv = document.getElementById('student-info');
+    const resultSummaryDiv = document.getElementById('result-summary');
+    const questionsWrapper = document.getElementById('questions-wrapper');
+
+    let currentStudentData = {};
+    let totalQuestions = 0;
+
+    // FUNGSI BARU: Untuk meminta dan menampilkan soal
+    async function fetchAndDisplayQuiz() {
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=getQuestions`);
+            const questions = await response.json();
+            totalQuestions = questions.length;
+            questionsWrapper.innerHTML = ''; // Kosongkan loader
+
+            questions.forEach((q, index) => {
+                const questionNumber = index + 1;
+                
+                // Buat elemen HTML untuk setiap soal
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                
+                let optionsHTML = '';
+                for (const key in q.options) {
+                    optionsHTML += `
+                        <label>
+                            <input type="radio" name="q${questionNumber}" value="${key}"> ${key}. ${q.options[key]}
+                        </label>
+                    `;
+                }
+
+                questionDiv.innerHTML = `
+                    <p>${questionNumber}. ${q.question}</p>
+                    <div class="options">${optionsHTML}</div>
+                `;
+                questionsWrapper.appendChild(questionDiv);
+            });
+
+        } catch (error) {
+            questionsWrapper.innerHTML = '<p style="color:red;">Gagal memuat soal. Silakan refresh halaman.</p>';
+        }
+    }
+
+    // Handle Login
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const loginId = document.getElementById('loginId').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const button = loginForm.querySelector('button');
+        
+        button.disabled = true;
+        button.textContent = 'Memverifikasi...';
+        loginMessage.textContent = '';
+
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=login&loginId=${loginId}&password=${password}`);
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                currentStudentData = result.student;
+                studentInfoDiv.innerHTML = `
+                    <p>Selamat Mengerjakan, <strong>${currentStudentData.nama}</strong>!</p>
+                    <p>Kelas: ${currentStudentData.kelas} | NIS: ${currentStudentData.nis}</p>
+                `;
+                loginContainer.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+                
+                // Panggil fungsi untuk memuat soal setelah login berhasil
+                fetchAndDisplayQuiz();
+            } else {
+                loginMessage.textContent = result.message || 'Login gagal. Silakan coba lagi.';
+            }
+        } catch (error) {
+            loginMessage.textContent = 'Terjadi kesalahan. Periksa koneksi internet Anda.';
+        } finally {
+            button.disabled = false;
+            button.textContent = 'Login';
+        }
+    });
+
+    // Handle Quiz Submission
+    quizForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(quizForm);
+        const answers = [];
+        // Loop berdasarkan jumlah soal yang didapat
+        for (let i = 1; i <= totalQuestions; i++) {
+            answers.push(formData.get(`q${i}`) || '');
+        }
+        
+        const isConfirmed = confirm('Apakah Anda yakin ingin mengirim jawaban Anda?');
+        if (!isConfirmed) return;
+        
+        const button = quizForm.querySelector('button');
+        button.disabled = true;
+        button.textContent = 'Mengirim...';
+
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                    action: 'submit',
+                    student: currentStudentData,
+                    answers: answers
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.status === 'success') {
+                quizContainer.classList.add('hidden');
+                resultSummaryDiv.innerHTML = `
+                    <h3>${currentStudentData.nama}, pengerjaan Anda telah selesai.</h3>
+                    <p>Anda menjawab benar <strong>${result.correctAnswers}</strong> dari <strong>${result.totalQuestions}</strong> soal.</p>
+                    <h2>Skor Akhir Anda: ${result.score}</h2>
+                `;
+                resultContainer.classList.remove('hidden');
+            } else {
+                 alert('Gagal mengirim jawaban: ' + result.message);
+            }
+        } catch (error) {
+            alert('Terjadi kesalahan saat mengirim jawaban. Silakan coba lagi.');
+        } finally {
+            button.disabled = false;
+            button.textContent = 'Kirim Jawaban';
+        }
+    });
+</script>
+
+</body>
+</html>
