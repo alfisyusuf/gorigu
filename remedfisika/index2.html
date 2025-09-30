@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remediasi Online Fisika</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .spinner { animation: spin 1s linear infinite; }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .option-hover:hover {
+            transform: translateX(5px);
+            transition: all 0.3s ease;
+        }
+        
+        input[type="radio"]:checked + label {
+            background-color: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg py-8 px-4">
+
+<div class="container max-w-4xl mx-auto" x-data="quizApp()" x-cloak>
+    
+    <!-- Login Container -->
+    <div x-show="currentView === 'login'" class="fade-in">
+        <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-8 text-white text-center">
+                <i class="fas fa-atom text-6xl mb-4"></i>
+                <h1 class="text-3xl font-bold mb-2">Remediasi Fisika</h1>
+                <p class="text-blue-100">Midterm Assessment (PTS)</p>
+            </div>
+            
+            <div class="p-8">
+                <div class="mb-6 text-center">
+                    <p class="text-gray-600">Silakan masuk menggunakan NIS/NISN dan password yang telah diberikan</p>
+                </div>
+                
+                <form @submit.prevent="handleLogin" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-id-card mr-2 text-blue-600"></i>NIS / NISN
+                        </label>
+                        <input 
+                            type="text" 
+                            x-model="loginId" 
+                            required
+                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all outline-none"
+                            placeholder="Masukkan NIS atau NISN"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            <i class="fas fa-lock mr-2 text-blue-600"></i>Password
+                        </label>
+                        <div class="relative">
+                            <input 
+                                :type="showPassword ? 'text' : 'password'" 
+                                x-model="password" 
+                                required
+                                class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all outline-none pr-12"
+                                placeholder="Masukkan password"
+                            >
+                            <button 
+                                type="button" 
+                                @click="showPassword = !showPassword"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                            >
+                                <i :class="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        type="submit" 
+                        :disabled="isLoading"
+                        class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-bold text-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <span x-show="!isLoading">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Login
+                        </span>
+                        <span x-show="isLoading" class="flex items-center justify-center">
+                            <i class="fas fa-spinner spinner mr-2"></i>Memverifikasi...
+                        </span>
+                    </button>
+                    
+                    <p x-show="loginMessage" x-text="loginMessage" class="text-center text-red-600 font-semibold mt-4"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Container -->
+    <div x-show="currentView === 'quiz'" class="fade-in">
+        <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-6 text-white">
+                <h1 class="text-2xl font-bold text-center mb-4">
+                    <i class="fas fa-clipboard-list mr-2"></i>REMEDIAL TEST - MIDTERM ASSESSMENT
+                </h1>
+                <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4">
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-user-graduate text-xl"></i>
+                            <span class="font-semibold" x-text="studentData.nama"></span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-school"></i>
+                            <span x-text="studentData.kelas"></span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-id-badge"></i>
+                            <span x-text="studentData.nis"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-8">
+                <form @submit.prevent="handleSubmit">
+                    <div x-show="questionsLoading" class="text-center py-12">
+                        <i class="fas fa-spinner spinner text-5xl text-blue-600 mb-4"></i>
+                        <p class="text-gray-600 text-lg">Memuat soal, mohon tunggu...</p>
+                    </div>
+                    
+                    <div x-show="!questionsLoading" class="space-y-6">
+                        <template x-for="(question, index) in questions" :key="index">
+                            <div class="border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 transition-all">
+                                <div class="flex items-start gap-3 mb-4">
+                                    <span class="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold" x-text="index + 1"></span>
+                                    <p class="text-gray-800 font-medium flex-1" x-text="question.question"></p>
+                                </div>
+                                
+                                <div class="space-y-2 ml-11">
+                                    <template x-for="(optionText, optionKey) in question.options" :key="optionKey">
+                                        <label class="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg cursor-pointer option-hover">
+                                            <input 
+                                                type="radio" 
+                                                :name="'q' + (index + 1)" 
+                                                :value="optionKey"
+                                                x-model="answers[index]"
+                                                class="w-5 h-5 text-blue-600 focus:ring-2 focus:ring-blue-500"
+                                            >
+                                            <span class="flex-1 text-gray-700">
+                                                <strong x-text="optionKey + '.'"></strong> <span x-text="optionText"></span>
+                                            </span>
+                                        </label>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                        
+                        <div class="mt-8 pt-6 border-t-2 border-gray-200">
+                            <button 
+                                type="submit" 
+                                :disabled="isSubmitting"
+                                class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                <span x-show="!isSubmitting">
+                                    <i class="fas fa-paper-plane mr-2"></i>Kirim Jawaban
+                                </span>
+                                <span x-show="isSubmitting" class="flex items-center justify-center">
+                                    <i class="fas fa-spinner spinner mr-2"></i>Mengirim...
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Container -->
+    <div x-show="currentView === 'result'" class="fade-in">
+        <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+            <div class="bg-gradient-to-r from-green-500 to-emerald-600 p-8 text-white text-center">
+                <i class="fas fa-check-circle text-6xl mb-4"></i>
+                <h2 class="text-3xl font-bold">Selamat!</h2>
+                <p class="text-green-100 mt-2">Anda telah menyelesaikan remediasi</p>
+            </div>
+            
+            <div class="p-8">
+                <div class="text-center space-y-6">
+                    <div class="bg-blue-50 rounded-xl p-6">
+                        <p class="text-gray-700 text-lg mb-2">
+                            <i class="fas fa-user text-blue-600 mr-2"></i>
+                            <strong x-text="studentData.nama"></strong>
+                        </p>
+                        <p class="text-gray-600">
+                            <i class="fas fa-school text-blue-600 mr-2"></i>
+                            Kelas <span x-text="studentData.kelas"></span>
+                        </p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-green-50 rounded-xl p-6">
+                            <i class="fas fa-check-double text-3xl text-green-600 mb-2"></i>
+                            <p class="text-gray-600 text-sm">Jawaban Benar</p>
+                            <p class="text-3xl font-bold text-green-600" x-text="resultData.correctAnswers"></p>
+                        </div>
+                        <div class="bg-purple-50 rounded-xl p-6">
+                            <i class="fas fa-list-ol text-3xl text-purple-600 mb-2"></i>
+                            <p class="text-gray-600 text-sm">Total Soal</p>
+                            <p class="text-3xl font-bold text-purple-600" x-text="resultData.totalQuestions"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
+                        <p class="text-xl mb-2">Skor Akhir Anda</p>
+                        <p class="text-6xl font-bold" x-text="resultData.score"></p>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <button 
+                            @click="window.print()" 
+                            class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all"
+                        >
+                            <i class="fas fa-print mr-2"></i>Cetak Hasil
+                        </button>
+                        <button 
+                            @click="location.reload()" 
+                            class="flex-1 bg-gray-600 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition-all"
+                        >
+                            <i class="fas fa-home mr-2"></i>Kembali
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function quizApp() {
+        return {
+            currentView: 'login',
+            loginId: '',
+            password: '',
+            showPassword: false,
+            isLoading: false,
+            isSubmitting: false,
+            questionsLoading: false,
+            loginMessage: '',
+            studentData: {},
+            questions: [],
+            answers: [],
+            resultData: {},
+            
+            SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwkAvYBP1Vb3vvBT66j96Yq2RqpVaF6Ex-JOIzH0UWo83BFNAbmJUt9jHFYlfYKcnJ6/exec',
+            
+            async handleLogin() {
+                this.isLoading = true;
+                this.loginMessage = '';
+                
+                try {
+                    const response = await fetch(`${this.SCRIPT_URL}?action=login&loginId=${this.loginId}&password=${this.password}`);
+                    const result = await response.json();
+                    
+                    if (result.status === 'success') {
+                        this.studentData = result.student;
+                        this.currentView = 'quiz';
+                        this.fetchQuestions();
+                    } else {
+                        this.loginMessage = result.message || 'Login gagal. Silakan coba lagi.';
+                    }
+                } catch (error) {
+                    this.loginMessage = 'Terjadi kesalahan. Periksa koneksi internet Anda.';
+                } finally {
+                    this.isLoading = false;
+                }
+            },
+            
+            async fetchQuestions() {
+                this.questionsLoading = true;
+                try {
+                    const response = await fetch(`${this.SCRIPT_URL}?action=getQuestions`);
+                    this.questions = await response.json();
+                    this.answers = new Array(this.questions.length).fill('');
+                } catch (error) {
+                    alert('Gagal memuat soal. Silakan refresh halaman.');
+                } finally {
+                    this.questionsLoading = false;
+                }
+            },
+            
+            async handleSubmit() {
+                const isConfirmed = confirm('Apakah Anda yakin ingin mengirim jawaban Anda?');
+                if (!isConfirmed) return;
+                
+                this.isSubmitting = true;
+                
+                try {
+                    const response = await fetch(this.SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({
+                            action: 'submit',
+                            student: this.studentData,
+                            answers: this.answers
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.status === 'success') {
+                        this.resultData = result;
+                        this.currentView = 'result';
+                    } else {
+                        alert('Gagal mengirim jawaban: ' + result.message);
+                    }
+                } catch (error) {
+                    alert('Terjadi kesalahan saat mengirim jawaban. Silakan coba lagi.');
+                } finally {
+                    this.isSubmitting = false;
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
