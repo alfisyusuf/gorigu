@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dasbor Rapotan Kelas XII</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --sidebar-bg: #ffffff;
+            --main-bg: #ffffff;
+            --text-color: #212529;
+            --border-color: #dee2e6;
+            --primary-color: #007bff;
+            --hover-bg: #e9ecef;
+            --below-average-color: #dc3545;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        #sidebar h2 {
+            margin: 0;
+            padding: 20px;
+            font-size: 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+        #student-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #student-list li {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #student-list li:hover {
+            background-color: var(--hover-bg);
+        }
+        #student-list li.active {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+        #student-list .rank {
+            font-size: 0.9em;
+            background-color: #6c757d;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #student-list li.active .rank {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        #main-content {
+            flex-grow: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+        .card {
+            background-color: var(--main-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        h3 {
+            margin-top: 0;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        #student-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #student-header h1 { margin: 0; font-size: 1.8rem; }
+        #student-header .rank-badge {
+            font-size: 1rem;
+            font-weight: bold;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .info-item span:first-child {
+            font-size: 0.8rem;
+            color: #6c757d;
+            text-transform: uppercase;
+        }
+        .info-item span:last-child {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .attendance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+        .attendance-item h4 { margin: 0 0 5px 0; font-size: 1.5rem; }
+        .attendance-item p { margin: 0; color: #6c757d; }
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .grades-table th, .grades-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .grades-table th { background-color: var(--bg-color); }
+        .below-average { color: var(--below-average-color); font-weight: bold; }
+        .konsul-list { list-style: none; padding-left: 0; }
+        .konsul-list li {
+            display: flex;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .konsul-list li:last-child { border-bottom: none; }
+        .konsul-list strong {
+            flex-basis: 150px;
+            flex-shrink: 0;
+            color: #495057;
+        }
+        #placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            font-size: 1.5rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+<div id="sidebar">
+    <h2>Daftar Siswa</h2>
+    <ul id="student-list"></ul>
+</div>
+
+<div id="main-content">
+    <div id="placeholder">
+        Pilih siswa dari daftar di samping untuk melihat detail.
+    </div>
+    <div id="student-detail-view" style="display: none;">
+        <div class="card" id="student-header">
+            <div>
+                <h1 id="student-name"></h1>
+                <span id="student-nis" style="color: #6c757d;"></span>
+            </div>
+            <div id="student-rank" class="rank-badge"></div>
+        </div>
+        <div class="card">
+            <h3>📝 Rangkuman Akademik & Kehadiran</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span>Jumlah Nilai</span>
+                    <span id="total-score"></span>
+                </div>
+                <div class="info-item">
+                    <span>Rata-Rata Nilai</span>
+                    <span id="average-score"></span>
+                </div>
+            </div>
+            <div class="attendance-grid">
+                <div class="attendance-item">
+                    <h4 id="sakit-percent"></h4>
+                    <p>Sakit</p>
+                </div>
+                <div class="attendance-item">
+                    <h4 id="izin-percent"></h4>
+                    <p>Izin</p>
+                </div>
+                <div class="attendance-item">
+                    <h4 id="alfa-percent"></h4>
+                    <p>Tanpa Keterangan</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid-container">
+            <div class="card">
+                <h3>📊 Nilai Mata Pelajaran</h3>
+                <table class="grades-table">
+                    <thead>
+                        <tr>
+                            <th>Mata Pelajaran</th>
+                            <th>Nilai</th>
+                            <th>Rerata Kelas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="grades-body"></tbody>
+                </table>
+            </div>
+            <div class="card">
+                <h3>🎓 Konsultasi Studi Lanjut (BK)</h3>
+                <ul id="konsul-body" class="konsul-list"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- DATABASE ---
+        const rapotData = [
+            {"No":1,"Nama":"Abyanu Ar Rasyid","NIS":23111004,"PAI":92,"rerata PAI":93.63,"Pancasila":62,"rerata Pancasila":78.55,"Bahasa Indonesia":83,"rerata Bahasa Indonesia":83.44,"Matematika W":76,"rerata Mat W":76.7,"Bahasa Inggris Wajib":77,"rerata Bing W":76.97,"Penjaskes":82,"rerata Penjaskes":87.4,"Sejarah":89,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":938.65,"RATA-RATA":78.22,"RANK":21,"% Sakit":3,"% Izin":1,"% Alfa":3},
+            {"No":2,"Nama":"Aldi Raditya Satria","NIS":23111018,"PAI":89,"rerata PAI":93.63,"Pancasila":75,"rerata Pancasila":78.55,"Bahasa Indonesia":80,"rerata Bahasa Indonesia":83.44,"Matematika W":75,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":80,"rerata Penjaskes":87.4,"Sejarah":75,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":64,"rerata Biologi":78.87,"Fisika":60,"rerata Fisika":76.79,"Matematika TL":60,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":883,"RATA-RATA":73.58,"RANK":29,"% Sakit":10,"% Izin":1,"% Alfa":23},
+            {"No":3,"Nama":"Alvino Putra Athailla","NIS":23111021,"PAI":89,"rerata PAI":93.63,"Pancasila":60,"rerata Pancasila":78.55,"Bahasa Indonesia":80,"rerata Bahasa Indonesia":83.44,"Matematika W":76,"rerata Mat W":76.7,"Bahasa Inggris Wajib":76,"rerata Bing W":76.97,"Penjaskes":81,"rerata Penjaskes":87.4,"Sejarah":75,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":915.44,"RATA-RATA":76.29,"RANK":26,"% Sakit":24,"% Izin":2,"% Alfa":0},
+            {"No":4,"Nama":"Anas Fadhila Shidiq Prasetya","NIS":23111024,"PAI":98,"rerata PAI":93.63,"Pancasila":75,"rerata Pancasila":78.55,"Bahasa Indonesia":78,"rerata Bahasa Indonesia":83.44,"Matematika W":75,"rerata Mat W":76.7,"Bahasa Inggris Wajib":76,"rerata Bing W":76.97,"Penjaskes":85,"rerata Penjaskes":87.4,"Sejarah":85,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":947,"RATA-RATA":78.92,"RANK":19,"% Sakit":2,"% Izin":0,"% Alfa":6},
+            {"No":5,"Nama":"Ardi Hafizh Wibowo","NIS":23111026,"PAI":96,"rerata PAI":93.63,"Pancasila":76,"rerata Pancasila":78.55,"Bahasa Indonesia":89,"rerata Bahasa Indonesia":83.44,"Matematika W":76,"rerata Mat W":76.7,"Bahasa Inggris Wajib":77,"rerata Bing W":76.97,"Penjaskes":85,"rerata Penjaskes":87.4,"Sejarah":87,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":76,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":962.72,"RATA-RATA":80.23,"RANK":17,"% Sakit":15,"% Izin":2,"% Alfa":9},
+            {"No":6,"Nama":"Arfian Janni Alfa Zahry","NIS":23111028,"PAI":94,"rerata PAI":93.63,"Pancasila":75,"rerata Pancasila":78.55,"Bahasa Indonesia":83,"rerata Bahasa Indonesia":83.44,"Matematika W":76,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":85,"rerata Penjaskes":87.4,"Sejarah":75,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":74,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":936.89,"RATA-RATA":78.07,"RANK":22,"% Sakit":0,"% Izin":6,"% Alfa":0},
+            {"No":7,"Nama":"Arrauf Rozan Attailah","NIS":23111030,"PAI":89,"rerata PAI":93.63,"Pancasila":60,"rerata Pancasila":78.55,"Bahasa Indonesia":80,"rerata Bahasa Indonesia":83.44,"Matematika W":76,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":80,"rerata Penjaskes":87.4,"Sejarah":75,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":910,"RATA-RATA":75.83,"RANK":27,"% Sakit":26,"% Izin":1,"% Alfa":3},
+            {"No":8,"Nama":"Arsavin Ibnu Shabir","NIS":23111031,"PAI":98,"rerata PAI":93.63,"Pancasila":79,"rerata Pancasila":78.55,"Bahasa Indonesia":89,"rerata Bahasa Indonesia":83.44,"Matematika W":75,"rerata Mat W":76.7,"Bahasa Inggris Wajib":86,"rerata Bing W":76.97,"Penjaskes":81,"rerata Penjaskes":87.4,"Sejarah":91,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":977.41,"RATA-RATA":81.45,"RANK":11,"% Sakit":0,"% Izin":1,"% Alfa":1},
+            {"No":9,"Nama":"Daffa Ulhaq","NIS":23111050,"PAI":100,"rerata PAI":93.63,"Pancasila":76,"rerata Pancasila":78.55,"Bahasa Indonesia":80,"rerata Bahasa Indonesia":83.44,"Matematika W":76,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":92,"rerata Penjaskes":87.4,"Sejarah":76,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":953.92,"RATA-RATA":79.49,"RANK":18,"% Sakit":14,"% Izin":0,"% Alfa":2},
+            {"No":10,"Nama":"Dzaki Azfar Abdullah","NIS":23111053,"PAI":96,"rerata PAI":93.63,"Pancasila":91,"rerata Pancasila":78.55,"Bahasa Indonesia":93,"rerata Bahasa Indonesia":83.44,"Matematika W":88,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":85,"rerata Penjaskes":87.4,"Sejarah":96,"rerata Sejarah":82.63,"Kimia":79,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":80,"rerata Fisika":76.79,"Matematika TL":76,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":1011.59,"RATA-RATA":84.3,"RANK":4,"% Sakit":0,"% Izin":1,"% Alfa":0},
+            {"No":11,"Nama":"Fairuz Ananta Afla","NIS":23111058,"PAI":96,"rerata PAI":93.63,"Pancasila":76,"rerata Pancasila":78.55,"Bahasa Indonesia":80,"rerata Bahasa Indonesia":83.44,"Matematika W":80,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":81,"rerata Penjaskes":87.4,"Sejarah":96,"rerata Sejarah":82.63,"Kimia":90,"rerata Kimia":77.08,"Biologi":88,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":86,"rerata Mat TL":74.73,"Informatika":80,"rerata Informatika":76.87,"JUMLAH NILAI":1003.07,"RATA-RATA":83.59,"RANK":7,"% Sakit":2,"% Izin":2,"% Alfa":7},
+            {"No":12,"Nama":"Galih Fajar Anggoro","NIS":23111069,"PAI":98,"rerata PAI":93.63,"Pancasila":85,"rerata Pancasila":78.55,"Bahasa Indonesia":91,"rerata Bahasa Indonesia":83.44,"Matematika W":89,"rerata Mat W":76.7,"Bahasa Inggris Wajib":84,"rerata Bing W":76.97,"Penjaskes":85,"rerata Penjaskes":87.4,"Sejarah":89,"rerata Sejarah":82.63,"Kimia":85,"rerata Kimia":77.08,"Biologi":91,"rerata Biologi":78.87,"Fisika":89,"rerata Fisika":76.79,"Matematika TL":96,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":1060.09,"RATA-RATA":88.34,"RANK":1,"% Sakit":0,"% Izin":0,"% Alfa":2},
+            {"No":13,"Nama":"Gaza Fadlian Tezar","NIS":23111072,"PAI":96,"rerata PAI":93.63,"Pancasila":88,"rerata Pancasila":78.55,"Bahasa Indonesia":82,"rerata Bahasa Indonesia":83.44,"Matematika W":59,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":92,"rerata Penjaskes":87.4,"Sejarah":80,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":76,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":60,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":935.9,"RATA-RATA":77.99,"RANK":23,"% Sakit":10,"% Izin":1,"% Alfa":4},
+            {"No":14,"Nama":"Gerald Fawaszain Arkananggara","NIS":23111073,"PAI":98,"rerata PAI":93.63,"Pancasila":82,"rerata Pancasila":78.55,"Bahasa Indonesia":87,"rerata Bahasa Indonesia":83.44,"Matematika W":75,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":92,"rerata Penjaskes":87.4,"Sejarah":89,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":78,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":978.91,"RATA-RATA":81.58,"RANK":10,"% Sakit":10,"% Izin":3,"% Alfa":1},
+            {"No":15,"Nama":"Ivandhia Naufalathif","NIS":23111078,"PAI":96,"rerata PAI":93.63,"Pancasila":75,"rerata Pancasila":78.55,"Bahasa Indonesia":88,"rerata Bahasa Indonesia":83.44,"Matematika W":77,"rerata Mat W":76.7,"Bahasa Inggris Wajib":78,"rerata Bing W":76.97,"Penjaskes":95,"rerata Penjaskes":87.4,"Sejarah":81,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":967.78,"RATA-RATA":80.65,"RANK":16,"% Sakit":4,"% Izin":6,"% Alfa":2},
+            {"No":16,"Nama":"Kafeel Aizat Rayyansyah","NIS":23111080,"PAI":85,"rerata PAI":93.63,"Pancasila":97,"rerata Pancasila":78.55,"Bahasa Indonesia":80,"rerata Bahasa Indonesia":83.44,"Matematika W":78,"rerata Mat W":76.7,"Bahasa Inggris Wajib":78,"rerata Bing W":76.97,"Penjaskes":95,"rerata Penjaskes":87.4,"Sejarah":76,"rerata Sejarah":82.63,"Kimia":80,"rerata Kimia":77.08,"Biologi":83,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":977.06,"RATA-RATA":81.42,"RANK":12,"% Sakit":1,"% Izin":4,"% Alfa":15},
+            {"No":17,"Nama":"Khalil Firja Athaillah","NIS":23111085,"PAI":94,"rerata PAI":93.63,"Pancasila":75,"rerata Pancasila":78.55,"Bahasa Indonesia":76,"rerata Bahasa Indonesia":83.44,"Matematika W":57,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":80,"rerata Penjaskes":87.4,"Sejarah":75,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":66,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":60,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":882.56,"RATA-RATA":73.55,"RANK":30,"% Sakit":17,"% Izin":5,"% Alfa":46},
+            {"No":18,"Nama":"M. Rizky Fadega Pulungan","NIS":23111087,"PAI":90,"rerata PAI":93.63,"Pancasila":75,"rerata Pancasila":78.55,"Bahasa Indonesia":83,"rerata Bahasa Indonesia":83.44,"Matematika W":62,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":80,"rerata Penjaskes":87.4,"Sejarah":75,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":63,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":60,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":887.89,"RATA-RATA":73.99,"RANK":28,"% Sakit":24,"% Izin":5,"% Alfa":32},
+            {"No":19,"Nama":"Mardhika Hadi Widiatmoko","NIS":23111090,"PAI":98,"rerata PAI":93.63,"Pancasila":88,"rerata Pancasila":78.55,"Bahasa Indonesia":82,"rerata Bahasa Indonesia":83.44,"Matematika W":86,"rerata Mat W":76.7,"Bahasa Inggris Wajib":78,"rerata Bing W":76.97,"Penjaskes":92,"rerata Penjaskes":87.4,"Sejarah":89,"rerata Sejarah":82.63,"Kimia":90,"rerata Kimia":77.08,"Biologi":88,"rerata Biologi":78.87,"Fisika":88,"rerata Fisika":76.79,"Matematika TL":90,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":1046.8,"RATA-RATA":87.23,"RANK":2,"% Sakit":0,"% Izin":3,"% Alfa":0},
+            {"No":20,"Nama":"Muhammad Ammar Al-Bahy","NIS":23111101,"PAI":94,"rerata PAI":93.63,"Pancasila":97,"rerata Pancasila":78.55,"Bahasa Indonesia":83,"rerata Bahasa Indonesia":83.44,"Matematika W":84,"rerata Mat W":76.7,"Bahasa Inggris Wajib":76,"rerata Bing W":76.97,"Penjaskes":92,"rerata Penjaskes":87.4,"Sejarah":76,"rerata Sejarah":82.63,"Kimia":85,"rerata Kimia":77.08,"Biologi":90,"rerata Biologi":78.87,"Fisika":91,"rerata Fisika":76.79,"Matematika TL":76,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":1022.2,"RATA-RATA":85.18,"RANK":3,"% Sakit":8,"% Izin":3,"% Alfa":1},
+            {"No":21,"Nama":"Muhammad Fikriyaskuri Eko Setiawan","NIS":23111108,"PAI":94,"rerata PAI":93.63,"Pancasila":94,"rerata Pancasila":78.55,"Bahasa Indonesia":87,"rerata Bahasa Indonesia":83.44,"Matematika W":83,"rerata Mat W":76.7,"Bahasa Inggris Wajib":76,"rerata Bing W":76.97,"Penjaskes":92,"rerata Penjaskes":87.4,"Sejarah":85,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":85,"rerata Biologi":78.87,"Fisika":84,"rerata Fisika":76.79,"Matematika TL":76,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":1005.42,"RATA-RATA":83.79,"RANK":6,"% Sakit":7,"% Izin":4,"% Alfa":12},
+            {"No":22,"Nama":"Muhammad Furqon Mahzum Arsyad","NIS":23111109,"PAI":92,"rerata PAI":93.63,"Pancasila":88,"rerata Pancasila":78.55,"Bahasa Indonesia":83,"rerata Bahasa Indonesia":83.44,"Matematika W":78,"rerata Mat W":76.7,"Bahasa Inggris Wajib":76,"rerata Bing W":76.97,"Penjaskes":95,"rerata Penjaskes":87.4,"Sejarah":87,"rerata Sejarah":82.63,"Kimia":89,"rerata Kimia":77.08,"Biologi":93,"rerata Biologi":78.87,"Fisika":79,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":1009.62,"RATA-RATA":84.14,"RANK":5,"% Sakit":19,"% Izin":4,"% Alfa":26},
+            {"No":23,"Nama":"Muhammad Yoga Satriya Atmadja","NIS":23111129,"PAI":85,"rerata PAI":93.63,"Pancasila":88,"rerata Pancasila":78.55,"Bahasa Indonesia":80,"rerata Bahasa Indonesia":83.44,"Matematika W":78,"rerata Mat W":76.7,"Bahasa Inggris Wajib":76,"rerata Bing W":76.97,"Penjaskes":95,"rerata Penjaskes":87.4,"Sejarah":75,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":90,"rerata Biologi":78.87,"Fisika":78,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":972.74,"RATA-RATA":81.06,"RANK":13,"% Sakit":1,"% Izin":1,"% Alfa":1},
+            {"No":24,"Nama":"Naylendra Pakarti Luhur","NIS":23111132,"PAI":96,"rerata PAI":93.63,"Pancasila":88,"rerata Pancasila":78.55,"Bahasa Indonesia":87,"rerata Bahasa Indonesia":83.44,"Matematika W":75,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":89,"rerata Penjaskes":87.4,"Sejarah":76,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":85,"rerata Biologi":78.87,"Fisika":76,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":972.04,"RATA-RATA":81,"RANK":14,"% Sakit":9,"% Izin":2,"% Alfa":16},
+            {"No":25,"Nama":"Panggih Aryasatya Priyanto","NIS":23111136,"PAI":87,"rerata PAI":93.63,"Pancasila":68,"rerata Pancasila":78.55,"Bahasa Indonesia":80,"rerata Bahasa Indonesia":83.44,"Matematika W":84,"rerata Mat W":76.7,"Bahasa Inggris Wajib":77,"rerata Bing W":76.97,"Penjaskes":89,"rerata Penjaskes":87.4,"Sejarah":87,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":90,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":82,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":971.45,"RATA-RATA":80.95,"RANK":15,"% Sakit":0,"% Izin":4,"% Alfa":2},
+            {"No":26,"Nama":"Raditya Arya Bajra Sanjaya","NIS":23111140,"PAI":94,"rerata PAI":93.63,"Pancasila":75,"rerata Pancasila":78.55,"Bahasa Indonesia":88,"rerata Bahasa Indonesia":83.44,"Matematika W":86,"rerata Mat W":76.7,"Bahasa Inggris Wajib":76,"rerata Bing W":76.97,"Penjaskes":89,"rerata Penjaskes":87.4,"Sejarah":81,"rerata Sejarah":82.63,"Kimia":80,"rerata Kimia":77.08,"Biologi":89,"rerata Biologi":78.87,"Fisika":79,"rerata Fisika":76.79,"Matematika TL":86,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":1000.13,"RATA-RATA":83.34,"RANK":8,"% Sakit":1,"% Izin":1,"% Alfa":0},
+            {"No":27,"Nama":"Rayhan Nawfal Akbar","NIS":23111154,"PAI":94,"rerata PAI":93.63,"Pancasila":75,"rerata Pancasila":78.55,"Bahasa Indonesia":84,"rerata Bahasa Indonesia":83.44,"Matematika W":76,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":95,"rerata Penjaskes":87.4,"Sejarah":75,"rerata Sejarah":82.63,"Kimia":60,"rerata Kimia":77.08,"Biologi":65,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":75,"rerata Informatika":76.87,"JUMLAH NILAI":924.11,"RATA-RATA":77.01,"RANK":25,"% Sakit":3,"% Izin":1,"% Alfa":4},
+            {"No":28,"Nama":"Revansa Nadhifanditya Aghadhiaulhaq Santoso","NIS":23111158,"PAI":89,"rerata PAI":93.63,"Pancasila":60,"rerata Pancasila":78.55,"Bahasa Indonesia":80,"rerata Bahasa Indonesia":83.44,"Matematika W":75,"rerata Mat W":76.7,"Bahasa Inggris Wajib":75,"rerata Bing W":76.97,"Penjaskes":82,"rerata Penjaskes":87.4,"Sejarah":94,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":83,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":941,"RATA-RATA":78.42,"RANK":20,"% Sakit":11,"% Izin":2,"% Alfa":0},
+            {"No":29,"Nama":"Roja Natandya Maheswara","NIS":23111160,"PAI":96,"rerata PAI":93.63,"Pancasila":75,"rerata Pancasila":78.55,"Bahasa Indonesia":85,"rerata Bahasa Indonesia":83.44,"Matematika W":75,"rerata Mat W":76.7,"Bahasa Inggris Wajib":77,"rerata Bing W":76.97,"Penjaskes":81,"rerata Penjaskes":87.4,"Sejarah":75,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":60,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":927.33,"RATA-RATA":77.28,"RANK":24,"% Sakit":12,"% Izin":4,"% Alfa":7},
+            {"No":30,"Nama":"Yuan Pradipa Cakrawardhana","NIS":23111176,"PAI":96,"rerata PAI":93.63,"Pancasila":75,"rerata Pancasila":78.55,"Bahasa Indonesia":84,"rerata Bahasa Indonesia":83.44,"Matematika W":75,"rerata Mat W":76.7,"Bahasa Inggris Wajib":90,"rerata Bing W":76.97,"Penjaskes":95,"rerata Penjaskes":87.4,"Sejarah":94,"rerata Sejarah":82.63,"Kimia":75,"rerata Kimia":77.08,"Biologi":75,"rerata Biologi":78.87,"Fisika":75,"rerata Fisika":76.79,"Matematika TL":75,"rerata Mat TL":74.73,"Informatika":78,"rerata Informatika":76.87,"JUMLAH NILAI":987.11,"RATA-RATA":82.26,"RANK":9,"% Sakit":12,"% Izin":8,"% Alfa":5}
+        ];
+        const konsulData = [
+            {"NO":1,"NAMA":"Abyanu Ar Rasyid","UNIVERSITAS":"UPN YK, UB","JALUR MASUK":"SNBP, SNBT","JURUSAN":"TEKNIK PERMINYAKAN","KEDINASAN":"STAN, POLTEKIM, UNHAN","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"-","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"FIS,MATH"},
+            {"NO":2,"NAMA":"Aldi Raditya Satria","UNIVERSITAS":"UNS , UPN YK","JALUR MASUK":"SNBT","JURUSAN":"BISNIS DIGITAL, AKUNTANSI","KEDINASAN":"AKMIL","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"TELKOM UNIVERSITY","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"MATH, KIM"},
+            {"NO":3,"NAMA":"Alvino Putra Athailla","UNIVERSITAS":"UNDIP, UNS","JALUR MASUK":"SNBT","JURUSAN":"TEKNIK INFORMATIKA","KEDINASAN":"UNHAN ?","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"UMS","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"MATH, FIS"},
+            {"NO":4,"NAMA":"Anas Fadhila Shidiq Prasetya","UNIVERSITAS":"ITS, UNDIP/UNPAD","JALUR MASUK":"SNBP, SNBT","JURUSAN":"TEKNIK INFORMATIKA","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"-","SWASTA":"TELKOM UNIVERSITY","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"FIS, MATH"},
+            {"NO":5,"NAMA":"Ardi Hafizh Wibowo","UNIVERSITAS":"UNDIP","JALUR MASUK":"SNBP, SNBT","JURUSAN":"ILMU KELAUTAN, OSEANOGRAFI","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"-","SWASTA":"-","PROGRAM IUP":"-","REKOMENDASI":"SBUB UNDIP (CARI SERTIFIKAT)","SERTIFIKAT":"-","MAPEL TKA ":"FIS, MATH"},
+            {"NO":6,"NAMA":"Arfian Janni Alfa Zahry","UNIVERSITAS":"UNS","JALUR MASUK":"SNBP, SNBT","JURUSAN":"PETERNAKAN, PERTANIAN","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"UMS (MANAJEMEN)","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"BIO, KIMIA"},
+            {"NO":7,"NAMA":"Arrauf Rozan Attailah","UNIVERSITAS":"UNS","JALUR MASUK":"SNBT","JURUSAN":"PERTANIAN, PETERNAKAN","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"-","SWASTA":"UMY","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"BIO, MATH"},
+            {"NO":8,"NAMA":"Arsavin Ibnu Shabir","UNIVERSITAS":"UNS, UNPAD","JALUR MASUK":"SNBT","JURUSAN":"BISNIS DIGITAL","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"UMS (PAI)","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"","MAPEL TKA ":"MATH, KIMIA"},
+            {"NO":9,"NAMA":"Daffa Ulhaq","UNIVERSITAS":"UNDIP/UNPAD","JALUR MASUK":"SNBT","JURUSAN":"PSIKOLOGI","KEDINASAN":"AKPOL","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"UMS","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"BIO, MATH"},
+            {"NO":10,"NAMA":"Dzaki Azfar Abdullah","UNIVERSITAS":"POLIMED","JALUR MASUK":"SNBT","JURUSAN":"TEKNOLOGI PERMAINAN, TEKNIK","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"-","PROGRAM IUP":"-","REKOMENDASI":"TELKOM UNIVERSITY","SERTIFIKAT":"-","MAPEL TKA ":"MATH, FIS"},
+            {"NO":11,"NAMA":"Fairuz Ananta Afla","UNIVERSITAS":"UI","JALUR MASUK":"SNBP, SNBT","JURUSAN":"FK, FISIOTERAPI","KEDINASAN":"UNHAN?","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"UMS","PROGRAM IUP":"-","REKOMENDASI":"POLTEKKES?","SERTIFIKAT":"-","MAPEL TKA ":"BIO,KIM"},
+            {"NO":12,"NAMA":"Galih Fajar Anggoro","UNIVERSITAS":"UNS, UNDIP","JALUR MASUK":"SNBP, SNBT","JURUSAN":"ARSITEK, STATISTIK","KEDINASAN":"STAN, UNHAN","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"-","PROGRAM IUP":"-","REKOMENDASI":"SBUB UNDIP, PPKB UI, PBUB UGM, SELMA UB,","SERTIFIKAT":"JUARA 3 O2SN KARATE TINGKAT NASIONAL, JUARA 3 POPDA KARATE PROVINSI, JUARA 2 FORKI JATENG KARATE,","MAPEL TKA ":"MATH, FIS"},
+            {"NO":13,"NAMA":"Gaza Fadlian Tezar","UNIVERSITAS":"ISI YK, ISI SOLO","JALUR MASUK":"SNBP, SNBT","JURUSAN":"DKV","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"-","SWASTA":"MSD JOGJA","PROGRAM IUP":"-","REKOMENDASI":"TELKOM UNIVERSITY","SERTIFIKAT":"-","MAPEL TKA ":"MATH, KIMIA"},
+            {"NO":14,"NAMA":"Gerald Fawaszain Arkananggara","UNIVERSITAS":"UNS, UNDIP","JALUR MASUK":"SNBP, SNBT","JURUSAN":"TEKNIK INFORMATIKA","KEDINASAN":"-","LUAR NEGERI":"UTM","BEASISWA":"MAU","SWASTA":"TELKOM UNIVERSITY","PROGRAM IUP":"IUP ITB, IUP UGM , IUP ITS","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"FIS, MATH"},
+            {"NO":15,"NAMA":"Ivandhia Naufalathif","UNIVERSITAS":"ITB, UB, UGM","JALUR MASUK":"SNBT","JURUSAN":"STEIK KOMPUTASI,TEKNIK INFORMATIKA, D4 TEKNOLOGI REKAYASA PERANGKAT LUNAK","KEDINASAN":"UNHAN","LUAR NEGERI":"KOREA","BEASISWA":"MAU","SWASTA":"-","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"MATH, FISIKA"},
+            {"NO":16,"NAMA":"Kafeel Aizat Rayyansyah","UNIVERSITAS":"UNS, PENS","JALUR MASUK":"SNBT","JURUSAN":"TEKNIK SIPIL, TEKNIK MESIN, TEKNIK PERMESINAN KAPAL","KEDINASAN":"-","LUAR NEGERI":"AUSTRALIA","BEASISWA":"-","SWASTA":"TELKOM UNIV","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"FIS,MATH"},
+            {"NO":17,"NAMA":"Khalil Firja Athaillah","UNIVERSITAS":"UNS, UB","JALUR MASUK":"SNBT","JURUSAN":"PSIKOLOGI","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"TELKOM UNIV","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"JUARA 1 LIGA SOLO DIVISI 2, JUARA 3 ROJALI CUP BASKET SEMUA","MAPEL TKA ":"BIO, MATH TL"},
+            {"NO":18,"NAMA":"M. Rizky Fadega Pulungan","UNIVERSITAS":"UNS (UNIV SRIWIJAYA, SUMATRA SELATAN 1:18)","JALUR MASUK":"SNBP, SNBT","JURUSAN":"FK, KEPERAWATAN ANESTESI","KEDINASAN":"STAN, UNHAN","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"-","PROGRAM IUP":"-","REKOMENDASI":"POLTEKKES SMRG, SURABAYA, DAN JAKARTA AMBIL PERAWAT ANESTESI","SERTIFIKAT":"-","MAPEL TKA ":"BIO,KIM"},
+            {"NO":19,"NAMA":"Mardhika Hadi Widiatmoko","UNIVERSITAS":"UGM, UNJ","JALUR MASUK":"SNBP, SNBT","JURUSAN":"PSIKOLOGI","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"TELKOM UNIV","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"JUARA 2 LOMBA LCTP UIN SOLO","MAPEL TKA ":"MATH, BIO"},
+            {"NO":20,"NAMA":"Muhammad Ammar Al-Bahy","UNIVERSITAS":"UNS","JALUR MASUK":"SNBT","JURUSAN":"PJKR, PETERNAKAN","KEDINASAN":"MINAT","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"-","PROGRAM IUP":"-","REKOMENDASI":"SPAN PTKIN PAI","SERTIFIKAT":"-","MAPEL TKA ":"MATH, BIO"},
+            {"NO":21,"NAMA":"Muhammad Fikriyaskuri Eko Setiawan","UNIVERSITAS":"UNDIP, UNS","JALUR MASUK":"SNBP, SNBT","JURUSAN":"HUKUM","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"UMS","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"JUARA 3 LOMBA PIONERING GROUP UIN SOLO","MAPEL TKA ":"BIO, PKN"},
+            {"NO":22,"NAMA":"Muhammad Furqon Mahzum Arsyad","UNIVERSITAS":"UNS","JALUR MASUK":"SNBP, SNBT","JURUSAN":"PJKR, PJR","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"UMS","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"BIO, MATH"},
+            {"NO":23,"NAMA":"Muhammad Yoga Satriya Atmadja","UNIVERSITAS":"UNS","JALUR MASUK":"SNBP, SNBT","JURUSAN":"FK","KEDINASAN":"UNHAN?","LUAR NEGERI":"-","BEASISWA":"-","SWASTA":"UMS","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"BIO,KIM"},
+            {"NO":24,"NAMA":"Naylendra Pakarti Luhur","UNIVERSITAS":"UNDIP, UNS","JALUR MASUK":"SNBP, SNBT","JURUSAN":"HUKUM","KEDINASAN":"AKPOL (FOKUS KE AKPOL DAN AKAN GAPYEAR)","LUAR NEGERI":"-","BEASISWA":"-","SWASTA":"-","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"PKN, BIO"},
+            {"NO":25,"NAMA":"Panggih Aryasatya Priyanto","UNIVERSITAS":"ITS, UNDIP","JALUR MASUK":"SNBT","JURUSAN":"TEKNIK INFORMATIKA, TEKNIK KOMPUTER","KEDINASAN":"IPDN","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"TELKOM UNIV","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"JUARA 3 LOMBA PIONERRING UIN RMS GROUP,","MAPEL TKA ":"FIS, MATH"},
+            {"NO":26,"NAMA":"Raditya Arya Bajra Sanjaya","UNIVERSITAS":"UGM, UNDIP","JALUR MASUK":"SNBP, SNBT","JURUSAN":"TEKNIK SIPIL, D4 TEKNIK PENGELOLAAN DAN PEMELIHARAAN INFRASTRUKTUR SIPIL UGM","KEDINASAN":"STAN","LUAR NEGERI":"-","BEASISWA":"-","SWASTA":"UMS","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"FIS,MATH"},
+            {"NO":27,"NAMA":"Rayhan Nawfal Akbar","UNIVERSITAS":"ITB, ITS","JALUR MASUK":"SNBP, SNBT","JURUSAN":"TEKNIK INDUSTRI, D4 TEKNIK PENGELOLAAN DAN PEMELIHARAAN INFRASTRUKTUR SIPIL","KEDINASAN":"UNHAN","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"-","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"FIS,MATH"},
+            {"NO":28,"NAMA":"Revansa Nadhifanditya Aghadhiaulhaq Santoso","UNIVERSITAS":"UNY","JALUR MASUK":"SNBT","JURUSAN":"TATA BOGA","KEDINASAN":"PIP","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"UMS","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"BIO, MATH"},
+            {"NO":29,"NAMA":"Roja Natandya Maheswara","UNIVERSITAS":"UNS, UNEJ","JALUR MASUK":"SNBP, SNBT","JURUSAN":"FK","KEDINASAN":"UNHAN ?","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"-","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"BIO,KIM"},
+            {"NO":30,"NAMA":"Yuan Pradipa Cakrawardhana","UNIVERSITAS":"UNDIP","JALUR MASUK":"SNBT","JURUSAN":"HI, ILKOM","KEDINASAN":"-","LUAR NEGERI":"-","BEASISWA":"MAU","SWASTA":"TELKOM UNIVERSITY","PROGRAM IUP":"-","REKOMENDASI":"-","SERTIFIKAT":"-","MAPEL TKA ":"PKN, BIO"}
+        ];
+
+        // --- MERGE & PREPARE DATA ---
+        const mergedData = rapotData.map(rapot => {
+            const konsul = konsulData.find(k => k.NAMA.trim().toLowerCase() === rapot.Nama.trim().toLowerCase());
+            return { ...rapot, ...konsul };
+        });
+        
+        // Sort by rank
+        mergedData.sort((a, b) => a.RANK - b.RANK);
+
+        // --- DOM ELEMENTS ---
+        const studentList = document.getElementById('student-list');
+        const placeholder = document.getElementById('placeholder');
+        const detailView = document.getElementById('student-detail-view');
+        
+        // --- RENDER STUDENT LIST ---
+        mergedData.forEach(student => {
+            const li = document.createElement('li');
+            li.dataset.nis = student.NIS;
+            li.innerHTML = `<span>${student.Nama}</span> <span class="rank">${student.RANK}</span>`;
+            li.addEventListener('click', () => {
+                renderStudentDetails(student.NIS);
+                
+                // Highlight active student
+                document.querySelectorAll('#student-list li').forEach(item => item.classList.remove('active'));
+                li.classList.add('active');
+            });
+            studentList.appendChild(li);
+        });
+
+        // --- RENDER STUDENT DETAILS ---
+        function renderStudentDetails(nis) {
+            const student = mergedData.find(s => s.NIS === nis);
+            if (!student) return;
+
+            placeholder.style.display = 'none';
+            detailView.style.display = 'block';
+
+            // Header
+            document.getElementById('student-name').textContent = student.Nama;
+            document.getElementById('student-nis').textContent = `NIS: ${student.NIS}`;
+            document.getElementById('student-rank').textContent = `Peringkat ${student.RANK}`;
+            
+            // Summary
+            document.getElementById('total-score').textContent = parseFloat(student['JUMLAH NILAI']).toFixed(2);
+            document.getElementById('average-score').textContent = parseFloat(student['RATA-RATA']).toFixed(2);
+            document.getElementById('sakit-percent').textContent = `${student['% Sakit']}%`;
+            document.getElementById('izin-percent').textContent = `${student['% Izin']}%`;
+            document.getElementById('alfa-percent').textContent = `${student['% Alfa']}%`;
+
+            // Grades Table
+            const gradesBody = document.getElementById('grades-body');
+            gradesBody.innerHTML = '';
+            const subjects = [
+                { name: 'PAI', key: 'PAI', avgKey: 'rerata PAI' },
+                { name: 'Pancasila', key: 'Pancasila', avgKey: 'rerata Pancasila' },
+                { name: 'Bahasa Indonesia', key: 'Bahasa Indonesia', avgKey: 'rerata Bahasa Indonesia' },
+                { name: 'Matematika Wajib', key: 'Matematika W', avgKey: 'rerata Mat W' },
+                { name: 'Bahasa Inggris', key: 'Bahasa Inggris Wajib', avgKey: 'rerata Bing W' },
+                { name: 'Penjaskes', key: 'Penjaskes', avgKey: 'rerata Penjaskes' },
+                { name: 'Sejarah', key: 'Sejarah', avgKey: 'rerata Sejarah' },
+                { name: 'Kimia', key: 'Kimia', avgKey: 'rerata Kimia' },
+                { name: 'Biologi', key: 'Biologi', avgKey: 'rerata Biologi' },
+                { name: 'Fisika', key: 'Fisika', avgKey: 'rerata Fisika' },
+                { name: 'Matematika TL', key: 'Matematika TL', avgKey: 'rerata Mat TL' },
+                { name: 'Informatika', key: 'Informatika', avgKey: 'rerata Informatika' }
+            ];
+
+            subjects.forEach(subject => {
+                const score = student[subject.key];
+                const avg = student[subject.avgKey];
+                const isBelow = score < avg;
+                const row = `
+                    <tr>
+                        <td>${subject.name}</td>
+                        <td class="${isBelow ? 'below-average' : ''}">${score}</td>
+                        <td>${avg.toFixed(2)}</td>
+                    </tr>
+                `;
+                gradesBody.innerHTML += row;
+            });
+
+            // Konsul BK
+            const konsulBody = document.getElementById('konsul-body');
+            konsulBody.innerHTML = '';
+            const konsulFields = [
+                { label: 'Universitas Pilihan', key: 'UNIVERSITAS' },
+                { label: 'Jalur Masuk', key: 'JALUR MASUK' },
+                { label: 'Jurusan Pilihan', key: 'JURUSAN' },
+                { label: 'Sekolah Kedinasan', key: 'KEDINASAN' },
+                { label: 'Studi Luar Negeri', key: 'LUAR NEGERI' },
+                { label: 'Opsi Swasta', key: 'SWASTA' },
+                { label: 'Program IUP', key: 'PROGRAM IUP' },
+                { label: 'Rekomendasi Prestasi', key: 'REKOMENDASI' },
+                { label: 'Sertifikat Pendukung', key: 'SERTIFIKAT' },
+                { label: 'Mapel Fokus TKA', key: 'MAPEL TKA ' },
+            ];
+            
+            konsulFields.forEach(field => {
+                if(student[field.key] && student[field.key].trim() !== '-' && student[field.key].trim() !== '') {
+                    const li = `<li><strong>${field.label}</strong> <span>${student[field.key]}</span></li>`;
+                    konsulBody.innerHTML += li;
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
