@@ -7,11 +7,22 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        svg: {
+          fontCache: 'global'
+        }
+      };
+    </script>
+
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
-        /* Sedikit style tambahan agar rapi */
         body {
             line-height: 1.7;
         }
@@ -19,7 +30,6 @@
             max-width: 800px;
             padding-bottom: 4rem;
         }
-        /* Style untuk jawaban akhir agar menonjol */
         blockquote {
             background: #f0f0f0; 
             border-left-color: #007bff;
