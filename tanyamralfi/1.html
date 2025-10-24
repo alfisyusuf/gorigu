@@ -11,13 +11,23 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
-        /* Sedikit style tambahan agar rumus lebih rapi */
+        /* Sedikit style tambahan agar rapi */
         body {
             line-height: 1.7;
         }
         main.container {
             max-width: 800px;
             padding-bottom: 4rem;
+        }
+        /* Style untuk jawaban akhir agar menonjol */
+        blockquote {
+            background: #f0f0f0; 
+            border-left-color: #007bff;
+        }
+        blockquote h3 {
+            text-align: center; 
+            margin: 0;
+            padding: 0.5rem;
         }
     </style>
 </head>
@@ -62,8 +72,7 @@
             $$ \Delta EP = (4 \text{ kg} - 3 \text{ kg}) \cdot (10 \text{ m/s}^2) \cdot (0.4 \text{ m}) $$
             $$ \Delta EP = (1) \cdot 10 \cdot 0.4 $$
             $$ \Delta EP = 4 \text{ Joule} $$
-            <p><strong>Ini adalah angka 4 (Joule) yang ada di sisi kanan persamaan.</strong></p>
-
+            
             <hr>
 
             <h2>Langkah 2: Menghitung Perubahan Energi Kinetik ($\Delta EK$)</h2>
@@ -90,27 +99,32 @@
             $$ \Delta EK = \left( \frac{1}{2}(3) + \frac{1}{2}(4) + \frac{1}{4}(2) \right) v^2 $$
             $$ \Delta EK = ( 1.5 + 2 + 0.5 ) v^2 $$
             $$ \Delta EK = 4 v^2 $$
-            <p><strong>Ini adalah ekspresi $4v^2$ yang ada di sisi kiri persamaan.</strong></p>
 
             <hr>
 
-            <h2>Langkah 3: Menyelesaikan Persamaan (Jawaban Murid Anda)</h2>
+            <h2>Langkah 3: Mencari Kecepatan Akhir</h2>
             <p>
-                Sekarang kita samakan $\Delta EK$ dan $\Delta EP$ sesuai prinsip kekekalan energi:
+                Sekarang kita samakan total perubahan energi kinetik ($\Delta EK$) 
+                dengan total perubahan energi potensial ($\Delta EP$) 
+                sesuai prinsip kekekalan energi:
             </p>
             $$ \Delta EK = \Delta EP $$
             $$ 4v^2 = 4 $$
             <p>
-                Persamaan inilah yang ditanyakan oleh murid Anda. Angka 4 di kiri adalah total koefisien massa efektif sistem, dan angka 4 di kanan adalah total perubahan energi potensial dalam Joule.
+                Dari persamaan ini, kita bisa selesaikan untuk mencari nilai $v$:
             </p>
-            <p>Selesaikan untuk $v$:</p>
             $$ v^2 = \frac{4}{4} $$
             $$ v^2 = 1 $$
             $$ v = \sqrt{1} $$
+            <p>
+                Jadi, kecepatan balok setelah bergerak sejauh 0.4 m adalah:
+            </p>
             
-            <h3 style="text-align: center; background: #f0f0f0; padding: 1rem; border-radius: 8px;">
-                $ v = 1 \text{ m/s} $
-            </h3>
+            <blockquote>
+                <h3>
+                    $ v = 1 \text{ m/s} $
+                </h3>
+            </blockquote>
 
         </article>
 
