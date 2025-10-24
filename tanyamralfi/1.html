@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembahasan Soal Fisika: Sistem Katrol</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* Sedikit style tambahan agar rumus lebih rapi */
+        body {
+            line-height: 1.7;
+        }
+        main.container {
+            max-width: 800px;
+            padding-bottom: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        
+        <h1>Pembahasan Soal Fisika: Sistem Katrol</h1>
+        
+        <article>
+            <h2>Deskripsi Soal</h2>
+            <p>Dua balok $m_1$ dan $m_2$ dihubungkan oleh tali melalui sebuah katrol pejal. Sistem bergerak dari keadaan diam.</p>
+            <ul>
+                <li>Massa balok $m_1 = 3 \text{ kg}$</li>
+                <li>Massa balok $m_2 = 4 \text{ kg}$</li>
+                <li>Massa katrol $M = 2 \text{ kg}$</li>
+                <li>Momen Inersia katrol $I = \frac{1}{2}MR^2$ (katrol pejal)</li>
+                <li>Percepatan gravitasi $g = 10 \text{ m/s}^2$</li>
+                <li>Jarak tempuh $s = 40 \text{ cm} = 0.4 \text{ m}$</li>
+            </ul>
+            <p><strong>Ditanya:</strong> Kecepatan balok ($v$) setelah bergerak sejauh $s$?</p>
+
+            <hr>
+
+            <h2>Prinsip yang Digunakan: Kekekalan Energi Mekanik</h2>
+            <p>
+                Dalam sistem ini, energi mekanik total tetap kekal. Energi Potensial (EP) yang "hilang" dari sistem akan diubah seluruhnya menjadi Energi Kinetik (EK) sistem.
+            </p>
+            $$ \Delta EP_{\text{sistem}} = \Delta EK_{\text{sistem}} $$
+            
+            <hr>
+
+            <h2>Langkah 1: Menghitung Perubahan Energi Potensial ($\Delta EP$)</h2>
+            <p>
+                Energi potensial sistem berubah karena $m_2$ (yang lebih berat) turun dan $m_1$ (yang lebih ringan) naik sejauh $s$.
+            </p>
+            $$ \Delta EP = \text{EP yang hilang (m_2)} - \text{EP yang didapat (m_1)} $$
+            $$ \Delta EP = m_2 g s - m_1 g s $$
+            <p>Kita bisa faktorkan $gs$:</p>
+            $$ \Delta EP = (m_2 - m_1) g s $$
+            <p>Masukkan angka yang diketahui:</p>
+            $$ \Delta EP = (4 \text{ kg} - 3 \text{ kg}) \cdot (10 \text{ m/s}^2) \cdot (0.4 \text{ m}) $$
+            $$ \Delta EP = (1) \cdot 10 \cdot 0.4 $$
+            $$ \Delta EP = 4 \text{ Joule} $$
+            <p><strong>Ini adalah angka 4 (Joule) yang ada di sisi kanan persamaan.</strong></p>
+
+            <hr>
+
+            <h2>Langkah 2: Menghitung Perubahan Energi Kinetik ($\Delta EK$)</h2>
+            <p>
+                Energi kinetik sistem adalah total dari energi gerak semua benda yang terlibat: 
+                <ol>
+                    <li>Gerak lurus (translasi) balok $m_1$.</li>
+                    <li>Gerak lurus (translasi) balok $m_2$.</li>
+                    <li>Gerak putar (rotasi) katrol $M$.</li>
+                </ol>
+            </p>
+            $$ \Delta EK = EK_{m_1} + EK_{m_2} + EK_{\text{rotasi}} $$
+            $$ \Delta EK = \frac{1}{2}m_1v^2 + \frac{1}{2}m_2v^2 + \frac{1}{2}I\omega^2 $$
+            <p>
+                Kita substitusi nilai $I = \frac{1}{2}MR^2$ dan hubungan kecepatan linear & angular $\omega = v/R$:
+            </p>
+            $$ \Delta EK = \frac{1}{2}m_1v^2 + \frac{1}{2}m_2v^2 + \frac{1}{2}\left(\frac{1}{2}MR^2\right)\left(\frac{v}{R}\right)^2 $$
+            $$ \Delta EK = \frac{1}{2}m_1v^2 + \frac{1}{2}m_2v^2 + \frac{1}{4}MR^2\left(\frac{v^2}{R^2}\right) $$
+            <p>Perhatikan bahwa $R^2$ saling mencoret:</p>
+            $$ \Delta EK = \frac{1}{2}m_1v^2 + \frac{1}{2}m_2v^2 + \frac{1}{4}Mv^2 $$
+            <p>Keluarkan $v^2$ (faktorkan):</p>
+            $$ \Delta EK = \left( \frac{1}{2}m_1 + \frac{1}{2}m_2 + \frac{1}{4}M \right) v^2 $$
+            <p>Masukkan angka yang diketahui:</p>
+            $$ \Delta EK = \left( \frac{1}{2}(3) + \frac{1}{2}(4) + \frac{1}{4}(2) \right) v^2 $$
+            $$ \Delta EK = ( 1.5 + 2 + 0.5 ) v^2 $$
+            $$ \Delta EK = 4 v^2 $$
+            <p><strong>Ini adalah ekspresi $4v^2$ yang ada di sisi kiri persamaan.</strong></p>
+
+            <hr>
+
+            <h2>Langkah 3: Menyelesaikan Persamaan (Jawaban Murid Anda)</h2>
+            <p>
+                Sekarang kita samakan $\Delta EK$ dan $\Delta EP$ sesuai prinsip kekekalan energi:
+            </p>
+            $$ \Delta EK = \Delta EP $$
+            $$ 4v^2 = 4 $$
+            <p>
+                Persamaan inilah yang ditanyakan oleh murid Anda. Angka 4 di kiri adalah total koefisien massa efektif sistem, dan angka 4 di kanan adalah total perubahan energi potensial dalam Joule.
+            </p>
+            <p>Selesaikan untuk $v$:</p>
+            $$ v^2 = \frac{4}{4} $$
+            $$ v^2 = 1 $$
+            $$ v = \sqrt{1} $$
+            
+            <h3 style="text-align: center; background: #f0f0f0; padding: 1rem; border-radius: 8px;">
+                $ v = 1 \text{ m/s} $
+            </h3>
+
+        </article>
+
+    </main>
+
+</body>
+</html>
