@@ -1,274 +1,81 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gorigu Studio - Website Canggih Berbasis Ghost CMS</title>
-    <meta name="description" content="Gorigu Studio membangun website institusi dengan performa kilat, desain futuristik, dan pengelolaan konten yang intuitif menggunakan Ghost CMS.">
+    <title>Gorigu Studio | Jasa Pembuatan Website Modern</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
+        /* Animasi subtle untuk background */
+        .bg-gradient-animate {
+            background-size: 200% 200%;
+            animation: gradientMove 8s ease infinite;
         }
-        .font-orbitron {
-            font-family: 'Orbitron', sans-serif;
-        }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .text-gradient {
-            background: linear-gradient(90deg, #a78bfa, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(167, 139, 250, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(129, 140, 248, 0.5); }
-        }
-        .animate-glow {
-            animation: glow 3s ease-in-out infinite;
-        }
-        .card-hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
-<body class="bg-slate-900 text-gray-200">
+<body class="bg-slate-950 text-slate-200 font-sans antialiased min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
 
-    <header class="bg-slate-900/50 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-700">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold font-orbitron">
-                Gorigu<span class="text-indigo-400">.</span>Studio
+    <!-- Ornamen Background -->
+    <div class="absolute top-[-10%] left-[-10%] w-72 h-72 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-72 h-72 bg-emerald-600 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style="animation-delay: 2s;"></div>
+
+    <!-- Main Card (Glassmorphism) -->
+    <div class="w-full max-w-sm bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-700/50 p-8 relative z-10">
+        
+        <!-- Header & Profile -->
+        <div class="text-center mb-8">
+            <div class="w-24 h-24 mx-auto bg-gradient-to-tr from-indigo-500 to-emerald-400 rounded-full p-1 mb-4 shadow-lg">
+                <div class="w-full h-full bg-slate-900 rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-code text-3xl text-slate-200"></i>
+                </div>
+            </div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">Gorigu Studio</h1>
+            <p class="text-indigo-400 font-medium text-sm mt-1">Modern Web Development</p>
+        </div>
+
+        <!-- Copywriting Section -->
+        <div class="text-center mb-8 space-y-3">
+            <p class="text-slate-300 text-sm leading-relaxed">
+                Hadirkan bisnis Anda ke dunia digital dengan website yang <strong class="text-white">Cepat, Aman, dan Elegan.</strong>
+            </p>
+            <div class="inline-block bg-slate-800/80 rounded-lg px-4 py-2 text-xs text-slate-400 border border-slate-700/50">
+                <i class="fa-solid fa-server mr-1"></i> Mendukung Arsitektur <span class="text-emerald-400 font-semibold">Serverless</span> & <span class="text-emerald-400 font-semibold">VPS</span>
+            </div>
+        </div>
+
+        <!-- Action Buttons (CTA) -->
+        <div class="space-y-4 mb-8">
+            <!-- Tombol WA -->
+            <a href="https://wa.me/6285713697219?text=Halo%2C%20saya%20tertarik%20untuk%20membuat%20website..." target="_blank" class="flex items-center justify-center w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-lg shadow-emerald-900/50">
+                <i class="fa-brands fa-whatsapp text-xl mr-2"></i>
+                Konsultasi via WhatsApp
             </a>
-            <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#layanan" class="hover:text-indigo-400 transition">Layanan</a>
-                <a href="#harga" class="hover:text-indigo-400 transition">Investasi</a>
-                <a href="#portfolio" class="hover:text-indigo-400 transition">Portfolio</a>
-                <a href="#kontak" class="bg-indigo-600 text-white px-5 py-2 rounded-full hover:bg-indigo-700 transition font-semibold">Hubungi Kami</a>
-            </nav>
-            <button id="mobile-menu-button" class="md:hidden p-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
-            </button>
+            
+            <!-- Tombol IG -->
+            <a href="https://instagram.com/khsatrya" target="_blank" class="flex items-center justify-center w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 shadow-lg shadow-purple-900/50">
+                <i class="fa-brands fa-instagram text-xl mr-2"></i>
+                @khsatrya
+            </a>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-            <a href="#layanan" class="block py-2 hover:text-indigo-400">Layanan</a>
-            <a href="#harga" class="block py-2 hover:text-indigo-400">Investasi</a>
-            <a href="#portfolio" class="block py-2 hover:text-indigo-400">Portfolio</a>
-            <a href="#kontak" class="block mt-2 bg-indigo-600 text-white px-4 py-2 rounded-full text-center hover:bg-indigo-700 transition">Hubungi Kami</a>
-        </div>
-    </header>
 
-    <main>
-        <section class="py-24 md:py-40 relative overflow-hidden">
-             <div class="absolute top-0 left-0 w-96 h-96 bg-purple-600/20 rounded-full filter blur-3xl animate-pulse"></div>
-             <div class="absolute bottom-0 right-0 w-96 h-96 bg-indigo-600/20 rounded-full filter blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
-            <div class="container mx-auto px-6 text-center relative z-10">
-                <h1 class="text-5xl md:text-7xl font-extrabold font-orbitron text-white leading-tight">
-                    Website <span class="text-gradient">Generasi Baru</span> untuk Institusi Modern
-                </h1>
-                <p class="mt-6 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-                    Kami hadirkan website berbasis Ghost CMS dengan performa kilat, desain memukau, dan kemudahan pengelolaan konten tanpa batas.
+        <!-- Footer / Address -->
+        <div class="pt-6 border-t border-slate-700/50 text-center">
+            <div class="flex items-start justify-center text-slate-400 text-xs">
+                <i class="fa-solid fa-location-dot mt-1 mr-2 text-rose-500"></i>
+                <p class="text-left leading-relaxed">
+                    Windan RT 02 RW 6,<br>
+                    Gumpang, Kartasura
                 </p>
-                <div class="mt-10 flex justify-center gap-4">
-                    <a href="#kontak" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-8 py-4 rounded-full font-bold hover:from-indigo-600 hover:to-purple-700 transition text-lg transform hover:scale-105 animate-glow">
-                        🚀 Mulai Proyek Anda
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="text-center">
-                    <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-white">
-                        Jangan Biarkan Website Usang <span class="text-red-400">Menghambat Reputasi</span>
-                    </h2>
-                    <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
-                        Di era digital, website adalah wajah institusi Anda. Masalah ini bisa merusak citra dan kredibilitas Anda secara serius.
-                    </p>
-                </div>
-                <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="card-hover p-8 rounded-2xl glass-effect">
-                        <div class="text-4xl mb-4">🐌</div>
-                        <h3 class="text-xl font-bold mb-2 text-red-400">Performa Lambat</h3>
-                        <p class="text-gray-400">Pengunjung pergi dalam 3 detik. Kehilangan audiens potensial setiap hari.</p>
-                    </div>
-                    <div class="card-hover p-8 rounded-2xl glass-effect">
-                        <div class="text-4xl mb-4">🧱</div>
-                        <h3 class="text-xl font-bold mb-2 text-yellow-400">Desain Kuno</h3>
-                        <p class="text-gray-400">Tampilan tidak modern dan tidak responsif, membuat institusi terlihat tertinggal.</p>
-                    </div>
-                    <div class="card-hover p-8 rounded-2xl glass-effect">
-                        <div class="text-4xl mb-4">🔒</div>
-                        <h3 class="text-xl font-bold mb-2 text-orange-400">Konten Sulit Di-update</h3>
-                        <p class="text-gray-400">Ketergantungan pada tim IT memperlambat penyebaran informasi penting.</p>
-                    </div>
-                    <div class="card-hover p-8 rounded-2xl glass-effect">
-                        <div class="text-4xl mb-4">📉</div>
-                        <h3 class="text-xl font-bold mb-2 text-purple-400">SEO Tidak Optimal</h3>
-                        <p class="text-gray-400">Sulit ditemukan di Google berarti institusi Anda "tidak terlihat" di dunia digital.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section class="py-20 bg-slate-900/50">
-            <div class="container mx-auto px-6">
-                 <div class="text-center">
-                    <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-white">
-                        Solusi <span class="text-gradient">Revolusioner</span> dengan Ghost CMS
-                    </h2>
-                    <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
-                        Kami tidak hanya membuat website. Kami membangun aset digital masa depan yang berfokus pada tiga pilar utama.
-                    </p>
-                </div>
-                <div class="mt-16 grid md:grid-cols-3 gap-10">
-                    <div class="text-center">
-                        <div class="flex items-center justify-center h-20 w-20 rounded-full bg-indigo-500/20 text-indigo-400 mx-auto mb-6 text-4xl">⚡</div>
-                        <h3 class="text-2xl font-bold mb-3">Performa Kilat</h3>
-                        <p class="text-gray-400">Dibangun dengan teknologi modern (Node.js), memastikan waktu muat super cepat untuk pengalaman pengguna terbaik dan ranking SEO lebih tinggi.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="flex items-center justify-center h-20 w-20 rounded-full bg-purple-500/20 text-purple-400 mx-auto mb-6 text-4xl">✍️</div>
-                        <h3 class="text-2xl font-bold mb-3">Pengelolaan Intuitif</h3>
-                        <p class="text-gray-400">Editor Ghost yang minimalis dan canggih memungkinkan tim Anda mempublikasikan konten dengan mudah, tanpa perlu keahlian teknis.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="flex items-center justify-center h-20 w-20 rounded-full bg-pink-500/20 text-pink-400 mx-auto mb-6 text-4xl">🎨</div>
-                        <h3 class="text-2xl font-bold mb-3">Desain Fleksibel</h3>
-                        <p class="text-gray-400">Dari tema premium yang elegan hingga desain kustom sepenuhnya, kami wujudkan identitas visual institusi Anda secara presisi dan profesional.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="layanan" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-gradient">Layanan Unggulan Kami</h2>
-                    <p class="mt-4 text-gray-400">Dirancang untuk memenuhi kebutuhan transformasi digital institusi Anda.</p>
-                </div>
-                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-                    <div class="card-hover p-8 rounded-2xl glass-effect">
-                        <h3 class="text-2xl font-bold mb-4">🚀 Pengembangan Website Ghost</h3>
-                        <p class="text-gray-400">Kami merancang dan membangun website institusi dari awal, fokus pada desain kustom, fungsionalitas, dan performa optimal.</p>
-                    </div>
-                     <div class="card-hover p-8 rounded-2xl glass-effect">
-                        <h3 class="text-2xl font-bold mb-4">🔄 Migrasi & Implementasi Statis</h3>
-                        <p class="text-gray-400">Pindahkan website lama Anda atau integrasikan desain statis (HTML/CSS) ke dalam ekosistem Ghost CMS yang dinamis dan mudah dikelola.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="harga" class="py-20 bg-slate-900/50">
-            <div class="container mx-auto px-6 text-center">
-                 <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-white">
-                    Investasi <span class="text-gradient">Masa Depan Digital</span>
-                </h2>
-                <div class="mt-12 max-w-lg mx-auto card-hover rounded-3xl p-10 glass-effect border-2 border-indigo-500 shadow-2xl shadow-indigo-500/10">
-                    <p class="text-gray-400 font-semibold">HARGA MULAI DARI</p>
-                    <p class="text-6xl font-extrabold text-white my-4">Rp 1,5 Juta</p>
-                    <p class="text-gray-400 mb-8">Investasi satu kali untuk aset digital yang berkelanjutan.</p>
-                    <ul class="text-left space-y-3 text-gray-300">
-                        <li class="flex items-center"><span class="text-green-400 mr-3">✓</span>Desain Modern & Responsif</li>
-                        <li class="flex items-center"><span class="text-green-400 mr-3">✓</span>Setup & Konfigurasi Ghost CMS</li>
-                        <li class="flex items-center"><span class="text-green-400 mr-3">✓</span>Optimasi Kecepatan & SEO Dasar</li>
-                        <li class="flex items-center"><span class="text-green-400 mr-3">✓</span>Pelatihan Pengelolaan Konten</li>
-                    </ul>
-                    <a href="#kontak" class="mt-10 block w-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white py-4 rounded-full font-bold hover:from-indigo-600 hover:to-purple-700 transition transform hover:scale-105">Dapatkan Penawaran Detail</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="portfolio" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-gradient">Karya Digital Kami</h2>
-                    <p class="mt-4 text-gray-400">Contoh transformasi yang telah kami wujudkan.</p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="card-hover rounded-2xl overflow-hidden glass-effect group">
-                        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&q=80" alt="Portfolio 1" class="w-full h-56 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold">Portal Institusi Pendidikan</h3>
-                            <p class="mt-2 text-gray-400">Pengembangan website baru berbasis Ghost.</p>
-                        </div>
-                    </div>
-                    <div class="card-hover rounded-2xl overflow-hidden glass-effect group">
-                        <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&w=800&q=80" alt="Portfolio 2" class="w-full h-56 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold">Website Berita Organisasi</h3>
-                            <p class="mt-2 text-gray-400">Migrasi dari sistem lama ke Ghost CMS.</p>
-                        </div>
-                    </div>
-                    <div class="card-hover rounded-2xl overflow-hidden glass-effect group">
-                        <img src="https://images.unsplash.com/photo-1600880292210-859bb3fed4b1?auto=format&fit=crop&w=800&q=80" alt="Portfolio 3" class="w-full h-56 object-cover transform group-hover:scale-110 transition-transform duration-500">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold">Company Profile Modern</h3>
-                            <p class="mt-2 text-gray-400">Implementasi desain statis ke Ghost.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="kontak" class="py-20 bg-gradient-to-r from-indigo-600 to-purple-600">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold font-orbitron text-white">
-                    Siap Merevolusi Website Institusi Anda?
-                </h2>
-                <p class="mt-4 text-indigo-200 max-w-2xl mx-auto">
-                    Diskusikan proyek Anda dengan kami. Dapatkan konsultasi gratis untuk merancang strategi digital terbaik bagi institusi Anda.
-                </p>
-                <a href="https://wa.me/6285713697219?text=Halo%20Gorigu%20Studio,%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website%20Ghost." 
-                   target="_blank" 
-                   class="mt-10 inline-block bg-white text-indigo-600 px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition text-lg shadow-2xl transform hover:scale-105">
-                    Hubungi via WhatsApp
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-slate-900 border-t border-slate-800">
-        <div class="container mx-auto px-6 py-8">
-            <div class="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
-                <div>
-                    <a href="#" class="text-xl font-bold font-orbitron">
-                        Gorigu<span class="text-indigo-400">.</span>Studio
-                    </a>
-                    <p class="text-sm text-gray-500 mt-1">Membangun Masa Depan Digital Institusi.</p>
-                </div>
-                <div class="mt-6 md:mt-0 text-gray-400">
-                    <p>gorigu.info@gmail.com | WA: 0857-1369-7219</p>
-                </div>
-            </div>
-            <div class="mt-6 border-t border-slate-800 pt-6 text-center text-gray-600 text-sm">
-                <p>&copy; 2025 Gorigu Studio. All Rights Reserved.</p>
             </div>
         </div>
-    </footer>
 
-    <script>
-        // Script untuk menu mobile
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+    </div>
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-    </script>
 </body>
 </html>
