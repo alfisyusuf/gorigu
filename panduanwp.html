@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Master SOP Migrasi CloudPanel</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 20px auto; padding: 20px; background: #f4f4f9; }
+        .input-panel { background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 20px; }
+        .input-group { margin-bottom: 10px; }
+        input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+        pre { background: #2d2d2d; color: #ccc; padding: 15px; border-radius: 5px; position: relative; overflow-x: auto; }
+        code { font-family: monospace; }
+        .copy-btn { position: absolute; top: 5px; right: 5px; background: #444; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; font-size: 12px; }
+        .copy-btn:hover { background: #666; }
+    </style>
+</head>
+<body>
+
+    <h1>Master SOP Migrasi WordPress</h1>
+    <pre><code>8:jD:A4z{Zf*4m?c</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+    <div class="input-panel">
+        <h3>Input Variabel Situs</h3>
+        <div class="input-group"><label>Nama Folder GDrive:</label><input type="text" id="gdrive" value="alabidin-platinum" oninput="updateCommands()"></div>
+        <div class="input-group"><label>Domain Situs:</label><input type="text" id="domain" value="platinum.alabidin.sch.id" oninput="updateCommands()"></div>
+        <div class="input-group"><label>User Situs (Seragam):</label><input type="text" id="user" value="alabidin-platinum" oninput="updateCommands()"></div>
+        <div class="input-group"><label>DB Name/User:</label><input type="text" id="db" value="alabidin-platinum" oninput="updateCommands()"></div>
+        <div class="input-group"><label>DB Password:</label><input type="text" id="pass" value="pXp57LKicR8zzRZL1ZiY" oninput="updateCommands()"></div>
+        <div class="input-group"><label>File DB (.sql.gz):</label><input type="text" id="sqlfile" value="nama_file_terbaru.sql.gz" oninput="updateCommands()"></div>
+        <div class="input-group"><label>Folder DB di GDrive:</label><input type="text" id="dbfolder" value="alabidin-platinum" oninput="updateCommands()"></div>
+    </div>
+
+    <h2>Langkah 1: Bersihkan Folder Temp</h2>
+    <pre><code id="cmd1">rm -rf /root/temp-restore/*</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+    <h2>Langkah 2: Tarik Backup</h2>
+    <pre><code id="cmd2">rclone copy "remote:z-backup-alabidin/2026-05-26/19.00/home/[gdrive]/backup.tar" /root/temp-restore/ -P</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+    <h2>Langkah 3: Ekstrak & Cek Config</h2>
+    <pre><code id="cmd3">cd /root/temp-restore && tar -xf backup.tar && cat /root/temp-restore/home/[gdrive]/htdocs/[domain]/wp-config.php | grep -E "DB_NAME|DB_USER|DB_PASSWORD"</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+    <h2>Langkah 4: Setup Situs</h2>
+    <pre><code id="cmd4">clpctl site:add:php --domainName=[domain] --phpVersion=8.3 --vhostTemplate='Generic' --siteUser=[user] --siteUserPassword='[pass]'</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+    <h2>Langkah 5: Pindahkan File & Reset Hak Akses</h2>
+    <pre><code id="cmd5">rm -rf /home/[user]/htdocs/[domain]/* && cp -R /root/temp-restore/home/[gdrive]/htdocs/[domain]/* /home/[user]/htdocs/[domain]/ && chown -R [user]:[user] /home/[user]/htdocs/[domain]/ && clpctl system:permissions:reset --directories=770 --files=660 --path=/home/[user]/htdocs/[domain]/</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+    <h2>Langkah 6: Restore Database</h2>
+    <pre><code id="cmd6">clpctl db:add --domainName=[domain] --databaseName=[db] --databaseUserName=[db] --databaseUserPassword='[pass]' && clpctl db:import --databaseName=[db] --file=/root/temp-restore/home/[gdrive]/backups/databases/[dbfolder]/2026-05-25/[sqlfile]</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+    <script>
+        function updateCommands() {
+            const v = {
+                gdrive: document.getElementById('gdrive').value,
+                domain: document.getElementById('domain').value,
+                user: document.getElementById('user').value,
+                db: document.getElementById('db').value,
+                pass: document.getElementById('pass').value,
+                sqlfile: document.getElementById('sqlfile').value,
+                dbfolder: document.getElementById('dbfolder').value
+            };
+            document.getElementById('cmd2').innerText = `rclone copy "remote:z-backup-alabidin/2026-05-26/19.00/home/${v.gdrive}/backup.tar" /root/temp-restore/ -P`;
+            document.getElementById('cmd3').innerText = `cd /root/temp-restore && tar -xf backup.tar && cat /root/temp-restore/home/${v.gdrive}/htdocs/${v.domain}/wp-config.php | grep -E "DB_NAME|DB_USER|DB_PASSWORD"`;
+            document.getElementById('cmd4').innerText = `clpctl site:add:php --domainName=${v.domain} --phpVersion=8.3 --vhostTemplate='Generic' --siteUser=${v.user} --siteUserPassword='${v.pass}'`;
+            document.getElementById('cmd5').innerText = `rm -rf /home/${v.user}/htdocs/${v.domain}/* && cp -R /root/temp-restore/home/${v.gdrive}/htdocs/${v.domain}/* /home/${v.user}/htdocs/${v.domain}/ && chown -R ${v.user}:${v.user} /home/${v.user}/htdocs/${v.domain}/ && clpctl system:permissions:reset --directories=770 --files=660 --path=/home/${v.user}/htdocs/${v.domain}/`;
+            document.getElementById('cmd6').innerText = `clpctl db:add --domainName=${v.domain} --databaseName=${v.db} --databaseUserName=${v.db} --databaseUserPassword='${v.pass}' && clpctl db:import --databaseName=${v.db} --file=/root/temp-restore/home/${v.gdrive}/backups/databases/${v.dbfolder}/2026-05-25/${v.sqlfile}`;
+        }
+        function copyCode(btn) {
+            const code = btn.previousElementSibling.innerText;
+            navigator.clipboard.writeText(code);
+            btn.innerText = "Copied!";
+            setTimeout(() => btn.innerText = "Copy", 2000);
+        }
+        updateCommands();
+    </script>
+</body>
+</html>
