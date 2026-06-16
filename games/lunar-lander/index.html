@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Pendaratan Santai</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0f172a; /* Slate 900 - gaya modern */
+            color: #f8fafc;
+            font-family: system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+        }
+        canvas {
+            background-color: #1e293b;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        #ui {
+            position: absolute;
+            top: 20px;
+            text-align: center;
+            pointer-events: none;
+        }
+        h1 { font-size: 1.5rem; margin: 0; font-weight: 600; }
+        p { font-size: 0.9rem; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+    <div id="ui">
+        <h1>Pendaratan Santai</h1>
+        <p>Tahan SPASI atau sentuh layar untuk menyalakan mesin.</p>
+        <p id="status"></p>
+    </div>
+
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const statusText = document.getElementById('status');
+
+        // Variabel Fisika
+        let y = 50;
+        let velocity = 0;
+        const gravity = 0.05;
+        const thrust = -0.15;
+        let isThrusting = false;
+        let isGameOver = false;
+
+        // Kontrol Input
+        const startThrust = () => { if(!isGameOver) isThrusting = true; };
+        const stopThrust = () => isThrusting = false;
+
+        window.addEventListener('keydown', (e) => { if (e.code === 'Space') startThrust(); });
+        window.addEventListener('keyup', (e) => { if (e.code === 'Space') stopThrust(); });
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startThrust(); }, {passive: false});
+        canvas.addEventListener('touchend', (e) => { e.preventDefault(); stopThrust(); }, {passive: false});
+
+        function resetGame() {
+            y = 50;
+            velocity = 0;
+            isGameOver = false;
+            statusText.innerText = "";
+            statusText.style.color = "#94a3b8";
+            loop();
+        }
+
+        function loop() {
+            if (isGameOver) return;
+
+            // Kalkulasi Fisika
+            if (isThrusting) {
+                velocity += thrust;
+            }
+            velocity += gravity;
+            y += velocity;
+
+            // Deteksi Tabrakan / Pendaratan (Lantai di y = 550)
+            if (y >= 530) {
+                y = 530;
+                isGameOver = true;
+                
+                // Cek kecepatan pendaratan
+                if (velocity < 1.5) {
+                    statusText.innerText = "Pendaratan Sempurna! Klik untuk mengulang.";
+                    statusText.style.color = "#4ade80"; // Green
+                } else {
+                    statusText.innerText = "Roket Hancur! Kecepatan terlalu tinggi. Klik untuk mengulang.";
+                    statusText.style.color = "#f87171"; // Red
+                }
+            } else if (y <= 0) {
+                y = 0;
+                velocity = 0;
+            }
+
+            // Render Grafis
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Gambar Platform Pendaratan
+            ctx.fillStyle = '#334155';
+            ctx.fillRect(0, 550, 400, 50);
+            ctx.fillStyle = '#cbd5e1';
+            ctx.fillRect(150, 550, 100, 5); // Pad pendaratan
+
+            // Gambar Roket (Kotak)
+            ctx.fillStyle = '#38bdf8';
+            ctx.fillRect(180, y, 40, 20);
+
+            // Gambar Api Mesin
+            if (isThrusting) {
+                ctx.fillStyle = '#fb923c';
+                ctx.beginPath();
+                ctx.moveTo(190, y + 20);
+                ctx.lineTo(210, y + 20);
+                ctx.lineTo(200, y + 40 + Math.random() * 10);
+                ctx.fill();
+            }
+
+            requestAnimationFrame(loop);
+        }
+
+        // Mulai ulang game jika layar diklik saat game over
+        window.addEventListener('click', () => {
+            if (isGameOver) resetGame();
+        });
+
+        // Mulai Game
+        loop();
+    </script>
+</body>
+</html>
