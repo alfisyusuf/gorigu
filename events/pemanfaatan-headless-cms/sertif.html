@@ -3,146 +3,381 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Sertifikat - Gorigu Studio</title>
+    <title>Sertifikat Partisipasi – Gorigu Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .cert-title { font-family: 'Playfair Display', serif; }
-        
+        :root {
+            --navy: #070C1B;
+            --indigo: #4F46E5;
+            --cyan: #06B6D4;
+            --gold: #B8860B;
+            --gold-light: #D4A017;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F0F4F8;
+            min-height: 100vh;
+        }
+
+        .display { font-family: 'Cormorant Garamond', serif; }
+        .grotesk { font-family: 'Space Grotesk', sans-serif; }
+
+        /* Certificate specific */
+        #cert-container {
+            font-family: 'Inter', sans-serif;
+            background: #FFFFFF;
+            width: 1123px;
+            height: 794px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        /* Gold border frame */
+        .cert-frame-tl, .cert-frame-tr, .cert-frame-bl, .cert-frame-br {
+            position: absolute;
+            width: 64px;
+            height: 64px;
+        }
+        .cert-frame-tl { top: 28px; left: 28px; border-top: 3px solid #B8860B; border-left: 3px solid #B8860B; }
+        .cert-frame-tr { top: 28px; right: 28px; border-top: 3px solid #B8860B; border-right: 3px solid #B8860B; }
+        .cert-frame-bl { bottom: 28px; left: 28px; border-bottom: 3px solid #B8860B; border-left: 3px solid #B8860B; }
+        .cert-frame-br { bottom: 28px; right: 28px; border-bottom: 3px solid #B8860B; border-right: 3px solid #B8860B; }
+
+        /* Cert title font */
+        .cert-heading {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Form card */
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 40px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+        /* Input styling */
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1.5px solid #E2E8F0;
+            background: #F8FAFC;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            color: #1E293B;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+        }
+        .input-field:focus {
+            border-color: #4F46E5;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+        }
+
+        /* Live name display on cert */
+        #cert-name-display {
+            transition: opacity 0.3s;
+        }
+
+        /* Print styles */
         @media print {
             body * { visibility: hidden; }
             #cert-container, #cert-container * { visibility: visible; }
             #cert-container {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 297mm;
-                height: 210mm;
-                background-color: white !important;
+                position: fixed !important;
+                top: 0 !important; left: 0 !important;
+                width: 297mm !important;
+                height: 210mm !important;
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
-                margin: 0;
-                border: none;
-                box-shadow: none;
             }
             @page { size: A4 landscape; margin: 0; }
         }
+
+        /* Page bg gradient */
+        .page-bg {
+            background: linear-gradient(160deg, #EEF2FF 0%, #F0F4F8 40%, #E8F4F8 100%);
+        }
+
+        /* Pill */
+        .pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 14px; border-radius: 999px;
+            font-size: 11px; font-weight: 600;
+            letter-spacing: 0.07em; text-transform: uppercase;
+        }
+
+        /* Step indicator */
+        .step-dot {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; font-weight: 700;
+            background: #EEF2FF; color: #4F46E5;
+            border: 2px solid #C7D2FE;
+            flex-shrink: 0;
+        }
+
+        /* Cert ornament line */
+        .cert-ornament {
+            display: flex; align-items: center; gap: 8px;
+        }
+        .cert-ornament::before, .cert-ornament::after {
+            content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #B8860B60);
+        }
+        .cert-ornament::after {
+            background: linear-gradient(90deg, #B8860B60, transparent);
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4">
+<body class="page-bg min-h-screen">
 
-    <div class="mb-8 text-center print:hidden">
-        <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-600 text-white font-bold text-xl shadow-lg mb-4">GS</div>
-        <h1 class="text-2xl font-bold text-slate-900">E-Certificate Generator</h1>
-        <p class="text-slate-500 mt-2 text-sm">Gorigu Studio - Event 11 Maret 2026</p>
-    </div>
-
-    <div id="form-card" class="bg-white p-8 rounded-2xl shadow-xl shadow-slate-200/50 w-full max-w-md border border-slate-100 print:hidden transition-all duration-300">
-        <h2 class="text-lg font-semibold text-slate-800 mb-6 flex items-center">
-            <i data-lucide="user" class="w-5 h-5 mr-2 text-indigo-500"></i>
-            Masukkan Data Diri
-        </h2>
-        
-        <form id="certForm" onsubmit="generateCertificate(event)">
-            <div class="mb-6">
-                <label for="inputName" class="block text-sm font-medium text-slate-700 mb-2">Nama Lengkap (Beserta Gelar)</label>
-                <input type="text" id="inputName" required 
-                    class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" 
-                    placeholder="Cth: Dr. Budi Santoso, M.Kom">
+    <!-- Header Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/60 print:hidden">
+        <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+            <a href="index.html" class="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition text-sm font-medium">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Kembali ke Event
+            </a>
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs text-white" style="background:linear-gradient(135deg,#4F46E5,#06B6D4);">GS</div>
+                <span class="font-semibold text-slate-900 text-sm" style="font-family:'Space Grotesk',sans-serif;">Gorigu Studio</span>
             </div>
-            
-            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-xl shadow-md shadow-indigo-200 transition flex items-center justify-center cursor-pointer">
-                <i data-lucide="wand-2" class="w-4 h-4 mr-2"></i>
-                Buat Sertifikat
-            </button>
-        </form>
-    </div>
+        </div>
+    </header>
 
-    <div id="action-buttons" class="hidden flex gap-4 mb-6 print:hidden">
-        <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-lg font-medium shadow-md flex items-center transition cursor-pointer">
-            <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Cetak / Simpan PDF
-        </button>
-        <button onclick="resetGenerator()" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-6 py-2.5 rounded-lg font-medium shadow-sm flex items-center transition cursor-pointer">
-            <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i> Buat Baru
-        </button>
-    </div>
+    <div class="pt-20 pb-16 px-4 print:p-0">
 
-    <div id="preview-area" class="hidden overflow-x-auto w-full flex justify-center pb-12 print:pb-0">
-        <div id="cert-container" class="w-[1123px] h-[794px] bg-white relative shrink-0 border border-slate-200 shadow-2xl p-16 flex flex-col justify-between overflow-hidden">
-            
-            <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-50 rounded-bl-full opacity-70"></div>
-            <div class="absolute bottom-0 left-0 w-80 h-80 bg-slate-50 rounded-tr-full opacity-80"></div>
-            <div class="absolute top-12 left-12 w-20 h-20 border-t-4 border-l-4 border-indigo-900"></div>
-            <div class="absolute bottom-12 right-12 w-20 h-20 border-b-4 border-r-4 border-indigo-900"></div>
-
-            <div class="relative z-10 text-center mt-4">
-                <div class="text-indigo-900 font-bold tracking-[0.2em] text-sm uppercase mb-4">Gorigu Studio presents</div>
-                <h1 class="cert-title text-6xl text-slate-900 font-bold mb-6">Sertifikat Partisipasi</h1>
-                <div class="w-32 h-1 bg-indigo-600 mx-auto"></div>
+        <!-- Page Title -->
+        <div class="text-center mb-10 print:hidden">
+            <div class="pill mb-4 text-indigo-600" style="background:#EEF2FF; border:1px solid #C7D2FE;">
+                <i data-lucide="award" class="w-3 h-3"></i>
+                E-Certificate
             </div>
+            <h1 class="text-3xl font-bold text-slate-900 mb-2" style="font-family:'Space Grotesk',sans-serif;">Sertifikat Partisipasi</h1>
+            <p class="text-slate-500 text-sm">Webinar "Pemanfaatan Headless Sanity CMS" · 11 Maret 2026</p>
+        </div>
 
-            <div class="relative z-10 text-center flex-grow flex flex-col justify-center px-20">
-                <p class="text-xl text-slate-600 mb-6">Diberikan dengan bangga kepada:</p>
-                
-                <h2 id="displayName" class="cert-title text-5xl font-bold text-indigo-950 mb-8 border-b-2 border-dashed border-slate-300 pb-4 inline-block px-12 mx-auto max-w-[900px] truncate">
-                    Nama Peserta
-                </h2>
-                
-                <p class="text-xl text-slate-700 leading-relaxed max-w-3xl mx-auto">
-                    Telah mengikuti dan berpartisipasi aktif dalam kegiatan webinar 
-                    <br><strong class="text-slate-900">"Pemanfaatan Headless Sanity CMS untuk Modul Online"</strong><br>
-                    yang diselenggarakan secara daring pada tanggal 11 Maret 2026.
-                </p>
-            </div>
+        <div class="max-w-6xl mx-auto print:max-w-none">
 
-            <div class="relative z-10 flex justify-between items-end px-12 mb-4">
-                <div class="text-center">
-                    <p class="text-lg text-slate-600 mb-12">Surakarta, 11 Maret 2026</p>
-                    <div class="w-64 border-b border-slate-800 mx-auto mb-2"></div>
-                    <p class="font-bold text-slate-900 text-lg">Penyelenggara</p>
-                    <p class="text-slate-500 text-sm">Gorigu Studio</p>
-                </div>
+            <!-- Two-column: Form + Preview (on larger screens) -->
+            <div class="flex flex-col xl:flex-row gap-8 items-start">
 
-                <div class="flex items-center gap-4 bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
-                    <div class="text-right">
-                        <p class="font-bold text-slate-800 text-sm">Verifikasi Dokumen</p>
-                        <p class="text-xs text-slate-500 mt-1">Scan untuk memvalidasi</p>
-                        <p class="text-[10px] text-indigo-600 mt-1 font-mono">gorigu.my.id/events</p>
+                <!-- LEFT: Form Panel -->
+                <div class="form-card p-8 w-full xl:w-96 xl:sticky xl:top-20 print:hidden">
+
+                    <!-- Step 1 -->
+                    <div class="flex items-start gap-3 mb-6">
+                        <div class="step-dot">1</div>
+                        <div>
+                            <h2 class="font-semibold text-slate-900 text-base">Masukkan Nama</h2>
+                            <p class="text-slate-500 text-xs mt-0.5">Pratinjau sertifikat tampil otomatis</p>
+                        </div>
                     </div>
-                    <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://gorigu.my.id/events/headless-cms-sanity" 
-                         alt="QR Code" class="w-24 h-24">
-                </div>
-            </div>
 
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-slate-700 mb-2" for="inputName">
+                            Nama Lengkap (beserta gelar)
+                        </label>
+                        <input type="text" id="inputName"
+                            class="input-field"
+                            placeholder="Cth: Dr. Budi Santoso, M.Kom"
+                            oninput="liveUpdate(this.value)">
+                        <p class="text-xs text-slate-400 mt-2">
+                            <i data-lucide="info" class="w-3 h-3 inline mr-1"></i>
+                            Nama akan muncul di sertifikat seperti yang Anda ketik
+                        </p>
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-5 mt-5">
+                        <div class="flex items-start gap-3 mb-4">
+                            <div class="step-dot">2</div>
+                            <div>
+                                <h2 class="font-semibold text-slate-900 text-base">Simpan Sertifikat</h2>
+                                <p class="text-slate-500 text-xs mt-0.5">Cetak atau ekspor sebagai PDF</p>
+                            </div>
+                        </div>
+
+                        <button id="printBtn" onclick="printCert()" disabled
+                            class="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl font-semibold text-sm transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-white"
+                            style="background:linear-gradient(135deg,#4F46E5,#4338CA); box-shadow: 0 4px 16px rgba(79,70,229,0.3);">
+                            <i data-lucide="printer" class="w-4 h-4"></i>
+                            Cetak / Simpan PDF
+                        </button>
+
+                        <p class="text-center text-xs text-slate-400 mt-3">Gunakan "Save as PDF" di dialog cetak untuk ekspor file</p>
+                    </div>
+
+                    <!-- Info box -->
+                    <div class="mt-6 rounded-xl p-4 text-xs text-slate-500" style="background:#F8FAFC; border:1px solid #E2E8F0;">
+                        <div class="flex gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5"></i>
+                            <div>
+                                <p class="font-medium text-slate-600 mb-1">QR Code Verifikasi</p>
+                                <p>Sertifikat dilengkapi QR code yang mengarah ke halaman verifikasi event resmi Gorigu Studio.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Certificate Preview -->
+                <div class="flex-1 min-w-0 print:w-full">
+                    <div class="text-sm text-slate-400 mb-3 font-medium print:hidden flex items-center gap-2">
+                        <i data-lucide="eye" class="w-4 h-4"></i>
+                        Pratinjau Sertifikat (A4 Landscape)
+                    </div>
+
+                    <div class="overflow-x-auto pb-2 print:overflow-visible">
+                        <!-- CERTIFICATE -->
+                        <div id="cert-container" class="shadow-2xl rounded-2xl print:rounded-none print:shadow-none">
+
+                            <!-- Decorative BG -->
+                            <div style="position:absolute; top:0; right:0; width:420px; height:420px; background:radial-gradient(circle at top right, #EEF2FF, transparent 70%); opacity:0.8;"></div>
+                            <div style="position:absolute; bottom:0; left:0; width:320px; height:320px; background:radial-gradient(circle at bottom left, #F0FDF4, transparent 70%); opacity:0.6;"></div>
+
+                            <!-- Side accent bar -->
+                            <div style="position:absolute; left:0; top:0; bottom:0; width:6px; background:linear-gradient(180deg, #4F46E5, #06B6D4);"></div>
+
+                            <!-- Corner frames -->
+                            <div class="cert-frame-tl" style="left:34px;"></div>
+                            <div class="cert-frame-tr" style="right:34px;"></div>
+                            <div class="cert-frame-bl" style="left:34px;"></div>
+                            <div class="cert-frame-br" style="right:34px;"></div>
+
+                            <!-- Content wrapper -->
+                            <div style="position:relative; z-index:10; height:100%; display:flex; flex-direction:column; padding:50px 80px 44px 90px;">
+
+                                <!-- Top: Logo + badge -->
+                                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px;">
+                                    <div>
+                                        <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; color:#0D1526; letter-spacing:-0.02em;">GORIGU STUDIO</div>
+                                        <div style="font-size:11px; color:#94A3B8; letter-spacing:0.12em; text-transform:uppercase; margin-top:2px;">Surakarta · Indonesia</div>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:8px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:8px 14px;">
+                                        <div style="width:8px; height:8px; border-radius:50%; background:#10B981;"></div>
+                                        <span style="font-size:11px; font-weight:600; color:#374151; letter-spacing:0.05em; text-transform:uppercase;">Sertifikat Resmi</span>
+                                    </div>
+                                </div>
+
+                                <!-- Divider gold -->
+                                <div style="height:1px; background:linear-gradient(90deg, #B8860B40, #B8860B, #B8860B40); margin-bottom:22px;"></div>
+
+                                <!-- Center content -->
+                                <div style="flex:1; display:flex; flex-direction:column; justify-content:center; text-align:center;">
+                                    <div style="font-size:12px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#6366F1; margin-bottom:10px;">Sertifikat Partisipasi</div>
+                                    <h1 style="font-family:'Cormorant Garamond',serif; font-size:64px; font-weight:700; color:#0D1526; line-height:1.1; margin-bottom:18px; letter-spacing:-0.01em;">Certificate of Participation</h1>
+
+                                    <div style="width:80px; height:2px; background:linear-gradient(90deg,#4F46E5,#06B6D4); margin:0 auto 22px;"></div>
+
+                                    <p style="font-size:15px; color:#64748B; margin-bottom:14px; font-style:italic; font-family:'Cormorant Garamond',serif; font-size:20px;">Diberikan dengan bangga kepada</p>
+
+                                    <!-- NAME -->
+                                    <div id="cert-name-display" style="margin-bottom:18px; padding: 12px 40px; position:relative;">
+                                        <h2 id="displayName" style="font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:700; color:#1E1B5E; line-height:1.2; display:inline-block; padding-bottom:12px; border-bottom:2px dashed #C7D2FE; min-width:400px; max-width:800px; word-break:break-word;">
+                                            Nama Peserta
+                                        </h2>
+                                    </div>
+
+                                    <p style="font-size:14px; color:#475569; line-height:1.7; max-width:680px; margin:0 auto;">
+                                        Telah mengikuti dan berpartisipasi aktif dalam kegiatan webinar<br>
+                                        <strong style="color:#1E293B; font-size:15px;">"Pemanfaatan Headless Sanity CMS untuk Modul Online"</strong><br>
+                                        yang diselenggarakan secara daring pada <strong style="color:#1E293B;">11 Maret 2026</strong>
+                                    </p>
+                                </div>
+
+                                <!-- Bottom: Penandatangan + QR -->
+                                <div style="height:1px; background:linear-gradient(90deg, #B8860B40, #B8860B, #B8860B40); margin-bottom:20px;"></div>
+
+                                <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+                                    <!-- Signature block -->
+                                    <div style="text-align:center; min-width:200px;">
+                                        <div style="margin-bottom:36px;">
+                                            <span style="font-size:11px; color:#94A3B8; text-transform:uppercase; letter-spacing:0.1em;">Surakarta, 11 Maret 2026</span>
+                                        </div>
+                                        <div style="width:200px; height:1px; background:#1E293B; margin-bottom:8px;"></div>
+                                        <p style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; color:#0D1526;">Gorigu Studio</p>
+                                        <p style="font-size:12px; color:#94A3B8; margin-top:2px;">Penyelenggara</p>
+                                    </div>
+
+                                    <!-- ID + QR -->
+                                    <div style="display:flex; align-items:flex-end; gap:16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:14px; padding:14px 16px;">
+                                        <div style="text-align:right;">
+                                            <p style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:12px; color:#374151; margin-bottom:4px;">Verifikasi Sertifikat</p>
+                                            <p style="font-size:10px; color:#94A3B8; margin-bottom:6px;">Scan QR untuk memvalidasi</p>
+                                            <p style="font-size:10px; font-weight:600; color:#4F46E5; font-family:monospace;">gorigu.my.id/events</p>
+                                        </div>
+                                        <img id="qrImage"
+                                            src=""
+                                            alt="QR Code Verifikasi"
+                                            style="width:88px; height:88px; border-radius:8px; border:1px solid #E2E8F0;">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
 
-        function generateCertificate(e) {
-            e.preventDefault();
-            const name = document.getElementById('inputName').value.trim();
-            if(!name) return;
+        const BASE_URL = 'https://gorigu.my.id/events/pemanfaatan-headless-cms/';
 
-            // Set Name
-            document.getElementById('displayName').innerText = name;
+        function liveUpdate(name) {
+            const displayName = document.getElementById('displayName');
+            const qrImg = document.getElementById('qrImage');
+            const printBtn = document.getElementById('printBtn');
 
-            // UI Transitions
-            document.getElementById('form-card').classList.add('hidden');
-            document.getElementById('action-buttons').classList.remove('hidden');
-            document.getElementById('preview-area').classList.remove('hidden');
+            if (!name.trim()) {
+                displayName.textContent = 'Nama Peserta';
+                displayName.style.color = '#94A3B8';
+                qrImg.src = '';
+                printBtn.disabled = true;
+                return;
+            }
+
+            displayName.textContent = name;
+            displayName.style.color = '#1E1B5E';
+            printBtn.disabled = false;
+
+            // Generate QR pointing to index.html?nama=...
+            const verifyUrl = BASE_URL + '?nama=' + encodeURIComponent(name);
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=6&color=1E1B5E&data=${encodeURIComponent(verifyUrl)}`;
+            qrImg.src = qrUrl;
         }
 
-        function resetGenerator() {
-            document.getElementById('certForm').reset();
-            document.getElementById('form-card').classList.remove('hidden');
-            document.getElementById('action-buttons').classList.add('hidden');
-            document.getElementById('preview-area').classList.add('hidden');
+        function printCert() {
+            const name = document.getElementById('inputName').value.trim();
+            if (!name) return;
+            window.print();
+        }
+
+        // Auto-fill if ?nama= param present (e.g., linking from event page to generate cert)
+        const params = new URLSearchParams(window.location.search);
+        const prefilledName = params.get('nama');
+        if (prefilledName) {
+            const decoded = decodeURIComponent(prefilledName);
+            document.getElementById('inputName').value = decoded;
+            liveUpdate(decoded);
+        } else {
+            // Default placeholder QR
+            document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=6&color=94A3B8&data=${encodeURIComponent(BASE_URL)}`;
         }
     </script>
 </body>
