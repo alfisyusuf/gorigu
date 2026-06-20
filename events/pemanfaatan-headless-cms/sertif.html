@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Sertifikat - Gorigu Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .cert-title { font-family: 'Playfair Display', serif; }
+        
+        @media print {
+            body * { visibility: hidden; }
+            #cert-container, #cert-container * { visibility: visible; }
+            #cert-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 297mm;
+                height: 210mm;
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                margin: 0;
+                border: none;
+                box-shadow: none;
+            }
+            @page { size: A4 landscape; margin: 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="mb-8 text-center print:hidden">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-600 text-white font-bold text-xl shadow-lg mb-4">GS</div>
+        <h1 class="text-2xl font-bold text-slate-900">E-Certificate Generator</h1>
+        <p class="text-slate-500 mt-2 text-sm">Gorigu Studio - Event 11 Maret 2026</p>
+    </div>
+
+    <div id="form-card" class="bg-white p-8 rounded-2xl shadow-xl shadow-slate-200/50 w-full max-w-md border border-slate-100 print:hidden transition-all duration-300">
+        <h2 class="text-lg font-semibold text-slate-800 mb-6 flex items-center">
+            <i data-lucide="user" class="w-5 h-5 mr-2 text-indigo-500"></i>
+            Masukkan Data Diri
+        </h2>
+        
+        <form id="certForm" onsubmit="generateCertificate(event)">
+            <div class="mb-6">
+                <label for="inputName" class="block text-sm font-medium text-slate-700 mb-2">Nama Lengkap (Beserta Gelar)</label>
+                <input type="text" id="inputName" required 
+                    class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" 
+                    placeholder="Cth: Dr. Budi Santoso, M.Kom">
+            </div>
+            
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-xl shadow-md shadow-indigo-200 transition flex items-center justify-center cursor-pointer">
+                <i data-lucide="wand-2" class="w-4 h-4 mr-2"></i>
+                Buat Sertifikat
+            </button>
+        </form>
+    </div>
+
+    <div id="action-buttons" class="hidden flex gap-4 mb-6 print:hidden">
+        <button onclick="window.print()" class="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-lg font-medium shadow-md flex items-center transition cursor-pointer">
+            <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Cetak / Simpan PDF
+        </button>
+        <button onclick="resetGenerator()" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-6 py-2.5 rounded-lg font-medium shadow-sm flex items-center transition cursor-pointer">
+            <i data-lucide="refresh-cw" class="w-4 h-4 mr-2"></i> Buat Baru
+        </button>
+    </div>
+
+    <div id="preview-area" class="hidden overflow-x-auto w-full flex justify-center pb-12 print:pb-0">
+        <div id="cert-container" class="w-[1123px] h-[794px] bg-white relative shrink-0 border border-slate-200 shadow-2xl p-16 flex flex-col justify-between overflow-hidden">
+            
+            <div class="absolute top-0 right-0 w-96 h-96 bg-indigo-50 rounded-bl-full opacity-70"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 bg-slate-50 rounded-tr-full opacity-80"></div>
+            <div class="absolute top-12 left-12 w-20 h-20 border-t-4 border-l-4 border-indigo-900"></div>
+            <div class="absolute bottom-12 right-12 w-20 h-20 border-b-4 border-r-4 border-indigo-900"></div>
+
+            <div class="relative z-10 text-center mt-4">
+                <div class="text-indigo-900 font-bold tracking-[0.2em] text-sm uppercase mb-4">Gorigu Studio presents</div>
+                <h1 class="cert-title text-6xl text-slate-900 font-bold mb-6">Sertifikat Partisipasi</h1>
+                <div class="w-32 h-1 bg-indigo-600 mx-auto"></div>
+            </div>
+
+            <div class="relative z-10 text-center flex-grow flex flex-col justify-center px-20">
+                <p class="text-xl text-slate-600 mb-6">Diberikan dengan bangga kepada:</p>
+                
+                <h2 id="displayName" class="cert-title text-5xl font-bold text-indigo-950 mb-8 border-b-2 border-dashed border-slate-300 pb-4 inline-block px-12 mx-auto max-w-[900px] truncate">
+                    Nama Peserta
+                </h2>
+                
+                <p class="text-xl text-slate-700 leading-relaxed max-w-3xl mx-auto">
+                    Telah mengikuti dan berpartisipasi aktif dalam kegiatan webinar 
+                    <br><strong class="text-slate-900">"Pemanfaatan Headless Sanity CMS untuk Modul Online"</strong><br>
+                    yang diselenggarakan secara daring pada tanggal 11 Maret 2026.
+                </p>
+            </div>
+
+            <div class="relative z-10 flex justify-between items-end px-12 mb-4">
+                <div class="text-center">
+                    <p class="text-lg text-slate-600 mb-12">Surakarta, 11 Maret 2026</p>
+                    <div class="w-64 border-b border-slate-800 mx-auto mb-2"></div>
+                    <p class="font-bold text-slate-900 text-lg">Penyelenggara</p>
+                    <p class="text-slate-500 text-sm">Gorigu Studio</p>
+                </div>
+
+                <div class="flex items-center gap-4 bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="text-right">
+                        <p class="font-bold text-slate-800 text-sm">Verifikasi Dokumen</p>
+                        <p class="text-xs text-slate-500 mt-1">Scan untuk memvalidasi</p>
+                        <p class="text-[10px] text-indigo-600 mt-1 font-mono">gorigu.my.id/events</p>
+                    </div>
+                    <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://gorigu.my.id/events/headless-cms-sanity" 
+                         alt="QR Code" class="w-24 h-24">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function generateCertificate(e) {
+            e.preventDefault();
+            const name = document.getElementById('inputName').value.trim();
+            if(!name) return;
+
+            // Set Name
+            document.getElementById('displayName').innerText = name;
+
+            // UI Transitions
+            document.getElementById('form-card').classList.add('hidden');
+            document.getElementById('action-buttons').classList.remove('hidden');
+            document.getElementById('preview-area').classList.remove('hidden');
+        }
+
+        function resetGenerator() {
+            document.getElementById('certForm').reset();
+            document.getElementById('form-card').classList.remove('hidden');
+            document.getElementById('action-buttons').classList.add('hidden');
+            document.getElementById('preview-area').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
