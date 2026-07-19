@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Jadwal Pak Alfi — Fisika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0F2540;
+    --ink-2: #133456;
+    --ink-3: #17395C;
+    --grid-line: rgba(210,228,245,0.08);
+    --grid-line-strong: rgba(210,228,245,0.16);
+    --paper: #EDF1F5;
+    --paper-dim: #92AAC4;
+    --paper-dimmer: #62809F;
+    --amber: #E8A33D;
+    --amber-dim: rgba(232,163,61,0.14);
+    --mint: #5FC7A8;
+    --mint-dim: rgba(95,199,168,0.14);
+    --coral: #E8674F;
+    --coral-dim: rgba(232,103,79,0.14);
+    --radius: 14px;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 28px 28px;
+    padding-bottom: 48px;
+    overflow-x: hidden;
+  }
+
+  /* corner registration marks, blueprint style */
+  .corner{
+    position: fixed;
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--paper-dimmer);
+    opacity: 0.5;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .corner.tl{ top:10px; left:10px; border-right:none; border-bottom:none; }
+  .corner.tr{ top:10px; right:10px; border-left:none; border-bottom:none; }
+
+  header{
+    padding: 34px 20px 18px;
+    position: relative;
+  }
+  .stamp{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--amber);
+    border: 1px solid rgba(232,163,61,0.4);
+    padding: 3px 9px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  .stamp::before{
+    content:'';
+    width:6px; height:6px;
+    border-radius:50%;
+    background: var(--amber);
+    box-shadow: 0 0 8px var(--amber);
+  }
+  h1{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.05;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  h1 span{ color: var(--amber); }
+  .subtitle{
+    font-size: 14px;
+    color: var(--paper-dim);
+    font-weight: 500;
+    margin: 0;
+  }
+  .subtitle b{ color: var(--paper); font-weight: 600; }
+
+  /* sine wave divider — signature element */
+  .wave-divider{
+    width: 100%;
+    height: 26px;
+    margin: 22px 0 4px;
+    opacity: 0.8;
+  }
+
+  nav.days{
+    display: flex;
+    gap: 8px;
+    padding: 4px 20px 18px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    position: sticky;
+    top: 0;
+    background: linear-gradient(var(--ink) 78%, transparent);
+    z-index: 4;
+    padding-top: 10px;
+  }
+  nav.days::-webkit-scrollbar{ display:none; }
+  .day-btn{
+    flex: 0 0 auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--paper-dim);
+    background: var(--ink-2);
+    border: 1px solid var(--grid-line-strong);
+    padding: 9px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+  }
+  .day-btn .full{ display:none; }
+  .day-btn.active{
+    background: var(--amber);
+    color: var(--ink);
+    border-color: var(--amber);
+    font-weight: 700;
+  }
+  .day-btn.today:not(.active){
+    color: var(--amber);
+    border-color: rgba(232,163,61,0.5);
+  }
+  .day-btn.today:not(.active)::after{
+    content: ' •';
+  }
+
+  main{
+    padding: 4px 20px 10px;
+  }
+
+  .day-title-row{
+    display:flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 14px 2px 14px;
+  }
+  .day-title{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .day-count{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--paper-dimmer);
+  }
+
+  .timeline{
+    position: relative;
+    padding-left: 34px;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left: 13px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: repeating-linear-gradient(
+      to bottom, var(--grid-line-strong) 0 4px, transparent 4px 9px
+    );
+  }
+
+  .card{
+    position: relative;
+    background: var(--ink-2);
+    border: 1px solid var(--grid-line-strong);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    animation: rise 0.4s ease backwards;
+  }
+  .card::before{
+    content:'';
+    position:absolute;
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 2px solid var(--paper-dimmer);
+  }
+  .card.subj-fisika::before{ border-color: var(--amber); }
+  .card.subj-ila::before{ border-color: var(--mint); }
+  .card.subj-piket::before{ border-color: var(--coral); }
+
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(10px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .card-left{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .period-badge{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--paper-dim);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--grid-line-strong);
+    border-radius: 8px;
+    padding: 6px 8px;
+    text-align: center;
+    line-height: 1.1;
+    flex-shrink: 0;
+    min-width: 44px;
+  }
+  .period-badge small{
+    display:block;
+    font-size: 8.5px;
+    color: var(--paper-dimmer);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 1px;
+  }
+  .card-info{ min-width: 0; }
+  .subj-name{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0 0 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .class-name{
+    font-size: 12.5px;
+    color: var(--paper-dim);
+    margin: 0;
+    font-weight: 500;
+  }
+  .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 4px 9px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
+  .subj-fisika .tag{ color: var(--amber); background: var(--amber-dim); }
+  .subj-ila .tag{ color: var(--mint); background: var(--mint-dim); }
+  .subj-piket .tag{ color: var(--coral); background: var(--coral-dim); }
+
+  .break-row{
+    position: relative;
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    padding: 8px 0 8px 0;
+    margin: 4px 0 10px;
+    color: var(--paper-dimmer);
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .break-row::before{
+    content:'';
+    position:absolute;
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 9px; height: 9px;
+    background: var(--ink);
+    border: 2px dashed var(--paper-dimmer);
+    border-radius: 50%;
+  }
+  .break-row .line{
+    flex:1;
+    height: 1px;
+    background: var(--grid-line-strong);
+  }
+
+  .empty-state{
+    text-align:center;
+    padding: 60px 20px;
+    color: var(--paper-dim);
+  }
+  .empty-state .big{
+    font-family:'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--paper);
+    margin-bottom: 8px;
+  }
+
+  footer{
+    padding: 30px 20px 10px;
+    text-align: center;
+  }
+  footer p{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--paper-dimmer);
+    letter-spacing: 0.03em;
+    margin: 0;
+  }
+  .legend{
+    display:flex;
+    justify-content:center;
+    gap: 16px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size: 11px;
+    color: var(--paper-dim);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .legend-dot{
+    width:8px; height:8px; border-radius:50%;
+  }
+
+  @media (min-width: 480px){
+    .day-btn .full{ display:inline; }
+    .day-btn .abbr{ display:none; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .card{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+
+<header>
+  <div class="stamp">Rev. 20 Jul 2026</div>
+  <h1>Jadwal Pak <span>Alfi</span></h1>
+  <p class="subtitle">Fisika · <b>SMA ABBS Surakarta</b> · Kelas XII</p>
+
+  <svg class="wave-divider" viewBox="0 0 400 26" preserveAspectRatio="none">
+    <path d="M0,13 C 20,2 40,2 60,13 C 80,24 100,24 120,13 C 140,2 160,2 180,13 C 200,24 220,24 240,13 C 260,2 280,2 300,13 C 320,24 340,24 360,13 C 380,2 400,2 400,13"
+      fill="none" stroke="#E8A33D" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
+  </svg>
+</header>
+
+<nav class="days" id="dayNav"></nav>
+
+<main>
+  <div class="day-title-row">
+    <div class="day-title" id="dayTitle">—</div>
+    <div class="day-count" id="dayCount">0 jam</div>
+  </div>
+  <div class="timeline" id="timeline"></div>
+</main>
+
+<footer>
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span>Fisika</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--mint)"></span>ILA</div>
+    <div class="legend-item"><span class="legend-dot" style="background:var(--coral)"></span>Piket</div>
+  </div>
+  <p>Jadwal berlaku sejak 20 Juli 2026 · Geser kiri/kanan untuk ganti hari</p>
+</footer>
+
+<script>
+  // ---- schedule data, transcribed from the timetable ----
+  const schedule = {
+    Senin: [
+      { period:"1", subj:"ILA", cls:"XII-4", type:"ila" },
+      { brk:"Istirahat / Dhuha" },
+      { period:"4–5", subj:"Fisika", cls:"XII-7", type:"fisika" },
+      { period:"6", subj:"Fisika", cls:"XII-9", type:"fisika" },
+      { brk:"Makan Siang & Sholat Dzuhur" },
+      { period:"7", subj:"Fisika", cls:"XII-9", type:"fisika" },
+    ],
+    Selasa: [
+      { period:"1–2", subj:"Fisika", cls:"XII-2", type:"fisika" },
+      { period:"3", subj:"Fisika", cls:"XII-4", type:"fisika" },
+      { brk:"Istirahat / Dhuha" },
+      { period:"4", subj:"Fisika", cls:"XII-4", type:"fisika" },
+      { period:"6", subj:"Fisika", cls:"XII-3", type:"fisika" },
+      { brk:"Makan Siang & Sholat Dzuhur" },
+      { period:"7", subj:"Fisika", cls:"XII-3", type:"fisika" },
+    ],
+    Rabu: [
+      { period:"0", subj:"Piket Gang 1", cls:"PG1", type:"piket" },
+      { period:"2–3", subj:"Fisika", cls:"XII-5", type:"fisika" },
+      { brk:"Istirahat / Dhuha" },
+      { period:"4", subj:"ILA", cls:"XII-4", type:"ila" },
+      { brk:"Makan Siang & Sholat Dzuhur" },
+      { period:"8–9", subj:"Fisika", cls:"XII-2", type:"fisika" },
+    ],
+    Kamis: [
+      { period:"2–3", subj:"Fisika", cls:"XII-5", type:"fisika" },
+      { brk:"Istirahat / Dhuha" },
+      { period:"5–6", subj:"Fisika", cls:"XII-4", type:"fisika" },
+      { brk:"Makan Siang & Sholat Dzuhur" },
+      { period:"8–9", subj:"Fisika", cls:"XII-3", type:"fisika" },
+    ],
+    Jumat: [
+      { period:"1–2", subj:"Fisika", cls:"XII-7", type:"fisika" },
+      { period:"3", subj:"Fisika", cls:"XII-9", type:"fisika" },
+      { brk:"Istirahat / Dhuha" },
+      { period:"4", subj:"Fisika", cls:"XII-9", type:"fisika" },
+      { brk:"Makan Siang & Sholat Dzuhur" },
+      { period:"7–8", subj:"Fisika", cls:"XII-8", type:"fisika" },
+    ],
+    Sabtu: [
+      { period:"1–2", subj:"Fisika", cls:"XII-8", type:"fisika" },
+    ],
+  };
+
+  const dayOrder = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  const dayAbbr = { Senin:"Sen", Selasa:"Sel", Rabu:"Rab", Kamis:"Kam", Jumat:"Jum", Sabtu:"Sab" };
+
+  // JS getDay(): 0=Sun,1=Mon...6=Sat
+  const jsDayToName = ["", "Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+  const todayIdx = new Date().getDay();
+  const todayName = jsDayToName[todayIdx] || null;
+
+  let currentDay = todayName && dayOrder.includes(todayName) ? todayName : "Senin";
+
+  const dayNav = document.getElementById('dayNav');
+  const timeline = document.getElementById('timeline');
+  const dayTitle = document.getElementById('dayTitle');
+  const dayCount = document.getElementById('dayCount');
+
+  function buildNav(){
+    dayNav.innerHTML = '';
+    dayOrder.forEach(day => {
+      const btn = document.createElement('button');
+      btn.className = 'day-btn' + (day === currentDay ? ' active' : '') + (day === todayName ? ' today' : '');
+      btn.innerHTML = `<span class="abbr">${dayAbbr[day]}</span><span class="full">${day}</span>`;
+      btn.addEventListener('click', () => { currentDay = day; render(); });
+      dayNav.appendChild(btn);
+    });
+  }
+
+  function typeLabel(type){
+    if(type === 'fisika') return 'Fisika';
+    if(type === 'ila') return 'ILA';
+    if(type === 'piket') return 'Piket';
+    return '';
+  }
+
+  function render(){
+    buildNav();
+    dayTitle.textContent = currentDay;
+    const items = schedule[currentDay] || [];
+    const teachCount = items.filter(i => !i.brk).length;
+    dayCount.textContent = teachCount + (teachCount === 1 ? ' jam mengajar' : ' jam mengajar');
+
+    timeline.innerHTML = '';
+    if(items.length === 0){
+      timeline.innerHTML = `<div class="empty-state"><div class="big">Libur mengajar</div>Tidak ada kelas terjadwal hari ini.</div>`;
+      return;
+    }
+    items.forEach((item, i) => {
+      if(item.brk){
+        const row = document.createElement('div');
+        row.className = 'break-row';
+        row.innerHTML = `${item.brk}<span class="line"></span>`;
+        timeline.appendChild(row);
+      } else {
+        const card = document.createElement('div');
+        card.className = `card subj-${item.type}`;
+        card.style.animationDelay = (i * 0.04) + 's';
+        card.innerHTML = `
+          <div class="card-left">
+            <div class="period-badge">${item.period}<small>Jam ke</small></div>
+            <div class="card-info">
+              <p class="subj-name">${item.subj}</p>
+              <p class="class-name">Kelas ${item.cls}</p>
+            </div>
+          </div>
+          <span class="tag">${typeLabel(item.type)}</span>
+        `;
+        timeline.appendChild(card);
+      }
+    });
+  }
+
+  render();
+
+  // swipe left/right to change day
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive:true});
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const idx = dayOrder.indexOf(currentDay);
+    if(dx < -50 && idx < dayOrder.length - 1){ currentDay = dayOrder[idx+1]; render(); }
+    else if(dx > 50 && idx > 0){ currentDay = dayOrder[idx-1]; render(); }
+  }, {passive:true});
+</script>
+
+</body>
+</html>
