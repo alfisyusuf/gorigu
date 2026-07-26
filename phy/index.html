@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fisika Quest — Elektrostatika</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="starfield" id="stars"></div>
+<div id="hudMount"></div>
+
+<div class="wrap">
+  <div class="center" style="margin-top:1rem;">
+    <div class="badge-pill">KELAS XII · BAB 1</div>
+    <h1 style="font-size:clamp(1.4rem,5vw,2.4rem);">⚡ FISIKA QUEST ⚡</h1>
+    <h2 style="margin-top:-.4rem;">Petualangan Elektrostatika</h2>
+    <p class="small" style="max-width:520px; margin:.8rem auto 0;">
+      Jelajahi enam wilayah, kalahkan penjaga tiap wilayah dengan menjawab
+      tantangan fisika, dan asah kemampuan matematikamu di sepanjang jalan.
+      Progresmu tersimpan otomatis di perangkat ini.
+    </p>
+  </div>
+
+  <div class="row" style="margin:1.6rem 0;">
+    <a href="dojo.html" class="pixel-panel tone-cyan" style="text-decoration:none; display:block;">
+      <h3 style="color:var(--cyan);">🥋 DOJO MATEMATIKA</h3>
+      <p class="small">Latihan bebas: perbandingan kuadrat terbalik, Pythagoras, trigonometri, vektor, dan pecahan. Bisa dibuka kapan saja.</p>
+    </a>
+    <a href="grimoire.html" class="pixel-panel tone-magenta" style="text-decoration:none; display:block;">
+      <h3 style="color:var(--magenta);">📖 KITAB SAKTI</h3>
+      <p class="small">Kumpulan rumus, tabel sin/cos sudut istimewa, dan konstanta penting. Cocok dibuka sebelum ulangan.</p>
+    </a>
+  </div>
+
+  <div class="pixel-panel">
+    <h2 style="margin-top:0;">🗺️ Peta Wilayah</h2>
+    <p class="small">Selesaikan <b>Pertempuran Bos</b> tiap wilayah untuk membuka wilayah berikutnya.</p>
+    <div class="map-road" id="mapRoad"></div>
+  </div>
+
+  <div class="pixel-panel" style="margin-top:1.4rem;" id="statsPanel"></div>
+</div>
+
+<footer class="site">
+  Dibuat untuk kelas Fisika XII — Elektrostatika · Progres disimpan lokal di browser ini.
+  <br>
+  <button class="pixel-btn ghost" id="resetBtn" style="font-size:.55rem; margin-top:.8rem;">Reset Progres</button>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  FQ.renderHUD('#hudMount', {});
+
+  // starfield
+  const sf = document.getElementById('stars');
+  for(let i=0;i<50;i++){
+    const s = document.createElement('span');
+    s.style.left = Math.random()*100+'vw';
+    s.style.top = Math.random()*100+'vh';
+    s.style.animationDelay = (Math.random()*3)+'s';
+    sf.appendChild(s);
+  }
+
+  const progress = FQ.get();
+  const road = document.getElementById('mapRoad');
+  road.innerHTML = FQ.STAGES.map((s,i)=>{
+    const unlocked = FQ.isUnlocked(s.id);
+    const done = progress[s.id] && progress[s.id].boss && progress[s.id].boss.done;
+    const stars = FQ.stageStars(s.id);
+    const side = i%2===0 ? '' : 'right';
+    const cls = [unlocked?'':'locked', done?'done':''].join(' ');
+    return `
+      <a class="node ${side} ${cls}" href="${unlocked ? s.file : '#'}">
+        <div class="badge">${s.icon}</div>
+        <div class="info">
+          <h3>${s.num}. ${s.title}</h3>
+          <div class="tag">${s.tag}</div>
+          <div class="stars">${unlocked ? '★'.repeat(stars)+'☆'.repeat(3-stars) : '🔒 Terkunci'}</div>
+        </div>
+      </a>`;
+  }).join('');
+
+  document.querySelectorAll('.node').forEach(n=>n.addEventListener('click', (e)=>{
+    if(n.classList.contains('locked')){ e.preventDefault(); FQ.toast('Kalahkan bos wilayah sebelumnya dulu!'); FQ.sfx.wrong(); }
+    else FQ.sfx.click();
+  }));
+
+  const total = FQ.totalStars();
+  document.getElementById('statsPanel').innerHTML = `
+    <h2 style="margin-top:0;">📊 Progresmu</h2>
+    <p>Total Bintang: <b style="color:var(--gold);">${total} / 18</b></p>
+    <div class="hpbar player" style="max-width:100%;"><span style="width:${(total/18*100).toFixed(0)}%"></span></div>
+  `;
+
+  document.getElementById('resetBtn').addEventListener('click', ()=>{
+    if(confirm('Yakin ingin menghapus semua progres di perangkat ini?')) FQ.resetAll();
+  });
+</script>
+</body>
+</html>

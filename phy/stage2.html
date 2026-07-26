@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wilayah 2 — Hutan Vektor | Fisika Quest</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="hudMount"></div>
+
+<div class="wrap">
+  <div class="center">
+    <div class="badge-pill">WILAYAH 2 / 6</div>
+    <h1>🌲 Hutan Vektor</h1>
+    <h2>Gaya 2D &amp; Konsep Medan Listrik</h2>
+  </div>
+
+  <div class="tabbar" id="tabbar">
+    <button data-tab="math" class="active">1. Pemanasan Matematika</button>
+    <button data-tab="materi">2. Materi</button>
+    <button data-tab="latihan">3. Latihan</button>
+    <button data-tab="boss">4. Bos: Roh Medan</button>
+  </div>
+
+  <div class="tabpane active" id="pane-math">
+    <div class="pixel-panel tone-cyan">
+      <h2 style="margin-top:0;">🥋 Pemanasan: Trigonometri &amp; Pythagoras</h2>
+      <p>Saat dua gaya/medan bekerja tegak lurus, kita menggabungkannya seperti dua sisi segitiga siku-siku. Kuasai dulu dua alat bantu ini:</p>
+      <table class="ref" style="margin:1rem 0;">
+        <tr><th>Sudut</th><th>0°</th><th>30°</th><th>37°</th><th>45°</th><th>53°</th><th>60°</th><th>90°</th></tr>
+        <tr><td>sin</td><td>0</td><td>1/2</td><td>3/5</td><td>½√2</td><td>4/5</td><td>½√3</td><td>1</td></tr>
+        <tr><td>cos</td><td>1</td><td>½√3</td><td>4/5</td><td>½√2</td><td>3/5</td><td>1/2</td><td>0</td></tr>
+      </table>
+      <div id="warmupBox"></div>
+    </div>
+  </div>
+
+  <div class="tabpane" id="pane-materi">
+    <div class="pixel-panel">
+      <div class="dots" id="dots"></div>
+
+      <div class="concept-card active" data-i="0">
+        <h2 style="margin-top:0;">① Menggabungkan Dua Arah Tegak Lurus</h2>
+        <p>Jika dua vektor gaya/medan saling tegak lurus (membentuk sudut 90°), besar resultannya dihitung dengan <b>Teorema Pythagoras</b>:</p>
+        <p class="center"><span class="formula">R = √(A² + B²)</span></p>
+        <div class="visual-box">
+          <svg viewBox="0 0 220 160" width="220">
+            <line x1="30" y1="130" x2="170" y2="130" stroke="#3be8e0" stroke-width="3" marker-end="url(#arrow2)"/>
+            <line x1="30" y1="130" x2="30" y2="30" stroke="#f6b93b" stroke-width="3" marker-end="url(#arrow2)"/>
+            <line x1="170" y1="130" x2="30" y2="30" stroke="#ff5d8f" stroke-width="3" stroke-dasharray="5,4" marker-end="url(#arrow2)"/>
+            <text x="100" y="148" fill="#3be8e0" font-size="12">A</text>
+            <text x="10" y="80" fill="#f6b93b" font-size="12">B</text>
+            <text x="90" y="70" fill="#ff5d8f" font-size="12">R</text>
+            <defs><marker id="arrow2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#f3ead2"/></marker></defs>
+          </svg>
+        </div>
+        <p class="small">Ini sama persis dengan mencari sisi miring segitiga siku-siku — hanya sekarang sisi-sisinya adalah gaya atau medan listrik.</p>
+      </div>
+
+      <div class="concept-card" data-i="1">
+        <h2 style="margin-top:0;">② Apa itu Medan Listrik?</h2>
+        <p>Medan listrik (<span class="formula">E</span>) adalah "ruang pengaruh" di sekitar muatan. Digambarkan dengan garis gaya yang <b>keluar dari muatan positif</b> dan <b>masuk ke muatan negatif</b> — persis seperti pola serbuk besi di sekitar magnet.</p>
+        <div class="visual-box">
+          <svg viewBox="0 0 260 140" width="260">
+            <circle cx="70" cy="70" r="16" fill="#ff6b6b"/><text x="70" y="75" text-anchor="middle" fill="#120c1f" font-weight="bold">+</text>
+            <g stroke="#3be8e0" stroke-width="1.5" fill="none" opacity=".8">
+              <line x1="86" y1="70" x2="140" y2="70" marker-end="url(#arrow3)"/>
+              <line x1="70" y1="54" x2="70" y2="10" marker-end="url(#arrow3)" transform="rotate(35 70 70)"/>
+              <line x1="70" y1="54" x2="70" y2="10" marker-end="url(#arrow3)" transform="rotate(-35 70 70)"/>
+              <line x1="70" y1="54" x2="70" y2="10" marker-end="url(#arrow3)" transform="rotate(145 70 70)"/>
+              <line x1="70" y1="54" x2="70" y2="10" marker-end="url(#arrow3)" transform="rotate(215 70 70)"/>
+            </g>
+            <circle cx="200" cy="70" r="16" fill="#5b8dff"/><text x="200" y="75" text-anchor="middle" fill="#120c1f" font-weight="bold">−</text>
+            <g stroke="#3be8e0" stroke-width="1.5" fill="none" opacity=".8">
+              <line x1="252" y1="70" x2="216" y2="70" marker-end="url(#arrow3)"/>
+            </g>
+            <defs><marker id="arrow3" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#3be8e0"/></marker></defs>
+          </svg>
+        </div>
+      </div>
+
+      <div class="concept-card" data-i="2">
+        <h2 style="margin-top:0;">③ Aturan Garis Gaya</h2>
+        <p>Garis gaya listrik adalah garis khayal yang <b>tidak pernah saling berpotongan</b>. Di antara muatan + dan −, garis-garisnya melengkung mulus dari + menuju −.</p>
+        <div class="visual-box">
+          <svg viewBox="0 0 260 140" width="260">
+            <circle cx="70" cy="70" r="16" fill="#ff6b6b"/><text x="70" y="75" text-anchor="middle" fill="#120c1f" font-weight="bold">+</text>
+            <circle cx="190" cy="70" r="16" fill="#5b8dff"/><text x="190" y="75" text-anchor="middle" fill="#120c1f" font-weight="bold">−</text>
+            <path d="M 86 60 Q 130 20 174 60" stroke="#3be8e0" stroke-width="1.5" fill="none" marker-end="url(#arrow3)"/>
+            <path d="M 86 70 Q 130 70 174 70" stroke="#3be8e0" stroke-width="1.5" fill="none" marker-end="url(#arrow3)"/>
+            <path d="M 86 80 Q 130 120 174 80" stroke="#3be8e0" stroke-width="1.5" fill="none" marker-end="url(#arrow3)"/>
+          </svg>
+        </div>
+        <p class="small">Kepadatan garis gaya juga menunjukkan kekuatan medan: makin rapat garis, makin kuat medannya.</p>
+      </div>
+
+      <div class="concept-card" data-i="3">
+        <h2 style="margin-top:0;">④ Rumus &amp; Resultan Medan (E)</h2>
+        <p class="center"><span class="formula" style="font-size:1.1rem;">E = k <span class="frac"><span class="num">q</span><span class="den">r²</span></span></span></p>
+        <p>Jika dua sumber muatan menghasilkan medan <span class="formula">E₁</span> dan <span class="formula">E₂</span> yang saling tegak lurus di suatu titik, resultannya:</p>
+        <p class="center"><span class="formula">E_total = √(E₁² + E₂²)</span></p>
+        <div class="visual-box">
+          <svg viewBox="0 0 200 150" width="200">
+            <line x1="30" y1="120" x2="150" y2="120" stroke="#3be8e0" stroke-width="3" marker-end="url(#arrow2b)"/>
+            <line x1="30" y1="120" x2="30" y2="30" stroke="#f6b93b" stroke-width="3" marker-end="url(#arrow2b)"/>
+            <path d="M 30 105 A 15 15 0 0 1 45 120" fill="none" stroke="#f3ead2" stroke-width="1.5"/>
+            <text x="90" y="138" fill="#3be8e0" font-size="11">E₁</text>
+            <text x="8" y="80" fill="#f6b93b" font-size="11">E₂</text>
+            <defs><marker id="arrow2b" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#f3ead2"/></marker></defs>
+          </svg>
+        </div>
+        <p class="small">Sudut resultannya bisa dicari dengan <span class="formula">tan θ = E₂/E₁</span> — tapi untuk kelas ini kita fokus dulu ke besarnya saja.</p>
+      </div>
+
+      <div class="card-nav">
+        <button class="pixel-btn ghost" id="prevCard" style="font-size:.6rem;">← Sebelumnya</button>
+        <div class="dots" id="dots2"></div>
+        <button class="pixel-btn cyan" id="nextCard" style="font-size:.6rem;">Selanjutnya →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabpane" id="pane-latihan">
+    <div class="pixel-panel">
+      <h2 style="margin-top:0;">📝 Latihan Konsep</h2>
+      <div id="practiceBox"></div>
+    </div>
+  </div>
+
+  <div class="tabpane" id="pane-boss">
+    <div class="pixel-panel tone-magenta">
+      <h2 style="margin-top:0;">👾 Pertempuran Bos: Roh Medan</h2>
+      <div id="bossBox"></div>
+    </div>
+  </div>
+
+  <div class="center" style="margin-top:2rem;">
+    <a href="index.html" class="pixel-btn ghost">← Kembali ke Peta</a>
+  </div>
+</div>
+
+<footer class="site">Wilayah 2 dari 6 — Fisika Quest Elektrostatika</footer>
+
+<script src="js/main.js"></script>
+<script src="js/quiz.js"></script>
+<script>
+const STAGE_ID = 'stage2';
+FQ.renderHUD('#hudMount', { backHref:'index.html' });
+if(!FQ.isUnlocked(STAGE_ID)){
+  document.querySelector('.wrap').innerHTML = `<div class="locked-note pixel-panel"><h2>🔒 Wilayah Terkunci</h2><p>Selesaikan dulu Wilayah 1: Desa Coulomb.</p><a href="index.html" class="pixel-btn cyan">Kembali ke Peta</a></div>`;
+  throw new Error('locked');
+}
+
+const tabs = document.querySelectorAll('#tabbar button');
+tabs.forEach(btn=>btn.addEventListener('click', ()=>{
+  FQ.sfx.click();
+  tabs.forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tabpane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-'+btn.dataset.tab).classList.add('active');
+}));
+function markTabDone(tab){
+  const b = document.querySelector(`#tabbar button[data-tab="${tab}"]`);
+  if(b && !b.querySelector('.check')) b.innerHTML += ' <span class="check">✔</span>';
+}
+const prog = FQ.get()[STAGE_ID];
+if(prog.math) markTabDone('math');
+if(prog.latihan.done) markTabDone('latihan');
+if(prog.boss.done) markTabDone('boss');
+
+const warmupItems = [
+  { q:'Sebuah segitiga siku-siku punya dua sisi tegak lurus 3 dan 4. Berapa panjang sisi miringnya?', type:'fill', answer:5, tol:0.1,
+    hint:'Pythagoras: c = √(3²+4²) = √(9+16) = √25', explain:'c = √25 = 5.' },
+  { q:'Dua gaya tegak lurus besarnya 6 N dan 8 N. Berapa resultannya?', type:'fill', answer:10, tol:0.2,
+    hint:'R = √(6²+8²) = √(36+64) = √100', explain:'R = √100 = 10 N.' },
+  { q:'Nilai sin 37° adalah...', options:['3/5','4/5','1/2','√2/2'], answer:0, hint:'Ingat segitiga 3-4-5: sin 37° = depan/miring = 3/5.', explain:'sin 37° = 3/5 = 0,6.' },
+  { q:'Nilai cos 53° sama dengan...', options:['3/5','4/5','1','0'], answer:0, hint:'cos 53° = sin 37° (sudut saling berpenyiku) = 3/5.', explain:'cos 53° = 3/5.' },
+];
+FQ_Quiz.renderMathWarmup(document.getElementById('warmupBox'), warmupItems, {
+  onDone(c,t){ FQ.set(STAGE_ID,'math',true); markTabDone('math'); FQ.toast(`Pemanasan selesai! ${c}/${t}`); }
+});
+
+const cards = document.querySelectorAll('.concept-card');
+let cardIdx=0;
+function showCard(i){
+  cardIdx = Math.max(0, Math.min(cards.length-1,i));
+  cards.forEach(c=>c.classList.remove('active'));
+  cards[cardIdx].classList.add('active');
+  [document.getElementById('dots'),document.getElementById('dots2')].forEach(d=>{
+    d.innerHTML = Array.from(cards).map((_,j)=>`<span class="${j===cardIdx?'on':''}"></span>`).join('');
+  });
+  document.getElementById('prevCard').disabled = cardIdx===0;
+  if(cardIdx===cards.length-1) FQ.set(STAGE_ID,'materi',true);
+}
+document.getElementById('prevCard').addEventListener('click', ()=>{FQ.sfx.click(); showCard(cardIdx-1);});
+document.getElementById('nextCard').addEventListener('click', ()=>{FQ.sfx.click(); showCard(cardIdx+1);});
+showCard(0);
+
+const practiceItems = [
+  { q:'Arah garis gaya listrik selalu...', options:['Keluar dari (+) dan masuk ke (−)','Keluar dari (−) dan masuk ke (+)','Sejajar semua ke kanan','Acak, tergantung pengamat'], answer:0, explain:'Konvensi: garis gaya keluar dari muatan positif, masuk ke muatan negatif.' },
+  { q:'Dua garis gaya listrik dapat saling berpotongan?', options:['Bisa, jika muatannya besar','Tidak pernah','Bisa, di titik tengah','Hanya pada medan homogen'], answer:1, explain:'Garis gaya tidak pernah berpotongan karena arah medan di satu titik hanya satu.' },
+  { q:'Dua medan listrik tegak lurus besarnya 3 N/C dan 4 N/C. Medan totalnya adalah...', options:['5 N/C','7 N/C','1 N/C','12 N/C'], answer:0, explain:'√(3²+4²) = √25 = 5 N/C.' },
+  { q:'Semakin rapat garis-garis gaya pada suatu daerah, artinya...', options:['Medan makin lemah','Medan makin kuat','Muatan netral','Tidak ada hubungan'], answer:1, explain:'Kerapatan garis gaya menggambarkan besar/kuat medan di daerah tersebut.' },
+  { q:'sin 30° × 2 = ...', options:['1','2','0,5','√3'], answer:0, explain:'sin 30° = 1/2, maka 1/2 × 2 = 1.' },
+];
+FQ_Quiz.renderPractice(document.getElementById('practiceBox'), practiceItems, {
+  onDone(c,t){ FQ.set(STAGE_ID,'latihan',{done:true,score:c}); markTabDone('latihan'); FQ.toast(`Latihan selesai! Skor ${c}/${t}`); }
+});
+
+const bossSteps = [
+  { q:'Sebuah muatan uji diletakkan di dekat muatan positif besar. Ke arah mana garis gaya di titik itu?', weight:20,
+    options:['Menjauhi muatan positif','Mendekati muatan positif','Sejajar permukaan bumi'], answer:0,
+    explain:'Garis gaya selalu keluar (menjauh) dari muatan positif.' },
+  { q:'Dua medan listrik E₁=6 N/C dan E₂=8 N/C saling tegak lurus di suatu titik. Berapa medan resultannya?', weight:30,
+    options:['14 N/C','2 N/C','10 N/C','48 N/C'], answer:2,
+    explain:'R = √(6²+8²) = √100 = 10 N/C (segitiga 6-8-10, kelipatan 3-4-5).' },
+  { q:'Sebuah muatan q = 4×10⁻⁶ C menghasilkan medan di titik berjarak r = 0,2 m (k=9×10⁹). Berapa E?', weight:50,
+    options:['9×10⁵ N/C','9×10⁴ N/C','4,5×10⁵ N/C','9×10³ N/C'], answer:0,
+    explain:'E = 9×10⁹ × 4×10⁻⁶/(0,2)² = 9×10⁹×4×10⁻⁶/0,04 = 9×10⁵ N/C.' },
+];
+FQ_Quiz.renderBoss(document.getElementById('bossBox'), bossSteps, {
+  bossName:'Roh Medan', bossEmoji:'🌀',
+  onWin(){
+    FQ.set(STAGE_ID,'boss',{done:true,stars:3});
+    markTabDone('boss'); FQ.sfx.unlock();
+    setTimeout(()=>FQ.toast('Wilayah 3: Gua Gauss telah terbuka! 🕳️'), 800);
+  }
+});
+</script>
+</body>
+</html>

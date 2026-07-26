@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wilayah 6 — Menara Akhir | Fisika Quest</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .flipcard{ perspective:800px; height:130px; cursor:pointer; }
+  .flipcard-inner{ position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d; }
+  .flipcard.flipped .flipcard-inner{ transform:rotateY(180deg); }
+  .flipcard-face{ position:absolute; inset:0; backface-visibility:hidden; border-radius:8px; border:3px solid var(--ink);
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:.6rem; font-size:.85rem; }
+  .flipcard-front{ background:var(--panel-lite); color:var(--cyan); font-family:var(--font-pixel); font-size:.65rem; }
+  .flipcard-back{ background:var(--gold); color:var(--ink); transform:rotateY(180deg); font-weight:600; }
+  .case-step{ display:none; margin-top:.6rem; padding:.7em .9em; background:var(--ink); border-left:4px solid var(--cyan); border-radius:6px; }
+  .case-step.show{ display:block; }
+</style>
+</head>
+<body>
+<div id="hudMount"></div>
+
+<div class="wrap">
+  <div class="center">
+    <div class="badge-pill">WILAYAH 6 / 6 · FINAL</div>
+    <h1>🗼 Menara Akhir</h1>
+    <h2>Kesimpulan &amp; Pemantapan</h2>
+  </div>
+
+  <div class="tabbar" id="tabbar">
+    <button data-tab="peta" class="active">1. Peta Konsep</button>
+    <button data-tab="flash">2. Flashcard</button>
+    <button data-tab="kasus">3. Studi Kasus</button>
+    <button data-tab="boss">4. Bos Akhir: Sang Penakluk</button>
+  </div>
+
+  <!-- PETA KONSEP -->
+  <div class="tabpane active" id="pane-peta">
+    <div class="pixel-panel">
+      <h2 style="margin-top:0;">🗺️ Peta Konsep Elektrostatika</h2>
+      <p class="small">Begini semua materi yang sudah kamu taklukkan saling berhubungan:</p>
+      <div class="visual-box" style="min-height:220px;">
+        <svg viewBox="0 0 700 160" width="100%" style="max-width:700px;">
+          <defs><marker id="pm" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#f6b93b"/></marker></defs>
+          <g font-family="monospace" font-size="13" fill="#f3ead2" text-anchor="middle">
+            <rect x="10" y="60" width="100" height="40" rx="6" fill="#241a3d" stroke="#ff6b6b" stroke-width="2"/>
+            <text x="60" y="85">Muatan (q)</text>
+            <line x1="110" y1="80" x2="150" y2="80" stroke="#f6b93b" stroke-width="2" marker-end="url(#pm)"/>
+
+            <rect x="150" y="60" width="100" height="40" rx="6" fill="#241a3d" stroke="#3be8e0" stroke-width="2"/>
+            <text x="200" y="85">Gaya (F)</text>
+            <line x1="250" y1="80" x2="290" y2="80" stroke="#f6b93b" stroke-width="2" marker-end="url(#pm)"/>
+
+            <rect x="290" y="60" width="100" height="40" rx="6" fill="#241a3d" stroke="#3be8e0" stroke-width="2"/>
+            <text x="340" y="85">Medan (E)</text>
+            <line x1="390" y1="80" x2="430" y2="80" stroke="#f6b93b" stroke-width="2" marker-end="url(#pm)"/>
+
+            <rect x="430" y="60" width="110" height="40" rx="6" fill="#241a3d" stroke="#f6b93b" stroke-width="2"/>
+            <text x="485" y="85">Potensial (V)</text>
+            <line x1="540" y1="80" x2="580" y2="80" stroke="#f6b93b" stroke-width="2" marker-end="url(#pm)"/>
+
+            <rect x="580" y="60" width="110" height="40" rx="6" fill="#241a3d" stroke="#ff5d8f" stroke-width="2"/>
+            <text x="635" y="85">Energi (Eₚ)</text>
+
+            <rect x="150" y="115" width="100" height="35" rx="6" fill="#241a3d" stroke="#7bd88f" stroke-width="1.5"/>
+            <text x="200" y="137" font-size="11">Hukum Gauss</text>
+            <line x1="200" y1="115" x2="200" y2="100" stroke="#7bd88f" stroke-width="1.5"/>
+
+            <rect x="430" y="115" width="110" height="35" rx="6" fill="#241a3d" stroke="#7bd88f" stroke-width="1.5"/>
+            <text x="485" y="137" font-size="11">Kapasitor (C)</text>
+            <line x1="485" y1="115" x2="485" y2="100" stroke="#7bd88f" stroke-width="1.5"/>
+          </g>
+        </svg>
+      </div>
+      <p class="small">Muatan menghasilkan <b>gaya</b> (Hukum Coulomb) yang membentuk <b>medan</b> di sekitarnya (Hukum Gauss membantu menghitungnya untuk bentuk simetris). Medan ini terkait dengan <b>potensial</b> (skalar), yang menentukan <b>energi</b> saat muatan berpindah. Kapasitor memanfaatkan konsep ini untuk menyimpan muatan.</p>
+    </div>
+  </div>
+
+  <!-- FLASHCARD -->
+  <div class="tabpane" id="pane-flash">
+    <div class="pixel-panel tone-cyan">
+      <h2 style="margin-top:0;">🃏 Flashcard Fisika</h2>
+      <p class="small">Klik kartu untuk membalik dan melihat rumusnya.</p>
+      <div class="grid-2" id="flashGrid"></div>
+    </div>
+  </div>
+
+  <!-- STUDI KASUS -->
+  <div class="tabpane" id="pane-kasus">
+    <div class="pixel-panel">
+      <h2 style="margin-top:0;">📘 Studi Kasus 1: Dua Muatan</h2>
+      <p>Dua muatan q₁ = 2×10⁻⁶ C dan q₂ = 8×10⁻⁶ C terpisah sejauh r = 0,4 m. Hitung gaya Coulomb dan medan listrik akibat q₁ di lokasi q₂.</p>
+      <button class="pixel-btn cyan" id="case1btn" style="font-size:.6rem;">Tunjukkan Langkah 1</button>
+      <div class="case-step" id="case1-1"><b>Langkah 1 — Gaya Coulomb:</b><br>F = k·q₁q₂/r² = 9×10⁹ × (2×10⁻⁶ × 8×10⁻⁶) / (0,4)² = 9×10⁹ × 1,6×10⁻¹¹ / 0,16 = <b>0,9 N</b></div>
+      <button class="pixel-btn cyan" id="case1btn2" style="font-size:.6rem; margin-top:.6rem;">Tunjukkan Langkah 2</button>
+      <div class="case-step" id="case1-2"><b>Langkah 2 — Medan akibat q₁ di posisi q₂:</b><br>E = k·q₁/r² = 9×10⁹ × 2×10⁻⁶ / 0,16 = <b>1,125×10⁵ N/C</b></div>
+
+      <h2 style="margin-top:1.6rem;">📗 Studi Kasus 2: Kapasitor Seri</h2>
+      <p>Kapasitor C₁ = 6 μF dan C₂ = 3 μF disusun seri, dihubungkan sumber tegangan 12 V. Hitung kapasitas total dan muatan totalnya.</p>
+      <button class="pixel-btn cyan" id="case2btn" style="font-size:.6rem;">Tunjukkan Langkah 1</button>
+      <div class="case-step" id="case2-1"><b>Langkah 1 — Kapasitas total:</b><br>1/Cs = 1/6 + 1/3 = 1/6 + 2/6 = 3/6 = 1/2 → <b>Cs = 2 μF</b></div>
+      <button class="pixel-btn cyan" id="case2btn2" style="font-size:.6rem; margin-top:.6rem;">Tunjukkan Langkah 2</button>
+      <div class="case-step" id="case2-2"><b>Langkah 2 — Muatan total (q = Cs·V):</b><br>q = 2 μF × 12 V = <b>24 μC</b> (ingat: pada rangkaian seri, muatan ini sama di C₁ maupun C₂)</div>
+    </div>
+  </div>
+
+  <!-- BOSS AKHIR -->
+  <div class="tabpane" id="pane-boss">
+    <div class="pixel-panel tone-magenta">
+      <h2 style="margin-top:0;">👑 Bos Akhir: Sang Penakluk Elektrostatika</h2>
+      <p class="small">Gabungan seluruh materi Wilayah 1–5. Ini tantangan terakhirmu!</p>
+      <div id="bossBox"></div>
+    </div>
+  </div>
+
+  <div class="center" style="margin-top:2rem;">
+    <a href="index.html" class="pixel-btn ghost">← Kembali ke Peta</a>
+  </div>
+</div>
+
+<footer class="site">Wilayah 6 dari 6 — Fisika Quest Elektrostatika · Selamat menempuh ulangan sungguhan!</footer>
+
+<script src="js/main.js"></script>
+<script src="js/quiz.js"></script>
+<script>
+const STAGE_ID = 'stage6';
+FQ.renderHUD('#hudMount', { backHref:'index.html' });
+if(!FQ.isUnlocked(STAGE_ID)){
+  document.querySelector('.wrap').innerHTML = `<div class="locked-note pixel-panel"><h2>🔒 Wilayah Terkunci</h2><p>Selesaikan dulu Wilayah 5: Kastil Kapasitor.</p><a href="index.html" class="pixel-btn cyan">Kembali ke Peta</a></div>`;
+  throw new Error('locked');
+}
+
+const tabs = document.querySelectorAll('#tabbar button');
+tabs.forEach(btn=>btn.addEventListener('click', ()=>{
+  FQ.sfx.click();
+  tabs.forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tabpane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-'+btn.dataset.tab).classList.add('active');
+}));
+
+/* Flashcards */
+const flashData = [
+  {f:'F = k q₁q₂/r²', b:'Hukum Coulomb — gaya antar dua muatan titik'},
+  {f:'E = k q/r²', b:'Kuat medan listrik akibat satu muatan titik'},
+  {f:'φ = E·A·cosθ = q/ε₀', b:'Fluks listrik & Hukum Gauss'},
+  {f:'V = k q/r', b:'Potensial listrik (besaran skalar)'},
+  {f:'W = q(V₂−V₁)', b:'Usaha memindahkan muatan antar titik'},
+  {f:'C = q/V', b:'Definisi kapasitas kapasitor'},
+  {f:'W = ½CV²', b:'Energi tersimpan pada kapasitor'},
+  {f:'C = ε₀A/d', b:'Kapasitas kapasitor keping sejajar'},
+];
+document.getElementById('flashGrid').innerHTML = flashData.map((c,i)=>`
+  <div class="flipcard" data-i="${i}">
+    <div class="flipcard-inner">
+      <div class="flipcard-face flipcard-front">${c.f}</div>
+      <div class="flipcard-face flipcard-back">${c.b}</div>
+    </div>
+  </div>
+`).join('');
+document.querySelectorAll('.flipcard').forEach(el=>el.addEventListener('click', ()=>{ el.classList.toggle('flipped'); FQ.sfx.click(); }));
+
+/* Studi kasus reveal */
+function wireCase(btnId, stepId){
+  document.getElementById(btnId).addEventListener('click', ()=>{
+    document.getElementById(stepId).classList.add('show');
+    FQ.sfx.click();
+  });
+}
+wireCase('case1btn','case1-1'); wireCase('case1btn2','case1-2');
+wireCase('case2btn','case2-1'); wireCase('case2btn2','case2-2');
+
+/* Final Boss — gabungan semua topik */
+const bossSteps = [
+  { q:'Dua muatan sejenis (− dan −) saling didekatkan. Sifat gayanya adalah...', weight:12,
+    options:['Tarik-menarik','Tolak-menolak','Netral'], answer:1, explain:'Muatan sejenis selalu tolak-menolak.' },
+  { q:'Jika jarak dua muatan dijadikan 3 kali lebih jauh, gaya Coulomb menjadi...', weight:13,
+    options:['1/9 kali','1/3 kali','3 kali','9 kali'], answer:0, explain:'F∝1/r² → 1/3²=1/9.' },
+  { q:'Dua medan listrik tegak lurus 9 N/C dan 12 N/C. Resultannya adalah...', weight:15,
+    options:['21 N/C','15 N/C','3 N/C','108 N/C'], answer:1, explain:'√(9²+12²)=√(81+144)=√225=15 N/C.' },
+  { q:'Kuat medan listrik di dalam bola konduktor berongga bermuatan adalah...', weight:10,
+    options:['Sama dengan permukaan','Nol','Tak hingga'], answer:1, explain:'Selalu nol di dalam konduktor.' },
+  { q:'Potensial listrik adalah besaran...', weight:10,
+    options:['Vektor','Skalar'], answer:1, explain:'V adalah skalar.' },
+  { q:'Muatan q=4 C berpindah dari V₁=3V ke V₂=8V. Berapa usahanya?', weight:15,
+    options:['20 J','11 J','32 J','5 J'], answer:0, explain:'W=q(V₂−V₁)=4×(8−3)=4×5=20 J.' },
+  { q:'Dua kapasitor 4 μF disusun paralel, kapasitas totalnya adalah...', weight:10,
+    options:['2 μF','4 μF','8 μF','1/8 μF'], answer:2, explain:'Cp=4+4=8 μF.' },
+  { q:'Dua muatan q₁=5×10⁻⁶ C dan q₂=4×10⁻⁶ C berjarak r=0,3 m (k=9×10⁹). Berapa gaya Coulombnya?', weight:15,
+    options:['2 N','20 N','0,2 N','200 N'], answer:0, explain:'F=9×10⁹×(5×10⁻⁶×4×10⁻⁶)/(0,3)²=9×10⁹×2×10⁻¹¹/0,09=2 N.' },
+];
+FQ_Quiz.renderBoss(document.getElementById('bossBox'), bossSteps, {
+  bossName:'Sang Penakluk', bossEmoji:'👑',
+  onWin(){
+    FQ.set(STAGE_ID,'boss',{done:true,stars:3});
+    FQ.sfx.unlock();
+    setTimeout(()=>{
+      FQ.toast('🎉 Selamat! Kamu menaklukkan seluruh Fisika Quest Elektrostatika!');
+      document.getElementById('bossBox').insertAdjacentHTML('beforeend', `
+        <div class="pixel-panel tone-cyan center" style="margin-top:1.4rem;">
+          <h2 style="color:var(--gold);">🏆 SERTIFIKAT PENAKLUK ELEKTROSTATIKA 🏆</h2>
+          <p>Kamu telah menyelesaikan seluruh 6 wilayah dengan total <b>${FQ.totalStars()} / 18 bintang</b>.</p>
+          <p class="small">Cetak semangat ini untuk menghadapi ulangan yang sesungguhnya!</p>
+        </div>`);
+    }, 900);
+  }
+});
+</script>
+</body>
+</html>

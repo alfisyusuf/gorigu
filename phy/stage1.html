@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wilayah 1 — Desa Coulomb | Fisika Quest</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="hudMount"></div>
+
+<div class="wrap">
+  <div class="center">
+    <div class="badge-pill">WILAYAH 1 / 6</div>
+    <h1>⚡ Desa Coulomb</h1>
+    <h2>Konsep Dasar Muatan &amp; Hukum Coulomb</h2>
+  </div>
+
+  <div class="tabbar" id="tabbar">
+    <button data-tab="math" class="active">1. Pemanasan Matematika</button>
+    <button data-tab="materi">2. Materi</button>
+    <button data-tab="latihan">3. Latihan</button>
+    <button data-tab="boss">4. Bos: Penjaga Elektron</button>
+  </div>
+
+  <!-- ============ TAB: MATH WARMUP ============ -->
+  <div class="tabpane active" id="pane-math">
+    <div class="pixel-panel tone-cyan">
+      <h2 style="margin-top:0;">🥋 Pemanasan: Perbandingan Kuadrat Terbalik</h2>
+      <p>Hukum Coulomb punya bentuk <span class="formula">F ∝ 1 / r²</span> — artinya gaya <b>berbanding terbalik dengan kuadrat jarak</b>. Ini pola matematika yang akan terus muncul di seluruh bab ini, jadi mari kita kuasai dulu polanya sebelum masuk fisikanya.</p>
+      <div id="warmupBox"></div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: MATERI ============ -->
+  <div class="tabpane" id="pane-materi">
+    <div class="pixel-panel">
+      <div class="dots" id="dots"></div>
+
+      <div class="concept-card active" data-i="0">
+        <h2 style="margin-top:0;">① Apa itu Muatan Listrik?</h2>
+        <p>Semua benda tersusun dari atom. Di dalam atom ada <b style="color:var(--posred);">proton (+)</b> di inti dan <b style="color:var(--negblue);">elektron (−)</b> yang mengelilinginya. Benda menjadi bermuatan ketika kelebihan atau kekurangan elektron.</p>
+        <div class="visual-box">
+          <svg viewBox="0 0 240 160" width="260">
+            <circle cx="120" cy="80" r="14" fill="#f6b93b"/>
+            <text x="120" y="85" text-anchor="middle" font-size="11" fill="#120c1f" font-weight="bold">+</text>
+            <g>
+              <ellipse cx="120" cy="80" rx="70" ry="28" fill="none" stroke="#3be8e0" stroke-width="1.5" opacity=".6"/>
+              <circle r="6" fill="#5b8dff">
+                <animateMotion dur="3s" repeatCount="indefinite" path="M 190,80 A 70,28 0 1,1 50,80 A 70,28 0 1,1 190,80"/>
+              </circle>
+            </g>
+            <g transform="rotate(60 120 80)">
+              <ellipse cx="120" cy="80" rx="70" ry="28" fill="none" stroke="#3be8e0" stroke-width="1.5" opacity=".6"/>
+              <circle r="6" fill="#5b8dff">
+                <animateMotion dur="4s" repeatCount="indefinite" path="M 190,80 A 70,28 0 1,1 50,80 A 70,28 0 1,1 190,80"/>
+              </circle>
+            </g>
+          </svg>
+        </div>
+        <p class="small">💡 Ingat: <b>sejenis tolak-menolak</b> (+ dengan +, atau − dengan −), <b>beda jenis tarik-menarik</b> (+ dengan −).</p>
+      </div>
+
+      <div class="concept-card" data-i="1">
+        <h2 style="margin-top:0;">② Kenapa Berbanding Terbalik Kuadrat?</h2>
+        <p>Bayangkan gaya listrik seperti cahaya lampu yang menyebar ke segala arah membentuk permukaan bola. Saat jarak <span class="formula">r</span> menjadi 2 kali lebih jauh, "kekuatan" itu tersebar di permukaan yang luasnya 4 kali lebih besar — sehingga yang diterima di satu titik menjadi <b>¼ kalinya</b>.</p>
+        <div class="visual-box">
+          <svg viewBox="0 0 300 140" width="300">
+            <circle cx="60" cy="70" r="10" fill="#f6b93b"/>
+            <rect x="100" y="55" width="26" height="30" fill="none" stroke="#3be8e0" stroke-width="2"/>
+            <text x="113" y="100" text-anchor="middle" font-size="10" fill="#3be8e0">r</text>
+            <text x="113" y="45" text-anchor="middle" font-size="10" fill="#f3ead2">Gaya penuh</text>
+
+            <circle cx="200" cy="70" r="10" fill="#f6b93b"/>
+            <rect x="255" y="45" width="52" height="50" fill="none" stroke="#3be8e0" stroke-width="1" opacity=".5"/>
+            <text x="281" y="112" text-anchor="middle" font-size="10" fill="#3be8e0">2r</text>
+            <text x="281" y="35" text-anchor="middle" font-size="10" fill="#f3ead2">¼ gaya (area 4×)</text>
+          </svg>
+        </div>
+        <p><b>Pola pentingnya:</b></p>
+        <ul>
+          <li>Jarak menjadi <span class="formula">2×</span> → gaya menjadi <span class="formula">¼×</span></li>
+          <li>Jarak menjadi <span class="formula">3×</span> → gaya menjadi <span class="formula">1/9×</span></li>
+          <li>Jarak menjadi <span class="formula">½×</span> (lebih dekat) → gaya menjadi <span class="formula">4×</span></li>
+        </ul>
+      </div>
+
+      <div class="concept-card" data-i="2">
+        <h2 style="margin-top:0;">③ Hukum Coulomb</h2>
+        <p>Besar gaya listrik antara dua muatan titik:</p>
+        <p class="center"><span class="formula" style="font-size:1.15rem;">F = k <span class="frac"><span class="num">q₁ · q₂</span><span class="den">r²</span></span></span></p>
+        <p class="small center">dengan <span class="formula">k = 9×10⁹ N·m²/C²</span>, <span class="formula">q₁, q₂</span> = besar muatan (Coulomb), <span class="formula">r</span> = jarak antar muatan (meter).</p>
+        <h3>🔬 Coba Simulasinya</h3>
+        <div class="visual-box" style="flex-direction:column; min-height:200px;">
+          <div id="simTrack" style="position:relative; width:100%; max-width:420px; height:80px; margin-bottom:.6rem;">
+            <div id="chargeA" style="position:absolute; top:20px; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#120c1f;"></div>
+            <div id="chargeB" style="position:absolute; top:20px; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; color:#120c1f;"></div>
+            <div id="arrowA" style="position:absolute; top:36px; font-size:1.2rem; transition:all .2s;"></div>
+            <div id="arrowB" style="position:absolute; top:36px; font-size:1.2rem; transition:all .2s;"></div>
+          </div>
+          <div class="row" style="width:100%; max-width:420px;">
+            <label class="small">q₁ (µC) <input type="range" id="simQ1" min="-8" max="8" value="4" step="1" style="width:100%;"><span id="simQ1val"></span></label>
+            <label class="small">q₂ (µC) <input type="range" id="simQ2" min="-8" max="8" value="-4" step="1" style="width:100%;"><span id="simQ2val"></span></label>
+          </div>
+          <label class="small" style="width:100%; max-width:420px;">jarak r (cm) <input type="range" id="simR" min="2" max="20" value="8" step="1" style="width:100%;"><span id="simRval"></span></label>
+          <p class="pixel" style="font-size:.7rem; color:var(--gold); margin-top:.4rem;" id="simF"></p>
+        </div>
+      </div>
+
+      <div class="concept-card" data-i="3">
+        <h2 style="margin-top:0;">④ Logika Arah: 3 Muatan Segaris</h2>
+        <p>Saat lebih dari dua muatan segaris (satu dimensi), gaya total pada satu muatan adalah <b>jumlah aljabar</b> (dengan tanda arah) dari gaya akibat tiap muatan lain — bukan sekadar dijumlah begitu saja.</p>
+        <div class="visual-box">
+          <svg viewBox="0 0 300 90" width="300">
+            <line x1="20" y1="45" x2="280" y2="45" stroke="#4a3a70" stroke-width="2"/>
+            <circle cx="50" cy="45" r="14" fill="#ff6b6b"/><text x="50" y="49" text-anchor="middle" font-size="12" fill="#120c1f">+</text>
+            <text x="50" y="70" text-anchor="middle" font-size="10" fill="#f3ead2">A (+)</text>
+            <circle cx="150" cy="45" r="14" fill="#5b8dff"/><text x="150" y="49" text-anchor="middle" font-size="12" fill="#120c1f">−</text>
+            <text x="150" y="70" text-anchor="middle" font-size="10" fill="#f3ead2">B (−)</text>
+            <circle cx="250" cy="45" r="14" fill="#ff6b6b"/><text x="250" y="49" text-anchor="middle" font-size="12" fill="#120c1f">+</text>
+            <text x="250" y="70" text-anchor="middle" font-size="10" fill="#f3ead2">C (+)</text>
+          </svg>
+        </div>
+        <p class="small">Contoh: gaya total pada <b>B</b> = (tarikan dari A ke kiri) + (tarikan dari C ke kanan). Karena berlawanan arah, hasilnya adalah <b>selisih</b> keduanya, arahnya mengikuti gaya yang lebih besar.</p>
+      </div>
+
+      <div class="card-nav">
+        <button class="pixel-btn ghost" id="prevCard" style="font-size:.6rem;">← Sebelumnya</button>
+        <div class="dots" id="dots2"></div>
+        <button class="pixel-btn cyan" id="nextCard" style="font-size:.6rem;">Selanjutnya →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: LATIHAN ============ -->
+  <div class="tabpane" id="pane-latihan">
+    <div class="pixel-panel">
+      <h2 style="margin-top:0;">📝 Latihan Konsep</h2>
+      <div id="practiceBox"></div>
+    </div>
+  </div>
+
+  <!-- ============ TAB: BOSS ============ -->
+  <div class="tabpane" id="pane-boss">
+    <div class="pixel-panel tone-magenta">
+      <h2 style="margin-top:0;">👾 Pertempuran Bos: Penjaga Elektron</h2>
+      <p class="small">Soal akan dipecah menjadi beberapa tahap kecil, dari yang mudah ke yang lebih menantang. Kalahkan HP Penjaga Elektron sampai 0!</p>
+      <div id="bossBox"></div>
+    </div>
+  </div>
+
+  <div class="center" style="margin-top:2rem;">
+    <a href="index.html" class="pixel-btn ghost">← Kembali ke Peta</a>
+  </div>
+</div>
+
+<footer class="site">Wilayah 1 dari 6 — Fisika Quest Elektrostatika</footer>
+
+<script src="js/main.js"></script>
+<script src="js/quiz.js"></script>
+<script>
+const STAGE_ID = 'stage1';
+FQ.renderHUD('#hudMount', { backHref:'index.html' });
+
+/* ---------------- Tabs ---------------- */
+const tabs = document.querySelectorAll('#tabbar button');
+tabs.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    FQ.sfx.click();
+    tabs.forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tabpane').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('pane-'+btn.dataset.tab).classList.add('active');
+  });
+});
+function markTabDone(tab){
+  const b = document.querySelector(`#tabbar button[data-tab="${tab}"]`);
+  if(b && !b.querySelector('.check')) b.innerHTML += ' <span class="check">✔</span>';
+}
+const prog = FQ.get()[STAGE_ID];
+if(prog.math) markTabDone('math');
+if(prog.latihan.done) markTabDone('latihan');
+if(prog.boss.done) markTabDone('boss');
+
+/* ---------------- Math warmup ---------------- */
+const warmupItems = [
+  { q:'Jika jarak antar dua muatan dijadikan <b>2 kali</b> lebih jauh, gaya Coulomb menjadi berapa kali semula?',
+    options:['2 kali','4 kali','¼ kali','½ kali'], answer:2,
+    hint:'Gunakan F ∝ 1/r². Jika r → 2r, maka F → 1/(2)² = 1/4.',
+    explain:'F baru = 1/(2²) = 1/4 kali gaya semula.' },
+  { q:'Jika jarak diperkecil menjadi <b>1/3</b> kali semula, gaya Coulomb menjadi berapa kali?',
+    options:['3 kali','1/3 kali','9 kali','1/9 kali'], answer:2,
+    hint:'r → r/3, maka F → 1/(1/3)² = 9.',
+    explain:'F baru = 1/(1/3)² = 9 kali gaya semula.' },
+  { q:'Diketahui F = k·q₁q₂/r² dengan k=9×10⁹, q₁=q₂=2×10⁻⁶ C, r=0,1 m. Berapa F (dalam Newton)? <span class="small">(bulatkan)</span>',
+    type:'fill', answer:36, tol:1,
+    hint:'F = 9×10⁹ × (2×10⁻⁶ × 2×10⁻⁶) / (0,1)² = 9×10⁹ × 4×10⁻¹² / 0,01',
+    explain:'F = 9×10⁹ × 4×10⁻¹² / 0,01 = 36 N.' },
+  { q:'Sebuah gaya F terjadi pada jarak r. Jika jarak menjadi 4 kali lebih jauh, gaya menjadi...',
+    options:['1/16 kali','1/4 kali','4 kali','16 kali'], answer:0,
+    hint:'F ∝ 1/r², maka 1/(4)² = 1/16.',
+    explain:'F baru = 1/16 kali gaya semula — melemah drastis karena kuadrat.' },
+];
+FQ_Quiz.renderMathWarmup(document.getElementById('warmupBox'), warmupItems, {
+  onDone(correct,total){
+    FQ.set(STAGE_ID,'math', true);
+    markTabDone('math');
+    FQ.toast(`Pemanasan selesai! Benar ${correct}/${total} 🔥`);
+  }
+});
+
+/* ---------------- Concept cards ---------------- */
+const cards = document.querySelectorAll('.concept-card');
+let cardIdx = 0;
+function showCard(i){
+  cardIdx = Math.max(0, Math.min(cards.length-1, i));
+  cards.forEach(c=>c.classList.remove('active'));
+  cards[cardIdx].classList.add('active');
+  [document.getElementById('dots'), document.getElementById('dots2')].forEach(d=>{
+    d.innerHTML = cards.length ? Array.from(cards).map((_,j)=>`<span class="${j===cardIdx?'on':''}"></span>`).join('') : '';
+  });
+  document.getElementById('prevCard').disabled = cardIdx===0;
+  if(cardIdx===cards.length-1){
+    FQ.set(STAGE_ID,'materi', true);
+  }
+}
+document.getElementById('prevCard').addEventListener('click', ()=>{ FQ.sfx.click(); showCard(cardIdx-1); });
+document.getElementById('nextCard').addEventListener('click', ()=>{ FQ.sfx.click(); showCard(cardIdx+1); });
+showCard(0);
+
+/* ---------------- Coulomb simulator ---------------- */
+const q1El=document.getElementById('simQ1'), q2El=document.getElementById('simQ2'), rEl=document.getElementById('simR');
+function updateSim(){
+  const q1 = +q1El.value, q2 = +q2El.value, r = +rEl.value;
+  document.getElementById('simQ1val').textContent = ' '+q1+' µC';
+  document.getElementById('simQ2val').textContent = ' '+q2+' µC';
+  document.getElementById('simRval').textContent = ' '+r+' cm';
+
+  const trackW = 380;
+  const rpx = 40 + (r-2)/(20-2)*260;
+  const xA = (trackW-rpx)/2 - 20, xB = xA + rpx;
+  const a = document.getElementById('chargeA'), b = document.getElementById('chargeB');
+  a.style.left = xA+'px'; b.style.left = xB+'px';
+  a.style.background = q1>=0 ? '#ff6b6b' : '#5b8dff';
+  b.style.background = q2>=0 ? '#ff6b6b' : '#5b8dff';
+  a.textContent = q1>=0?'+':'−';
+  b.textContent = q2>=0?'+':'−';
+
+  const F = 9e9 * Math.abs(q1*1e-6) * Math.abs(q2*1e-6) / Math.pow(r/100,2);
+  const attract = (q1>=0) !== (q2>=0);
+  const arrowA = document.getElementById('arrowA'), arrowB = document.getElementById('arrowB');
+  const scale = Math.min(1.6, 0.5 + Math.log10(F+1)/3);
+  arrowA.style.fontSize = (scale)+'rem';
+  arrowB.style.fontSize = (scale)+'rem';
+  if(attract){
+    arrowA.textContent='→'; arrowB.textContent='←';
+    arrowA.style.left = (xA+20)+'px'; arrowB.style.left=(xB-20)+'px';
+    arrowA.style.color = arrowB.style.color = 'var(--success)';
+  } else {
+    arrowA.textContent='←'; arrowB.textContent='→';
+    arrowA.style.left = (xA-20)+'px'; arrowB.style.left=(xB+40)+'px';
+    arrowA.style.color = arrowB.style.color = 'var(--danger)';
+  }
+  document.getElementById('simF').textContent =
+    `F ≈ ${F.toFixed(2)} N — ${attract? 'TARIK-MENARIK':'TOLAK-MENOLAK'} (q berlawanan jenis: ${attract?'ya':'tidak'})`;
+}
+[q1El,q2El,rEl].forEach(el=>el.addEventListener('input', updateSim));
+updateSim();
+
+/* ---------------- Practice ---------------- */
+const practiceItems = [
+  { q:'Dua muatan sejenis (+ dan +) didekatkan. Apa yang terjadi?', options:['Tarik-menarik','Tolak-menolak','Tidak ada gaya','Bergabung menjadi netral'], answer:1, explain:'Muatan sejenis selalu tolak-menolak.' },
+  { q:'Satuan gaya Coulomb (F) dalam Sistem Internasional adalah...', options:['Coulomb (C)','Newton (N)','Joule (J)','Volt (V)'], answer:1, explain:'F adalah gaya, satuannya Newton.' },
+  { q:'Jika jarak antar muatan diperbesar 5 kali, gaya Coulomb menjadi...', options:['1/25 kali','1/5 kali','5 kali','25 kali'], answer:0, explain:'F ∝ 1/r² → 1/5² = 1/25.' },
+  { q:'Dua muatan q₁ = 3 µC dan q₂ = −6 µC berjarak 3 cm. Sifat gayanya adalah...', options:['Tolak-menolak','Tarik-menarik','Netral (F=0)','Tidak bisa ditentukan'], answer:1, explain:'Beda jenis (+ dan −) selalu tarik-menarik.' },
+  { q:'Pada tiga muatan segaris A(+), B(−), C(+) dengan B di tengah, gaya total pada B berasal dari...', options:['Hanya muatan A','Hanya muatan C','Jumlah aljabar gaya dari A dan C','Rata-rata gaya A dan C'], answer:2, explain:'Gaya total = jumlah aljabar (memperhatikan arah) dari semua gaya yang bekerja pada B.' },
+];
+FQ_Quiz.renderPractice(document.getElementById('practiceBox'), practiceItems, {
+  onDone(correct,total){
+    FQ.set(STAGE_ID,'latihan', {done:true, score:correct});
+    markTabDone('latihan');
+    FQ.toast(`Latihan selesai! Skor ${correct}/${total}`);
+  }
+});
+
+/* ---------------- Boss ---------------- */
+const bossSteps = [
+  { q:'Dua muatan positif saling didekatkan. Ke arah mana gaya yang dialami tiap muatan?', weight:20,
+    options:['Saling menjauh (tolak-menolak)','Saling mendekat (tarik-menarik)','Diam, tidak ada gaya'], answer:0,
+    explain:'Muatan sejenis (+ dan +) selalu tolak-menolak.' },
+  { q:'Mula-mula gaya antar dua muatan adalah F. Jika jaraknya dijadikan setengah kali semula, gaya yang baru adalah...', weight:30,
+    options:['F/4','F/2','2F','4F'], answer:3,
+    explain:'r→r/2 maka F baru = 1/(1/2)² = 4F.' },
+  { q:'Dua muatan q₁ = 4×10⁻⁶ C dan q₂ = 5×10⁻⁶ C berjarak r = 2×10⁻¹ m (k=9×10⁹). Berapa besar gaya Coulomb-nya?', weight:50,
+    options:['0,45 N','4,5 N','45 N','450 N'], answer:1,
+    explain:'F = 9×10⁹ × (4×10⁻⁶ × 5×10⁻⁶)/(0,2)² = 9×10⁹×2×10⁻¹¹/0,04 = 4,5 N.' },
+];
+FQ_Quiz.renderBoss(document.getElementById('bossBox'), bossSteps, {
+  bossName:'Penjaga Elektron', bossEmoji:'👾',
+  onWin(){
+    FQ.set(STAGE_ID,'boss', {done:true, stars:3});
+    markTabDone('boss');
+    FQ.sfx.unlock();
+    setTimeout(()=>FQ.toast('Wilayah 2: Hutan Vektor telah terbuka! 🌲'), 800);
+  }
+});
+</script>
+</body>
+</html>

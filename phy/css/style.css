@@ -1,0 +1,329 @@
+/* =========================================================
+   FISIKA QUEST — Elektrostatika
+   Tema: RPG 16-bit (ala JRPG SNES) — dibangun dari nol untuk
+   pembelajaran Fisika Kelas XII, Bab Elektrostatika.
+   ========================================================= */
+
+@font-face {
+  font-family: 'PixelHead';
+  src: url('../fonts/PressStart2P.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root{
+  /* ---- Palet warna (dunia malam JRPG + aksen listrik) ---- */
+  --void:        #120c1f;
+  --void-2:      #1b1330;
+  --panel:       #241a3d;
+  --panel-lite:  #362751;
+  --ink:         #0b0714;
+  --ink-soft:    #4a3a70;
+  --parchment:   #f3ead2;
+  --parchment-dim:#c9bfa8;
+  --gold:        #f6b93b;
+  --gold-dim:    #a97e2e;
+  --cyan:        #3be8e0;
+  --cyan-dim:    #1f8f8c;
+  --magenta:     #ff5d8f;
+  --posred:      #ff6b6b;
+  --negblue:     #5b8dff;
+  --success:     #7bd88f;
+  --danger:      #ff4d4d;
+
+  --font-pixel: 'PixelHead', monospace;
+  --font-body: 'Segoe UI', 'Trebuchet MS', system-ui, sans-serif;
+
+  --radius-px: 10px;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse at 20% 0%, #2a1f4a 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, #1a2a4a 0%, transparent 55%),
+    var(--void);
+  color:var(--parchment);
+  font-family:var(--font-body);
+  line-height:1.55;
+  overflow-x:hidden;
+}
+
+/* subtle CRT scanlines over everything */
+body::before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:9000;
+  background:repeating-linear-gradient(
+    to bottom, rgba(0,0,0,0.09) 0px, rgba(0,0,0,0.09) 1px,
+    transparent 2px, transparent 3px);
+  mix-blend-mode:overlay;
+  opacity:.5;
+}
+
+img,svg{ max-width:100%; display:block; }
+a{ color:inherit; }
+button{ font-family:inherit; cursor:pointer; }
+
+::selection{ background:var(--gold); color:var(--ink); }
+
+/* ---------------------------------------------------------
+   Star field decor (cheap ambient motion)
+--------------------------------------------------------- */
+.starfield{
+  position:fixed; inset:0; z-index:-1; overflow:hidden;
+}
+.starfield span{
+  position:absolute; width:2px; height:2px; background:#fff;
+  opacity:.5; animation: twinkle 3.5s ease-in-out infinite;
+}
+@keyframes twinkle{ 0%,100%{opacity:.15} 50%{opacity:.9} }
+
+/* ---------------------------------------------------------
+   Typography helpers
+--------------------------------------------------------- */
+.pixel{ font-family:var(--font-pixel); line-height:1.7; letter-spacing:.5px; }
+h1,h2,h3{ font-family:var(--font-pixel); letter-spacing:.5px; }
+h1{ font-size:clamp(1.1rem,3.4vw,1.8rem); color:var(--gold); text-shadow:3px 3px 0 var(--ink); }
+h2{ font-size:clamp(.85rem,2.2vw,1.15rem); color:var(--cyan); text-shadow:2px 2px 0 var(--ink); }
+h3{ font-size:.72rem; color:var(--parchment); text-shadow:2px 2px 0 var(--ink); }
+p{ margin:.6em 0; }
+.small{ font-size:.85rem; color:var(--parchment-dim); }
+
+/* Formula chip + fraction (no external math lib needed) */
+.formula{
+  display:inline-flex; align-items:center; gap:.15em;
+  background:var(--ink); color:var(--cyan);
+  border:2px solid var(--gold-dim);
+  border-radius:6px;
+  padding:.25em .6em;
+  font-family:'Consolas','Courier New',monospace;
+  font-weight:700;
+  white-space:nowrap;
+}
+.frac{ display:inline-flex; flex-direction:column; text-align:center; vertical-align:middle; margin:0 .2em; font-size:.9em; }
+.frac .num{ border-bottom:2px solid var(--cyan); padding:0 .2em; }
+.frac .den{ padding:0 .2em; }
+sup, sub { font-size:.7em; }
+
+/* ---------------------------------------------------------
+   Pixel panel — signature stepped-corner RPG window
+--------------------------------------------------------- */
+.pixel-panel{
+  position:relative;
+  background:var(--panel);
+  padding:1.4rem 1.5rem;
+  clip-path: polygon(
+    0 10px, 10px 10px, 10px 0,
+    calc(100% - 10px) 0, calc(100% - 10px) 10px, 100% 10px,
+    100% calc(100% - 10px), calc(100% - 10px) calc(100% - 10px), calc(100% - 10px) 100%,
+    10px 100%, 10px calc(100% - 10px), 0 calc(100% - 10px)
+  );
+  box-shadow:
+    0 0 0 4px var(--ink),
+    0 0 0 8px var(--gold-dim),
+    0 10px 24px rgba(0,0,0,.45);
+}
+.pixel-panel.tone-cyan{ box-shadow:0 0 0 4px var(--ink), 0 0 0 8px var(--cyan-dim), 0 10px 24px rgba(0,0,0,.45); }
+.pixel-panel.tone-magenta{ box-shadow:0 0 0 4px var(--ink), 0 0 0 8px #a83a5c, 0 10px 24px rgba(0,0,0,.45); }
+
+.pixel-btn{
+  font-family:var(--font-pixel);
+  font-size:.72rem;
+  background:var(--gold);
+  color:var(--ink);
+  border:none;
+  padding:.9em 1.1em;
+  clip-path: polygon(0 6px,6px 6px,6px 0,calc(100% - 6px) 0,calc(100% - 6px) 6px,100% 6px,100% calc(100% - 6px),calc(100% - 6px) calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,6px calc(100% - 6px),0 calc(100% - 6px));
+  box-shadow: 0 0 0 3px var(--ink), 0 4px 0 var(--gold-dim), 0 7px 10px rgba(0,0,0,.4);
+  transition:transform .08s ease;
+  text-align:center;
+}
+.pixel-btn:hover{ transform:translateY(-2px); }
+.pixel-btn:active{ transform:translateY(2px); box-shadow:0 0 0 3px var(--ink),0 1px 0 var(--gold-dim); }
+.pixel-btn.cyan{ background:var(--cyan); box-shadow:0 0 0 3px var(--ink), 0 4px 0 var(--cyan-dim), 0 7px 10px rgba(0,0,0,.4); }
+.pixel-btn.magenta{ background:var(--magenta); box-shadow:0 0 0 3px var(--ink), 0 4px 0 #a83a5c, 0 7px 10px rgba(0,0,0,.4); }
+.pixel-btn.ghost{ background:transparent; color:var(--parchment); box-shadow:0 0 0 3px var(--ink), 0 4px 0 var(--ink-soft); }
+.pixel-btn:disabled{ opacity:.35; cursor:not-allowed; transform:none; }
+.pixel-btn[data-locked="1"]{ filter:grayscale(1); opacity:.5; cursor:not-allowed; }
+
+/* ---------------------------------------------------------
+   Top HUD bar (present on every page)
+--------------------------------------------------------- */
+.hud{
+  position:sticky; top:0; z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1rem; flex-wrap:wrap;
+  padding:.7rem 1.1rem;
+  background:linear-gradient(var(--ink),#180f2a);
+  border-bottom:4px solid var(--gold-dim);
+}
+.hud .brand{ font-family:var(--font-pixel); font-size:.72rem; color:var(--gold); display:flex; align-items:center; gap:.5rem; }
+.hud .brand .bolt{ color:var(--cyan); animation:zap 1.6s infinite; }
+@keyframes zap{ 0%,100%{opacity:1} 50%{opacity:.3} }
+.hud-right{ display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; }
+.xp-pill{
+  font-family:var(--font-pixel); font-size:.6rem; color:var(--void);
+  background:var(--parchment); border-radius:20px; padding:.4em .8em;
+  display:flex; align-items:center; gap:.4em;
+}
+.hp-mini{ width:120px; height:10px; background:var(--ink); border:2px solid var(--gold-dim); border-radius:6px; overflow:hidden; }
+.hp-mini > span{ display:block; height:100%; background:var(--success); }
+
+/* ---------------------------------------------------------
+   Container / layout
+--------------------------------------------------------- */
+.wrap{ max-width:980px; margin:0 auto; padding:1.6rem 1.1rem 5rem; }
+.center{ text-align:center; }
+.stack{ display:flex; flex-direction:column; gap:1.1rem; }
+.row{ display:flex; gap:1rem; flex-wrap:wrap; }
+.row > *{ flex:1 1 220px; }
+
+/* ---------------------------------------------------------
+   Overworld map (index.html)
+--------------------------------------------------------- */
+.map-road{
+  position:relative;
+  margin:2rem auto;
+  max-width:560px;
+  padding:1rem 0 3rem;
+}
+.map-road::before{
+  content:"";
+  position:absolute; left:50%; top:0; bottom:0; width:6px;
+  transform:translateX(-50%);
+  background-image:linear-gradient(var(--gold) 60%, transparent 0);
+  background-size:6px 22px;
+  opacity:.55;
+}
+.node{
+  position:relative; z-index:2;
+  display:flex; align-items:center; gap:1rem;
+  margin:2.1rem 0;
+  text-decoration:none;
+}
+.node.right{ flex-direction:row-reverse; text-align:right; }
+.node .badge{
+  flex:none; width:78px; height:78px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:2rem;
+  background:radial-gradient(circle at 35% 30%, var(--panel-lite), var(--panel));
+  border:4px solid var(--gold);
+  box-shadow:0 0 0 4px var(--ink), 0 0 18px rgba(246,185,59,.35);
+}
+.node.locked .badge{ border-color:var(--ink-soft); filter:grayscale(1) brightness(.6); box-shadow:0 0 0 4px var(--ink); }
+.node.done .badge{ border-color:var(--success); box-shadow:0 0 0 4px var(--ink),0 0 20px rgba(123,216,143,.5); }
+.node .info{ flex:1; }
+.node .info h3{ margin:0 0 .2rem; color:var(--parchment); }
+.node .info .tag{ font-family:var(--font-pixel); font-size:.55rem; color:var(--cyan); }
+.node.locked .info .tag{ color:var(--ink-soft); }
+.node .stars{ font-size:.85rem; color:var(--gold); letter-spacing:2px; }
+.node.locked{ pointer-events:none; }
+.node.locked .info h3{ color:var(--parchment-dim); }
+
+/* ---------------------------------------------------------
+   Section tabs (quest log style) on stage pages
+--------------------------------------------------------- */
+.tabbar{
+  display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1.2rem;
+}
+.tabbar button{
+  font-family:var(--font-pixel); font-size:.6rem;
+  background:var(--panel-lite); color:var(--parchment-dim);
+  border:3px solid var(--ink); padding:.7em .9em; border-radius:6px 6px 0 0;
+}
+.tabbar button.active{ background:var(--gold); color:var(--ink); }
+.tabbar button .check{ color:var(--success); margin-left:.3em; }
+.tabpane{ display:none; }
+.tabpane.active{ display:block; animation:fadein .25s ease; }
+@keyframes fadein{ from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)} }
+
+/* ---------------------------------------------------------
+   Concept cards (materi)
+--------------------------------------------------------- */
+.concept-card{ display:none; }
+.concept-card.active{ display:block; animation:fadein .3s ease; }
+.card-nav{ display:flex; justify-content:space-between; align-items:center; margin-top:1.2rem; gap:1rem; }
+.dots{ display:flex; gap:.4rem; }
+.dots span{ width:9px; height:9px; border-radius:50%; background:var(--ink-soft); }
+.dots span.on{ background:var(--gold); }
+.visual-box{
+  background:var(--ink); border:3px dashed var(--ink-soft); border-radius:8px;
+  padding:1rem; margin:1rem 0; display:flex; justify-content:center; align-items:center;
+  min-height:160px;
+}
+
+/* ---------------------------------------------------------
+   Quiz engine
+--------------------------------------------------------- */
+.q-progress{ font-family:var(--font-pixel); font-size:.6rem; color:var(--cyan); margin-bottom:.6rem; }
+.q-block{ margin-bottom:1.4rem; }
+.q-text{ font-weight:600; margin-bottom:.7rem; }
+.q-options{ display:flex; flex-direction:column; gap:.55rem; }
+.q-opt{
+  text-align:left; background:var(--panel-lite); color:var(--parchment);
+  border:3px solid var(--ink); border-radius:8px; padding:.7em .9em;
+  font-family:var(--font-body); font-size:.95rem;
+}
+.q-opt:hover{ border-color:var(--gold); }
+.q-opt.correct{ background:#25502f; border-color:var(--success); }
+.q-opt.wrong{ background:#502525; border-color:var(--danger); }
+.q-opt:disabled{ cursor:default; }
+.q-fill{ display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; }
+.q-fill input{
+  width:110px; padding:.5em .6em; border-radius:6px; border:3px solid var(--ink);
+  background:var(--ink); color:var(--cyan); font-weight:700; font-family:'Consolas',monospace;
+}
+.q-feedback{ margin-top:.6rem; padding:.7em .9em; border-radius:8px; font-size:.9rem; display:none; }
+.q-feedback.show{ display:block; }
+.q-feedback.ok{ background:rgba(123,216,143,.15); border:2px solid var(--success); }
+.q-feedback.bad{ background:rgba(255,77,77,.15); border:2px solid var(--danger); }
+.hint-btn{ background:none; border:2px dashed var(--ink-soft); color:var(--parchment-dim); border-radius:6px; padding:.3em .7em; font-size:.8rem; margin-top:.5rem; }
+
+/* ---------------------------------------------------------
+   Boss battle
+--------------------------------------------------------- */
+.arena{ text-align:center; margin-bottom:1.4rem; }
+.hpbar-wrap{ margin:.6rem auto; max-width:420px; }
+.hpbar-label{ display:flex; justify-content:space-between; font-family:var(--font-pixel); font-size:.55rem; margin-bottom:.3rem; }
+.hpbar{ height:20px; background:var(--ink); border:3px solid var(--parchment); border-radius:4px; overflow:hidden; }
+.hpbar > span{ display:block; height:100%; transition:width .4s ease; }
+.hpbar.boss > span{ background:linear-gradient(90deg,var(--magenta),#c23a67); }
+.hpbar.player > span{ background:linear-gradient(90deg,var(--cyan),var(--cyan-dim)); }
+.boss-sprite{ font-size:4rem; margin:.4rem 0; animation:float 2.4s ease-in-out infinite; }
+@keyframes float{ 0%,100%{ transform:translateY(0)} 50%{ transform:translateY(-8px)} }
+.boss-sprite.hit{ animation:shake .3s; }
+@keyframes shake{ 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+.weight-tag{ font-family:var(--font-pixel); font-size:.55rem; color:var(--gold); }
+
+.result-banner{ text-align:center; padding:1.2rem; border-radius:10px; margin-top:1rem; }
+.result-banner.win{ background:rgba(123,216,143,.15); border:3px solid var(--success); }
+.result-banner.lose{ background:rgba(255,77,77,.12); border:3px solid var(--danger); }
+
+/* ---------------------------------------------------------
+   Misc components
+--------------------------------------------------------- */
+.badge-pill{
+  display:inline-block; font-family:var(--font-pixel); font-size:.55rem;
+  background:var(--ink); color:var(--cyan); padding:.35em .7em; border-radius:20px;
+  border:2px solid var(--cyan-dim); margin-bottom:.6rem;
+}
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+@media (max-width:640px){ .grid-2{ grid-template-columns:1fr; } .node .badge{ width:60px; height:60px; font-size:1.5rem;} }
+
+table.ref{ width:100%; border-collapse:collapse; font-size:.9rem; }
+table.ref th, table.ref td{ border:2px solid var(--ink-soft); padding:.5em .6em; text-align:center; }
+table.ref th{ background:var(--panel-lite); color:var(--gold); font-family:var(--font-pixel); font-size:.55rem; }
+
+footer.site{ text-align:center; padding:2rem 1rem; color:var(--parchment-dim); font-size:.8rem; }
+
+.locked-note{ text-align:center; padding:2rem; color:var(--parchment-dim); }
+
+.toast{
+  position:fixed; left:50%; bottom:1.4rem; transform:translate(-50%,20px);
+  background:var(--gold); color:var(--ink); font-family:var(--font-pixel); font-size:.65rem;
+  padding:.9em 1.3em; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,.5);
+  opacity:0; pointer-events:none; transition:all .3s ease; z-index:2000; text-align:center;
+}
+.toast.show{ opacity:1; transform:translate(-50%,0); }

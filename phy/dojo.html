@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dojo Matematika | Fisika Quest</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="hudMount"></div>
+
+<div class="wrap">
+  <div class="center">
+    <div class="badge-pill">RUANG LATIHAN BEBAS</div>
+    <h1>🥋 Dojo Matematika</h1>
+    <h2>Asah kemampuan dasar yang dibutuhkan di sepanjang perjalanan</h2>
+    <p class="small" style="max-width:560px; margin:.6rem auto 1.4rem;">Lima jurus matematika ini akan terus muncul di setiap wilayah. Latihan di sini boleh diulang kapan saja, tidak memengaruhi progres peta.</p>
+  </div>
+
+  <div class="tabbar" id="tabbar">
+    <button data-tab="m1" class="active">Kuadrat Terbalik</button>
+    <button data-tab="m2">Pythagoras</button>
+    <button data-tab="m3">Trigonometri</button>
+    <button data-tab="m4">Vektor 2D</button>
+    <button data-tab="m5">Pecahan &amp; KPK</button>
+  </div>
+
+  <div class="tabpane active" id="pane-m1">
+    <div class="pixel-panel tone-cyan">
+      <h2 style="margin-top:0;">📉 Perbandingan Kuadrat Terbalik</h2>
+      <p>Bentuk <span class="formula">y ∝ 1/x²</span> muncul di Hukum Coulomb, Medan Listrik, dan Hukum Gauss. Polanya:</p>
+      <table class="ref" style="max-width:400px; margin:0 auto 1rem;">
+        <tr><th>Jarak jadi</th><th>Nilai jadi</th></tr>
+        <tr><td>2×</td><td>1/4×</td></tr>
+        <tr><td>3×</td><td>1/9×</td></tr>
+        <tr><td>½×</td><td>4×</td></tr>
+        <tr><td>1/3×</td><td>9×</td></tr>
+      </table>
+      <div id="box1"></div>
+    </div>
+  </div>
+
+  <div class="tabpane" id="pane-m2">
+    <div class="pixel-panel tone-cyan">
+      <h2 style="margin-top:0;">📐 Teorema Pythagoras</h2>
+      <p>Untuk segitiga siku-siku dengan sisi tegak lurus <span class="formula">a</span> dan <span class="formula">b</span>, sisi miringnya:</p>
+      <p class="center"><span class="formula" style="font-size:1.1rem;">c = √(a² + b²)</span></p>
+      <p class="small">Trik cepat: hafalkan pasangan <b>3-4-5</b>, <b>6-8-10</b>, dan <b>5-12-13</b> — sering muncul di soal!</p>
+      <div id="box2"></div>
+    </div>
+  </div>
+
+  <div class="tabpane" id="pane-m3">
+    <div class="pixel-panel tone-cyan">
+      <h2 style="margin-top:0;">📏 Trigonometri Sudut Istimewa</h2>
+      <table class="ref" style="margin-bottom:1rem;">
+        <tr><th>Sudut</th><th>0°</th><th>30°</th><th>37°</th><th>45°</th><th>53°</th><th>60°</th><th>90°</th></tr>
+        <tr><td>sin</td><td>0</td><td>1/2</td><td>3/5</td><td>½√2</td><td>4/5</td><td>½√3</td><td>1</td></tr>
+        <tr><td>cos</td><td>1</td><td>½√3</td><td>4/5</td><td>½√2</td><td>3/5</td><td>1/2</td><td>0</td></tr>
+      </table>
+      <div id="box3"></div>
+    </div>
+  </div>
+
+  <div class="tabpane" id="pane-m4">
+    <div class="pixel-panel tone-cyan">
+      <h2 style="margin-top:0;">➡️ Vektor 2D Dasar</h2>
+      <p>Dua vektor yang saling <b>tegak lurus</b> digabung dengan Pythagoras. Dua vektor yang <b>segaris tapi berlawanan arah</b> digabung dengan <b>selisih</b> (jumlah aljabar).</p>
+      <div id="box4"></div>
+    </div>
+  </div>
+
+  <div class="tabpane" id="pane-m5">
+    <div class="pixel-panel tone-cyan">
+      <h2 style="margin-top:0;">🍰 Pecahan &amp; KPK</h2>
+      <p>Dibutuhkan saat menghitung kapasitor seri: <span class="formula">1/Cs = 1/C₁ + 1/C₂ + ...</span></p>
+      <div id="box5"></div>
+    </div>
+  </div>
+
+  <div class="center" style="margin-top:2rem;">
+    <a href="index.html" class="pixel-btn ghost">← Kembali ke Peta</a>
+  </div>
+</div>
+
+<footer class="site">Dojo Matematika — Fisika Quest Elektrostatika</footer>
+
+<script src="js/main.js"></script>
+<script src="js/quiz.js"></script>
+<script>
+FQ.renderHUD('#hudMount', { backHref:'index.html' });
+const tabs = document.querySelectorAll('#tabbar button');
+tabs.forEach(btn=>btn.addEventListener('click', ()=>{
+  FQ.sfx.click();
+  tabs.forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tabpane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-'+btn.dataset.tab).classList.add('active');
+}));
+
+FQ_Quiz.renderPractice(document.getElementById('box1'), [
+  { q:'Jarak menjadi 2× lebih jauh, nilai y menjadi...', options:['1/4 kali','1/2 kali','2 kali','4 kali'], answer:0, explain:'1/(2²)=1/4.' },
+  { q:'Jarak menjadi 4× lebih jauh, nilai y menjadi...', options:['1/8 kali','1/16 kali','1/4 kali','16 kali'], answer:1, explain:'1/(4²)=1/16.' },
+  { q:'Jarak diperkecil menjadi 1/2 kali, nilai y menjadi...', options:['1/4 kali','1/2 kali','2 kali','4 kali'], answer:3, explain:'1/(1/2)²=4.' },
+  { q:'Jarak diperkecil menjadi 1/5 kali, nilai y menjadi...', options:['5 kali','1/5 kali','25 kali','1/25 kali'], answer:2, explain:'1/(1/5)²=25.' },
+], {});
+
+FQ_Quiz.renderPractice(document.getElementById('box2'), [
+  { q:'Segitiga siku-siku dengan sisi 6 dan 8, sisi miringnya adalah...', options:['10','12','14','100'], answer:0, explain:'√(36+64)=√100=10.' },
+  { q:'Segitiga siku-siku dengan sisi 5 dan 12, sisi miringnya adalah...', options:['13','17','15','60'], answer:0, explain:'√(25+144)=√169=13.' },
+  { q:'Segitiga siku-siku dengan sisi 9 dan 12, sisi miringnya adalah...', options:['21','15','225','3'], answer:1, explain:'√(81+144)=√225=15.' },
+], {});
+
+FQ_Quiz.renderPractice(document.getElementById('box3'), [
+  { q:'sin 30° = ...', options:['1/2','√2/2','√3/2','1'], answer:0, explain:'sin30° = 1/2.' },
+  { q:'cos 60° = ...', options:['1/2','√3/2','1','0'], answer:0, explain:'cos60° = 1/2.' },
+  { q:'sin 45° = ...', options:['1/2','½√2','½√3','1'], answer:1, explain:'sin45° = ½√2 ≈ 0,71.' },
+  { q:'cos 37° = ...', options:['3/5','4/5','1/2','1'], answer:1, explain:'cos37° = 4/5 = 0,8.' },
+], {});
+
+FQ_Quiz.renderPractice(document.getElementById('box4'), [
+  { q:'Dua gaya 5 N dan 12 N saling tegak lurus. Resultannya adalah...', options:['13 N','17 N','7 N','60 N'], answer:0, explain:'√(5²+12²)=√169=13 N.' },
+  { q:'Dua gaya segaris berlawanan arah: 10 N (kanan) dan 4 N (kiri). Resultannya adalah...', options:['14 N ke kanan','6 N ke kanan','6 N ke kiri','14 N ke kiri'], answer:1, explain:'10−4=6 N, arah mengikuti gaya lebih besar (kanan).' },
+], {});
+
+FQ_Quiz.renderPractice(document.getElementById('box5'), [
+  { q:'1/2 + 1/4 = ...', options:['3/4','1/6','2/6','1/2'], answer:0, explain:'1/2=2/4, jadi 2/4+1/4=3/4.' },
+  { q:'1/3 + 1/6 = ...', options:['1/2','2/9','1/9','1/6'], answer:0, explain:'1/3=2/6, jadi 2/6+1/6=3/6=1/2.' },
+  { q:'Jika 1/Cs = 1/3, maka Cs = ...', options:['3','1/3','9','1'], answer:0, explain:'Cs adalah kebalikan dari 1/3, yaitu 3.' },
+], {});
+</script>
+</body>
+</html>

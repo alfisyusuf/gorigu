@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wilayah 5 — Kastil Kapasitor | Fisika Quest</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="hudMount"></div>
+
+<div class="wrap">
+  <div class="center">
+    <div class="badge-pill">WILAYAH 5 / 6</div>
+    <h1>🏰 Kastil Kapasitor</h1>
+    <h2>Kapasitor &amp; Rangkaian</h2>
+  </div>
+
+  <div class="tabbar" id="tabbar">
+    <button data-tab="math" class="active">1. Pemanasan Matematika</button>
+    <button data-tab="materi">2. Materi</button>
+    <button data-tab="latihan">3. Latihan</button>
+    <button data-tab="boss">4. Bos: Penjaga Kastil</button>
+  </div>
+
+  <div class="tabpane active" id="pane-math">
+    <div class="pixel-panel tone-cyan">
+      <h2 style="margin-top:0;">🥋 Pemanasan: Pecahan &amp; KPK</h2>
+      <p>Menghitung kapasitor seri butuh menjumlahkan pecahan dengan KPK penyebut — yuk dilatih dulu supaya nanti tinggal fokus ke fisikanya.</p>
+      <div id="warmupBox"></div>
+    </div>
+  </div>
+
+  <div class="tabpane" id="pane-materi">
+    <div class="pixel-panel">
+      <div class="dots" id="dots"></div>
+
+      <div class="concept-card active" data-i="0">
+        <h2 style="margin-top:0;">① Apa Fungsi Kapasitor?</h2>
+        <p>Kapasitor berfungsi <b>menyimpan muatan listrik</b> dan <b>energi</b>. Bayangkan seperti tangki air yang diisi oleh pompa (baterai/sumber tegangan).</p>
+        <p class="center"><span class="formula">C = q / V</span> &nbsp; &nbsp; <span class="formula">W = ½ C V²</span></p>
+        <div class="visual-box">
+          <svg viewBox="0 0 220 150" width="220">
+            <rect x="70" y="30" width="80" height="100" fill="none" stroke="#3be8e0" stroke-width="3"/>
+            <rect x="74" y="70" width="72" height="56" fill="rgba(59,232,224,.35)"/>
+            <rect x="20" y="60" width="30" height="20" fill="#f6b93b"/>
+            <text x="35" y="74" text-anchor="middle" font-size="9" fill="#120c1f">pompa</text>
+            <line x1="50" y1="70" x2="70" y2="70" stroke="#f6b93b" stroke-width="3"/>
+            <text x="110" y="145" text-anchor="middle" font-size="10" fill="#f3ead2">kapasitor = tangki muatan</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="concept-card" data-i="1">
+        <h2 style="margin-top:0;">② Apa yang Memengaruhi Kapasitas?</h2>
+        <p class="center"><span class="formula" style="font-size:1.1rem;">C = ε₀ <span class="frac"><span class="num">A</span><span class="den">d</span></span></span></p>
+        <div class="visual-box">
+          <svg viewBox="0 0 240 130" width="240">
+            <rect x="40" y="20" width="14" height="90" fill="#ff6b6b"/>
+            <rect x="140" y="20" width="14" height="90" fill="#5b8dff"/>
+            <text x="95" y="20" text-anchor="middle" font-size="10" fill="#f3ead2">d</text>
+            <line x1="54" y1="65" x2="140" y2="65" stroke="#f6b93b" stroke-width="1" stroke-dasharray="3,3"/>
+          </svg>
+        </div>
+        <ul>
+          <li>Luas pelat (<span class="formula">A</span>) makin besar → <b>C makin besar</b></li>
+          <li>Jarak antar pelat (<span class="formula">d</span>) makin kecil (didekatkan) → <b>C makin besar</b></li>
+        </ul>
+      </div>
+
+      <div class="concept-card" data-i="2">
+        <h2 style="margin-top:0;">③ Rangkaian Seri &amp; Paralel</h2>
+        <div class="row">
+          <div>
+            <h3>Seri (muatan sama)</h3>
+            <p class="center"><span class="formula"><span class="frac"><span class="num">1</span><span class="den">Cₛ</span></span> = <span class="frac"><span class="num">1</span><span class="den">C₁</span></span> + <span class="frac"><span class="num">1</span><span class="den">C₂</span></span> + ...</span></p>
+          </div>
+          <div>
+            <h3>Paralel (tegangan sama)</h3>
+            <p class="center"><span class="formula">C_p = C₁ + C₂ + ...</span></p>
+          </div>
+        </div>
+        <p class="small">💡 Trik cepat: kapasitor <b>seri</b> selalu menghasilkan kapasitas <b>total lebih kecil</b> dari kapasitor terkecilnya. Kapasitor <b>paralel</b> selalu menghasilkan kapasitas total <b>lebih besar</b> dari yang terbesar.</p>
+      </div>
+
+      <div class="card-nav">
+        <button class="pixel-btn ghost" id="prevCard" style="font-size:.6rem;">← Sebelumnya</button>
+        <div class="dots" id="dots2"></div>
+        <button class="pixel-btn cyan" id="nextCard" style="font-size:.6rem;">Selanjutnya →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabpane" id="pane-latihan">
+    <div class="pixel-panel">
+      <h2 style="margin-top:0;">📝 Latihan Konsep</h2>
+      <div id="practiceBox"></div>
+    </div>
+  </div>
+
+  <div class="tabpane" id="pane-boss">
+    <div class="pixel-panel tone-magenta">
+      <h2 style="margin-top:0;">👾 Pertempuran Bos: Penjaga Kastil</h2>
+      <div id="bossBox"></div>
+    </div>
+  </div>
+
+  <div class="center" style="margin-top:2rem;">
+    <a href="index.html" class="pixel-btn ghost">← Kembali ke Peta</a>
+  </div>
+</div>
+
+<footer class="site">Wilayah 5 dari 6 — Fisika Quest Elektrostatika</footer>
+
+<script src="js/main.js"></script>
+<script src="js/quiz.js"></script>
+<script>
+const STAGE_ID = 'stage5';
+FQ.renderHUD('#hudMount', { backHref:'index.html' });
+if(!FQ.isUnlocked(STAGE_ID)){
+  document.querySelector('.wrap').innerHTML = `<div class="locked-note pixel-panel"><h2>🔒 Wilayah Terkunci</h2><p>Selesaikan dulu Wilayah 4: Bukit Potensial.</p><a href="index.html" class="pixel-btn cyan">Kembali ke Peta</a></div>`;
+  throw new Error('locked');
+}
+
+const tabs = document.querySelectorAll('#tabbar button');
+tabs.forEach(btn=>btn.addEventListener('click', ()=>{
+  FQ.sfx.click();
+  tabs.forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tabpane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('pane-'+btn.dataset.tab).classList.add('active');
+}));
+function markTabDone(tab){
+  const b = document.querySelector(`#tabbar button[data-tab="${tab}"]`);
+  if(b && !b.querySelector('.check')) b.innerHTML += ' <span class="check">✔</span>';
+}
+const prog = FQ.get()[STAGE_ID];
+if(prog.math) markTabDone('math');
+if(prog.latihan.done) markTabDone('latihan');
+if(prog.boss.done) markTabDone('boss');
+
+const warmupItems = [
+  { q:'Berapa hasil dari 1/2 + 1/3 ? <span class="small">(KPK dari 2 dan 3 adalah 6)</span>', options:['2/5','5/6','1/6','3/5'], answer:1,
+    hint:'1/2 = 3/6 dan 1/3 = 2/6, jadi 3/6+2/6 = 5/6.', explain:'1/2 + 1/3 = 3/6 + 2/6 = 5/6.' },
+  { q:'Berapa hasil dari 1/4 + 1/4 ?', type:'fill', answer:0.5, tol:0.01, hint:'1/4 + 1/4 = 2/4 = 1/2 = 0,5', explain:'1/4+1/4 = 1/2 = 0,5.' },
+  { q:'Dua kapasitor 4 μF dan 4 μF disusun seri. Berapa 1/Cs?', options:['1/2','2','1/8','8'], answer:0,
+    hint:'1/Cs = 1/4 + 1/4 = 2/4 = 1/2', explain:'1/Cs = 1/4+1/4 = 1/2, maka Cs = 2 μF.' },
+  { q:'Jika 1/Cs = 1/2, berapa Cs?', type:'fill', answer:2, tol:0.05, hint:'Cs adalah kebalikan dari 1/2.', explain:'Cs = 1/(1/2) = 2.' },
+];
+FQ_Quiz.renderMathWarmup(document.getElementById('warmupBox'), warmupItems, {
+  onDone(c,t){ FQ.set(STAGE_ID,'math',true); markTabDone('math'); FQ.toast(`Pemanasan selesai! ${c}/${t}`); }
+});
+
+const cards = document.querySelectorAll('.concept-card');
+let cardIdx=0;
+function showCard(i){
+  cardIdx = Math.max(0, Math.min(cards.length-1,i));
+  cards.forEach(c=>c.classList.remove('active'));
+  cards[cardIdx].classList.add('active');
+  [document.getElementById('dots'),document.getElementById('dots2')].forEach(d=>{
+    d.innerHTML = Array.from(cards).map((_,j)=>`<span class="${j===cardIdx?'on':''}"></span>`).join('');
+  });
+  document.getElementById('prevCard').disabled = cardIdx===0;
+  if(cardIdx===cards.length-1) FQ.set(STAGE_ID,'materi',true);
+}
+document.getElementById('prevCard').addEventListener('click', ()=>{FQ.sfx.click(); showCard(cardIdx-1);});
+document.getElementById('nextCard').addEventListener('click', ()=>{FQ.sfx.click(); showCard(cardIdx+1);});
+showCard(0);
+
+const practiceItems = [
+  { q:'Fungsi utama kapasitor adalah...', options:['Menghambat arus saja','Menyimpan muatan dan energi listrik','Mengubah AC ke DC','Menghasilkan medan magnet'], answer:1, explain:'Kapasitor menyimpan muatan (q=CV) dan energi (W=½CV²).' },
+  { q:'Jika jarak antar pelat kapasitor diperkecil, kapasitasnya akan...', options:['Mengecil','Membesar','Tetap','Menjadi nol'], answer:1, explain:'C=ε₀A/d, d mengecil → C membesar (berbanding terbalik).' },
+  { q:'Dua kapasitor disusun paralel akan memiliki kapasitas total...', options:['Lebih kecil dari yang terkecil','Sama dengan rata-rata','Lebih besar dari yang terbesar','Selalu nol'], answer:2, explain:'Cp = C1+C2+..., selalu lebih besar dari komponen terbesarnya.' },
+  { q:'Pada rangkaian seri kapasitor, besaran yang sama di tiap kapasitor adalah...', options:['Tegangan','Muatan','Kapasitas','Energi'], answer:1, explain:'Pada rangkaian seri, muatan (q) tiap kapasitor sama besar.' },
+  { q:'Dua kapasitor 2 μF disusun paralel. Berapa kapasitas totalnya?', options:['1 μF','2 μF','4 μF','0,5 μF'], answer:2, explain:'Cp = 2+2 = 4 μF.' },
+];
+FQ_Quiz.renderPractice(document.getElementById('practiceBox'), practiceItems, {
+  onDone(c,t){ FQ.set(STAGE_ID,'latihan',{done:true,score:c}); markTabDone('latihan'); FQ.toast(`Latihan selesai! Skor ${c}/${t}`); }
+});
+
+const bossSteps = [
+  { q:'Apa yang terjadi pada kapasitas kapasitor keping sejajar jika luas pelat (A) diperbesar?', weight:20,
+    options:['C mengecil','C membesar','C tetap','C menjadi negatif'], answer:1,
+    explain:'C=ε₀A/d, A besar → C besar (berbanding lurus).' },
+  { q:'Tiga kapasitor identik 6 μF disusun paralel. Berapa kapasitas totalnya?', weight:30,
+    options:['2 μF','6 μF','18 μF','1/18 μF'], answer:2,
+    explain:'Cp = 6+6+6 = 18 μF.' },
+  { q:'Dua kapasitor 3 μF dan 6 μF disusun seri. Berapa kapasitas totalnya?', weight:50,
+    options:['9 μF','4,5 μF','2 μF','1/9 μF'], answer:2,
+    explain:'1/Cs = 1/3+1/6 = 2/6+1/6 = 3/6 = 1/2, maka Cs = 2 μF.' },
+];
+FQ_Quiz.renderBoss(document.getElementById('bossBox'), bossSteps, {
+  bossName:'Penjaga Kastil', bossEmoji:'🛡️',
+  onWin(){
+    FQ.set(STAGE_ID,'boss',{done:true,stars:3});
+    markTabDone('boss'); FQ.sfx.unlock();
+    setTimeout(()=>FQ.toast('Wilayah 6: Menara Akhir telah terbuka! 🗼'), 800);
+  }
+});
+</script>
+</body>
+</html>
