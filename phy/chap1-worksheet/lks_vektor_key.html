@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Answer Key - Electrostatics Vector Worksheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+  :root {
+    --text: #1a1a1a;
+    --border: #333;
+    --bg: #f9f9fa;
+    --accent: #16a34a; /* Green accent for the answer key */
+    --red: #dc2626;
+    --blue: #2563eb;
+  }
+
+  * { box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    margin: 0;
+    padding: 2rem;
+  }
+
+  .paper {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 2.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    position: relative;
+  }
+
+  .watermark-badge {
+    position: absolute;
+    top: 2rem;
+    right: 2.5rem;
+    background: var(--accent);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    border-left: 5px solid var(--accent);
+    padding-left: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .exercise {
+    border: 2px solid var(--border);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    page-break-inside: avoid;
+  }
+
+  .solution-box {
+    background-color: #f0fdf4;
+    border: 1px dashed var(--accent);
+    padding: 1.5rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+  }
+
+  .solution-box p {
+    margin-top: 0;
+  }
+
+  .footer-note {
+    text-align: right;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-style: italic;
+    margin-top: 2rem;
+  }
+
+  @media print {
+    body {
+      background: white;
+      padding: 0;
+    }
+    .paper {
+      box-shadow: none;
+      border: none;
+      padding: 0;
+      max-width: 100%;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+    .footer-note {
+      position: fixed;
+      bottom: 15px;
+      right: 20px;
+      margin-top: 0;
+    }
+    .watermark-badge {
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      background: white;
+    }
+  }
+</style>
+
+<!-- MathJax Integration -->
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']],
+      displayMath: [['\\[', '\\]']]
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+
+<div class="paper">
+  <div class="watermark-badge">TEACHER'S ANSWER KEY</div>
+
+  <div class="header">
+    <div>
+      <h1>ANSWER KEY</h1>
+      <p style="margin: 0; font-weight: 600;">Force & Electric Field Vector Analysis</p>
+    </div>
+  </div>
+
+  <h2>3. Skill Test Solutions</h2>
+  
+  <div class="exercise">
+    <p><strong>Problem 1 (Collinear):</strong> Three collinear charges. Charge A (\(+2 \, \mu\text{C}\)) is on the left, charge B (\(-1 \, \mu\text{C}\)) is in the middle, and charge C (\(+4 \, \mu\text{C}\)) is on the right. The distance from A to B is \(3 \, \text{cm}\), and from B to C is \(3 \, \text{cm}\). Determine the magnitude and direction of the total Coulomb force experienced by charge B!</p>
+    
+    <div class="solution-box">
+      <p><strong>Step 1: Calculate the magnitude of \(F_{BA}\) and \(F_{BC}\)</strong></p>
+      \[
+      F_{BA} = k \frac{|q_A \cdot q_B|}{r_{AB}^2} = 9 \times 10^9 \frac{(2 \times 10^{-6})(1 \times 10^{-6})}{(3 \times 10^{-2})^2} = 9 \times 10^9 \frac{2 \times 10^{-12}}{9 \times 10^{-4}} = 20 \, \text{N}
+      \]
+      <em>Direction of \(F_{BA}\): Left (B is attracted to A).</em>
+
+      \[
+      F_{BC} = k \frac{|q_B \cdot q_C|}{r_{BC}^2} = 9 \times 10^9 \frac{(1 \times 10^{-6})(4 \times 10^{-6})}{(3 \times 10^{-2})^2} = 9 \times 10^9 \frac{4 \times 10^{-12}}{9 \times 10^{-4}} = 40 \, \text{N}
+      \]
+      <em>Direction of \(F_{BC}\): Right (B is attracted to C).</em>
+
+      <p><strong>Step 2: Calculate the Resultant Force (\(\Sigma F_B\))</strong></p>
+      <p>Assuming Right is positive and Left is negative:</p>
+      \[
+      \Sigma F_B = F_{BC} - F_{BA} = 40 \, \text{N} - 20 \, \text{N} = 20 \, \text{N}
+      \]
+      <p><strong>Final Answer:</strong> The total force is <strong>\(20 \, \text{N}\) to the Right (towards C)</strong>.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <p><strong>Problem 2 (Perpendicular):</strong> Point P is located \(3 \, \text{cm}\) exactly above charge Q1 (\(+4 \, \mu\text{C}\)) and \(4 \, \text{cm}\) to the left of charge Q2 (\(-3 \, \mu\text{C}\)). If the constant \( k = 9 \times 10^9 \), calculate the total electric field strength at point P!</p>
+    
+    <div class="solution-box">
+      <p><strong>Step 1: Calculate Electric Field from Q1 (\(E_1\))</strong></p>
+      \[
+      E_1 = k \frac{|Q_1|}{r_1^2} = 9 \times 10^9 \frac{4 \times 10^{-6}}{(3 \times 10^{-2})^2} = 9 \times 10^9 \frac{4 \times 10^{-6}}{9 \times 10^{-4}} = 4 \times 10^7 \, \text{N/C}
+      \]
+      <em>Direction: Upward (away from positive charge Q1).</em>
+
+      <p><strong>Step 2: Calculate Electric Field from Q2 (\(E_2\))</strong></p>
+      \[
+      E_2 = k \frac{|Q_2|}{r_2^2} = 9 \times 10^9 \frac{3 \times 10^{-6}}{(4 \times 10^{-2})^2} = 9 \times 10^9 \frac{3 \times 10^{-6}}{16 \times 10^{-4}} = \frac{27}{16} \times 10^7 \, \text{N/C} = 1.6875 \times 10^7 \, \text{N/C}
+      \]
+      <em>Direction: Rightward (towards negative charge Q2).</em>
+
+      <p><strong>Step 3: Calculate the Resultant Electric Field (\(E_p\))</strong></p>
+      <p>Since \(E_1\) is pointing Up and \(E_2\) is pointing Right, they are perpendicular (\(90^\circ\)):</p>
+      \[
+      E_p = \sqrt{E_1^2 + E_2^2} = \sqrt{(4 \times 10^7)^2 + (1.6875 \times 10^7)^2} \approx 4.34 \times 10^7 \, \text{N/C}
+      \]
+      <p><strong>Final Answer:</strong> The total electric field is approximately <strong>\(4.34 \times 10^7 \, \text{N/C}\)</strong>.</p>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <div class="exercise">
+    <p><strong>Problem 3 (Resultant Challenge):</strong> Two attractive electrical forces act on a charge. The first force is \( 6 \, \text{N} \) pointing North, and the second force is \( 8 \, \text{N} \) pointing East. What is the magnitude of the resultant force experienced by the charge?</p>
+    
+    <div class="solution-box">
+      <p><strong>Step 1: Identify the angle</strong></p>
+      <p>North and East are perpendicular to each other, so the angle is \(90^\circ\). We can use the Pythagorean theorem directly.</p>
+
+      <p><strong>Step 2: Calculate the Resultant (\(R\))</strong></p>
+      \[
+      R = \sqrt{F_{\text{North}}^2 + F_{\text{East}}^2}
+      \]
+      \[
+      R = \sqrt{6^2 + 8^2}
+      \]
+      \[
+      R = \sqrt{36 + 64}
+      \]
+      \[
+      R = \sqrt{100} = 10 \, \text{N}
+      \]
+      <p><strong>Final Answer:</strong> The resultant force magnitude is <strong>\(10 \, \text{N}\)</strong> <em>(Following the 3-4-5 triangle ratio rule: \(2(3)-2(4)-2(5) \rightarrow 6-8-10\))</em>.</p>
+    </div>
+  </div>
+
+  <!-- CUSTOM FOOTER -->
+  <div class="footer-note">
+    Mr. Alfi's Physics Class, SMA ABBS Surakarta
+  </div>
+
+</div>
+
+</body>
+</html>
