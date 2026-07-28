@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electrostatics Vector Worksheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+  :root {
+    --text: #1a1a1a;
+    --border: #333;
+    --bg: #f9f9fa;
+    --accent: #2563eb;
+    --red: #dc2626;
+    --blue: #2563eb;
+  }
+
+  * { box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.5;
+    margin: 0;
+    padding: 2rem;
+  }
+
+  .paper {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 2.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    position: relative; /* For absolute positioning of the footer */
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 3px solid var(--text);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+  }
+
+  .student-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 250px;
+  }
+
+  .field {
+    border-bottom: 1px dashed var(--text);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    border-left: 5px solid var(--text);
+    padding-left: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .box {
+    border: 2px solid var(--text);
+    border-radius: 8px;
+    padding: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .svg-container {
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .math {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  .exercise {
+    border: 2px solid var(--text);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    page-break-inside: avoid;
+  }
+
+  .workspace {
+    height: 250px; 
+    background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+    background-size: 20px 20px;
+    margin-top: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+  }
+
+  .footer-note {
+    text-align: right;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    font-style: italic;
+    margin-top: 2rem;
+  }
+
+  /* Specific settings for printing (Ctrl+P) */
+  @media print {
+    body {
+      background: white;
+      padding: 0;
+    }
+    .paper {
+      box-shadow: none;
+      border: none;
+      padding: 0;
+      max-width: 100%;
+    }
+    .workspace {
+      background-image: none; /* Hide dot matrix when printing for a cleaner look */
+    }
+    .page-break {
+      page-break-before: always;
+    }
+    .footer-note {
+      position: fixed;
+      bottom: 15px;
+      right: 20px;
+      margin-top: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="paper">
+  <div class="header">
+    <div>
+      <h1>WORKSHEET</h1>
+      <p style="margin: 0; font-weight: 600;">Force & Electric Field Vector Analysis</p>
+    </div>
+    <div class="student-info">
+      <div class="field"><span>Name:</span> <span></span></div>
+      <div class="field"><span>Class:</span> <span></span></div>
+    </div>
+  </div>
+
+  <p><strong>Instructions:</strong> The positive (+) and negative (−) signs on charges are only used to determine the direction of the force arrows (Attract/Repel). Do not include the minus sign in your Coulomb's Law calculations!</p>
+
+  <!-- MATERI 1: 1 Dimension -->
+  <h2>1. Collinear Vectors (1 Dimension)</h2>
+  <div class="box">
+    <p>If the charges are arranged in a straight line, determine the direction of the force first. Force to the right = Positive, Force to the left = Negative. The resultant is the algebraic sum.</p>
+    
+    <div class="svg-container">
+      <svg viewBox="0 0 500 120" width="100%" max-width="500">
+        <defs>
+          <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 Z" fill="#dc2626"/></marker>
+          <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 Z" fill="#2563eb"/></marker>
+        </defs>
+        
+        <!-- Dashed axis line -->
+        <line x1="50" y1="60" x2="450" y2="60" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5" />
+        
+        <!-- Charge A -->
+        <circle cx="100" cy="60" r="18" fill="white" stroke="#dc2626" stroke-width="3"/>
+        <text x="100" y="65" text-anchor="middle" font-weight="bold" fill="#dc2626">+</text>
+        <text x="100" y="95" text-anchor="middle" font-size="12">A (Source)</text>
+
+        <!-- Charge B (Focus) -->
+        <circle cx="250" cy="60" r="18" fill="white" stroke="#2563eb" stroke-width="3"/>
+        <text x="250" y="65" text-anchor="middle" font-weight="bold" fill="#2563eb">−</text>
+        <text x="250" y="95" text-anchor="middle" font-size="12">B (Focus)</text>
+
+        <!-- Charge C -->
+        <circle cx="400" cy="60" r="18" fill="white" stroke="#2563eb" stroke-width="3"/>
+        <text x="400" y="65" text-anchor="middle" font-weight="bold" fill="#2563eb">−</text>
+        <text x="400" y="95" text-anchor="middle" font-size="12">C (Source)</text>
+
+        <!-- Force Vectors on B -->
+        <!-- Pulled by A to the left -->
+        <line x1="225" y1="40" x2="160" y2="40" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowRed)"/>
+        <text x="180" y="30" text-anchor="middle" font-size="12" fill="#dc2626">F_BA (Left)</text>
+        
+        <!-- Repelled by C to the right -->
+        <line x1="275" y1="40" x2="340" y2="40" stroke="#2563eb" stroke-width="3" marker-end="url(#arrowBlue)"/>
+        <text x="320" y="30" text-anchor="middle" font-size="12" fill="#2563eb">F_BC (Right)</text>
+      </svg>
+    </div>
+    <p class="math">Resultant force on B: ΣF = F_BC - F_BA</p>
+  </div>
+
+  <!-- MATERI 2: 2 Dimensions -->
+  <h2>2. Perpendicular Vectors (Right-Angled)</h2>
+  <div class="box">
+    <p>If two forces are perpendicular to each other (forming a 90° angle), use the Pythagorean theorem to find the resultant. <br>
+    <em>Trick: Remember the 3-4-5 and 6-8-10 number pairs!</em></p>
+    
+    <div class="svg-container">
+      <svg viewBox="0 0 300 200" width="100%" max-width="300">
+        <defs>
+          <marker id="arrowBlack" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 Z" fill="#1a1a1a"/></marker>
+        </defs>
+
+        <!-- Vector Y (F1) -->
+        <line x1="50" y1="150" x2="50" y2="50" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrowBlack)"/>
+        <text x="35" y="100" text-anchor="end" font-weight="bold">F1</text>
+
+        <!-- Vector X (F2) -->
+        <line x1="50" y1="150" x2="200" y2="150" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrowBlack)"/>
+        <text x="130" y="170" text-anchor="middle" font-weight="bold">F2</text>
+
+        <!-- Dashed lines forming a parallelogram -->
+        <line x1="50" y1="50" x2="200" y2="50" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5"/>
+        <line x1="200" y1="150" x2="200" y2="50" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5"/>
+
+        <!-- Resultant -->
+        <line x1="50" y1="150" x2="195" y2="55" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowRed)"/>
+        <text x="140" y="90" text-anchor="middle" font-weight="bold" fill="#dc2626">R = √(F1² + F2²)</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- EXERCISES -->
+  <h2>3. Skill Test (Workspace)</h2>
+  
+  <div class="exercise">
+    <p><strong>Problem 1 (Collinear):</strong> Three collinear charges. Charge A (+2 μC) is on the left, charge B (-1 μC) is in the middle, and charge C (+4 μC) is on the right. The distance from A to B is 3 cm, and from B to C is 3 cm. Determine the magnitude and direction of the total Coulomb force experienced by charge B!</p>
+    <p><em>Hint: Calculate F_BA and F_BC separately first.</em></p>
+    <div class="workspace"></div>
+  </div>
+
+  <div class="exercise">
+    <p><strong>Problem 2 (Perpendicular):</strong> Point P is located 3 cm exactly above charge Q1 (+4 μC) and 4 cm to the left of charge Q2 (-3 μC). If the constant k = 9×10⁹, calculate the total electric field strength at point P!</p>
+    <p><em>Hint: Draw the directions of E1 and E2 from point P first. Are they perpendicular to each other?</em></p>
+    <div class="workspace"></div>
+  </div>
+
+  <div class="exercise">
+    <p><strong>Problem 3 (Resultant Challenge):</strong> Two attractive electrical forces act on a charge. The first force is 6 Newtons pointing North, and the second force is 8 Newtons pointing East. What is the magnitude of the resultant force experienced by the charge?</p>
+    <div class="workspace" style="height: 150px;"></div>
+  </div>
+
+  <!-- CUSTOM FOOTER -->
+  <div class="footer-note">
+    Mr. Alfi's Physics Class, SMA ABBS Surakarta
+  </div>
+
+</div>
+
+</body>
+</html>
