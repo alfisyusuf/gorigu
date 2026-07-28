@@ -11,7 +11,7 @@
     --text: #1a1a1a;
     --border: #333;
     --bg: #f9f9fa;
-    --accent: #16a34a; /* Green accent for the answer key */
+    --accent: #16a34a; /* Hijau untuk kunci jawaban */
     --red: #dc2626;
     --blue: #2563eb;
   }
@@ -22,16 +22,17 @@
     font-family: 'Inter', sans-serif;
     color: var(--text);
     background: var(--bg);
-    line-height: 1.5;
+    line-height: 1.4;
     margin: 0;
     padding: 2rem;
+    font-size: 14px;
   }
 
   .paper {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     background: white;
-    padding: 2.5rem;
+    padding: 2rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     border: 1px solid #e5e7eb;
     position: relative;
@@ -40,13 +41,13 @@
   .watermark-badge {
     position: absolute;
     top: 2rem;
-    right: 2.5rem;
+    right: 2rem;
     background: var(--accent);
     color: white;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.8rem;
     font-weight: bold;
     border-radius: 4px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     letter-spacing: 1px;
   }
 
@@ -54,57 +55,87 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    border-bottom: 3px solid var(--accent);
-    padding-bottom: 1rem;
-    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
   }
 
   .header h1 {
     margin: 0;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     text-transform: uppercase;
     color: var(--accent);
   }
 
   h2 {
-    font-size: 1.3rem;
-    border-left: 5px solid var(--accent);
-    padding-left: 0.8rem;
-    margin-top: 2rem;
+    font-size: 1.1rem;
+    border-left: 4px solid var(--accent);
+    padding-left: 0.5rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
   }
 
   .exercise {
-    border: 2px solid var(--border);
+    border: 1.5px solid var(--border);
     padding: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .exercise p {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
   }
 
   .solution-box {
     background-color: #f0fdf4;
     border: 1px dashed var(--accent);
-    padding: 1.5rem;
+    padding: 1rem;
     margin-top: 1rem;
     border-radius: 4px;
     font-size: 0.95rem;
   }
 
-  .solution-box p {
-    margin-top: 0;
+  /* Flexbox untuk menyandingkan gambar dan teks */
+  .solution-grid {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+  
+  .solution-vis {
+    flex: 0 0 auto;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  .solution-math {
+    flex: 1;
+  }
+
+  .page-break {
+    page-break-before: always;
+    break-before: page;
   }
 
   .footer-note {
     text-align: right;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #9ca3af;
     font-style: italic;
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   @media print {
+    @page { margin: 1cm; }
     body {
       background: white;
       padding: 0;
+      font-size: 11pt;
     }
     .paper {
       box-shadow: none;
@@ -112,33 +143,23 @@
       padding: 0;
       max-width: 100%;
     }
-    .page-break {
-      page-break-before: always;
+    .watermark-badge {
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      background: white;
     }
     .footer-note {
       position: fixed;
-      bottom: 15px;
-      right: 20px;
-      margin-top: 0;
-    }
-    .watermark-badge {
-      border: 2px solid var(--accent);
-      color: var(--accent);
-      background: white;
+      bottom: 0;
+      right: 0;
     }
   }
 </style>
 
-<!-- MathJax Integration -->
 <script>
   MathJax = {
-    tex: {
-      inlineMath: [['\\(', '\\)']],
-      displayMath: [['\\[', '\\]']]
-    },
-    svg: {
-      fontCache: 'global'
-    }
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' }
   };
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -158,82 +179,192 @@
 
   <h2>3. Skill Test Solutions</h2>
   
+  <!-- PROBLEM 1 -->
   <div class="exercise">
-    <p><strong>Problem 1 (Collinear):</strong> Three collinear charges. Charge A (\(+2 \, \mu\text{C}\)) is on the left, charge B (\(-1 \, \mu\text{C}\)) is in the middle, and charge C (\(+4 \, \mu\text{C}\)) is on the right. The distance from A to B is \(3 \, \text{cm}\), and from B to C is \(3 \, \text{cm}\). Determine the magnitude and direction of the total Coulomb force experienced by charge B!</p>
+    <p><strong>Problem 1 (Collinear Forces):</strong> Three collinear charges. Charge A (\(+2 \, \mu\text{C}\)) is on the left, charge B (\(-1 \, \mu\text{C}\)) is in the middle, and charge C (\(+4 \, \mu\text{C}\)) is on the right. The distance from A to B is \(3 \, \text{cm}\), and from B to C is \(3 \, \text{cm}\). Determine the magnitude and direction of the total Coulomb force experienced by charge B!</p>
     
     <div class="solution-box">
-      <p><strong>Step 1: Calculate the magnitude of \(F_{BA}\) and \(F_{BC}\)</strong></p>
-      \[
-      F_{BA} = k \frac{|q_A \cdot q_B|}{r_{AB}^2} = 9 \times 10^9 \frac{(2 \times 10^{-6})(1 \times 10^{-6})}{(3 \times 10^{-2})^2} = 9 \times 10^9 \frac{2 \times 10^{-12}}{9 \times 10^{-4}} = 20 \, \text{N}
-      \]
-      <em>Direction of \(F_{BA}\): Left (B is attracted to A).</em>
-
-      \[
-      F_{BC} = k \frac{|q_B \cdot q_C|}{r_{BC}^2} = 9 \times 10^9 \frac{(1 \times 10^{-6})(4 \times 10^{-6})}{(3 \times 10^{-2})^2} = 9 \times 10^9 \frac{4 \times 10^{-12}}{9 \times 10^{-4}} = 40 \, \text{N}
-      \]
-      <em>Direction of \(F_{BC}\): Right (B is attracted to C).</em>
-
-      <p><strong>Step 2: Calculate the Resultant Force (\(\Sigma F_B\))</strong></p>
-      <p>Assuming Right is positive and Left is negative:</p>
-      \[
-      \Sigma F_B = F_{BC} - F_{BA} = 40 \, \text{N} - 20 \, \text{N} = 20 \, \text{N}
-      \]
-      <p><strong>Final Answer:</strong> The total force is <strong>\(20 \, \text{N}\) to the Right (towards C)</strong>.</p>
+      <div class="solution-grid">
+        <!-- Visual P1 -->
+        <div class="solution-vis" style="width: 250px;">
+          <svg viewBox="0 0 250 100" width="100%">
+            <defs>
+              <marker id="arrRed" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#dc2626"/></marker>
+              <marker id="arrBlu" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2563eb"/></marker>
+            </defs>
+            <line x1="20" y1="50" x2="230" y2="50" stroke="#ccc" stroke-dasharray="4,4"/>
+            <!-- Charges -->
+            <circle cx="40" cy="50" r="12" fill="none" stroke="#dc2626" stroke-width="2"/>
+            <text x="40" y="54" text-anchor="middle" fill="#dc2626" font-size="10">+</text>
+            <text x="40" y="75" text-anchor="middle" font-size="10">A</text>
+            
+            <circle cx="125" cy="50" r="12" fill="none" stroke="#2563eb" stroke-width="2"/>
+            <text x="125" y="54" text-anchor="middle" fill="#2563eb" font-size="10">−</text>
+            <text x="125" y="75" text-anchor="middle" font-size="10">B</text>
+            
+            <circle cx="210" cy="50" r="12" fill="none" stroke="#dc2626" stroke-width="2"/>
+            <text x="210" y="54" text-anchor="middle" fill="#dc2626" font-size="10">+</text>
+            <text x="210" y="75" text-anchor="middle" font-size="10">C</text>
+            
+            <!-- Forces -->
+            <line x1="110" y1="30" x2="60" y2="30" stroke="#dc2626" stroke-width="2" marker-end="url(#arrRed)"/>
+            <text x="85" y="22" text-anchor="middle" font-size="10" fill="#dc2626">F_BA</text>
+            
+            <line x1="140" y1="30" x2="190" y2="30" stroke="#2563eb" stroke-width="2" marker-end="url(#arrBlu)"/>
+            <text x="165" y="22" text-anchor="middle" font-size="10" fill="#2563eb">F_BC</text>
+          </svg>
+        </div>
+        <!-- Math P1 -->
+        <div class="solution-math">
+          <strong>Step 1: Calculate magnitudes</strong><br>
+          \( F_{BA} = 9 \times 10^9 \frac{(2 \times 10^{-6})(1 \times 10^{-6})}{(0.03)^2} = \frac{18 \times 10^{-3}}{9 \times 10^{-4}} = 20 \, \text{N} \) (Left)<br><br>
+          \( F_{BC} = 9 \times 10^9 \frac{(1 \times 10^{-6})(4 \times 10^{-6})}{(0.03)^2} = \frac{36 \times 10^{-3}}{9 \times 10^{-4}} = 40 \, \text{N} \) (Right)<br><br>
+          <strong>Step 2: Resultant</strong><br>
+          \( \Sigma F_B = F_{BC} - F_{BA} = 40 - 20 = \mathbf{20 \, \text{N}} \) <strong>to the Right</strong>.
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- PROBLEM 2 -->
   <div class="exercise">
-    <p><strong>Problem 2 (Perpendicular):</strong> Point P is located \(3 \, \text{cm}\) exactly above charge Q1 (\(+4 \, \mu\text{C}\)) and \(4 \, \text{cm}\) to the left of charge Q2 (\(-3 \, \mu\text{C}\)). If the constant \( k = 9 \times 10^9 \), calculate the total electric field strength at point P!</p>
+    <p><strong>Problem 2 (Perpendicular Fields):</strong> Point P is located \(3 \, \text{cm}\) exactly above charge Q1 (\(+4 \, \mu\text{C}\)) and \(4 \, \text{cm}\) to the left of charge Q2 (\(-3 \, \mu\text{C}\)). If the constant \( k = 9 \times 10^9 \), calculate the total electric field strength at point P!</p>
     
     <div class="solution-box">
-      <p><strong>Step 1: Calculate Electric Field from Q1 (\(E_1\))</strong></p>
-      \[
-      E_1 = k \frac{|Q_1|}{r_1^2} = 9 \times 10^9 \frac{4 \times 10^{-6}}{(3 \times 10^{-2})^2} = 9 \times 10^9 \frac{4 \times 10^{-6}}{9 \times 10^{-4}} = 4 \times 10^7 \, \text{N/C}
-      \]
-      <em>Direction: Upward (away from positive charge Q1).</em>
-
-      <p><strong>Step 2: Calculate Electric Field from Q2 (\(E_2\))</strong></p>
-      \[
-      E_2 = k \frac{|Q_2|}{r_2^2} = 9 \times 10^9 \frac{3 \times 10^{-6}}{(4 \times 10^{-2})^2} = 9 \times 10^9 \frac{3 \times 10^{-6}}{16 \times 10^{-4}} = \frac{27}{16} \times 10^7 \, \text{N/C} = 1.6875 \times 10^7 \, \text{N/C}
-      \]
-      <em>Direction: Rightward (towards negative charge Q2).</em>
-
-      <p><strong>Step 3: Calculate the Resultant Electric Field (\(E_p\))</strong></p>
-      <p>Since \(E_1\) is pointing Up and \(E_2\) is pointing Right, they are perpendicular (\(90^\circ\)):</p>
-      \[
-      E_p = \sqrt{E_1^2 + E_2^2} = \sqrt{(4 \times 10^7)^2 + (1.6875 \times 10^7)^2} \approx 4.34 \times 10^7 \, \text{N/C}
-      \]
-      <p><strong>Final Answer:</strong> The total electric field is approximately <strong>\(4.34 \times 10^7 \, \text{N/C}\)</strong>.</p>
+      <div class="solution-grid">
+        <!-- Visual P2 -->
+        <div class="solution-vis" style="width: 200px;">
+          <svg viewBox="0 0 200 150" width="100%">
+            <defs>
+              <marker id="arrBlk" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#000"/></marker>
+            </defs>
+            <line x1="40" y1="120" x2="40" y2="40" stroke="#ccc" stroke-dasharray="3,3"/>
+            <line x1="40" y1="40" x2="160" y2="40" stroke="#ccc" stroke-dasharray="3,3"/>
+            
+            <circle cx="40" cy="120" r="10" fill="none" stroke="#dc2626" stroke-width="2"/>
+            <text x="40" y="124" text-anchor="middle" fill="#dc2626" font-size="10">+</text>
+            <text x="20" y="124" text-anchor="middle" font-size="10">Q1</text>
+            
+            <circle cx="160" cy="40" r="10" fill="none" stroke="#2563eb" stroke-width="2"/>
+            <text x="160" y="44" text-anchor="middle" fill="#2563eb" font-size="10">−</text>
+            <text x="180" y="44" text-anchor="middle" font-size="10">Q2</text>
+            
+            <circle cx="40" cy="40" r="3" fill="#000"/>
+            <text x="25" y="35" text-anchor="middle" font-size="10">P</text>
+            
+            <line x1="40" y1="40" x2="40" y2="10" stroke="#000" stroke-width="1.5" marker-end="url(#arrBlk)"/>
+            <text x="55" y="20" text-anchor="middle" font-size="10">E1</text>
+            
+            <line x1="40" y1="40" x2="90" y2="40" stroke="#000" stroke-width="1.5" marker-end="url(#arrBlk)"/>
+            <text x="75" y="35" text-anchor="middle" font-size="10">E2</text>
+          </svg>
+        </div>
+        <!-- Math P2 -->
+        <div class="solution-math">
+          <strong>Step 1: E from each charge</strong><br>
+          \( E_1 = 9 \times 10^9 \frac{4 \times 10^{-6}}{(0.03)^2} = 4 \times 10^7 \, \text{N/C} \) (Upwards, away from Q1)<br><br>
+          \( E_2 = 9 \times 10^9 \frac{3 \times 10^{-6}}{(0.04)^2} = \frac{27 \times 10^3}{16 \times 10^{-4}} = 1.6875 \times 10^7 \, \text{N/C} \) (Right, towards Q2)<br><br>
+          <strong>Step 2: Pythagorean Resultant</strong><br>
+          \( E_P = \sqrt{(4 \times 10^7)^2 + (1.6875 \times 10^7)^2} \approx \mathbf{4.34 \times 10^7 \, \text{N/C}} \)
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="page-break"></div>
 
+  <!-- PROBLEM 3 -->
   <div class="exercise">
-    <p><strong>Problem 3 (Resultant Challenge):</strong> Two attractive electrical forces act on a charge. The first force is \( 6 \, \text{N} \) pointing North, and the second force is \( 8 \, \text{N} \) pointing East. What is the magnitude of the resultant force experienced by the charge?</p>
-    
+    <p><strong>Problem 3 (Resultant Challenge):</strong> Two attractive electrical forces act on a test charge. The first force is \( 6 \, \text{N} \) pointing North, and the second force is \( 8 \, \text{N} \) pointing East. What is the magnitude of the resultant force experienced by the charge?</p>
     <div class="solution-box">
-      <p><strong>Step 1: Identify the angle</strong></p>
-      <p>North and East are perpendicular to each other, so the angle is \(90^\circ\). We can use the Pythagorean theorem directly.</p>
-
-      <p><strong>Step 2: Calculate the Resultant (\(R\))</strong></p>
-      \[
-      R = \sqrt{F_{\text{North}}^2 + F_{\text{East}}^2}
-      \]
-      \[
-      R = \sqrt{6^2 + 8^2}
-      \]
-      \[
-      R = \sqrt{36 + 64}
-      \]
-      \[
-      R = \sqrt{100} = 10 \, \text{N}
-      \]
-      <p><strong>Final Answer:</strong> The resultant force magnitude is <strong>\(10 \, \text{N}\)</strong> <em>(Following the 3-4-5 triangle ratio rule: \(2(3)-2(4)-2(5) \rightarrow 6-8-10\))</em>.</p>
+      <div class="solution-grid">
+        <div class="solution-vis" style="width: 180px;">
+          <svg viewBox="0 0 150 150" width="100%">
+            <defs><marker id="arrB" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#000"/></marker></defs>
+            <line x1="30" y1="120" x2="30" y2="40" stroke="#000" stroke-width="2" marker-end="url(#arrB)"/>
+            <text x="15" y="80" text-anchor="middle" font-size="12">6 N</text>
+            <line x1="30" y1="120" x2="110" y2="120" stroke="#000" stroke-width="2" marker-end="url(#arrB)"/>
+            <text x="70" y="135" text-anchor="middle" font-size="12">8 N</text>
+            <line x1="30" y1="120" x2="105" y2="45" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arrRed)"/>
+            <text x="80" y="70" text-anchor="middle" font-size="12" fill="#dc2626">R</text>
+          </svg>
+        </div>
+        <div class="solution-math">
+          <p>North and East form a \( 90^\circ \) angle. Use Pythagoras:</p>
+          \[ R = \sqrt{F_{\text{North}}^2 + F_{\text{East}}^2} \]
+          \[ R = \sqrt{6^2 + 8^2} = \sqrt{36 + 64} = \sqrt{100} = \mathbf{10 \, \text{N}} \]
+          <p><em>(Matches the 3-4-5 triangle pattern: \( 3(2) \)-div-\( 4(2) \)-div-\( 5(2) \))</em></p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- CUSTOM FOOTER -->
+  <!-- PROBLEM 4 -->
+  <div class="exercise">
+    <p><strong>Problem 4 (Midpoint Field):</strong> Point A is located exactly in the middle between charge Q1 (\(+2 \, \mu\text{C}\)) and charge Q2 (\(-4 \, \mu\text{C}\)), which are separated by a total distance of \(6 \, \text{cm}\). Calculate the total electric field strength and determine its direction at point A!</p>
+    <div class="solution-box">
+      <div class="solution-grid">
+        <div class="solution-vis" style="width: 280px;">
+          <svg viewBox="0 0 280 100" width="100%">
+            <line x1="30" y1="60" x2="250" y2="60" stroke="#ccc" stroke-dasharray="4,4"/>
+            <circle cx="40" cy="60" r="10" fill="none" stroke="#dc2626" stroke-width="2"/>
+            <text x="40" y="64" text-anchor="middle" fill="#dc2626" font-size="10">+</text>
+            <text x="40" y="85" text-anchor="middle" font-size="10">Q1</text>
+            
+            <circle cx="240" cy="60" r="10" fill="none" stroke="#2563eb" stroke-width="2"/>
+            <text x="240" y="64" text-anchor="middle" fill="#2563eb" font-size="10">−</text>
+            <text x="240" y="85" text-anchor="middle" font-size="10">Q2</text>
+            
+            <circle cx="140" cy="60" r="3" fill="#000"/>
+            <text x="140" y="85" text-anchor="middle" font-size="10">Point A</text>
+            
+            <line x1="140" y1="45" x2="180" y2="45" stroke="#000" stroke-width="1.5" marker-end="url(#arrBlk)"/>
+            <text x="160" y="35" text-anchor="middle" font-size="10">E1 (Right)</text>
+            
+            <line x1="140" y1="20" x2="210" y2="20" stroke="#000" stroke-width="1.5" marker-end="url(#arrBlk)"/>
+            <text x="175" y="10" text-anchor="middle" font-size="10">E2 (Right)</text>
+          </svg>
+        </div>
+        <div class="solution-math">
+          <strong>Step 1: Distance to A</strong><br>
+          \( r_1 = r_2 = 3 \, \text{cm} = 0.03 \, \text{m} \)<br><br>
+          <strong>Step 2: Field Vectors</strong><br>
+          \( E_1 = 9 \times 10^9 \frac{2 \times 10^{-6}}{0.0009} = 2 \times 10^7 \, \text{N/C} \) (Right, away from +)<br>
+          \( E_2 = 9 \times 10^9 \frac{4 \times 10^{-6}}{0.0009} = 4 \times 10^7 \, \text{N/C} \) (Right, towards −)<br><br>
+          <strong>Step 3: Resultant</strong><br>
+          Both vectors point in the same direction, so we add them:<br>
+          \( E_A = E_1 + E_2 = \mathbf{6 \times 10^7 \, \text{N/C}} \) <strong>to the Right (towards Q2)</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM 5 -->
+  <div class="exercise">
+    <p><strong>Problem 5 (Perpendicular Forces):</strong> A test charge experiences a Coulomb force of \( 15 \, \text{N} \) to the West and \( 20 \, \text{N} \) to the South due to nearby charges. Determine the magnitude of the resultant force acting on the test charge!</p>
+    <div class="solution-box">
+      <div class="solution-grid">
+        <div class="solution-vis" style="width: 180px;">
+          <svg viewBox="0 0 150 150" width="100%">
+            <line x1="120" y1="30" x2="40" y2="30" stroke="#000" stroke-width="2" marker-end="url(#arrB)"/>
+            <text x="80" y="20" text-anchor="middle" font-size="12">15 N (W)</text>
+            <line x1="120" y1="30" x2="120" y2="110" stroke="#000" stroke-width="2" marker-end="url(#arrB)"/>
+            <text x="135" y="70" text-anchor="middle" font-size="12">20 N</text>
+            <line x1="120" y1="30" x2="45" y2="105" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#arrRed)"/>
+            <text x="70" y="80" text-anchor="middle" font-size="12" fill="#dc2626">R</text>
+          </svg>
+        </div>
+        <div class="solution-math">
+          <p>West and South form a \( 90^\circ \) angle. Use Pythagoras:</p>
+          \[ R = \sqrt{15^2 + 20^2} \]
+          \[ R = \sqrt{225 + 400} \]
+          \[ R = \sqrt{625} = \mathbf{25 \, \text{N}} \]
+          <p><em>(Matches the 3-4-5 triangle pattern: \( 3(5) \)-div-\( 4(5) \)-div-\( 5(5) \))</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="footer-note">
     Mr. Alfi's Physics Class, SMA ABBS Surakarta
   </div>
