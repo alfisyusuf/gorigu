@@ -134,10 +134,9 @@
     margin-top: 0.5rem;
   }
 
-  /* Kustomisasi tinggi ruang hitung agar proporsional di A4 */
-  .workspace-1 { height: 350px; }
-  .workspace-2 { height: 420px; }
-  .workspace-3 { height: 420px; margin-bottom: 20px; }
+  /* Kustomisasi tinggi ruang hitung agar pas di A4 */
+  .workspace-p1 { height: 120px; } /* Untuk soal 1 & 2 di Halaman 1 */
+  .workspace-p2 { height: 220px; } /* Untuk soal 3, 4, 5 di Halaman 2 */
 
   /* Memaksa elemen selanjutnya pindah ke halaman baru */
   .page-break {
@@ -169,7 +168,7 @@
       max-width: 100%;
     }
     .workspace {
-      background-image: none; /* Dihapus saat print agar bersih */
+      background-image: none;
     }
     .instructions {
       border: 1px solid #d1d5db;
@@ -287,25 +286,36 @@
     </div>
   </div>
 
-  <!-- EXERCISES -->
-  <h2 style="margin-top: 1.8rem;">3. Skill Test (Workspace)</h2>
+  <!-- EXERCISES (HALAMAN 1) -->
+  <h2 style="margin-top: 1.5rem;">3. Skill Test (Workspace)</h2>
   
   <div class="exercise">
-    <p><strong>Problem 1 (Collinear):</strong> Three collinear charges. Charge A (\(+2 \, \mu\text{C}\)) is on the left, charge B (\(-1 \, \mu\text{C}\)) is in the middle, and charge C (\(+4 \, \mu\text{C}\)) is on the right. The distance from A to B is \(3 \, \text{cm}\), and from B to C is \(3 \, \text{cm}\). Determine the magnitude and direction of the total Coulomb force experienced by charge B!</p>
-    <div class="workspace workspace-1"></div>
+    <p><strong>Problem 1 (Collinear Forces):</strong> Three collinear charges. Charge A (\(+2 \, \mu\text{C}\)) is on the left, charge B (\(-1 \, \mu\text{C}\)) is in the middle, and charge C (\(+4 \, \mu\text{C}\)) is on the right. The distance from A to B is \(3 \, \text{cm}\), and from B to C is \(3 \, \text{cm}\). Determine the magnitude and direction of the total Coulomb force experienced by charge B!</p>
+    <div class="workspace workspace-p1"></div>
+  </div>
+
+  <div class="exercise">
+    <p><strong>Problem 2 (Perpendicular Fields):</strong> Point P is located \(3 \, \text{cm}\) exactly above charge Q1 (\(+4 \, \mu\text{C}\)) and \(4 \, \text{cm}\) to the left of charge Q2 (\(-3 \, \mu\text{C}\)). If the constant \( k = 9 \times 10^9 \), calculate the total electric field strength at point P!</p>
+    <div class="workspace workspace-p1"></div>
   </div>
 
   <!-- PEMISAH HALAMAN (PAGE BREAK) -->
   <div class="page-break"></div>
 
-  <div class="exercise">
-    <p><strong>Problem 2 (Perpendicular):</strong> Point P is located \(3 \, \text{cm}\) exactly above charge Q1 (\(+4 \, \mu\text{C}\)) and \(4 \, \text{cm}\) to the left of charge Q2 (\(-3 \, \mu\text{C}\)). If the constant \( k = 9 \times 10^9 \), calculate the total electric field strength at point P!</p>
-    <div class="workspace workspace-2"></div>
+  <!-- EXERCISES (HALAMAN 2) -->
+  <div class="exercise" style="margin-top: 1rem;">
+    <p><strong>Problem 3 (Resultant Challenge):</strong> Two attractive electrical forces act on a test charge. The first force is \( 6 \, \text{N} \) pointing North, and the second force is \( 8 \, \text{N} \) pointing East. What is the magnitude of the resultant force experienced by the charge?</p>
+    <div class="workspace workspace-p2"></div>
   </div>
 
   <div class="exercise">
-    <p><strong>Problem 3 (Resultant Challenge):</strong> Two attractive electrical forces act on a charge. The first force is \( 6 \, \text{N} \) pointing North, and the second force is \( 8 \, \text{N} \) pointing East. What is the magnitude of the resultant force experienced by the charge?</p>
-    <div class="workspace workspace-3"></div>
+    <p><strong>Problem 4 (Midpoint Field):</strong> Point A is located exactly in the middle between charge Q1 (\(+2 \, \mu\text{C}\)) and charge Q2 (\(-4 \, \mu\text{C}\)), which are separated by a total distance of \(6 \, \text{cm}\). Calculate the total electric field strength and determine its direction at point A!</p>
+    <div class="workspace workspace-p2"></div>
+  </div>
+
+  <div class="exercise">
+    <p><strong>Problem 5 (Perpendicular Forces):</strong> A test charge experiences a Coulomb force of \( 15 \, \text{N} \) to the West and \( 20 \, \text{N} \) to the South due to nearby charges. Determine the magnitude of the resultant force acting on the test charge!</p>
+    <div class="workspace workspace-p2"></div>
   </div>
 
   <div class="footer-note">
