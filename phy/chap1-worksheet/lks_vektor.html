@@ -34,7 +34,7 @@
     padding: 2.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     border: 1px solid #e5e7eb;
-    position: relative; /* For absolute positioning of the footer */
+    position: relative;
   }
 
   .header {
@@ -84,10 +84,10 @@
     margin: 1rem 0;
   }
 
-  .math {
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
+  .math-display {
+    text-align: center;
     font-size: 1.1rem;
+    margin: 1rem 0;
   }
 
   .exercise {
@@ -114,7 +114,6 @@
     margin-top: 2rem;
   }
 
-  /* Specific settings for printing (Ctrl+P) */
   @media print {
     body {
       background: white;
@@ -127,7 +126,7 @@
       max-width: 100%;
     }
     .workspace {
-      background-image: none; /* Hide dot matrix when printing for a cleaner look */
+      background-image: none;
     }
     .page-break {
       page-break-before: always;
@@ -140,6 +139,20 @@
     }
   }
 </style>
+
+<!-- Integrasi MathJax untuk rendering LaTeX -->
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['\\(', '\\)']]
+    },
+    svg: {
+      fontCache: 'global'
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 </head>
 <body>
 
@@ -169,7 +182,6 @@
           <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 Z" fill="#2563eb"/></marker>
         </defs>
         
-        <!-- Dashed axis line -->
         <line x1="50" y1="60" x2="450" y2="60" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5" />
         
         <!-- Charge A -->
@@ -177,7 +189,7 @@
         <text x="100" y="65" text-anchor="middle" font-weight="bold" fill="#dc2626">+</text>
         <text x="100" y="95" text-anchor="middle" font-size="12">A (Source)</text>
 
-        <!-- Charge B (Focus) -->
+        <!-- Charge B -->
         <circle cx="250" cy="60" r="18" fill="white" stroke="#2563eb" stroke-width="3"/>
         <text x="250" y="65" text-anchor="middle" font-weight="bold" fill="#2563eb">−</text>
         <text x="250" y="95" text-anchor="middle" font-size="12">B (Focus)</text>
@@ -188,22 +200,29 @@
         <text x="400" y="95" text-anchor="middle" font-size="12">C (Source)</text>
 
         <!-- Force Vectors on B -->
-        <!-- Pulled by A to the left -->
         <line x1="225" y1="40" x2="160" y2="40" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowRed)"/>
-        <text x="180" y="30" text-anchor="middle" font-size="12" fill="#dc2626">F_BA (Left)</text>
+        <!-- Menggunakan foreignObject untuk merender MathJax di dalam SVG -->
+        <foreignObject x="130" y="12" width="100" height="30">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="color: #dc2626; font-size: 13px; text-align: center;">
+            \( F_{BA} \) (Left)
+          </div>
+        </foreignObject>
         
-        <!-- Repelled by C to the right -->
         <line x1="275" y1="40" x2="340" y2="40" stroke="#2563eb" stroke-width="3" marker-end="url(#arrowBlue)"/>
-        <text x="320" y="30" text-anchor="middle" font-size="12" fill="#2563eb">F_BC (Right)</text>
+        <foreignObject x="270" y="12" width="100" height="30">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="color: #2563eb; font-size: 13px; text-align: center;">
+            \( F_{BC} \) (Right)
+          </div>
+        </foreignObject>
       </svg>
     </div>
-    <p class="math">Resultant force on B: ΣF = F_BC - F_BA</p>
+    <div class="math-display">Resultant force on B: &nbsp; \( \Sigma F = F_{BC} - F_{BA} \)</div>
   </div>
 
   <!-- MATERI 2: 2 Dimensions -->
   <h2>2. Perpendicular Vectors (Right-Angled)</h2>
   <div class="box">
-    <p>If two forces are perpendicular to each other (forming a 90° angle), use the Pythagorean theorem to find the resultant. <br>
+    <p>If two forces are perpendicular to each other (forming a \( 90^\circ \) angle), use the Pythagorean theorem to find the resultant. <br>
     <em>Trick: Remember the 3-4-5 and 6-8-10 number pairs!</em></p>
     
     <div class="svg-container">
@@ -214,19 +233,31 @@
 
         <!-- Vector Y (F1) -->
         <line x1="50" y1="150" x2="50" y2="50" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrowBlack)"/>
-        <text x="35" y="100" text-anchor="end" font-weight="bold">F1</text>
+        <foreignObject x="0" y="85" width="45" height="30">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="font-weight: bold; text-align: right; font-size: 14px;">
+            \( F_1 \)
+          </div>
+        </foreignObject>
 
         <!-- Vector X (F2) -->
         <line x1="50" y1="150" x2="200" y2="150" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrowBlack)"/>
-        <text x="130" y="170" text-anchor="middle" font-weight="bold">F2</text>
+        <foreignObject x="110" y="155" width="40" height="30">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="font-weight: bold; text-align: center; font-size: 14px;">
+            \( F_2 \)
+          </div>
+        </foreignObject>
 
-        <!-- Dashed lines forming a parallelogram -->
+        <!-- Dashed lines -->
         <line x1="50" y1="50" x2="200" y2="50" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5"/>
         <line x1="200" y1="150" x2="200" y2="50" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5"/>
 
         <!-- Resultant -->
         <line x1="50" y1="150" x2="195" y2="55" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowRed)"/>
-        <text x="140" y="90" text-anchor="middle" font-weight="bold" fill="#dc2626">R = √(F1² + F2²)</text>
+        <foreignObject x="70" y="70" width="160" height="40">
+          <div xmlns="http://www.w3.org/1999/xhtml" style="color: #dc2626; font-weight: bold; text-align: center; font-size: 15px;">
+            \( R = \sqrt{F_1^2 + F_2^2} \)
+          </div>
+        </foreignObject>
       </svg>
     </div>
   </div>
@@ -237,19 +268,19 @@
   <h2>3. Skill Test (Workspace)</h2>
   
   <div class="exercise">
-    <p><strong>Problem 1 (Collinear):</strong> Three collinear charges. Charge A (+2 μC) is on the left, charge B (-1 μC) is in the middle, and charge C (+4 μC) is on the right. The distance from A to B is 3 cm, and from B to C is 3 cm. Determine the magnitude and direction of the total Coulomb force experienced by charge B!</p>
-    <p><em>Hint: Calculate F_BA and F_BC separately first.</em></p>
+    <p><strong>Problem 1 (Collinear):</strong> Three collinear charges. Charge A (\(+2 \, \mu\text{C}\)) is on the left, charge B (\(-1 \, \mu\text{C}\)) is in the middle, and charge C (\(+4 \, \mu\text{C}\)) is on the right. The distance from A to B is \(3 \, \text{cm}\), and from B to C is \(3 \, \text{cm}\). Determine the magnitude and direction of the total Coulomb force experienced by charge B!</p>
+    <p><em>Hint: Calculate \( F_{BA} \) and \( F_{BC} \) separately first.</em></p>
     <div class="workspace"></div>
   </div>
 
   <div class="exercise">
-    <p><strong>Problem 2 (Perpendicular):</strong> Point P is located 3 cm exactly above charge Q1 (+4 μC) and 4 cm to the left of charge Q2 (-3 μC). If the constant k = 9×10⁹, calculate the total electric field strength at point P!</p>
-    <p><em>Hint: Draw the directions of E1 and E2 from point P first. Are they perpendicular to each other?</em></p>
+    <p><strong>Problem 2 (Perpendicular):</strong> Point P is located \(3 \, \text{cm}\) exactly above charge Q1 (\(+4 \, \mu\text{C}\)) and \(4 \, \text{cm}\) to the left of charge Q2 (\(-3 \, \mu\text{C}\)). If the constant \( k = 9 \times 10^9 \), calculate the total electric field strength at point P!</p>
+    <p><em>Hint: Draw the directions of \( E_1 \) and \( E_2 \) from point P first. Are they perpendicular to each other?</em></p>
     <div class="workspace"></div>
   </div>
 
   <div class="exercise">
-    <p><strong>Problem 3 (Resultant Challenge):</strong> Two attractive electrical forces act on a charge. The first force is 6 Newtons pointing North, and the second force is 8 Newtons pointing East. What is the magnitude of the resultant force experienced by the charge?</p>
+    <p><strong>Problem 3 (Resultant Challenge):</strong> Two attractive electrical forces act on a charge. The first force is \( 6 \, \text{N} \) pointing North, and the second force is \( 8 \, \text{N} \) pointing East. What is the magnitude of the resultant force experienced by the charge?</p>
     <div class="workspace" style="height: 150px;"></div>
   </div>
 
