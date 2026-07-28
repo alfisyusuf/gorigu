@@ -24,18 +24,25 @@
     background: var(--bg);
     line-height: 1.4;
     margin: 0;
-    padding: 2rem;
+    padding: 1rem;
     font-size: 14px;
   }
 
   .paper {
     max-width: 900px;
     margin: 0 auto;
+  }
+
+  /* KONTROL HALAMAN UNTUK LAYOUT CETAK YANG AKURAT */
+  .print-page {
     background: white;
     padding: 2rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     border: 1px solid #e5e7eb;
-    position: relative;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 1050px; /* Simulasi tinggi A4 di layar monitor */
   }
 
   .header {
@@ -83,12 +90,11 @@
     margin-bottom: 0.5rem;
   }
 
-  /* LAYOUT DUA KOLOM UNTUK MATERI */
+  /* LAYOUT DUA KOLOM MATERI */
   .two-column {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    margin-bottom: 1rem;
   }
 
   .box {
@@ -114,12 +120,11 @@
     margin: 0.5rem 0 0 0;
   }
 
+  /* PENGATURAN EXERCISE (RUANG HITUNG) */
   .exercise {
     border: 1.5px solid var(--text);
     padding: 0.8rem;
     margin-bottom: 0.8rem;
-    page-break-inside: avoid;
-    break-inside: avoid;
   }
 
   .exercise p {
@@ -128,11 +133,27 @@
   }
 
   .workspace {
-    height: 120px; /* Ruang hitung dioptimalkan */
     background-image: radial-gradient(#d1d5db 1px, transparent 1px);
     background-size: 15px 15px;
     border: 1px solid #e5e7eb;
     border-radius: 4px;
+    width: 100%;
+  }
+
+  /* Class khusus untuk ruang hitung ukuran tetap (Problem 1 & 2) */
+  .exercise.fixed .workspace {
+    height: 70px; 
+  }
+
+  /* Class khusus agar exercise otomatis melar mengisi sisa halaman (Problem 3, 4, 5) */
+  .exercise.stretch {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .exercise.stretch .workspace {
+    flex-grow: 1; /* Memaksa kotak workspace menempel hingga ke bawah */
   }
 
   .footer-note {
@@ -140,35 +161,38 @@
     font-size: 0.7rem;
     color: #9ca3af;
     font-style: italic;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
 
-  /* PENGATURAN KHUSUS CETAK */
+  /* PENGATURAN KHUSUS CETAK (PRINT) */
   @media print {
     @page {
-      margin: 1cm; /* Margin kertas diperkecil agar area konten lebih luas */
+      size: A4;
+      margin: 1cm;
     }
     body {
       background: white;
       padding: 0;
-      font-size: 12pt; /* Ukuran font standar cetak */
+      font-size: 12pt;
     }
     .paper {
-      box-shadow: none;
-      border: none;
-      padding: 0;
+      margin: 0;
       max-width: 100%;
     }
+    .print-page {
+      margin: 0;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      height: 275mm; /* Memaksa tinggi pas 1 halaman A4 dikurangi margin */
+      min-height: 0;
+      page-break-after: always; /* Memastikan div selanjutnya ada di halaman baru */
+    }
     .workspace {
-      background-image: none; /* Titik-titik dihilangkan untuk cetak */
+      background-image: none; /* Titik-titik dihilangkan saat print */
     }
     .instructions {
       border: 1px solid #d1d5db;
-    }
-    .footer-note {
-      position: fixed;
-      bottom: 0;
-      right: 0;
     }
   }
 </style>
@@ -186,123 +210,136 @@
 <body>
 
 <div class="paper">
-  <!-- HEADER -->
-  <div class="header">
-    <div>
-      <h1>WORKSHEET</h1>
-      <p style="margin: 0; font-weight: 600;">Force & Electric Field Vector Analysis</p>
-    </div>
-    <div class="student-info">
-      <div class="field"><span>Name:</span> <span style="width: 180px;"></span></div>
-      <div class="field"><span>Class:</span> <span style="width: 180px;"></span></div>
-    </div>
-  </div>
-
-  <div class="instructions">
-    <strong>Instructions:</strong> The positive (+) and negative (−) signs on charges are only used to determine the direction of the force arrows (Attract/Repel). Do not include the minus sign in your Coulomb's Law calculations!
-  </div>
-
-  <!-- MATERI (DIBUAT 2 KOLOM AGAR HEMAT TEMPAT) -->
-  <div class="two-column">
-    
-    <!-- KOLOM 1: 1 Dimensi -->
-    <div>
-      <h2>1. Collinear Vectors</h2>
-      <div class="box">
-        <p>Determine the direction of the force first. Right = Positive, Left = Negative. The resultant is the algebraic sum.</p>
-        
-        <div class="svg-container">
-          <svg viewBox="0 0 500 130" width="100%" style="max-height: 120px;">
-            <defs>
-              <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 Z" fill="#dc2626"/></marker>
-              <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 Z" fill="#2563eb"/></marker>
-            </defs>
-            <line x1="20" y1="70" x2="480" y2="70" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5" />
-            
-            <circle cx="90" cy="70" r="22" fill="white" stroke="#dc2626" stroke-width="3"/>
-            <text x="90" y="77" text-anchor="middle" font-weight="bold" fill="#dc2626">+</text>
-            <text x="90" y="115" text-anchor="middle" font-size="14">A</text>
-
-            <circle cx="250" cy="70" r="22" fill="white" stroke="#2563eb" stroke-width="3"/>
-            <text x="250" y="77" text-anchor="middle" font-weight="bold" fill="#2563eb">−</text>
-            <text x="250" y="115" text-anchor="middle" font-size="14">B</text>
-
-            <circle cx="410" cy="70" r="22" fill="white" stroke="#2563eb" stroke-width="3"/>
-            <text x="410" y="77" text-anchor="middle" font-weight="bold" fill="#2563eb">−</text>
-            <text x="410" y="115" text-anchor="middle" font-size="14">C</text>
-
-            <line x1="220" y1="45" x2="140" y2="45" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowRed)"/>
-            <foreignObject x="130" y="10" width="80" height="30">
-              <div xmlns="http://www.w3.org/1999/xhtml" style="color: #dc2626; font-size: 13px; text-align: center;">\( F_{BA} \)</div>
-            </foreignObject>
-            
-            <line x1="280" y1="45" x2="360" y2="45" stroke="#2563eb" stroke-width="3" marker-end="url(#arrowBlue)"/>
-            <foreignObject x="290" y="10" width="80" height="30">
-              <div xmlns="http://www.w3.org/1999/xhtml" style="color: #2563eb; font-size: 13px; text-align: center;">\( F_{BC} \)</div>
-            </foreignObject>
-          </svg>
-        </div>
-        <div class="math-display">Resultant: \( \Sigma F = F_{BC} - F_{BA} \)</div>
-      </div>
-    </div>
-
-    <!-- KOLOM 2: 2 Dimensi -->
-    <div>
-      <h2>2. Perpendicular Vectors</h2>
-      <div class="box">
-        <p>If two forces form a \( 90^\circ \) angle, use the Pythagorean theorem. <em>Trick: Remember 3-4-5 pairs!</em></p>
-        
-        <div class="svg-container">
-          <svg viewBox="0 0 300 170" width="100%" style="max-height: 120px;">
-            <defs>
-              <marker id="arrowBlack" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 Z" fill="#1a1a1a"/></marker>
-            </defs>
-            <line x1="50" y1="130" x2="50" y2="30" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrowBlack)"/>
-            <foreignObject x="0" y="65" width="45" height="30">
-              <div xmlns="http://www.w3.org/1999/xhtml" style="font-weight: bold; text-align: right; font-size: 14px;">\( F_1 \)</div>
-            </foreignObject>
-
-            <line x1="50" y1="130" x2="220" y2="130" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrowBlack)"/>
-            <foreignObject x="110" y="135" width="40" height="30">
-              <div xmlns="http://www.w3.org/1999/xhtml" style="font-weight: bold; text-align: center; font-size: 14px;">\( F_2 \)</div>
-            </foreignObject>
-
-            <line x1="50" y1="30" x2="220" y2="30" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5"/>
-            <line x1="220" y1="130" x2="220" y2="30" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5"/>
-
-            <line x1="50" y1="130" x2="215" y2="35" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowRed)"/>
-            <foreignObject x="70" y="50" width="160" height="40">
-              <div xmlns="http://www.w3.org/1999/xhtml" style="color: #dc2626; font-weight: bold; text-align: center; font-size: 14px;">
-                \( R = \sqrt{F_1^2 + F_2^2} \)
-              </div>
-            </foreignObject>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- EXERCISES -->
-  <h2 style="margin-top: 1rem;">3. Skill Test (Workspace)</h2>
   
-  <div class="exercise">
-    <p><strong>Problem 1 (Collinear):</strong> Three collinear charges. Charge A (\(+2 \, \mu\text{C}\)) is on the left, charge B (\(-1 \, \mu\text{C}\)) is in the middle, and charge C (\(+4 \, \mu\text{C}\)) is on the right. The distance from A to B is \(3 \, \text{cm}\), and from B to C is \(3 \, \text{cm}\). Determine the magnitude and direction of the total Coulomb force experienced by charge B!</p>
-    <div class="workspace"></div>
+  <!-- ================= HALAMAN 1 ================= -->
+  <div class="print-page">
+    
+    <!-- HEADER -->
+    <div class="header">
+      <div>
+        <h1>WORKSHEET</h1>
+        <p style="margin: 0; font-weight: 600;">Force & Electric Field Vector Analysis</p>
+      </div>
+      <div class="student-info">
+        <div class="field"><span>Name:</span> <span style="width: 180px;"></span></div>
+        <div class="field"><span>Class:</span> <span style="width: 180px;"></span></div>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <strong>Instructions:</strong> The positive (+) and negative (−) signs on charges are only used to determine the direction of the force arrows (Attract/Repel). Do not include the minus sign in your Coulomb's Law calculations!
+    </div>
+
+    <!-- MATERI 2 KOLOM -->
+    <div class="two-column">
+      <div>
+        <h2>1. Collinear Vectors</h2>
+        <div class="box">
+          <p>Determine the direction of the force first. Right = Positive, Left = Negative. The resultant is the algebraic sum.</p>
+          <div class="svg-container">
+            <svg viewBox="0 0 500 130" width="100%" style="max-height: 120px;">
+              <defs>
+                <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 Z" fill="#dc2626"/></marker>
+                <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 Z" fill="#2563eb"/></marker>
+              </defs>
+              <line x1="20" y1="70" x2="480" y2="70" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5" />
+              <circle cx="90" cy="70" r="22" fill="white" stroke="#dc2626" stroke-width="3"/>
+              <text x="90" y="77" text-anchor="middle" font-weight="bold" fill="#dc2626">+</text>
+              <text x="90" y="115" text-anchor="middle" font-size="14">A</text>
+              <circle cx="250" cy="70" r="22" fill="white" stroke="#2563eb" stroke-width="3"/>
+              <text x="250" y="77" text-anchor="middle" font-weight="bold" fill="#2563eb">−</text>
+              <text x="250" y="115" text-anchor="middle" font-size="14">B</text>
+              <circle cx="410" cy="70" r="22" fill="white" stroke="#2563eb" stroke-width="3"/>
+              <text x="410" y="77" text-anchor="middle" font-weight="bold" fill="#2563eb">−</text>
+              <text x="410" y="115" text-anchor="middle" font-size="14">C</text>
+              <line x1="220" y1="45" x2="140" y2="45" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowRed)"/>
+              <foreignObject x="130" y="10" width="80" height="30">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color: #dc2626; font-size: 13px; text-align: center;">\( F_{BA} \)</div>
+              </foreignObject>
+              <line x1="280" y1="45" x2="360" y2="45" stroke="#2563eb" stroke-width="3" marker-end="url(#arrowBlue)"/>
+              <foreignObject x="290" y="10" width="80" height="30">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color: #2563eb; font-size: 13px; text-align: center;">\( F_{BC} \)</div>
+              </foreignObject>
+            </svg>
+          </div>
+          <div class="math-display">Resultant: \( \Sigma F = F_{BC} - F_{BA} \)</div>
+        </div>
+      </div>
+
+      <div>
+        <h2>2. Perpendicular Vectors</h2>
+        <div class="box">
+          <p>If two forces form a \( 90^\circ \) angle, use the Pythagorean theorem. <em>Trick: Remember 3-4-5 pairs!</em></p>
+          <div class="svg-container">
+            <svg viewBox="0 0 300 170" width="100%" style="max-height: 120px;">
+              <defs>
+                <marker id="arrowBlack" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 Z" fill="#1a1a1a"/></marker>
+              </defs>
+              <line x1="50" y1="130" x2="50" y2="30" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrowBlack)"/>
+              <foreignObject x="0" y="65" width="45" height="30">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="font-weight: bold; text-align: right; font-size: 14px;">\( F_1 \)</div>
+              </foreignObject>
+              <line x1="50" y1="130" x2="220" y2="130" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrowBlack)"/>
+              <foreignObject x="110" y="135" width="40" height="30">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="font-weight: bold; text-align: center; font-size: 14px;">\( F_2 \)</div>
+              </foreignObject>
+              <line x1="50" y1="30" x2="220" y2="30" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5"/>
+              <line x1="220" y1="130" x2="220" y2="30" stroke="#9ca3af" stroke-width="2" stroke-dasharray="5,5"/>
+              <line x1="50" y1="130" x2="215" y2="35" stroke="#dc2626" stroke-width="3" marker-end="url(#arrowRed)"/>
+              <foreignObject x="70" y="50" width="160" height="40">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color: #dc2626; font-weight: bold; text-align: center; font-size: 14px;">
+                  \( R = \sqrt{F_1^2 + F_2^2} \)
+                </div>
+              </foreignObject>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tulisan 3 diturunkan menggunakan margin-top -->
+    <h2 style="margin-top: 1.5rem;">3. Skill Test (Workspace)</h2>
+    
+    <!-- PROBLEM 1 (Tinggi ruang hitung tetap) -->
+    <div class="exercise fixed">
+      <p><strong>Problem 1 (Collinear):</strong> Three collinear charges. Charge A (\(+2 \, \mu\text{C}\)) is on the left, charge B (\(-1 \, \mu\text{C}\)) is in the middle, and charge C (\(+4 \, \mu\text{C}\)) is on the right. The distance from A to B is \(3 \, \text{cm}\), and from B to C is \(3 \, \text{cm}\). Determine the magnitude and direction of the total Coulomb force experienced by charge B!</p>
+      <div class="workspace"></div>
+    </div>
+
+    <!-- PROBLEM 2 (Tinggi ruang hitung tetap) -->
+    <div class="exercise fixed">
+      <p><strong>Problem 2 (Perpendicular):</strong> Point P is located \(3 \, \text{cm}\) exactly above charge Q1 (\(+4 \, \mu\text{C}\)) and \(4 \, \text{cm}\) to the left of charge Q2 (\(-3 \, \mu\text{C}\)). If the constant \( k = 9 \times 10^9 \), calculate the total electric field strength at point P!</p>
+      <div class="workspace"></div>
+    </div>
+
+    <!-- PROBLEM 3 (Melar sampai mentok bawah halaman 1) -->
+    <div class="exercise stretch">
+      <p><strong>Problem 3 (Resultant Challenge):</strong> Two attractive electrical forces act on a charge. The first force is \( 6 \, \text{N} \) pointing North, and the second force is \( 8 \, \text{N} \) pointing East. What is the magnitude of the resultant force experienced by the charge?</p>
+      <div class="workspace"></div>
+    </div>
+
+    <div class="footer-note">Mr. Alfi's Physics Class, SMA ABBS Surakarta</div>
   </div>
 
-  <div class="exercise">
-    <p><strong>Problem 2 (Perpendicular):</strong> Point P is located \(3 \, \text{cm}\) exactly above charge Q1 (\(+4 \, \mu\text{C}\)) and \(4 \, \text{cm}\) to the left of charge Q2 (\(-3 \, \mu\text{C}\)). If the constant \( k = 9 \times 10^9 \), calculate the total electric field strength at point P!</p>
-    <div class="workspace"></div>
-  </div>
 
-  <div class="exercise">
-    <p><strong>Problem 3 (Resultant Challenge):</strong> Two attractive electrical forces act on a charge. The first force is \( 6 \, \text{N} \) pointing North, and the second force is \( 8 \, \text{N} \) pointing East. What is the magnitude of the resultant force experienced by the charge?</p>
-    <div class="workspace" style="height: 100px;"></div>
-  </div>
+  <!-- ================= HALAMAN 2 ================= -->
+  <div class="print-page">
+    
+    <!-- PROBLEM 4 (Berbagi 50% ruang dengan Problem 5) -->
+    <div class="exercise stretch" style="margin-top: 0;">
+      <p><strong>Problem 4 (Zero Field Concept):</strong> Charge A (\(+4 \, \mu\text{C}\)) and Charge B (\(+9 \, \mu\text{C}\)) are separated by a distance of \(10 \, \text{cm}\). Where should a point P be placed along the line between them so that the total electric field at P is exactly zero?</p>
+      <p style="font-size: 0.85rem; color: #4b5563;"><em>Hint: The electric fields from A and B must be equal in magnitude and opposite in direction (\(E_A = E_B\)).</em></p>
+      <div class="workspace"></div>
+    </div>
 
-  <!-- CUSTOM FOOTER -->
-  <div class="footer-note">
-    Mr. Alfi's Physics Class, SMA ABBS Surakarta
+    <!-- PROBLEM 5 (Berbagi 50% ruang dengan Problem 4) -->
+    <div class="exercise stretch">
+      <p><strong>Problem 5 (2D Resultant on a Triangle):</strong> Three charges are placed at the corners of a right-angled triangle. \(Q_1\) (\(+3 \, \mu\text{C}\)) is at the top, \(Q_2\) (\(-4 \, \mu\text{C}\)) is at the right angle (bottom-left), and \(Q_3\) (\(+3 \, \mu\text{C}\)) is at the bottom-right. The distance from \(Q_1\) to \(Q_2\) is \(3 \, \text{cm}\), and \(Q_2\) to \(Q_3\) is \(4 \, \text{cm}\). Determine the total Coulomb force on \(Q_2\).</p>
+      <p style="font-size: 0.85rem; color: #4b5563;"><em>Hint: Calculate the force from \(Q_1\) and \(Q_3\) on \(Q_2\). Since it's a right triangle, use Pythagoras for the final resultant.</em></p>
+      <div class="workspace"></div>
+    </div>
+
+    <div class="footer-note">Mr. Alfi's Physics Class, SMA ABBS Surakarta</div>
   </div>
 
 </div>
