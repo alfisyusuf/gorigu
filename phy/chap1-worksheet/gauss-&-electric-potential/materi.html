@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gauss's Law &amp; Electric Potential — Physics 12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F8FB;
+    --paper-warm:#FBFAF7;
+    --ink:#1B2340;
+    --ink-soft:#4A5578;
+    --field-blue:#2E6F9E;
+    --field-blue-light:#E4EEF6;
+    --charge-amber:#E2792B;
+    --charge-amber-light:#FBEADD;
+    --flux-teal:#1E8A79;
+    --flux-teal-light:#E1F2EE;
+    --grid-line:#D8E1EC;
+    --warn:#C0392B;
+    --warn-light:#FBE9E7;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.eyebrow,.stage-badge,.identity{font-family:'Space Grotesk',sans-serif;}
+
+  /* background field-line texture */
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:40px 40px;
+    opacity:0.35;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .identity-bar{
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 24px;
+    background:rgba(246,248,251,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--grid-line);
+    font-size:12.5px;
+  }
+  .identity{
+    color:var(--ink-soft);
+    font-weight:600;
+    letter-spacing:0.02em;
+  }
+  .identity span{color:var(--field-blue);}
+  .worksheet-link{
+    color:var(--field-blue);
+    text-decoration:none;
+    font-weight:600;
+    font-family:'Inter',sans-serif;
+    border-bottom:1px dashed var(--field-blue);
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:800px;
+    margin:0 auto;
+    padding:0 24px 100px;
+  }
+
+  /* HERO */
+  .hero{
+    padding:60px 0 40px;
+    text-align:center;
+  }
+  .hero .eyebrow{
+    color:var(--field-blue);
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+  }
+  .hero h1{
+    font-size:clamp(32px,5vw,48px);
+    font-weight:700;
+    margin:12px 0 14px;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--field-blue);
+  }
+  .hero p.sub{
+    max-width:520px;
+    margin:0 auto;
+    color:var(--ink-soft);
+    font-size:17px;
+  }
+  .hero-svg{margin:36px auto 0; max-width:480px;}
+  .flux-count{
+    margin-top:14px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .flux-count b{color:var(--flux-teal);}
+
+  /* STAGE RAIL */
+  .stage{
+    position:relative;
+    padding-left:74px;
+    margin-bottom:64px;
+  }
+  .stage-badge{
+    position:absolute;
+    left:0; top:2px;
+    width:48px;height:48px;
+    border-radius:50%;
+    background:var(--paper-warm);
+    border:2px solid var(--field-blue);
+    color:var(--field-blue);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:16px;
+    z-index:2;
+  }
+  .stage::after{
+    content:'';
+    position:absolute;
+    left:23px; top:52px; bottom:-64px;
+    width:2px;
+    background:repeating-linear-gradient(to bottom, var(--grid-line) 0 6px, transparent 6px 11px);
+  }
+  .stage:last-of-type::after{display:none;}
+
+  .stage h2{
+    font-size:24px;
+    margin:2px 0 4px;
+    font-weight:700;
+  }
+  .stage .kicker{
+    color:var(--ink-soft);
+    font-size:13px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+  }
+  .stage p{font-size:15.5px;color:var(--ink);}
+  .stage .lead{font-size:16.5px;color:var(--ink-soft);margin-top:4px;}
+
+  /* CALLOUT BOXES */
+  .box{
+    border-radius:12px;
+    padding:18px 20px;
+    margin:22px 0;
+    font-size:14.5px;
+  }
+  .box .box-label{
+    display:block;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:6px;
+  }
+  .key-idea{background:var(--field-blue-light);border-left:4px solid var(--field-blue);}
+  .key-idea .box-label{color:var(--field-blue);}
+  .mistake{background:var(--warn-light);border-left:4px solid var(--warn);}
+  .mistake .box-label{color:var(--warn);}
+  .analogy{background:var(--charge-amber-light);border-left:4px solid var(--charge-amber);}
+  .analogy .box-label{color:var(--charge-amber);}
+  .try-it{background:var(--flux-teal-light);border-left:4px solid var(--flux-teal);}
+  .try-it .box-label{color:var(--flux-teal);}
+
+  /* FORMULA CARD */
+  .formula-card{
+    background:var(--ink);
+    background-image:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:16px 16px;
+    color:#EAF2FB;
+    border-radius:10px;
+    border:1px solid var(--field-blue);
+    padding:20px 22px;
+    margin:20px 0;
+  }
+  .formula-card .flabel{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#8FB7D6;
+    margin-bottom:8px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+  }
+  .formula-card .feq{
+    font-family:'JetBrains Mono',monospace;
+    font-size:20px;
+    letter-spacing:0.02em;
+  }
+  .formula-card .fnote{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    color:#B7CBE0;
+    margin-top:10px;
+    line-height:1.5;
+  }
+
+  /* WORKED EXAMPLE */
+  .worked{
+    border:1.5px solid var(--grid-line);
+    border-radius:12px;
+    padding:20px 22px;
+    margin:22px 0;
+    background:#fff;
+  }
+  .worked .wtitle{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:14px;
+    color:var(--ink);
+    margin-bottom:10px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .worked .wtitle::before{
+    content:'✓';
+    display:inline-flex;align-items:center;justify-content:center;
+    width:20px;height:20px;border-radius:50%;
+    background:var(--flux-teal);color:#fff;font-size:12px;
+  }
+  .worked ol{margin:0;padding-left:20px;font-size:14.5px;}
+  .worked li{margin-bottom:8px;}
+  .worked .step-eq{
+    font-family:'JetBrains Mono',monospace;
+    background:var(--paper);
+    padding:3px 8px;border-radius:4px;
+    font-size:13.5px;
+    display:inline-block;
+    margin-top:3px;
+  }
+
+  /* CHECK YOURSELF */
+  .check{
+    border:1.5px dashed var(--field-blue);
+    border-radius:12px;
+    padding:18px 20px;
+    margin:22px 0;
+    background:#fff;
+  }
+  .check .qlabel{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    color:var(--field-blue);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:8px;
+  }
+  .check p{margin:0 0 12px;font-size:14.5px;}
+  .reveal-btn{
+    background:var(--field-blue);
+    color:#fff;
+    border:none;
+    padding:8px 16px;
+    border-radius:20px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    cursor:pointer;
+  }
+  .reveal-btn:hover{background:var(--ink);}
+  .answer{
+    display:none;
+    margin-top:12px;
+    padding:12px 14px;
+    background:var(--flux-teal-light);
+    border-radius:8px;
+    font-size:14px;
+    border-left:3px solid var(--flux-teal);
+  }
+  .answer.show{display:block;}
+
+  /* TABLE */
+  table.cheat{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+    font-size:14px;
+  }
+  table.cheat th{
+    text-align:left;
+    background:var(--ink);
+    color:#EAF2FB;
+    padding:10px 12px;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+  table.cheat td{
+    padding:10px 12px;
+    border-bottom:1px solid var(--grid-line);
+    vertical-align:top;
+  }
+  table.cheat td.formula{font-family:'JetBrains Mono',monospace;color:var(--field-blue);font-weight:600;white-space:nowrap;}
+  table.cheat tr:nth-child(even) td{background:var(--paper-warm);}
+
+  svg{display:block;width:100%;height:auto;}
+
+  .cta{
+    margin-top:60px;
+    text-align:center;
+    padding:40px 20px;
+    background:var(--ink);
+    border-radius:16px;
+    color:#fff;
+  }
+  .cta h3{font-size:22px;margin:0 0 8px;}
+  .cta p{color:#B7CBE0;font-size:14.5px;margin:0 0 20px;}
+  .cta a{
+    display:inline-block;
+    background:var(--charge-amber);
+    color:#1B2340;
+    font-weight:700;
+    padding:12px 26px;
+    border-radius:24px;
+    text-decoration:none;
+    font-family:'Space Grotesk',sans-serif;
+  }
+
+  footer{
+    text-align:center;
+    padding:30px;
+    font-size:12px;
+    color:var(--ink-soft);
+    position:relative;
+    z-index:1;
+  }
+
+  @media(max-width:560px){
+    .stage{padding-left:56px;}
+    .stage-badge{width:38px;height:38px;font-size:14px;}
+    .stage::after{left:18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="identity-bar">
+  <div class="identity">Physics 12 <span>·</span> SMA ABBS Surakarta</div>
+  <a class="worksheet-link" href="student-worksheet.html">Open activity sheet →</a>
+</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">Electricity &amp; Magnetism · Chapter Guide</div>
+    <h1>Gauss's Law &amp; <em>Electric Potential</em></h1>
+    <p class="sub">Two ideas, one story: counting invisible field lines through a surface, and mapping the electric "height" that makes charges want to move. No heavy math — just patterns, pictures, and small steps.</p>
+
+    <svg class="hero-svg" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="240" cy="150" r="4" fill="#E2792B"/>
+      <text x="240" y="128" text-anchor="middle" font-family="JetBrains Mono" font-size="13" fill="#E2792B" font-weight="600">+Q</text>
+      <g stroke="#2E6F9E" stroke-width="1.6" fill="none" opacity="0.85">
+        <line x1="240" y1="150" x2="240" y2="20"/>
+        <line x1="240" y1="150" x2="240" y2="280"/>
+        <line x1="240" y1="150" x2="90" y2="150"/>
+        <line x1="240" y1="150" x2="390" y2="150"/>
+        <line x1="240" y1="150" x2="134" y2="44"/>
+        <line x1="240" y1="150" x2="346" y2="44"/>
+        <line x1="240" y1="150" x2="134" y2="256"/>
+        <line x1="240" y1="150" x2="346" y2="256"/>
+      </g>
+      <g fill="#2E6F9E">
+        <polygon points="240,26 235,38 245,38"/>
+        <polygon points="240,274 235,262 245,262"/>
+        <polygon points="96,150 108,145 108,155"/>
+        <polygon points="384,150 372,145 372,155"/>
+        <polygon points="139,50 148,58 138,60"/>
+        <polygon points="341,50 332,58 342,60"/>
+        <polygon points="139,250 148,242 138,240"/>
+        <polygon points="341,250 332,242 342,240"/>
+      </g>
+      <circle cx="240" cy="150" r="95" fill="none" stroke="#1E8A79" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="240" y="270" text-anchor="middle" font-family="Inter" font-size="12" fill="#1E8A79" font-weight="600">Gaussian surface (imaginary, closed)</text>
+    </svg>
+    <div class="flux-count">Field lines crossing the dashed surface: <b>8 out</b> — all counted, no matter its exact shape.</div>
+  </section>
+
+  <!-- STAGE 1 -->
+  <section class="stage">
+    <div class="stage-badge">1</div>
+    <div class="kicker">Warm-up recap</div>
+    <h2>What is an Electric Field?</h2>
+    <p class="lead">Before flux and Gauss's Law can make sense, we need one picture firmly in mind: the electric field as a set of arrows filling space around a charge.</p>
+
+    <p>An electric field is a way of describing how a charge affects the space around it, even before anything else is there. Instead of drawing forces on every possible test charge, we simplify life by drawing <strong>field lines</strong> — arrows that show the direction a small positive charge would be pushed at that point.</p>
+
+    <div class="box key-idea">
+      <span class="box-label">Three rules for field lines</span>
+      1. Lines start on positive charges and end on negative charges (or head off to infinity).<br>
+      2. Lines never cross each other.<br>
+      3. Where lines are packed close together, the field is <em>stronger</em>. Where they spread out, the field is <em>weaker</em>.
+    </div>
+
+    <div class="check">
+      <div class="qlabel">Check yourself</div>
+      <p>Two diagrams show field lines around a charge. In diagram A, the lines are close together. In diagram B, the same number of lines are spread far apart. Which region has the stronger field?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show answer</button>
+      <div class="answer">Diagram A. Line <em>density</em> (how packed they are) tells you field strength — not how many lines you drew in total.</div>
+    </div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section class="stage">
+    <div class="stage-badge">2</div>
+    <div class="kicker">Building the tool</div>
+    <h2>Electric Flux — Counting Lines Through a Window</h2>
+    <p class="lead">Flux just means: "how much field passes through a surface." Nothing more mysterious than that.</p>
+
+    <div class="box analogy">
+      <span class="box-label">Analogy</span>
+      Imagine standing at an open window on a windy day. If the window faces straight into the wind, a lot of air rushes through. If you turn the window sideways to the wind, almost no air passes through — even though the wind hasn't changed at all. <strong>Electric flux</strong> works the same way, except it's field lines passing through a surface instead of wind through a window.
+    </div>
+
+    <svg viewBox="0 0 480 160" xmlns="http://www.w3.org/2000/svg" style="margin:18px 0;">
+      <g stroke="#2E6F9E" stroke-width="1.6" fill="none">
+        <line x1="20" y1="40" x2="150" y2="40"/><polygon points="150,40 140,35 140,45" fill="#2E6F9E"/>
+        <line x1="20" y1="70" x2="150" y2="70"/><polygon points="150,70 140,65 140,75" fill="#2E6F9E"/>
+        <line x1="20" y1="100" x2="150" y2="100"/><polygon points="150,100 140,95 140,105" fill="#2E6F9E"/>
+      </g>
+      <rect x="150" y="20" width="10" height="100" fill="#E4EEF6" stroke="#1E8A79" stroke-width="2"/>
+      <text x="155" y="140" text-anchor="middle" font-family="Inter" font-size="11" fill="#1B2340" font-weight="600">θ = 0° (face-on)</text>
+      <text x="155" y="153" text-anchor="middle" font-family="Inter" font-size="10" fill="#1E8A79">maximum flux</text>
+
+      <g stroke="#2E6F9E" stroke-width="1.6" fill="none">
+        <line x1="260" y1="40" x2="390" y2="40"/><polygon points="390,40 380,35 380,45" fill="#2E6F9E"/>
+        <line x1="260" y1="70" x2="390" y2="70"/><polygon points="390,70 380,65 380,75" fill="#2E6F9E"/>
+        <line x1="260" y1="100" x2="390" y2="100"/><polygon points="390,100 380,95 380,105" fill="#2E6F9E"/>
+      </g>
+      <rect x="373" y="55" width="34" height="10" fill="#E4EEF6" stroke="#1E8A79" stroke-width="2" transform="rotate(0 0 0)"/>
+      <text x="390" y="140" text-anchor="middle" font-family="Inter" font-size="11" fill="#1B2340" font-weight="600">θ = 90° (edge-on)</text>
+      <text x="390" y="153" text-anchor="middle" font-family="Inter" font-size="10" fill="#C0392B">zero flux</text>
+    </svg>
+
+    <div class="formula-card">
+      <div class="flabel">General formula</div>
+      <div class="feq">Φ = E · A · cos θ</div>
+      <div class="fnote">Φ (phi) is flux, E is field strength, A is the surface area, and θ is the angle between the field and the surface's perpendicular ("normal") direction. When the field hits the surface straight-on, θ = 0° and cos θ = 1, so Φ = E·A — the simplest case.</div>
+    </div>
+
+    <div class="worked">
+      <div class="wtitle">Worked example</div>
+      <ol>
+        <li>A uniform field of <span class="step-eq">E = 500 N/C</span> passes straight through a flat surface of area <span class="step-eq">A = 2 m²</span>, perpendicular to it (θ = 0°).</li>
+        <li>Since θ = 0°, cos θ = 1, so we can use <span class="step-eq">Φ = E × A</span>.</li>
+        <li>Φ = 500 × 2 = <span class="step-eq">1000 N·m²/C</span>.</li>
+      </ol>
+    </div>
+
+    <div class="box mistake">
+      <span class="box-label">Common mistake</span>
+      Forgetting the cos θ term when the surface is tilted. If a problem doesn't say "perpendicular" or "face-on," check the angle before plugging numbers in.
+    </div>
+
+    <div class="check">
+      <div class="qlabel">Check yourself</div>
+      <p>A flat surface is turned so it's exactly edge-on to a field (θ = 90°). What is the flux through it?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show answer</button>
+      <div class="answer">Zero. Since cos 90° = 0, no field lines actually pass through the surface — they slide along it instead.</div>
+    </div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section class="stage">
+    <div class="stage-badge">3</div>
+    <div class="kicker">The big idea</div>
+    <h2>Gauss's Law</h2>
+    <p class="lead">Gauss's Law is one simple sentence: the total flux out of any <em>closed</em> surface only depends on the charge trapped inside it.</p>
+
+    <div class="box analogy">
+      <span class="box-label">Analogy</span>
+      Picture a closed fishing net wrapped all the way around part of a lake. It doesn't matter if the net is shaped like a ball, a box, or a lumpy potato — only the fish actually <em>inside</em> the net get caught. Charge outside the surface contributes nothing to the total flux, no matter how close it is.
+    </div>
+
+    <div class="formula-card">
+      <div class="flabel">Gauss's Law</div>
+      <div class="feq">Φ<sub style="font-size:13px;">total</sub> = Q<sub style="font-size:13px;">enc</sub> / ε₀</div>
+      <div class="fnote">Φ<sub>total</sub> is the total flux through a closed surface, Q<sub>enc</sub> is the total charge enclosed inside that surface, and ε₀ (epsilon-naught) is a fixed constant, ε₀ ≈ 8.85 × 10⁻¹² C²/(N·m²).</div>
+    </div>
+
+    <div class="box key-idea">
+      <span class="box-label">Key idea</span>
+      The <em>shape</em> of the closed surface (called a "Gaussian surface") never matters. We are always free to imagine any convenient closed shape — usually a sphere, cylinder, or box — because Gauss's Law only cares about the charge trapped inside.
+    </div>
+
+    <div class="check">
+      <div class="qlabel">Check yourself</div>
+      <p>If you double the amount of charge enclosed inside a Gaussian surface, what happens to the total flux through that surface?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show answer</button>
+      <div class="answer">It also doubles. Φ<sub>total</sub> = Q<sub>enc</sub>/ε₀ is a direct (linear) relationship — flux scales exactly with enclosed charge.</div>
+    </div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section class="stage">
+    <div class="stage-badge">4</div>
+    <div class="kicker">Putting it to work</div>
+    <h2>Using Gauss's Law: Field of a Point Charge</h2>
+    <p class="lead">Gauss's Law becomes genuinely useful when we pick a Gaussian surface with a lot of symmetry. For a single point charge, that's a sphere.</p>
+
+    <div class="worked">
+      <div class="wtitle">Step-by-step reasoning</div>
+      <ol>
+        <li>Draw an imaginary sphere of radius <span class="step-eq">r</span> centered on the point charge Q.</li>
+        <li>By symmetry, the field E has the same strength everywhere on this sphere, and always points straight outward — perpendicular to the surface (θ = 0°, so cos θ = 1).</li>
+        <li>The surface area of a sphere is <span class="step-eq">A = 4πr²</span>.</li>
+        <li>So the total flux is simply <span class="step-eq">Φ = E × 4πr²</span>.</li>
+        <li>Gauss's Law says this must equal <span class="step-eq">Q/ε₀</span>. Setting them equal: E × 4πr² = Q/ε₀.</li>
+        <li>Solving for E: <span class="step-eq">E = Q / (4πε₀r²)</span>.</li>
+      </ol>
+    </div>
+
+    <div class="formula-card">
+      <div class="flabel">Field of a point charge</div>
+      <div class="feq">E = kQ / r²  &nbsp; where &nbsp; k = 1/(4πε₀) ≈ 9 × 10⁹ N·m²/C²</div>
+      <div class="fnote">This is the same formula you may already know from Coulomb's Law — Gauss's Law simply gives us another route to the same answer, and a much faster one for symmetric shapes.</div>
+    </div>
+
+    <div class="worked">
+      <div class="wtitle">Worked example</div>
+      <ol>
+        <li>Find the field at r = 0.3 m from a point charge Q = 2 × 10⁻⁶ C.</li>
+        <li>E = kQ/r² = (9×10⁹ × 2×10⁻⁶) / (0.3)²</li>
+        <li>Numerator: 9×10⁹ × 2×10⁻⁶ = <span class="step-eq">1.8 × 10⁴</span></li>
+        <li>Denominator: 0.3² = <span class="step-eq">0.09</span></li>
+        <li>E = 1.8×10⁴ / 0.09 = <span class="step-eq">2 × 10⁵ N/C</span></li>
+      </ol>
+    </div>
+
+    <div class="check">
+      <div class="qlabel">Check yourself</div>
+      <p>If you move to a point twice as far away from the same charge (r doubles), what happens to E?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show answer</button>
+      <div class="answer">E becomes 4 times smaller. Because E ∝ 1/r², doubling r divides E by 2² = 4.</div>
+    </div>
+  </section>
+
+  <!-- STAGE 5 -->
+  <section class="stage">
+    <div class="stage-badge">5</div>
+    <div class="kicker">Changing viewpoint</div>
+    <h2>From Field to Potential: Electric "Height"</h2>
+    <p class="lead">Fields tell us about force. Potential tells us about energy — and energy is often easier to work with because it has no direction to track.</p>
+
+    <div class="box analogy">
+      <span class="box-label">Analogy</span>
+      Think about a ball sitting on a hill. The higher up the hill, the more gravitational potential energy it has. Roll it, and that stored energy turns into motion. Electric charges behave the same way inside a field: a charge at a location with more electric potential energy will "roll" toward lower potential energy if it's free to move.
+    </div>
+
+    <p>Just like we divide gravitational PE by mass to get a property of the location alone (height), we divide electric potential energy by charge to get <strong>electric potential</strong> — a property of the location in the field, independent of whatever charge happens to be sitting there.</p>
+
+    <div class="formula-card">
+      <div class="flabel">Definition of electric potential</div>
+      <div class="feq">V = PE / q</div>
+      <div class="fnote">V is measured in volts (V), where 1 volt = 1 joule per coulomb. Potential belongs to a <em>point in space</em>, the same way elevation belongs to a spot on a map — not to whichever hiker happens to be standing there.</div>
+    </div>
+  </section>
+
+  <!-- STAGE 6 -->
+  <section class="stage">
+    <div class="stage-badge">6</div>
+    <div class="kicker">A useful formula</div>
+    <h2>Potential of a Point Charge</h2>
+    <p class="lead">Just like the field, the potential around a point charge follows a clean formula — but this one is simpler, because potential has no direction.</p>
+
+    <div class="formula-card">
+      <div class="flabel">Potential of a point charge</div>
+      <div class="feq">V = kQ / r</div>
+      <div class="fnote">Notice E ∝ 1/r² but V ∝ 1/r — potential falls off more gently with distance. And because V is a scalar (just a number, no direction), adding up the potential from several charges is simple addition — no angles required.</div>
+    </div>
+
+    <div class="worked">
+      <div class="wtitle">Worked example</div>
+      <ol>
+        <li>Find V at r = 0.5 m from a charge Q = 3 × 10⁻⁶ C.</li>
+        <li>V = kQ/r = (9×10⁹ × 3×10⁻⁶) / 0.5</li>
+        <li>Numerator: 9×10⁹ × 3×10⁻⁶ = <span class="step-eq">2.7 × 10⁴</span></li>
+        <li>V = 2.7×10⁴ / 0.5 = <span class="step-eq">5.4 × 10⁴ V</span></li>
+      </ol>
+    </div>
+
+    <div class="check">
+      <div class="qlabel">Check yourself</div>
+      <p>Two point charges of equal size sit at different distances from you. Which one contributes more to the potential you experience — the near one or the far one?</p>
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show answer</button>
+      <div class="answer">The near one. Since V ∝ 1/r, a smaller r gives a larger contribution to V.</div>
+    </div>
+  </section>
+
+  <!-- STAGE 7 -->
+  <section class="stage">
+    <div class="stage-badge">7</div>
+    <div class="kicker">Seeing the whole picture</div>
+    <h2>Equipotential Surfaces — Contour Maps of Electric Height</h2>
+    <p class="lead">If potential is like elevation, then equipotential surfaces are exactly like the contour lines on a hiking map.</p>
+
+    <div class="box analogy">
+      <span class="box-label">Analogy</span>
+      On a hiking map, a contour line connects every point at the same elevation. Walking along a contour line means staying at the same height — no climbing, no descending, no work done against gravity. An <strong>equipotential surface</strong> connects every point in space that has the same electric potential. Moving a charge along it takes zero work.
+    </div>
+
+    <svg viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg" style="margin:18px 0;">
+      <circle cx="210" cy="110" r="4" fill="#E2792B"/>
+      <circle cx="210" cy="110" r="30" fill="none" stroke="#1E8A79" stroke-width="1.6" stroke-dasharray="4 4"/>
+      <circle cx="210" cy="110" r="60" fill="none" stroke="#1E8A79" stroke-width="1.6" stroke-dasharray="4 4"/>
+      <circle cx="210" cy="110" r="90" fill="none" stroke="#1E8A79" stroke-width="1.6" stroke-dasharray="4 4"/>
+      <g stroke="#2E6F9E" stroke-width="1.6">
+        <line x1="210" y1="110" x2="210" y2="14"/>
+        <line x1="210" y1="110" x2="210" y2="206"/>
+        <line x1="210" y1="110" x2="114" y2="110"/>
+        <line x1="210" y1="110" x2="306" y2="110"/>
+        <line x1="210" y1="110" x2="146" y2="46"/>
+        <line x1="210" y1="110" x2="274" y2="46"/>
+        <line x1="210" y1="110" x2="146" y2="174"/>
+        <line x1="210" y1="110" x2="274" y2="174"/>
+      </g>
+      <text x="210" y="26" text-anchor="middle" font-family="Inter" font-size="10" fill="#2E6F9E" font-weight="600">field line</text>
+      <text x="330" y="107" text-anchor="middle" font-family="Inter" font-size="10" fill="#1E8A79" font-weight="600">equipotential</text>
+    </svg>
+
+    <div class="box key-idea">
+      <span class="box-label">Key idea</span>
+      Field lines always cross equipotential surfaces at a perfect right angle (90°). This makes sense: the field points in the direction of <em>steepest change</em> in potential — exactly like water always flows straight downhill, perpendicular to the contour lines, never along them.
+    </div>
+  </section>
+
+  <!-- STAGE 8 -->
+  <section class="stage">
+    <div class="stage-badge">8</div>
+    <div class="kicker">Before you practice</div>
+    <h2>Formula Cheat Sheet</h2>
+    <p class="lead">Everything from this guide, in one table. Bookmark this before starting the activity sheet.</p>
+
+    <table class="cheat">
+      <tr><th>Formula</th><th>Meaning</th></tr>
+      <tr><td class="formula">Φ = E · A · cos θ</td><td>Electric flux through a surface — how much field "passes through."</td></tr>
+      <tr><td class="formula">Φ<sub>total</sub> = Q<sub>enc</sub> / ε₀</td><td>Gauss's Law — total flux through any closed surface depends only on enclosed charge.</td></tr>
+      <tr><td class="formula">E = kQ / r²</td><td>Electric field of a point charge (k ≈ 9×10⁹ N·m²/C²).</td></tr>
+      <tr><td class="formula">V = PE / q</td><td>Electric potential — potential energy per unit charge at a point.</td></tr>
+      <tr><td class="formula">V = kQ / r</td><td>Electric potential of a point charge — a scalar, no direction.</td></tr>
+    </table>
+  </section>
+
+  <div class="cta">
+    <h3>Ready to practice?</h3>
+    <p>Grab the printable activity sheet and work through it in 75 minutes — from field lines to equipotential surfaces.</p>
+    <a href="student-worksheet.html">Open the activity sheet →</a>
+  </div>
+
+</div>
+
+<footer>Physics 12 · SMA ABBS Surakarta — Gauss's Law &amp; Electric Potential Study Guide</footer>
+
+</body>
+</html>
