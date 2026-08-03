@@ -1,1 +1,394 @@
-tes
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity Sheet — Gauss's Law &amp; Electric Potential | Physics 12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2340;
+    --ink-soft:#4A5578;
+    --field-blue:#2E6F9E;
+    --field-blue-light:#E4EEF6;
+    --charge-amber:#E2792B;
+    --charge-amber-light:#FBEADD;
+    --flux-teal:#1E8A79;
+    --grid-line:#C9D4E2;
+    --warn:#C0392B;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#DDE3EC;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+  }
+  h1,h2,h3,.eyebrow{font-family:'Space Grotesk',sans-serif;}
+
+  /* screen-only toolbar */
+  .toolbar{
+    position:sticky;top:0;z-index:30;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 24px;
+    background:var(--ink);color:#fff;
+    font-size:13px;
+  }
+  .toolbar a{color:#B7CBE0;text-decoration:none;border-bottom:1px dashed #B7CBE0;}
+  .toolbar button{
+    background:var(--charge-amber);
+    color:var(--ink);
+    border:none;
+    font-weight:700;
+    padding:9px 18px;
+    border-radius:20px;
+    font-family:'Space Grotesk',sans-serif;
+    cursor:pointer;
+    font-size:13px;
+  }
+
+  /* the printable sheet, sized to real A4 landscape */
+  .page-preview{
+    padding:28px 0 60px;
+    display:flex;
+    justify-content:center;
+  }
+  .sheet{
+    width:297mm;
+    min-height:210mm;
+    background:#fff;
+    box-shadow:0 8px 30px rgba(0,0,0,0.18);
+    padding:10mm 12mm;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* header */
+  .head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:8px;
+    margin-bottom:8px;
+  }
+  .head .identity{
+    font-size:10.5px;
+    color:var(--ink-soft);
+    font-weight:600;
+    letter-spacing:0.02em;
+  }
+  .head h1{
+    font-size:19px;
+    margin:2px 0 0;
+    font-weight:700;
+  }
+  .head .timer{
+    text-align:right;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--field-blue);
+    border:1.5px solid var(--field-blue);
+    border-radius:8px;
+    padding:6px 12px;
+    white-space:nowrap;
+  }
+  .head .timer b{display:block;font-size:15px;color:var(--ink);}
+
+  .idrow{
+    display:flex;
+    gap:20px;
+    font-size:11px;
+    margin-bottom:10px;
+    flex-wrap:wrap;
+  }
+  .idrow .field{
+    display:flex;align-items:baseline;gap:6px;
+    flex:1 1 160px;
+  }
+  .idrow .field span{white-space:nowrap;color:var(--ink-soft);font-weight:600;}
+  .idrow .field .fill{
+    flex:1;
+    border-bottom:1px solid var(--ink);
+    height:14px;
+  }
+
+  /* two-column body */
+  .body-grid{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    column-gap:8mm;
+    flex:1;
+  }
+  .divider{
+    border-left:1.5px dashed var(--grid-line);
+  }
+  .col{display:flex;flex-direction:column;gap:6mm;}
+
+  .part{
+    border:1.3px solid var(--grid-line);
+    border-radius:8px;
+    padding:8px 10px 10px;
+  }
+  .part-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:6px;
+  }
+  .part-head h2{
+    font-size:13px;
+    margin:0;
+    font-weight:700;
+  }
+  .part-head .mins{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    background:var(--field-blue-light);
+    color:var(--field-blue);
+    padding:2px 8px;
+    border-radius:10px;
+    font-weight:600;
+    white-space:nowrap;
+  }
+  .part p, .part li{font-size:10.8px;line-height:1.45;margin:3px 0;}
+  .part ol, .part ul{margin:4px 0 4px 16px;padding:0;}
+  .qn{font-weight:700;margin-right:3px;}
+
+  .lines{
+    background-image:repeating-linear-gradient(to bottom, transparent 0 16px, var(--grid-line) 16px 17px);
+    min-height:17px;
+    margin:4px 0 8px;
+  }
+  .lines.h1{min-height:17px;}
+  .lines.h2{min-height:34px;}
+  .lines.h3{min-height:51px;}
+
+  .blank{
+    display:inline-block;
+    border-bottom:1.2px solid var(--ink);
+    min-width:46px;
+    height:12px;
+    margin:0 2px;
+  }
+
+  .mc{display:flex;gap:14px;flex-wrap:wrap;margin:4px 0 8px;}
+  .mc .opt{display:flex;align-items:center;gap:5px;font-size:10.6px;}
+  .mc .bubble{
+    width:13px;height:13px;border-radius:50%;
+    border:1.3px solid var(--ink);
+    display:inline-block;
+  }
+
+  .diagram-box{
+    border:1.2px solid var(--grid-line);
+    border-radius:6px;
+    padding:6px;
+    margin:6px 0;
+    text-align:center;
+  }
+  .diagram-box svg{width:100%;max-width:220px;height:auto;}
+
+  .steps-fill{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    background:#F6F8FB;
+    border-radius:5px;
+    padding:6px 8px;
+    margin:4px 0 8px;
+    line-height:1.7;
+  }
+
+  .rating{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin:4px 0 6px;
+    font-size:10.5px;
+  }
+  .rating .dots{display:flex;gap:5px;}
+  .rating .dot{
+    width:14px;height:14px;border-radius:50%;
+    border:1.3px solid var(--ink);
+  }
+
+  .reflect-row{display:flex;gap:8mm;}
+  .reflect-row > div{flex:1;}
+
+  footer.sheet-foot{
+    margin-top:6px;
+    text-align:center;
+    font-size:9px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--grid-line);
+    padding-top:5px;
+  }
+
+  /* ===== PRINT ===== */
+  @page{
+    size:A4 landscape;
+    margin:0;
+  }
+  @media print{
+    .toolbar{display:none;}
+    body{background:#fff;}
+    .page-preview{padding:0;}
+    .sheet{
+      box-shadow:none;
+      width:297mm;
+      min-height:210mm;
+      margin:0;
+      padding:8mm 11mm;
+    }
+    .part{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>Physics 12 · SMA ABBS Surakarta — <a href="gauss-electric-potential.html">← back to study guide</a></div>
+  <button onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="page-preview">
+<div class="sheet">
+
+  <div class="head">
+    <div>
+      <div class="identity">Physics 12 · SMA ABBS Surakarta</div>
+      <h1>Activity Sheet — Gauss's Law &amp; Electric Potential</h1>
+    </div>
+    <div class="timer">Total time<b>75 minutes</b></div>
+  </div>
+
+  <div class="idrow">
+    <div class="field"><span>Name:</span><div class="fill"></div></div>
+    <div class="field"><span>Class:</span><div class="fill"></div></div>
+    <div class="field"><span>Date:</span><div class="fill"></div></div>
+    <div class="field"><span>Score:</span><div class="fill"></div></div>
+  </div>
+
+  <div class="body-grid">
+
+    <!-- LEFT COLUMN -->
+    <div class="col">
+
+      <div class="part">
+        <div class="part-head"><h2>Part A — Reading Field Lines</h2><span class="mins">10 min</span></div>
+        <p><span class="qn">1.</span> Look at the two diagrams below. Circle the one that shows a <strong>stronger</strong> electric field, then explain your reasoning in one sentence.</p>
+        <div style="display:flex;gap:10px;justify-content:center;margin:6px 0;">
+          <div class="diagram-box" style="width:48%;">
+            <svg viewBox="0 0 100 80"><circle cx="50" cy="40" r="3" fill="#E2792B"/>
+              <g stroke="#2E6F9E" stroke-width="1.3"><line x1="50" y1="40" x2="50" y2="8"/><line x1="50" y1="40" x2="50" y2="72"/><line x1="50" y1="40" x2="20" y2="40"/><line x1="50" y1="40" x2="80" y2="40"/><line x1="50" y1="40" x2="28" y2="18"/><line x1="50" y1="40" x2="72" y2="18"/><line x1="50" y1="40" x2="28" y2="62"/><line x1="50" y1="40" x2="72" y2="62"/></g>
+            </svg>
+            <div style="font-size:9px;font-weight:700;">A</div>
+          </div>
+          <div class="diagram-box" style="width:48%;">
+            <svg viewBox="0 0 100 80"><circle cx="50" cy="40" r="3" fill="#E2792B"/>
+              <g stroke="#2E6F9E" stroke-width="1.3"><line x1="50" y1="40" x2="50" y2="20"/><line x1="50" y1="40" x2="50" y2="60"/><line x1="50" y1="40" x2="35" y2="40"/><line x1="50" y1="40" x2="65" y2="40"/></g>
+            </svg>
+            <div style="font-size:9px;font-weight:700;">B</div>
+          </div>
+        </div>
+        <p><span class="qn">Reason:</span></p>
+        <div class="lines h1"></div>
+
+        <p><span class="qn">2.</span> Fill in the blanks using the field-line rules from the study guide.</p>
+        <p>Field lines start on <span class="blank"></span> charges and end on <span class="blank"></span> charges. Field lines never <span class="blank" style="min-width:80px;"></span> each other.</p>
+
+        <p><span class="qn">3.</span> Draw at least 6 field lines around the positive charge below.</p>
+        <div class="diagram-box" style="max-width:140px;margin:0 auto;">
+          <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="4" fill="#E2792B"/><text x="50" y="70" text-anchor="middle" font-size="9" fill="#4A5578">+Q</text></svg>
+        </div>
+      </div>
+
+      <div class="part">
+        <div class="part-head"><h2>Part B — Gauss's Law in Action</h2><span class="mins">20 min</span></div>
+        <p><span class="qn">1.</span> In your own words, explain why the <em>shape</em> of a Gaussian surface does not matter when applying Gauss's Law.</p>
+        <div class="lines h2"></div>
+
+        <p><span class="qn">2.</span> A uniform field E = 400 N/C passes straight through (θ = 0°) a flat surface of area A = 1.5 m². Find the flux Φ.</p>
+        <div class="steps-fill">Φ = E × A = _______ × _______ = _______ N·m²/C</div>
+
+        <p><span class="qn">3.</span> A closed surface encloses a charge Q<sub>enc</sub> = 4.0 × 10⁻⁹ C. Use ε₀ = 8.85 × 10⁻¹² C²/(N·m²) to find the total flux.</p>
+        <div class="steps-fill">Φ<sub>total</sub> = Q<sub>enc</sub> / ε₀ = _______ / _______ = _______ N·m²/C</div>
+
+        <p><span class="qn">4. (Challenge)</span> A point charge Q = 5.0 × 10⁻⁹ C sits at the centre of a spherical Gaussian surface of radius r = 0.2 m. Follow the steps to find E.</p>
+        <div class="steps-fill">
+          Φ = E × 4πr² &nbsp;&nbsp;and&nbsp;&nbsp; Φ = Q/ε₀ &nbsp;&nbsp;so&nbsp;&nbsp; E = Q / (4πε₀r²) = kQ/r²<br>
+          E = (9×10⁹ × _______) / (_______)² = _______ N/C
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="col">
+
+      <div class="part">
+        <div class="part-head"><h2>Part C — Mapping Electric "Height"</h2><span class="mins">15 min</span></div>
+        <p><span class="qn">1.</span> Match each electric idea to its gravity analogy by writing the matching letter.</p>
+        <table style="width:100%;font-size:10.5px;border-collapse:collapse;">
+          <tr><td style="padding:2px 0;">Electric potential (V) &nbsp;&nbsp;<span class="blank" style="min-width:20px;"></span></td><td style="padding:2px 0;">A. A ball rolling downhill</td></tr>
+          <tr><td style="padding:2px 0;">Charge moving in a field &nbsp;<span class="blank" style="min-width:20px;"></span></td><td style="padding:2px 0;">B. Height on a hill</td></tr>
+          <tr><td style="padding:2px 0;">Equipotential surface &nbsp;&nbsp;<span class="blank" style="min-width:20px;"></span></td><td style="padding:2px 0;">C. A contour line on a map</td></tr>
+        </table>
+
+        <p><span class="qn">2.</span> Find the potential V at r = 0.4 m from a point charge Q = 6 × 10⁻⁶ C. (k = 9×10⁹ N·m²/C²)</p>
+        <div class="steps-fill">V = kQ/r = (_______ × _______) / _______ = _______ V</div>
+
+        <p><span class="qn">3.</span> Point X is 0.2 m from a charge; point Y is 0.6 m from the same charge. Which point has the higher potential? Explain in one sentence.</p>
+        <div class="lines h1"></div>
+      </div>
+
+      <div class="part">
+        <div class="part-head"><h2>Part D — Equipotential Surfaces</h2><span class="mins">20 min</span></div>
+        <p><span class="qn">1.</span> Label the diagram: write "field line" next to a straight radial line, and "equipotential" next to a dashed circle. Mark the angle where they cross.</p>
+        <div class="diagram-box" style="max-width:160px;margin:0 auto;">
+          <svg viewBox="0 0 120 100"><circle cx="60" cy="50" r="3" fill="#E2792B"/>
+            <circle cx="60" cy="50" r="20" fill="none" stroke="#1E8A79" stroke-width="1.2" stroke-dasharray="3 3"/>
+            <circle cx="60" cy="50" r="38" fill="none" stroke="#1E8A79" stroke-width="1.2" stroke-dasharray="3 3"/>
+            <g stroke="#2E6F9E" stroke-width="1.2"><line x1="60" y1="50" x2="60" y2="6"/><line x1="60" y1="50" x2="103" y2="50"/><line x1="60" y1="50" x2="60" y2="94"/><line x1="60" y1="50" x2="17" y2="50"/></g>
+          </svg>
+        </div>
+
+        <p><span class="qn">2.</span> True or False — circle one.</p>
+        <p>a. Moving a charge along an equipotential surface takes zero work. &nbsp; <strong>T / F</strong></p>
+        <p>b. Field lines are always parallel to equipotential surfaces. &nbsp; <strong>T / F</strong></p>
+        <p>c. Doubling the distance from a point charge doubles its potential. &nbsp; <strong>T / F</strong></p>
+
+        <p><span class="qn">3.</span> In 2–3 sentences, connect Gauss's Law to equipotential surfaces: how does "counting field lines" relate to "mapping electric height"?</p>
+        <div class="lines h3"></div>
+      </div>
+
+      <div class="part">
+        <div class="part-head"><h2>Reflection</h2><span class="mins">10 min</span></div>
+        <div class="reflect-row">
+          <div>
+            <p>One thing that's now clear to me:</p>
+            <div class="lines h1"></div>
+          </div>
+          <div>
+            <p>One thing I still find confusing:</p>
+            <div class="lines h1"></div>
+          </div>
+        </div>
+        <div class="rating"><span>Confidence — Gauss's Law:</span><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div><span style="color:var(--ink-soft);font-size:9.5px;">(1 = low, 5 = high)</span></div>
+        <div class="rating"><span>Confidence — Electric potential:</span><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="sheet-foot">Physics 12 · SMA ABBS Surakarta — Gauss's Law &amp; Electric Potential Activity Sheet · A4 Landscape</footer>
+
+</div>
+</div>
+
+</body>
+</html>
