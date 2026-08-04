@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<!-- MathJax for rendering equations -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <style>
   :root{
     --bg:#F5F7FB;
@@ -36,7 +39,7 @@
     line-height:1.65;
   }
   h1,h2,h3,.display{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em; }
-  code, .formula{ font-family:'IBM Plex Mono', monospace; }
+  code, .formula-text{ font-family:'IBM Plex Mono', monospace; }
 
   a{ color:var(--steel); }
 
@@ -149,8 +152,8 @@
     border-radius:14px; padding:18px 20px; margin:16px 0;
     display:flex; align-items:center; gap:16px; flex-wrap:wrap;
   }
-  .formula-box .formula{ font-size:1.25rem; font-weight:600; color:#5A3E00; }
-  .formula-box .meta{ font-size:0.85rem; color:var(--ink-soft); }
+  .formula-box .mathjax-wrapper { font-size: 1.15rem; color: #5A3E00; background: #fff; padding: 10px 20px; border-radius: 8px; border: 1px solid #FFE0A3; }
+  .formula-box .meta{ font-size:0.85rem; color:var(--ink-soft); flex: 1; min-width: 200px; }
 
   .factor-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0 6px; }
   .factor{
@@ -164,10 +167,10 @@
   .panel.series{ background:#FDEDEB; border:1px solid #F3C9C3; }
   .panel.parallel{ background:#EAF2F8; border:1px solid #C7DBEA; }
   .panel h3{ margin:0 0 8px; font-size:1.05rem; }
-  .panel .formula{ font-size:1.05rem; margin:10px 0; display:block; }
-  .panel ul{ margin:8px 0 0; padding-left:18px; font-size:0.88rem; color:var(--ink-soft); }
-
-  .diagram{ display:flex; justify-content:center; margin:10px 0 4px; }
+  .panel .mathjax-panel { background: rgba(255,255,255,0.6); padding: 10px; border-radius: 8px; margin: 10px 0; text-align: center; }
+  .panel .shortcut-box { background: #fff; border: 1px dashed var(--coral); padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-top: 12px; }
+  .panel ul{ margin:8px 0 0; padding-left:18px; font-size:0.88rem; color:var(--ink); }
+  .panel li { margin-bottom: 6px; }
 
   .app-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:14px; }
   .app-item{ display:flex; gap:12px; align-items:flex-start; border:1px solid var(--line); border-radius:12px; padding:14px; background:#FBFCFE; }
@@ -179,8 +182,8 @@
   .recap .kicker{ color:var(--amber); }
   .recap h2{ color:#fff; }
   .recap-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:16px; }
-  .recap-item{ background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:16px; }
-  .recap-item .formula{ color:var(--amber); font-size:1.15rem; display:block; margin-bottom:6px; }
+  .recap-item{ background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:16px; text-align: center; }
+  .recap-item .mathjax-recap { color: var(--amber); font-size: 1.15rem; margin-bottom: 10px; }
   .recap-item p{ margin:0; font-size:0.82rem; color:#B9C4D2; }
 
   .cta-banner{
@@ -320,18 +323,24 @@
         <span class="kicker">01 · Foundations</span>
         <h2>What is a Capacitor?</h2>
         <p>A <strong>capacitor</strong> is a component that stores electric charge — and with it, electric potential energy — inside an electric field. In its simplest form it is two conducting plates placed close together, separated by an insulating material called a <strong>dielectric</strong>.</p>
-        <p>When the plates are connected to a voltage source (like a battery), electrons are pushed onto one plate and pulled off the other. One plate ends up with excess positive charge <span class="formula">+Q</span>, the other with equal and opposite charge <span class="formula">−Q</span>. No charge actually crosses the dielectric — the capacitor stores energy in the electric field that forms between the plates.</p>
+        <p>When the plates are connected to a voltage source (like a battery), electrons are pushed onto one plate and pulled off the other. One plate ends up with excess positive charge \(+Q\), the other with equal and opposite charge \(-Q\). No charge actually crosses the dielectric — the capacitor stores energy in the electric field that forms between the plates.</p>
       </section>
 
       <section class="card" id="definition">
         <span class="kicker">02 · The Core Idea</span>
         <h2>Defining Capacitance</h2>
-        <p><strong>Capacitance</strong> (C) tells you how much charge a capacitor can store for every volt of potential difference applied across it. A capacitor with a large capacitance can hold a lot of charge without needing a large voltage.</p>
+        <p><strong>Capacitance</strong> (\(C\)) tells you how much charge a capacitor can store for every volt of potential difference applied across it. A capacitor with a large capacitance can hold a lot of charge without needing a large voltage.</p>
         <div class="formula-box">
-          <span class="formula">C = Q / V</span>
-          <span class="meta">Q = charge stored (coulombs) · V = potential difference (volts) · C in farads (F)</span>
+          <div class="mathjax-wrapper">
+            \[ C = \frac{Q}{V} \]
+          </div>
+          <div class="meta">
+            <strong>\(Q\)</strong> = charge stored (Coulombs, C)<br>
+            <strong>\(V\)</strong> = potential difference (Volts, V)<br>
+            <strong>\(C\)</strong> = capacitance (Farads, F)<br><br>
+            <em>Common units:</em> \(1 \, \mu\text{F} = 10^{-6} \text{ F}\)
+          </div>
         </div>
-        <p>One <strong>farad</strong> (1 F) is enormous for everyday circuits, so real capacitors are usually rated in microfarads (µF, 10⁻⁶ F), nanofarads (nF, 10⁻⁹ F), or picofarads (pF, 10⁻¹² F).</p>
       </section>
 
       <section class="card" id="parallel-plate">
@@ -339,21 +348,28 @@
         <h2>The Parallel-Plate Capacitor</h2>
         <p>For two flat plates facing each other, capacitance depends only on their geometry and the material between them:</p>
         <div class="formula-box">
-          <span class="formula">C = ε₀ εᵣ A / d</span>
-          <span class="meta">ε₀ = 8.85 × 10⁻¹² F/m (permittivity of free space)</span>
+          <div class="mathjax-wrapper">
+            \[ C = \frac{\varepsilon_0 \varepsilon_r A}{d} \]
+          </div>
+          <div class="meta">
+            <strong>\(\varepsilon_0\)</strong> = \( 8.85 \times 10^{-12} \text{ F/m} \)<br>
+            <strong>\(\varepsilon_r\)</strong> = dielectric constant (1 for air)<br>
+            <strong>\(A\)</strong> = area of one plate (\(\text{m}^2\))<br>
+            <strong>\(d\)</strong> = distance between plates (\(\text{m}\))
+          </div>
         </div>
         <div class="factor-grid">
           <div class="factor">
-            <span class="tag">A ↑</span>
+            <span class="tag">Area (\(A\)) ↑</span>
             <p>Larger overlapping plate <strong>area</strong> gives more room to store charge — capacitance increases.</p>
           </div>
           <div class="factor">
-            <span class="tag">d ↓</span>
+            <span class="tag">Distance (\(d\)) ↓</span>
             <p>Smaller <strong>separation</strong> between plates means a stronger field for the same voltage — capacitance increases.</p>
           </div>
           <div class="factor">
-            <span class="tag">εᵣ ↑</span>
-            <p>A better insulating <strong>dielectric</strong> (higher relative permittivity) lets the plates hold more charge at the same voltage.</p>
+            <span class="tag">Dielectric (\(\varepsilon_r\)) ↑</span>
+            <p>A better insulating <strong>dielectric</strong> lets the plates hold more charge at the same voltage.</p>
           </div>
         </div>
       </section>
@@ -365,20 +381,28 @@
         <div class="two-col">
           <div class="panel series">
             <h3>Series</h3>
-            <span class="formula">1/C_total = 1/C₁ + 1/C₂ + …</span>
+            <div class="mathjax-panel">
+              \[ \frac{1}{C_{\text{total}}} = \frac{1}{C_1} + \frac{1}{C_2} + \dots \]
+            </div>
+            <div class="shortcut-box">
+              <strong>Hint for 2 Capacitors:</strong> Avoid fractions by using the product-over-sum rule:<br>
+              \[ C_{\text{total}} = \frac{C_1 \times C_2}{C_1 + C_2} \]
+            </div>
             <ul>
-              <li>Every capacitor stores the <strong>same charge</strong> Q.</li>
+              <li>Every capacitor stores the <strong>same charge</strong> (\(Q_1 = Q_2 = Q_{\text{total}}\)).</li>
               <li>The total voltage splits across each capacitor.</li>
-              <li>Total capacitance is always <strong>smaller</strong> than the smallest individual C.</li>
+              <li>Total capacitance is always <strong>smaller</strong> than the smallest individual \(C\).</li>
             </ul>
           </div>
           <div class="panel parallel">
             <h3>Parallel</h3>
-            <span class="formula">C_total = C₁ + C₂ + …</span>
+            <div class="mathjax-panel">
+              \[ C_{\text{total}} = C_1 + C_2 + \dots \]
+            </div>
             <ul>
-              <li>Every capacitor feels the <strong>same voltage</strong> V.</li>
+              <li>Every capacitor feels the <strong>same voltage</strong> (\(V_1 = V_2 = V_{\text{total}}\)).</li>
               <li>The total charge splits across each capacitor.</li>
-              <li>Total capacitance is always <strong>larger</strong> than any individual C.</li>
+              <li>Total capacitance is always <strong>larger</strong> than any individual \(C\).</li>
             </ul>
           </div>
         </div>
@@ -389,10 +413,13 @@
         <h2>Energy Stored in a Capacitor</h2>
         <p>Charging a capacitor takes work, because each new bit of charge has to be pushed against the charge already sitting on the plates. That work is stored as electric potential energy:</p>
         <div class="formula-box">
-          <span class="formula">U = ½QV = ½CV² = Q²/2C</span>
-          <span class="meta">Any of the three forms works — pick whichever variables you already know.</span>
+          <div class="mathjax-wrapper">
+             \[ U = \frac{1}{2}QV = \frac{1}{2}CV^2 = \frac{Q^2}{2C} \]
+          </div>
+          <div class="meta">
+            Any of the three forms works — pick whichever variables you already know based on the question. Energy \(U\) is measured in Joules (J).
+          </div>
         </div>
-        <p>Graphically, this energy is the area under a charge–voltage (Q–V) graph, which is a straight line through the origin with gradient C — the area of that triangle is exactly ½QV.</p>
       </section>
 
       <section class="card" id="applications">
@@ -422,12 +449,12 @@
         <span class="kicker">Quick Reference</span>
         <h2>Formula Recap</h2>
         <div class="recap-grid">
-          <div class="recap-item"><span class="formula">C = Q/V</span><p>Definition of capacitance</p></div>
-          <div class="recap-item"><span class="formula">C = ε₀εᵣA/d</span><p>Parallel-plate capacitance</p></div>
-          <div class="recap-item"><span class="formula">1/C_t = Σ 1/Cᵢ</span><p>Series combination</p></div>
-          <div class="recap-item"><span class="formula">C_t = ΣCᵢ</span><p>Parallel combination</p></div>
-          <div class="recap-item"><span class="formula">U = ½CV²</span><p>Stored energy</p></div>
-          <div class="recap-item"><span class="formula">U = Q²/2C</span><p>Stored energy (alt. form)</p></div>
+          <div class="recap-item"><div class="mathjax-recap">\( C = \frac{Q}{V} \)</div><p>Definition</p></div>
+          <div class="recap-item"><div class="mathjax-recap">\( C = \frac{\varepsilon_0\varepsilon_r A}{d} \)</div><p>Parallel-plate</p></div>
+          <div class="recap-item"><div class="mathjax-recap">\( \frac{1}{C_t} = \Sigma \frac{1}{C_i} \)</div><p>Series</p></div>
+          <div class="recap-item"><div class="mathjax-recap">\( C_t = \Sigma C_i \)</div><p>Parallel</p></div>
+          <div class="recap-item"><div class="mathjax-recap">\( U = \frac{1}{2}CV^2 \)</div><p>Stored energy</p></div>
+          <div class="recap-item"><div class="mathjax-recap">\( U = \frac{Q^2}{2C} \)</div><p>Stored energy (alt)</p></div>
         </div>
       </section>
 
