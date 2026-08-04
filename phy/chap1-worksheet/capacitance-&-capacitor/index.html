@@ -255,16 +255,22 @@
     <div class="cap-figure">
       <div class="cap-card">
         <svg viewBox="0 0 340 240" width="100%" height="auto">
-          <!-- battery -->
-          <line x1="30" y1="60" x2="30" y2="180" stroke="#1E2A38" stroke-width="3"/>
-          <line x1="14" y1="95" x2="46" y2="95" stroke="#1E2A38" stroke-width="4"/>
-          <line x1="18" y1="145" x2="42" y2="145" stroke="#1E2A38" stroke-width="8"/>
-          <!-- wires -->
-          <line x1="30" y1="60" x2="120" y2="60" stroke="#1E2A38" stroke-width="3"/>
-          <line x1="30" y1="180" x2="120" y2="180" stroke="#1E2A38" stroke-width="3"/>
-          <line x1="220" y1="60" x2="300" y2="60" stroke="#1E2A38" stroke-width="3"/>
-          <line x1="220" y1="180" x2="300" y2="180" stroke="#1E2A38" stroke-width="3"/>
-          <line x1="300" y1="60" x2="300" y2="180" stroke="#1E2A38" stroke-width="3"/>
+          <!-- Wires & Battery Circuit -->
+          <g stroke="#1E2A38" stroke-width="3">
+            <!-- Left side (Positive path to Red plate) -->
+            <line x1="120" y1="120" x2="40" y2="120"/>
+            <line x1="40" y1="120" x2="40" y2="228"/>
+            <line x1="40" y1="228" x2="155" y2="228"/>
+
+            <!-- Right side (Negative path to Blue plate) -->
+            <line x1="220" y1="120" x2="300" y2="120"/>
+            <line x1="300" y1="120" x2="300" y2="228"/>
+            <line x1="300" y1="228" x2="185" y2="228"/>
+          </g>
+
+          <!-- Battery Symbol (Centered at the bottom) -->
+          <line x1="155" y1="214" x2="155" y2="242" stroke="#1E2A38" stroke-width="4"/> <!-- Positive Terminal -->
+          <line x1="185" y1="220" x2="185" y2="236" stroke="#1E2A38" stroke-width="8"/> <!-- Negative Terminal -->
           <!-- plates -->
           <rect x="120" y="40" width="12" height="160" rx="3" fill="#E85D4C"/>
           <rect x="208" y="40" width="12" height="160" rx="3" fill="#3E6E9E"/>
