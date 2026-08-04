@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capacitance &amp; Capacitors — Grade 12 Physics | SMA ABBS Surakarta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F7FB;
+    --surface:#FFFFFF;
+    --ink:#1E2A38;
+    --ink-soft:#5C6B7A;
+    --amber:#FFB627;
+    --amber-deep:#E89A00;
+    --coral:#E85D4C;
+    --steel:#3E6E9E;
+    --mint:#4CAF8C;
+    --line:#DCE3EE;
+    --radius:18px;
+    --shadow: 0 10px 30px -12px rgba(30,42,56,0.14);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(255,182,39,0.14), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(62,110,158,0.10), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.65;
+  }
+  h1,h2,h3,.display{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em; }
+  code, .formula{ font-family:'IBM Plex Mono', monospace; }
+
+  a{ color:var(--steel); }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px; }
+
+  /* NAV */
+  .topnav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,247,251,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav .wrap{ display:flex; align-items:center; justify-content:space-between; height:68px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Space Grotesk'; font-weight:700; font-size:1.05rem; color:var(--ink); text-decoration:none;}
+  .brand-mark{ width:30px; height:30px; flex:none; }
+  .nav-cta{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--ink); color:#fff !important; text-decoration:none;
+    padding:10px 18px; border-radius:999px; font-weight:600; font-size:0.92rem;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .nav-cta:hover{ background:#111a24; transform:translateY(-1px); }
+
+  /* HERO */
+  .hero{ padding:64px 0 40px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--surface); border:1px solid var(--line);
+    padding:7px 14px 7px 10px; border-radius:999px;
+    font-size:0.8rem; font-weight:600; color:var(--ink-soft);
+    box-shadow:var(--shadow);
+    margin-bottom:22px;
+  }
+  .eyebrow .dot{ width:8px; height:8px; border-radius:50%; background:var(--amber); }
+
+  .hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px; align-items:center; }
+  .hero h1{ font-size:clamp(2.1rem, 4.2vw, 3.4rem); line-height:1.08; margin:0 0 18px; }
+  .hero h1 .hl{ color:var(--coral); }
+  .hero p.lead{ font-size:1.08rem; color:var(--ink-soft); max-width:52ch; margin:0 0 28px; }
+
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 22px; border-radius:12px; font-weight:600; text-decoration:none;
+    font-size:0.96rem; border:1px solid transparent; transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-primary{ background:var(--amber); color:#2B1D00; box-shadow:0 10px 24px -10px rgba(255,182,39,0.7); }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-ghost{ background:var(--surface); color:var(--ink); border-color:var(--line); }
+  .btn-ghost:hover{ border-color:var(--steel); }
+
+  /* HERO SVG capacitor */
+  .cap-figure{ position:relative; }
+  .cap-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:24px;
+    padding:26px; box-shadow:var(--shadow);
+  }
+  .cap-caption{ margin-top:14px; font-size:0.85rem; color:var(--ink-soft); text-align:center; }
+
+  @keyframes drift{
+    0%,100%{ transform:translateY(0); opacity:0.9;}
+    50%{ transform:translateY(-10px); opacity:1;}
+  }
+  @keyframes pulseField{
+    0%,100%{ opacity:0.35; }
+    50%{ opacity:0.85; }
+  }
+  .charge-dot{ animation:drift 2.6s ease-in-out infinite; }
+  .charge-dot:nth-child(2){ animation-delay:.3s; }
+  .charge-dot:nth-child(3){ animation-delay:.6s; }
+  .field-line{ animation:pulseField 2.2s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce){
+    .charge-dot, .field-line{ animation:none !important; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* LAYOUT: TOC + content */
+  .layout{ display:grid; grid-template-columns:250px 1fr; gap:44px; padding:20px 0 80px; align-items:start; }
+  .toc{
+    position:sticky; top:88px;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px; box-shadow:var(--shadow);
+  }
+  .toc-title{ font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-soft); font-weight:700; margin:0 0 12px 4px; }
+  .toc a{
+    display:flex; align-items:center; gap:10px;
+    text-decoration:none; color:var(--ink); font-size:0.9rem; font-weight:500;
+    padding:9px 8px; border-radius:10px; transition:background .15s ease;
+  }
+  .toc a:hover{ background:#F0F3FA; }
+  .toc-ic{ width:20px; height:20px; flex:none; }
+
+  .content{ display:flex; flex-direction:column; gap:26px; }
+  section.card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:34px; box-shadow:var(--shadow); scroll-margin-top:88px;
+  }
+  section.card .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:0.76rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em;
+    color:var(--steel); margin-bottom:10px;
+  }
+  section.card h2{ font-size:1.55rem; margin:0 0 14px; }
+  section.card p{ color:#2c3b4c; margin:0 0 14px; }
+  section.card p:last-child{ margin-bottom:0; }
+
+  .formula-box{
+    background:#FFF8E8; border:1px dashed var(--amber-deep);
+    border-radius:14px; padding:18px 20px; margin:16px 0;
+    display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+  }
+  .formula-box .formula{ font-size:1.25rem; font-weight:600; color:#5A3E00; }
+  .formula-box .meta{ font-size:0.85rem; color:var(--ink-soft); }
+
+  .factor-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0 6px; }
+  .factor{
+    border:1px solid var(--line); border-radius:12px; padding:14px 16px; background:#FBFCFE;
+  }
+  .factor .tag{ font-family:'IBM Plex Mono'; font-size:0.78rem; font-weight:600; color:var(--coral); }
+  .factor p{ font-size:0.87rem; margin:6px 0 0; color:var(--ink-soft); }
+
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:8px; }
+  .panel{ border-radius:14px; padding:20px; }
+  .panel.series{ background:#FDEDEB; border:1px solid #F3C9C3; }
+  .panel.parallel{ background:#EAF2F8; border:1px solid #C7DBEA; }
+  .panel h3{ margin:0 0 8px; font-size:1.05rem; }
+  .panel .formula{ font-size:1.05rem; margin:10px 0; display:block; }
+  .panel ul{ margin:8px 0 0; padding-left:18px; font-size:0.88rem; color:var(--ink-soft); }
+
+  .diagram{ display:flex; justify-content:center; margin:10px 0 4px; }
+
+  .app-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:14px; }
+  .app-item{ display:flex; gap:12px; align-items:flex-start; border:1px solid var(--line); border-radius:12px; padding:14px; background:#FBFCFE; }
+  .app-item .ic{ width:26px; height:26px; flex:none; margin-top:2px;}
+  .app-item h4{ margin:0 0 4px; font-size:0.95rem; }
+  .app-item p{ margin:0; font-size:0.85rem; color:var(--ink-soft); }
+
+  .recap{ background:linear-gradient(135deg,#1E2A38,#233247); color:#fff; border:none; }
+  .recap .kicker{ color:var(--amber); }
+  .recap h2{ color:#fff; }
+  .recap-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:16px; }
+  .recap-item{ background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:16px; }
+  .recap-item .formula{ color:var(--amber); font-size:1.15rem; display:block; margin-bottom:6px; }
+  .recap-item p{ margin:0; font-size:0.82rem; color:#B9C4D2; }
+
+  .cta-banner{
+    display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px 30px; box-shadow:var(--shadow);
+  }
+  .cta-banner h3{ margin:0 0 6px; font-size:1.2rem; }
+  .cta-banner p{ margin:0; color:var(--ink-soft); font-size:0.92rem; }
+
+  footer{ border-top:1px solid var(--line); padding:28px 0 40px; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  footer p{ margin:0; font-size:0.82rem; color:var(--ink-soft); }
+
+  /* mobile TOC chips */
+  .toc-mobile{ display:none; }
+
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .layout{ grid-template-columns:1fr; }
+    .toc{ display:none; }
+    .toc-mobile{
+      display:flex; gap:8px; overflow-x:auto; padding:4px 2px 14px;
+      -webkit-overflow-scrolling:touch;
+    }
+    .toc-mobile a{
+      flex:none; white-space:nowrap; text-decoration:none; color:var(--ink);
+      background:var(--surface); border:1px solid var(--line); padding:9px 14px;
+      border-radius:999px; font-size:0.85rem; font-weight:600;
+    }
+    .factor-grid{ grid-template-columns:1fr; }
+    .two-col{ grid-template-columns:1fr; }
+    .app-grid{ grid-template-columns:1fr; }
+    .recap-grid{ grid-template-columns:1fr; }
+    section.card{ padding:24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none">
+        <rect x="4" y="4" width="4" height="24" rx="1.5" fill="#E85D4C"/>
+        <rect x="24" y="4" width="4" height="24" rx="1.5" fill="#3E6E9E"/>
+        <circle cx="16" cy="10" r="2" fill="#FFB627"/>
+        <circle cx="16" cy="16" r="2" fill="#FFB627"/>
+        <circle cx="16" cy="22" r="2" fill="#FFB627"/>
+      </svg>
+      Capacitance &amp; Capacitors
+    </a>
+    <a class="nav-cta" href="activity.html">Open Activity Sheet →</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Grade 12 Physics — SMA ABBS Surakarta</div>
+      <h1>How two metal plates learn to <span class="hl">hold a charge</span>.</h1>
+      <p class="lead">A field guide to capacitance and capacitors: what they are, how much charge they can hold, how they behave in circuits, and how much energy they can release. Use this page as your reference while you work through the Activity Sheet.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#intro">Start Reading ↓</a>
+        <a class="btn btn-ghost" href="activity.html">Go to Activity Sheet</a>
+      </div>
+    </div>
+
+    <div class="cap-figure">
+      <div class="cap-card">
+        <svg viewBox="0 0 340 240" width="100%" height="auto">
+          <!-- battery -->
+          <line x1="30" y1="60" x2="30" y2="180" stroke="#1E2A38" stroke-width="3"/>
+          <line x1="14" y1="95" x2="46" y2="95" stroke="#1E2A38" stroke-width="4"/>
+          <line x1="18" y1="145" x2="42" y2="145" stroke="#1E2A38" stroke-width="8"/>
+          <!-- wires -->
+          <line x1="30" y1="60" x2="120" y2="60" stroke="#1E2A38" stroke-width="3"/>
+          <line x1="30" y1="180" x2="120" y2="180" stroke="#1E2A38" stroke-width="3"/>
+          <line x1="220" y1="60" x2="300" y2="60" stroke="#1E2A38" stroke-width="3"/>
+          <line x1="220" y1="180" x2="300" y2="180" stroke="#1E2A38" stroke-width="3"/>
+          <line x1="300" y1="60" x2="300" y2="180" stroke="#1E2A38" stroke-width="3"/>
+          <!-- plates -->
+          <rect x="120" y="40" width="12" height="160" rx="3" fill="#E85D4C"/>
+          <rect x="208" y="40" width="12" height="160" rx="3" fill="#3E6E9E"/>
+          <!-- dielectric -->
+          <rect x="132" y="46" width="76" height="148" fill="#FFF3D6" opacity="0.7"/>
+          <!-- field lines -->
+          <g stroke="#E89A00" stroke-width="2">
+            <line class="field-line" x1="150" y1="65" x2="190" y2="65"/>
+            <line class="field-line" x1="150" y1="95" x2="190" y2="95"/>
+            <line class="field-line" x1="150" y1="125" x2="190" y2="125"/>
+            <line class="field-line" x1="150" y1="155" x2="190" y2="155"/>
+            <line class="field-line" x1="150" y1="185" x2="190" y2="185"/>
+          </g>
+          <!-- charge dots -->
+          <circle class="charge-dot" cx="126" cy="80" r="4" fill="#7A1E12"/>
+          <circle class="charge-dot" cx="126" cy="120" r="4" fill="#7A1E12"/>
+          <circle class="charge-dot" cx="126" cy="160" r="4" fill="#7A1E12"/>
+          <circle class="charge-dot" cx="214" cy="80" r="4" fill="#16324D"/>
+          <circle class="charge-dot" cx="214" cy="120" r="4" fill="#16324D"/>
+          <circle class="charge-dot" cx="214" cy="160" r="4" fill="#16324D"/>
+          <text x="126" y="215" font-family="IBM Plex Mono" font-size="12" fill="#E85D4C" text-anchor="middle">+Q</text>
+          <text x="214" y="215" font-family="IBM Plex Mono" font-size="12" fill="#3E6E9E" text-anchor="middle">−Q</text>
+        </svg>
+      </div>
+      <p class="cap-caption">A charged parallel-plate capacitor: opposite charges on each plate, an electric field between them.</p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="toc-mobile">
+    <a href="#intro">What is it?</a>
+    <a href="#definition">Definition</a>
+    <a href="#parallel-plate">Parallel-plate</a>
+    <a href="#series-parallel">Series &amp; Parallel</a>
+    <a href="#energy">Energy</a>
+    <a href="#applications">Applications</a>
+    <a href="#recap">Recap</a>
+  </div>
+
+  <div class="layout">
+    <aside class="toc">
+      <p class="toc-title">On this page</p>
+      <a href="#intro"><svg class="toc-ic" viewBox="0 0 20 20"><rect x="4" y="4" width="3" height="12" fill="#E85D4C"/><rect x="13" y="4" width="3" height="12" fill="#3E6E9E"/></svg> What is a Capacitor?</a>
+      <a href="#definition"><svg class="toc-ic" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="none" stroke="#FFB627" stroke-width="2"/></svg> Defining Capacitance</a>
+      <a href="#parallel-plate"><svg class="toc-ic" viewBox="0 0 20 20"><rect x="3" y="5" width="14" height="10" rx="2" fill="none" stroke="#3E6E9E" stroke-width="2"/></svg> The Parallel-Plate Formula</a>
+      <a href="#series-parallel"><svg class="toc-ic" viewBox="0 0 20 20"><path d="M3 10h14M8 5v10M12 5v10" stroke="#E85D4C" stroke-width="2"/></svg> Series &amp; Parallel</a>
+      <a href="#energy"><svg class="toc-ic" viewBox="0 0 20 20"><path d="M11 2 4 12h5l-1 6 7-10h-5z" fill="#FFB627"/></svg> Stored Energy</a>
+      <a href="#applications"><svg class="toc-ic" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="#4CAF8C" stroke-width="2"/></svg> Real-World Uses</a>
+      <a href="#recap"><svg class="toc-ic" viewBox="0 0 20 20"><rect x="3" y="3" width="14" height="14" rx="3" fill="none" stroke="#1E2A38" stroke-width="2"/></svg> Formula Recap</a>
+    </aside>
+
+    <main class="content">
+
+      <section class="card" id="intro">
+        <span class="kicker">01 · Foundations</span>
+        <h2>What is a Capacitor?</h2>
+        <p>A <strong>capacitor</strong> is a component that stores electric charge — and with it, electric potential energy — inside an electric field. In its simplest form it is two conducting plates placed close together, separated by an insulating material called a <strong>dielectric</strong>.</p>
+        <p>When the plates are connected to a voltage source (like a battery), electrons are pushed onto one plate and pulled off the other. One plate ends up with excess positive charge <span class="formula">+Q</span>, the other with equal and opposite charge <span class="formula">−Q</span>. No charge actually crosses the dielectric — the capacitor stores energy in the electric field that forms between the plates.</p>
+      </section>
+
+      <section class="card" id="definition">
+        <span class="kicker">02 · The Core Idea</span>
+        <h2>Defining Capacitance</h2>
+        <p><strong>Capacitance</strong> (C) tells you how much charge a capacitor can store for every volt of potential difference applied across it. A capacitor with a large capacitance can hold a lot of charge without needing a large voltage.</p>
+        <div class="formula-box">
+          <span class="formula">C = Q / V</span>
+          <span class="meta">Q = charge stored (coulombs) · V = potential difference (volts) · C in farads (F)</span>
+        </div>
+        <p>One <strong>farad</strong> (1 F) is enormous for everyday circuits, so real capacitors are usually rated in microfarads (µF, 10⁻⁶ F), nanofarads (nF, 10⁻⁹ F), or picofarads (pF, 10⁻¹² F).</p>
+      </section>
+
+      <section class="card" id="parallel-plate">
+        <span class="kicker">03 · Geometry Matters</span>
+        <h2>The Parallel-Plate Capacitor</h2>
+        <p>For two flat plates facing each other, capacitance depends only on their geometry and the material between them:</p>
+        <div class="formula-box">
+          <span class="formula">C = ε₀ εᵣ A / d</span>
+          <span class="meta">ε₀ = 8.85 × 10⁻¹² F/m (permittivity of free space)</span>
+        </div>
+        <div class="factor-grid">
+          <div class="factor">
+            <span class="tag">A ↑</span>
+            <p>Larger overlapping plate <strong>area</strong> gives more room to store charge — capacitance increases.</p>
+          </div>
+          <div class="factor">
+            <span class="tag">d ↓</span>
+            <p>Smaller <strong>separation</strong> between plates means a stronger field for the same voltage — capacitance increases.</p>
+          </div>
+          <div class="factor">
+            <span class="tag">εᵣ ↑</span>
+            <p>A better insulating <strong>dielectric</strong> (higher relative permittivity) lets the plates hold more charge at the same voltage.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="series-parallel">
+        <span class="kicker">04 · In Circuits</span>
+        <h2>Capacitors in Series and Parallel</h2>
+        <p>Just like resistors, capacitors combine differently depending on how they're wired.</p>
+        <div class="two-col">
+          <div class="panel series">
+            <h3>Series</h3>
+            <span class="formula">1/C_total = 1/C₁ + 1/C₂ + …</span>
+            <ul>
+              <li>Every capacitor stores the <strong>same charge</strong> Q.</li>
+              <li>The total voltage splits across each capacitor.</li>
+              <li>Total capacitance is always <strong>smaller</strong> than the smallest individual C.</li>
+            </ul>
+          </div>
+          <div class="panel parallel">
+            <h3>Parallel</h3>
+            <span class="formula">C_total = C₁ + C₂ + …</span>
+            <ul>
+              <li>Every capacitor feels the <strong>same voltage</strong> V.</li>
+              <li>The total charge splits across each capacitor.</li>
+              <li>Total capacitance is always <strong>larger</strong> than any individual C.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="energy">
+        <span class="kicker">05 · Storing Energy</span>
+        <h2>Energy Stored in a Capacitor</h2>
+        <p>Charging a capacitor takes work, because each new bit of charge has to be pushed against the charge already sitting on the plates. That work is stored as electric potential energy:</p>
+        <div class="formula-box">
+          <span class="formula">U = ½QV = ½CV² = Q²/2C</span>
+          <span class="meta">Any of the three forms works — pick whichever variables you already know.</span>
+        </div>
+        <p>Graphically, this energy is the area under a charge–voltage (Q–V) graph, which is a straight line through the origin with gradient C — the area of that triangle is exactly ½QV.</p>
+      </section>
+
+      <section class="card" id="applications">
+        <span class="kicker">06 · Why It Matters</span>
+        <h2>Where You'll Find Capacitors</h2>
+        <div class="app-grid">
+          <div class="app-item">
+            <svg class="ic" viewBox="0 0 24 24"><path d="M12 2 5 13h6l-1 9 8-13h-6z" fill="#FFB627"/></svg>
+            <div><h4>Camera flash</h4><p>Charges slowly from a small battery, then releases all its energy in a fraction of a second for a bright flash.</p></div>
+          </div>
+          <div class="app-item">
+            <svg class="ic" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.5-8.6C.7 8.8 2.3 5 6 5c2 0 3.3 1.1 4 2.2C10.7 6.1 12 5 14 5c3.7 0 5.3 3.8 3.5 7.4C19 16.6 12 21 12 21z" fill="#E85D4C"/></svg>
+            <div><h4>Defibrillators</h4><p>Store energy over a few seconds, then deliver a large, controlled pulse to the heart much faster than a battery ever could alone.</p></div>
+          </div>
+          <div class="app-item">
+            <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="#3E6E9E" stroke-width="2"/><rect x="7" y="9" width="4" height="4" fill="#3E6E9E"/><rect x="13" y="9" width="4" height="4" fill="#3E6E9E"/></svg>
+            <div><h4>Memory (DRAM)</h4><p>Each bit of data in computer memory is stored as a tiny charge on a microscopic capacitor.</p></div>
+          </div>
+          <div class="app-item">
+            <svg class="ic" viewBox="0 0 24 24"><path d="M4 12h4l2-6 4 12 2-6h4" fill="none" stroke="#4CAF8C" stroke-width="2"/></svg>
+            <div><h4>Smoothing &amp; touchscreens</h4><p>Smooth out bumpy power-supply voltages, and detect the tiny change in capacitance created by your finger on a touchscreen.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card recap" id="recap">
+        <span class="kicker">Quick Reference</span>
+        <h2>Formula Recap</h2>
+        <div class="recap-grid">
+          <div class="recap-item"><span class="formula">C = Q/V</span><p>Definition of capacitance</p></div>
+          <div class="recap-item"><span class="formula">C = ε₀εᵣA/d</span><p>Parallel-plate capacitance</p></div>
+          <div class="recap-item"><span class="formula">1/C_t = Σ 1/Cᵢ</span><p>Series combination</p></div>
+          <div class="recap-item"><span class="formula">C_t = ΣCᵢ</span><p>Parallel combination</p></div>
+          <div class="recap-item"><span class="formula">U = ½CV²</span><p>Stored energy</p></div>
+          <div class="recap-item"><span class="formula">U = Q²/2C</span><p>Stored energy (alt. form)</p></div>
+        </div>
+      </section>
+
+      <section class="cta-banner">
+        <div>
+          <h3>Ready to put this into practice?</h3>
+          <p>Head to the Activity Sheet — a 75-minute worksheet you'll answer in your notebook.</p>
+        </div>
+        <a class="btn btn-primary" href="activity.html">Open Activity Sheet →</a>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>Grade 12 Physics — SMA ABBS Surakarta</p>
+    <p>Topic: Capacitance &amp; Capacitors</p>
+  </div>
+</footer>
+
+</body>
+</html>

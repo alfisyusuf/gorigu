@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity Sheet: Capacitance &amp; Capacitors | Grade 12 Physics — SMA ABBS Surakarta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F7FB;
+    --surface:#FFFFFF;
+    --ink:#1E2A38;
+    --ink-soft:#5C6B7A;
+    --amber:#FFB627;
+    --amber-deep:#E89A00;
+    --coral:#E85D4C;
+    --steel:#3E6E9E;
+    --mint:#4CAF8C;
+    --line:#DCE3EE;
+    --radius:18px;
+    --shadow:0 10px 30px -12px rgba(30,42,56,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 90% -10%, rgba(255,182,39,0.14), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(62,110,158,0.10), transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:'Inter', sans-serif; line-height:1.65;
+  }
+  h1,h2,h3,.display{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em; }
+  code,.formula{ font-family:'IBM Plex Mono', monospace; }
+  a{ color:var(--steel); }
+  .wrap{ max-width:980px; margin:0 auto; padding:0 24px; }
+
+  .topnav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,247,251,0.88); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav .wrap{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Space Grotesk'; font-weight:700; font-size:1rem; color:var(--ink); text-decoration:none; }
+  .brand-mark{ width:26px; height:26px; }
+  .nav-link{ text-decoration:none; color:var(--ink); font-weight:600; font-size:0.9rem; display:flex; align-items:center; gap:6px; }
+
+  header.top{ padding:44px 0 8px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--surface); border:1px solid var(--line); padding:7px 14px 7px 10px;
+    border-radius:999px; font-size:0.8rem; font-weight:600; color:var(--ink-soft);
+    box-shadow:var(--shadow); margin-bottom:18px;
+  }
+  .eyebrow .dot{ width:8px; height:8px; border-radius:50%; background:var(--coral); }
+  header.top h1{ font-size:clamp(1.9rem,4vw,2.7rem); margin:0 0 12px; }
+  header.top p.lead{ color:var(--ink-soft); max-width:64ch; margin:0 0 24px; font-size:1.02rem; }
+
+  .info-strip{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:8px; }
+  .pill{
+    display:flex; align-items:center; gap:8px;
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:10px 14px; font-size:0.85rem; font-weight:600; box-shadow:var(--shadow);
+  }
+  .pill svg{ width:18px; height:18px; }
+
+  .instructions{
+    background:#FFF8E8; border:1px dashed var(--amber-deep); border-radius:16px;
+    padding:20px 22px; margin:24px 0 8px;
+  }
+  .instructions h3{ margin:0 0 8px; font-size:1rem; }
+  .instructions ul{ margin:8px 0 0; padding-left:20px; font-size:0.92rem; color:#5A3E00; }
+  .instructions li{ margin-bottom:4px; }
+
+  /* charge meter */
+  .meter-block{
+    margin:30px 0; background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:18px 22px; box-shadow:var(--shadow);
+  }
+  .meter-top{ display:flex; justify-content:space-between; align-items:center; font-size:0.85rem; font-weight:700; color:var(--ink-soft); margin-bottom:10px;}
+  .meter-top span#meterPct{ color:var(--ink); font-family:'IBM Plex Mono'; }
+  .meter-track{ position:relative; height:14px; background:#EDF1F7; border-radius:999px; overflow:hidden; border:1px solid var(--line); }
+  .meter-fill{ position:absolute; inset:0; width:0%; background:linear-gradient(90deg,var(--coral),var(--amber)); border-radius:999px; transition:width .4s ease; }
+
+  main{ padding:10px 0 70px; display:flex; flex-direction:column; gap:26px; }
+
+  .stage{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); overflow:hidden; scroll-margin-top:80px;
+  }
+  .stage-head{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    padding:22px 28px; border-bottom:1px solid var(--line); flex-wrap:wrap;
+  }
+  .stage-head .left{ display:flex; align-items:center; gap:14px; }
+  .stage-plate{
+    width:44px; height:44px; border-radius:12px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono'; font-weight:600; font-size:0.85rem; color:#fff;
+  }
+  .stage-head h2{ font-size:1.2rem; margin:0; }
+  .stage-time{
+    font-family:'IBM Plex Mono'; font-size:0.8rem; font-weight:600; color:var(--ink-soft);
+    background:#F0F3FA; padding:6px 12px; border-radius:999px; white-space:nowrap;
+  }
+  .stage-body{ padding:24px 28px 28px; }
+  .stage-body p.intro{ color:var(--ink-soft); margin:0 0 18px; font-size:0.95rem;}
+
+  .q-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .q-item{
+    display:flex; gap:14px; align-items:flex-start;
+    border:1px solid var(--line); border-radius:12px; padding:14px 16px; background:#FBFCFE;
+  }
+  .q-check{ margin-top:3px; width:18px; height:18px; flex:none; accent-color:var(--mint); cursor:pointer; }
+  .q-text{ font-size:0.94rem; }
+  .q-text .num{ font-family:'IBM Plex Mono'; font-weight:600; color:var(--coral); margin-right:6px; }
+  .q-text .given{ display:block; margin-top:6px; font-family:'IBM Plex Mono'; font-size:0.85rem; color:var(--steel); background:#EAF2F8; padding:8px 10px; border-radius:8px; }
+
+  .ref-note{
+    display:inline-flex; align-items:center; gap:6px; margin-top:16px;
+    font-size:0.82rem; color:var(--steel); text-decoration:none; font-weight:600;
+  }
+
+  .diagram-wrap{ display:flex; justify-content:center; margin:14px 0 4px; }
+
+  .stage.warmup .stage-plate{ background:var(--coral); }
+  .stage.define .stage-plate{ background:var(--amber-deep); }
+  .stage.circuits .stage-plate{ background:var(--steel); }
+  .stage.energy .stage-plate{ background:#7A4FB0; }
+  .stage.apply .stage-plate{ background:var(--mint); }
+  .stage.reflect .stage-plate{ background:#1E2A38; }
+
+  footer{ border-top:1px solid var(--line); padding:28px 0 40px; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+  footer p{ margin:0; font-size:0.82rem; color:var(--ink-soft); }
+
+  @media (max-width:700px){
+    .stage-head{ padding:18px 20px; }
+    .stage-body{ padding:18px 20px 22px; }
+    .info-strip{ gap:8px; }
+    .q-item{ flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none">
+        <rect x="4" y="4" width="4" height="24" rx="1.5" fill="#E85D4C"/>
+        <rect x="24" y="4" width="4" height="24" rx="1.5" fill="#3E6E9E"/>
+        <circle cx="16" cy="10" r="2" fill="#FFB627"/><circle cx="16" cy="16" r="2" fill="#FFB627"/><circle cx="16" cy="22" r="2" fill="#FFB627"/>
+      </svg>
+      Activity Sheet
+    </a>
+    <a class="nav-link" href="index.html">← Back to Learning Page</a>
+  </div>
+</nav>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> Grade 12 Physics — SMA ABBS Surakarta</div>
+    <h1>Capacitor Charge-Up: Activity Sheet</h1>
+    <p class="lead">Six short stages that build from concepts to calculations to real-world reasoning. Work through them in order — each one charges up your understanding a little more, just like a capacitor charging in a circuit.</p>
+
+    <div class="info-strip">
+      <div class="pill"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="#3E6E9E" stroke-width="2"/><path d="M10 5v5l3 2" stroke="#3E6E9E" stroke-width="2" fill="none"/></svg> Total duration: 75 minutes</div>
+      <div class="pill"><svg viewBox="0 0 20 20"><path d="M4 4h9l3 3v9H4z" fill="none" stroke="#E85D4C" stroke-width="2"/></svg> Answer in your notebook</div>
+      <div class="pill"><svg viewBox="0 0 20 20"><path d="M3 10h5l2-6 4 12 2-6h1" stroke="#4CAF8C" stroke-width="2" fill="none"/></svg> 6 stages</div>
+    </div>
+
+    <div class="instructions">
+      <h3>Before you begin</h3>
+      <ul>
+        <li>Write your name, class, and today's date at the top of your notebook page.</li>
+        <li>Answer every question with full working — final numbers alone won't earn full marks.</li>
+        <li>Stuck? Use the <a href="index.html">Learning Page</a> as your reference — every stage below tells you exactly which section to revisit.</li>
+        <li>Tick the checkbox next to a question once you've written the answer in your notebook, so you can track your progress on this screen.</li>
+      </ul>
+    </div>
+
+    <div class="meter-block">
+      <div class="meter-top"><span>Charge Level</span><span id="meterPct">0%</span></div>
+      <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="stage warmup" id="stage-warmup">
+    <div class="stage-head">
+      <div class="left"><div class="stage-plate">+Q</div><h2>Warm-Up — Spark Your Thinking</h2></div>
+      <span class="stage-time">10 minutes</span>
+    </div>
+    <div class="stage-body">
+      <p class="intro">No calculators yet. Just think, sketch, and predict.</p>
+      <ul class="q-list">
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">1.</span>In your own words, explain what a capacitor is and why it can "store" charge even though the dielectric between its plates doesn't conduct electricity.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">2.</span>Sketch a simple parallel-plate capacitor. Label the two plates, the dielectric, and the sign of the charge on each plate.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">3.</span>Predict: if you push the plates of a capacitor closer together, what do you expect happens to its capacitance? Write your prediction and your reasoning before you check the formula in Stage 1.</span></li>
+      </ul>
+      <a class="ref-note" href="index.html#intro">↳ Refer to "What is a Capacitor?" on the Learning Page</a>
+    </div>
+  </section>
+
+  <section class="stage define" id="stage-define">
+    <div class="stage-head">
+      <div class="left"><div class="stage-plate">C</div><h2>Stage 1 — Define &amp; Derive</h2></div>
+      <span class="stage-time">15 minutes</span>
+    </div>
+    <div class="stage-body">
+      <p class="intro">Practice using C = Q/V and the parallel-plate formula.</p>
+      <ul class="q-list">
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">1.</span>A capacitor stores a charge of 6 × 10⁻⁴ C when connected across a 12 V battery. Calculate its capacitance.<span class="given">Q = 6×10⁻⁴ C, V = 12 V → find C</span></span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">2.</span>A 470 µF capacitor is connected to a 9 V supply. How much charge does it store?</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">3.</span>A parallel-plate capacitor has plates of area 0.02 m², separated by 0.5 mm of air (εᵣ = 1). Calculate its capacitance. (ε₀ = 8.85 × 10⁻¹² F/m)</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">4.</span>The same plates from question 3 are now separated by a dielectric with εᵣ = 4 instead of air, at the same distance. Recalculate the capacitance, and explain in one sentence why it changed.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">5.</span>Revisit your prediction from Warm-Up question 3. Was it correct? Use the formula to justify your answer.</span></li>
+      </ul>
+      <a class="ref-note" href="index.html#parallel-plate">↳ Refer to "The Parallel-Plate Capacitor" on the Learning Page</a>
+    </div>
+  </section>
+
+  <section class="stage circuits" id="stage-circuits">
+    <div class="stage-head">
+      <div class="left"><div class="stage-plate">⇄</div><h2>Stage 2 — Series &amp; Parallel Circuits</h2></div>
+      <span class="stage-time">20 minutes</span>
+    </div>
+    <div class="stage-body">
+      <p class="intro">Combine capacitors and track how charge and voltage distribute.</p>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 560 130" width="100%" style="max-width:520px;height:auto;">
+          <text x="10" y="18" font-family="Space Grotesk" font-size="13" font-weight="600" fill="#3E6E9E">Series</text>
+          <line x1="10" y1="60" x2="60" y2="60" stroke="#1E2A38" stroke-width="2"/>
+          <line x1="65" y1="42" x2="65" y2="78" stroke="#E85D4C" stroke-width="4"/>
+          <line x1="75" y1="42" x2="75" y2="78" stroke="#E85D4C" stroke-width="4"/>
+          <text x="70" y="95" font-family="IBM Plex Mono" font-size="11" text-anchor="middle">C₁=6µF</text>
+          <line x1="80" y1="60" x2="140" y2="60" stroke="#1E2A38" stroke-width="2"/>
+          <line x1="145" y1="42" x2="145" y2="78" stroke="#3E6E9E" stroke-width="4"/>
+          <line x1="155" y1="42" x2="155" y2="78" stroke="#3E6E9E" stroke-width="4"/>
+          <text x="150" y="95" font-family="IBM Plex Mono" font-size="11" text-anchor="middle">C₂=3µF</text>
+          <line x1="160" y1="60" x2="220" y2="60" stroke="#1E2A38" stroke-width="2"/>
+          <text x="115" y="20" font-family="IBM Plex Mono" font-size="11" text-anchor="middle" fill="#5C6B7A">V = 18 V</text>
+
+          <line x1="330" y1="10" x2="330" y2="18" stroke="none"/>
+          <text x="330" y="18" font-family="Space Grotesk" font-size="13" font-weight="600" fill="#E85D4C">Parallel</text>
+          <line x1="330" y1="30" x2="330" y2="100" stroke="#1E2A38" stroke-width="2"/>
+          <line x1="330" y1="45" x2="380" y2="45" stroke="#1E2A38" stroke-width="2"/>
+          <line x1="385" y1="35" x2="385" y2="55" stroke="#3E6E9E" stroke-width="4"/>
+          <line x1="395" y1="35" x2="395" y2="55" stroke="#3E6E9E" stroke-width="4"/>
+          <text x="415" y="49" font-family="IBM Plex Mono" font-size="11">C₃=4µF</text>
+          <line x1="400" y1="45" x2="470" y2="45" stroke="#1E2A38" stroke-width="2"/>
+          <line x1="470" y1="45" x2="470" y2="30" stroke="#1E2A38" stroke-width="2"/>
+          <line x1="470" y1="30" x2="330" y2="30" stroke="#1E2A38" stroke-width="2"/>
+
+          <line x1="330" y1="85" x2="380" y2="85" stroke="#1E2A38" stroke-width="2"/>
+          <line x1="385" y1="75" x2="385" y2="95" stroke="#E85D4C" stroke-width="4"/>
+          <line x1="395" y1="75" x2="395" y2="95" stroke="#E85D4C" stroke-width="4"/>
+          <text x="415" y="89" font-family="IBM Plex Mono" font-size="11">C₄=2µF</text>
+          <line x1="400" y1="85" x2="470" y2="85" stroke="#1E2A38" stroke-width="2"/>
+          <line x1="470" y1="85" x2="470" y2="100" stroke="#1E2A38" stroke-width="2"/>
+          <line x1="470" y1="100" x2="330" y2="100" stroke="#1E2A38" stroke-width="2"/>
+          <text x="400" y="120" font-family="IBM Plex Mono" font-size="11" text-anchor="middle" fill="#5C6B7A">V = 10 V</text>
+        </svg>
+      </div>
+
+      <ul class="q-list">
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">1.</span>For the series circuit shown (C₁ = 6 µF, C₂ = 3 µF, supply V = 18 V), calculate the total (equivalent) capacitance.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">2.</span>Using your answer above, calculate the total charge supplied by the battery, and state the charge stored on C₁ and on C₂.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">3.</span>Find the voltage across C₁ and across C₂ individually, and check that they add up to 18 V.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">4.</span>For the parallel circuit shown (C₃ = 4 µF, C₄ = 2 µF, supply V = 10 V), calculate the total capacitance and the charge stored on each capacitor.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">5.</span>In two sentences, explain why series combinations always give a smaller total capacitance while parallel combinations always give a larger one.</span></li>
+      </ul>
+      <a class="ref-note" href="index.html#series-parallel">↳ Refer to "Capacitors in Series and Parallel" on the Learning Page</a>
+    </div>
+  </section>
+
+  <section class="stage energy" id="stage-energy">
+    <div class="stage-head">
+      <div class="left"><div class="stage-plate">U</div><h2>Stage 3 — Energy Storage Calculations</h2></div>
+      <span class="stage-time">15 minutes</span>
+    </div>
+    <div class="stage-body">
+      <p class="intro">Use U = ½QV = ½CV² = Q²/2C to find stored energy.</p>
+      <ul class="q-list">
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">1.</span>A 220 µF capacitor is charged to 25 V. Calculate the energy stored.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">2.</span>A capacitor stores 4 × 10⁻³ C of charge at a potential difference of 40 V. Calculate the energy stored, using a different formula from question 1.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">3.</span>Using your results from Stage 2 question 1 (the series combination), calculate the total energy stored in that circuit.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">4.</span>Using your results from Stage 2 question 4 (the parallel combination), calculate the total energy stored in that circuit.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">5.</span>Between the series and parallel circuits in Stage 2, which one stores more total energy? Suggest a reason why, based on their equivalent capacitance.</span></li>
+      </ul>
+      <a class="ref-note" href="index.html#energy">↳ Refer to "Energy Stored in a Capacitor" on the Learning Page</a>
+    </div>
+  </section>
+
+  <section class="stage apply" id="stage-apply">
+    <div class="stage-head">
+      <div class="left"><div class="stage-plate">⚡</div><h2>Stage 4 — Real-World Application</h2></div>
+      <span class="stage-time">10 minutes</span>
+    </div>
+    <div class="stage-body">
+      <p class="intro">Reasoning questions — write full-sentence explanations, not just one-word answers.</p>
+      <ul class="q-list">
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">1.</span>A camera flash uses a capacitor rather than powering the flash bulb directly from the battery. Explain why, using the idea of charge and discharge rate.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">2.</span>A defibrillator needs to deliver a large amount of energy to a patient in a fraction of a second. Explain why a capacitor is better suited to this job than a battery alone.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">3.</span>Engineers designing a phone touchscreen's capacitor-based sensors need to choose a dielectric material carefully. Suggest one property that dielectric should have, and explain how it affects the capacitance.</span></li>
+      </ul>
+      <a class="ref-note" href="index.html#applications">↳ Refer to "Where You'll Find Capacitors" on the Learning Page</a>
+    </div>
+  </section>
+
+  <section class="stage reflect" id="stage-reflect">
+    <div class="stage-head">
+      <div class="left"><div class="stage-plate">✓</div><h2>Reflection &amp; Self-Check</h2></div>
+      <span class="stage-time">5 minutes</span>
+    </div>
+    <div class="stage-body">
+      <p class="intro">Close the loop on today's learning.</p>
+      <ul class="q-list">
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">1.</span>Write one idea from today that finally "clicked" for you, and one question you still have about capacitors.</span></li>
+        <li class="q-item"><input type="checkbox" class="q-check"><span class="q-text"><span class="num">2.</span>Rate your confidence (1–5) on each: (a) the definition C = Q/V, (b) the parallel-plate formula, (c) series &amp; parallel combinations, (d) energy stored. Write down the topic you'll review again tonight.</span></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Grade 12 Physics — SMA ABBS Surakarta</p>
+    <p>Activity Sheet · Capacitance &amp; Capacitors · 75 minutes</p>
+  </div>
+</footer>
+
+<script>
+  const checks = document.querySelectorAll('.q-check');
+  const fill = document.getElementById('meterFill');
+  const pct = document.getElementById('meterPct');
+  function updateMeter(){
+    const total = checks.length;
+    const done = document.querySelectorAll('.q-check:checked').length;
+    const p = total ? Math.round((done/total)*100) : 0;
+    fill.style.width = p + '%';
+    pct.textContent = p + '%';
+  }
+  checks.forEach(c => c.addEventListener('change', updateMeter));
+  updateMeter();
+</script>
+
+</body>
+</html>
