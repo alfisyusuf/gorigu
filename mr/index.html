@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Majmu'atul Rasail - Risalah Ta'alim</title>
+    <!-- Tailwind CSS untuk Styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js untuk reaktivitas ringan (toggle & state management) -->
+    <!-- Alpine.js untuk State Management (Toggle & Fetching) -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- Font khusus untuk teks Arab dan Latin -->
+    <!-- Font Tipografi Arab dan Latin -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
         .font-arabic { 
             font-family: 'Amiri', serif; 
-            line-height: 2.2; 
+            line-height: 2.4; 
         }
-        /* Efek Glassmorphism untuk Header */
         .glass-header {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -26,7 +26,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased" x-data="documentData()">
 
-    <!-- Sticky Header -->
+    <!-- Header & Navigasi -->
     <header class="glass-header fixed top-0 w-full z-50 shadow-sm">
         <div class="max-w-3xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-lg font-semibold tracking-tight text-slate-900">Risalah Ta'alim</h1>
@@ -35,8 +35,9 @@
                         class="px-4 py-2 text-sm font-medium text-white bg-slate-800 rounded-lg hover:bg-slate-700 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-1">
                     <span x-text="showAll ? 'Sembunyikan Arti' : 'Tampilkan Arti'"></span>
                 </button>
+                <!-- Tombol Refresh Data (Serverless Handling Concept) -->
                 <button @click="refreshData()" 
-                        class="p-2 text-slate-600 bg-slate-200 rounded-lg hover:bg-slate-300 transition-colors focus:outline-none" title="Refresh Data">
+                        class="p-2 text-slate-600 bg-slate-200 rounded-lg hover:bg-slate-300 transition-colors focus:outline-none" title="Muat Ulang Data">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
@@ -45,17 +46,27 @@
         </div>
     </header>
 
-    <!-- Main Content Area -->
+    <!-- Konten Utama -->
     <main class="max-w-3xl mx-auto px-4 pt-24 pb-12">
-        <div class="space-y-6">
+        
+        <!-- Indikator Loading -->
+        <div x-show="loading" class="flex justify-center py-10">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-900"></div>
+        </div>
+
+        <!-- Pesan Error -->
+        <div x-show="error" class="bg-red-50 text-red-600 p-4 rounded-lg text-center font-medium" x-text="error"></div>
+
+        <!-- Render Data JSON -->
+        <div class="space-y-6" x-show="!loading && !error">
             <template x-for="(item, index) in content" :key="index">
                 <article class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-200 hover:shadow-md">
-                    <!-- Arabic Text -->
+                    <!-- Teks Arab Berharakat -->
                     <div class="p-6 text-right">
                         <p class="font-arabic text-3xl md:text-4xl text-slate-900 leading-relaxed" dir="rtl" x-text="item.arabic"></p>
                     </div>
                     
-                    <!-- Translation (Toggleable) -->
+                    <!-- Terjemahan (Toggleable) -->
                     <div x-show="showAll" 
                          x-collapse 
                          class="border-t border-slate-50 bg-slate-50/50">
@@ -73,67 +84,37 @@
             Alpine.data('documentData', () => ({
                 showAll: true,
                 content: [],
+                loading: true,
+                error: null,
                 
-                init() {
-                    this.loadData();
+                async init() {
+                    await this.loadData();
                 },
                 
                 toggleAll() {
                     this.showAll = !this.showAll;
                 },
 
-                refreshData() {
-                    // Animasi sederhana untuk simulasi refresh
+                async refreshData() {
+                    this.loading = true;
+                    this.error = null;
                     this.content = [];
-                    setTimeout(() => {
-                        this.loadData();
-                    }, 300);
+                    // Efek transisi jaringan
+                    setTimeout(async () => {
+                        await this.loadData();
+                    }, 400);
                 },
 
-                loadData() {
-                    // Data JSON ini bisa dipisah ke endpoint serverless di masa depan
-                    this.content = [
-                        {
-                            arabic: "أيها الاخوان الصادقون",
-                            translation: "Wahai Ikhwan yang tulus,"
-                        },
-                        {
-                            arabic: "أركان بيعتنا عشرة فاحفظوها : « الفهم ، والاخلاص ، والعمل ، والجهاد ، والتضحية ، والطاعة ، والثبات ، والتجرد ، والأخوة ، والثقة » .",
-                            translation: "Rukun bai'at kita ada sepuluh, maka hafalkanlah: \"Pemahaman (Al-Fahm), Keikhlasan (Al-Ikhlas), Amal (Al-'Amal), Jihad (Al-Jihad), Pengorbanan (At-Tadhhiyah), Ketaatan (Ath-Tha'ah), Keteguhan (Ats-Tsabat), Totalitas (At-Tajarrud), Persaudaraan (Al-Ukhuwah), dan Kepercayaan (Ats-Tsiqah).\""
-                        },
-                        {
-                            arabic: "أيها الأخ الصادق : انما اريد بالفهم : أن توقن بأن فكرتنا « اسلامية صميمة » وأن تفهم الاسلام كما نفهمه في حدود هذه الأصول العشرين الموجزة كل الإيجاز :",
-                            translation: "Wahai Saudara yang tulus: Sesungguhnya yang aku maksud dengan pemahaman (Al-Fahm) adalah: Engkau meyakini dengan yakin bahwa pemikiran (fikrah) kita adalah \"Islam yang murni\", dan engkau memahami Islam sebagaimana kami memahaminya dalam batas dua puluh prinsip dasar yang sangat ringkas ini:"
-                        },
-                        {
-                            arabic: "١ - الاسلام نظام شامل يتناول مظاهر الحياة جميعاً فهو دولة ووطن أو حكومة وأمة ، وهو خلق وقوة أو رحمة وعدالة ، وهو ثقافة وقانون أو علم وقضاء ، وهو مادة وثروة أو كسب وغنى ، وهو جهاد ودعوة أو جيش وفكرة ، كما هو عقيدة صادقة وعبادة .",
-                            translation: "1. Islam adalah sistem yang komprehensif yang mencakup seluruh aspek kehidupan. Ia adalah negara dan tanah air atau pemerintah dan umat. Ia adalah akhlak dan kekuatan atau rahmat dan keadilan. Ia adalah kebudayaan dan undang-undang atau ilmu dan peradilan. Ia adalah materi dan kekayaan atau penghasilan dan kekayaan. Ia adalah jihad dan dakwah atau pasukan dan pemikiran, sebagaimana ia juga adalah akidah yang benar dan ibadah."
-                        },
-                        {
-                            arabic: "٢ - والقرآن الكريم والسنة المطهرة مرجع كل مسلم في تعرف أحكام الاسلام ، ويفهم القرآن طبقاً لقواعد اللغة العربية من غير تكلف ولا تعسف ويرجع في فهم السنة المطهرة إلى رجال الحديث الثقات ..",
-                            translation: "2. Al-Qur'an yang mulia dan As-Sunnah yang suci adalah rujukan setiap muslim untuk mengetahui hukum-hukum Islam. Al-Qur'an dipahami sesuai dengan kaidah-kaidah bahasa Arab tanpa memaksakan diri dan tanpa serampangan. Sedangkan untuk memahami As-Sunnah yang suci, dikembalikan kepada para ulama hadis yang terpercaya (tsiqah)."
-                        },
-                        {
-                            arabic: "٣ - وللايمان الصادق والعبادة الصحيحة والمجاهدة نور وحلاوة يقذفها الله في قلب من يشاء من عباده ولكن الإلهام والخواطر ، والكشف والرؤى ليست من أدلة الأحكام الشرعية ولا تعتبر إلا بشرط عدم اصطدامها بأحكام الدين ونصوصه .",
-                            translation: "3. Iman yang tulus, ibadah yang benar, dan mujahadah memiliki cahaya dan kelezatan yang ditanamkan Allah ke dalam hati hamba-hamba-Nya yang Dia kehendaki. Akan tetapi, ilham, lintasan pikiran (khawathir), penyingkapan tabir (kasyaf), dan mimpi bukanlah dalil atas hukum-hukum syariat, dan tidak bisa dipertimbangkan kecuali dengan syarat tidak bertentangan dengan hukum-hukum agama dan nas-nasnya."
-                        },
-                        {
-                            arabic: "٤ - والتمائم والرقى والودع والرمل والمعرفة والكهانة وادعاء معرفة الغيب وكل ما كان من هذا الباب منكر تجب محاربته « إلا ما كان آية من قرآن أو رقية مأثورة » .",
-                            translation: "4. Jimat, mantra, kerang (untuk tenung), ramalan pasir, ilmu perbintangan, perdukunan, dan pengakuan mengetahui hal ghaib, serta segala hal yang sejenis dengan itu adalah kemungkaran yang wajib diperangi, \"Kecuali jika itu berupa ayat Al-Qur'an atau ruqyah yang ma'tsur (diriwayatkan dari Nabi).\""
-                        },
-                        {
-                            arabic: "٥ - ورأى الإمام ونائبه فيما لا نص فيه وفيما يحتمل وجوهاً عدة وفي المصالح المرسلة معمول به ما لم يصطدم بقاعدة شرعية ، وقد يتغير بحسب الظروف والعرف والعادات ــ والأصل في العبادات التعبد دون الالتفات إلى المعاني وفي العاديات الالتفات الى الأسرار والحكم والمقاصد .",
-                            translation: "5. Pendapat seorang imam dan wakilnya dalam masalah yang tidak ada nasnya, dalam masalah yang mengandung berbagai kemungkinan makna, dan dalam masalah maslahat mursalah, dapat diamalkan selama tidak bertentangan dengan kaidah syariat. Pendapat ini bisa berubah sesuai dengan kondisi, kebiasaan ('urf), dan tradisi. Pada dasarnya, ibadah bersifat ta'abbudi (ketundukan penuh) tanpa perlu mempertanyakan maknanya, sedangkan dalam masalah muamalah ('aadiyat), memperhatikan rahasia, hikmah, dan tujuannya."
-                        },
-                        {
-                            arabic: "٦ - وكل أحد يؤخذ من كلامه ويترك إلا المعصوم صلى الله عليه وسلم وكل ما جاء عن السلف رضوان الله عليهم موافقاً للكتاب والسنة قبلناه وإلا فكتاب الله وسنة رسوله أولى بالاتباع ولكنا لا نعرض للاشخاص ــ فيما اختلف فيه ــ بطعن أو تجريح ونكلهم إلى نياتهم ، وقد أفضوا إلى ما قدموا .",
-                            translation: "6. Perkataan setiap orang bisa diterima dan bisa ditolak, kecuali perkataan Al-Ma'shum (Nabi Muhammad) shallallahu 'alaihi wa sallam. Setiap apa yang datang dari kaum Salaf ridwanullah 'alaihim yang sejalan dengan Al-Qur'an dan As-Sunnah kita terima. Namun, jika tidak sejalan, maka Kitabullah dan Sunnah Rasul-Nya lebih berhak untuk diikuti. Akan tetapi, kita tidak mencela atau melukai pribadi-pribadi (dalam masalah yang diperselisihkan), kita serahkan niat mereka (kepada Allah), dan mereka telah berlalu dengan apa yang mereka perbuat."
-                        },
-                        {
-                            arabic: "٧ - ولكل مسلم لم يبلغ درجة النظر في أدلة الأحكام الفرعية أن يتبع إماماً من أئمة الدين ، ويحسن به مع هذا الاتباع أن",
-                            translation: "7. Dan bagi setiap muslim yang belum mencapai derajat mampu meneliti (berijtihad) dalam dalil-dalil hukum furu' (cabang), dibolehkan baginya untuk mengikuti salah seorang imam dari imam-imam agama. Dan adalah hal yang baik jika seiring dengan sikap mengikutinya itu ia..."
-                        }
-                    ];
+                async loadData() {
+                    try {
+                        const response = await fetch('data.json');
+                        if (!response.ok) throw new Error('Gagal memuat file data.json. Pastikan dijalankan melalui local server (bukan file://).');
+                        this.content = await response.json();
+                    } catch (err) {
+                        this.error = err.message;
+                    } finally {
+                        this.loading = false;
+                    }
                 }
             }));
         });
