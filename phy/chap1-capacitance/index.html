@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitors & Capacitance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Animasi transisi halus antar slide */
+        .slide-fade {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 min-h-screen text-slate-100 font-sans flex flex-col items-center justify-center p-4">
+
+    <!-- Glassmorphism Container -->
+    <div class="w-full max-w-2xl bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 shadow-2xl relative">
+        
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-700/50 rounded-full h-2.5 mb-6">
+            <div id="progress-bar" class="bg-blue-500 h-2.5 rounded-full transition-all duration-300" style="width: 14%"></div>
+        </div>
+
+        <!-- SLIDES CONTAINER -->
+        <div id="slides-container" class="min-h-[300px] flex flex-col justify-center">
+            
+            <!-- Slide 1 -->
+            <div class="slide slide-fade text-center" id="slide-1">
+                <div class="text-6xl mb-4">⚡</div>
+                <h1 class="text-3xl font-bold mb-4 text-blue-300">Power in Your Pocket</h1>
+                <h2 class="text-xl font-semibold mb-4">Understanding Capacitors</h2>
+                <p class="text-slate-300 leading-relaxed text-lg">
+                    Welcome! Almost every electronic device you use today—from your smartphone to your computer—has tiny components called capacitors inside it. Let's find out how they work.
+                </p>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide slide-fade hidden" id="slide-2">
+                <div class="text-5xl mb-4 text-center">🚰 ➡️ 🔋</div>
+                <h2 class="text-2xl font-bold mb-4 text-blue-300">The Water Tank Analogy</h2>
+                <p class="text-slate-300 leading-relaxed text-lg mb-4">
+                    Think of a capacitor like a water tank on top of a building. A water tank stores water to use later when you turn on a tap.
+                </p>
+                <p class="text-slate-300 leading-relaxed text-lg">
+                    A capacitor stores <strong>electrical energy</strong>. It charges up, holds the energy, and can release it very quickly when the circuit needs it!
+                </p>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide slide-fade hidden" id="slide-3">
+                <div class="text-5xl mb-4 text-center">🥪</div>
+                <h2 class="text-2xl font-bold mb-4 text-blue-300">Anatomy of a Capacitor</h2>
+                <p class="text-slate-300 leading-relaxed text-lg mb-4">
+                    How is it built? It is surprisingly simple! It acts like an electronic sandwich.
+                </p>
+                <ul class="list-disc list-inside text-slate-300 text-lg space-y-2">
+                    <li>It consists of two metal <strong>conductive plates</strong>.</li>
+                    <li>These plates are separated by an insulating material in the middle.</li>
+                    <li>This middle layer is called a <strong>dielectric</strong> (like air, paper, or ceramic).</li>
+                    <li>The two metal plates never touch each other!</li>
+                </ul>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="slide slide-fade hidden" id="slide-4">
+                <div class="flex justify-center items-center space-x-8 mb-6 text-2xl font-bold">
+                    <span class="text-red-400 bg-red-400/20 px-4 py-2 rounded-lg">++++</span>
+                    <span class="text-slate-400">⚡ Field ⚡</span>
+                    <span class="text-blue-400 bg-blue-400/20 px-4 py-2 rounded-lg">----</span>
+                </div>
+                <h2 class="text-2xl font-bold mb-4 text-blue-300">How Does It Store Energy?</h2>
+                <p class="text-slate-300 leading-relaxed text-lg">
+                    When connected to a battery, negative electrons gather on one plate. The other plate loses electrons and becomes positive. Because opposite charges attract, an invisible <strong>electric field</strong> is created across the dielectric. This field is exactly where the energy is stored!
+                </p>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="slide slide-fade hidden" id="slide-5">
+                <h2 class="text-2xl font-bold mb-4 text-blue-300 text-center">Understanding Capacitance</h2>
+                <p class="text-slate-300 leading-relaxed text-lg mb-6 text-center">
+                    <strong>Capacitance</strong> is the ability of the component to store an electric charge. We measure it in <strong>Farads (F)</strong>.
+                </p>
+                <div class="bg-slate-800/80 p-6 rounded-xl text-center border border-slate-600 mb-4">
+                    <div class="text-4xl font-mono text-white mb-2">C = Q / V</div>
+                </div>
+                <ul class="text-slate-300 text-lg text-center space-y-1">
+                    <li><strong>C</strong> = Capacitance</li>
+                    <li><strong>Q</strong> = Charge (in Coulombs)</li>
+                    <li><strong>V</strong> = Voltage (in Volts)</li>
+                </ul>
+            </div>
+
+            <!-- Slide 6 -->
+            <div class="slide slide-fade hidden" id="slide-6">
+                <h2 class="text-2xl font-bold mb-4 text-blue-300">What Changes Capacitance?</h2>
+                <p class="text-slate-300 leading-relaxed text-lg mb-4">
+                    You can change how much energy a capacitor holds by changing its physical design. Here are the golden rules:
+                </p>
+                <div class="space-y-4">
+                    <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                        <strong class="text-blue-200">1. Plate Area:</strong> Larger plates = Higher capacitance.
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                        <strong class="text-blue-200">2. Distance:</strong> Closer plates = Higher capacitance.
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-lg border border-white/10">
+                        <strong class="text-blue-200">3. Material:</strong> A better dielectric material = Higher capacitance.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7 -->
+            <div class="slide slide-fade hidden" id="slide-7">
+                <div class="text-5xl mb-4 text-center">📸 📱 🎹</div>
+                <h2 class="text-2xl font-bold mb-4 text-blue-300">Real-World Magic</h2>
+                <p class="text-slate-300 leading-relaxed text-lg mb-4">
+                    Where do we use them every day?
+                </p>
+                <ul class="list-disc list-inside text-slate-300 text-lg space-y-3">
+                    <li><strong>Camera Flashes:</strong> They release a massive amount of energy instantly to create a bright light.</li>
+                    <li><strong>Touchscreens:</strong> Your finger changes the capacitance on the phone's screen, telling the processor exactly where you touched!</li>
+                    <li><strong>Audio Equipment:</strong> They filter electronic signals to make your music sound clear.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="mt-8 flex justify-between items-center pt-4 border-t border-white/10">
+            <button id="btn-prev" class="px-6 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                Previous
+            </button>
+            <span id="slide-indicator" class="text-slate-400 font-medium">Slide 1 / 7</span>
+            <button id="btn-next" class="px-6 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium transition-colors">
+                Next
+            </button>
+        </div>
+        
+    </div>
+
+    <script>
+        const totalSlides = 7;
+        let currentSlide = 1;
+
+        const btnNext = document.getElementById('btn-next');
+        const btnPrev = document.getElementById('btn-prev');
+        const slideIndicator = document.getElementById('slide-indicator');
+        const progressBar = document.getElementById('progress-bar');
+
+        function updateUI() {
+            // Sembunyikan semua slide
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.add('hidden');
+            });
+            
+            // Tampilkan slide yang aktif
+            document.getElementById(`slide-${currentSlide}`).classList.remove('hidden');
+            
+            // Perbarui teks indikator & progress bar
+            slideIndicator.textContent = `Slide ${currentSlide} / ${totalSlides}`;
+            progressBar.style.width = `${(currentSlide / totalSlides) * 100}%`;
+
+            // Atur status tombol
+            btnPrev.disabled = currentSlide === 1;
+            
+            if (currentSlide === totalSlides) {
+                btnNext.textContent = 'Finish';
+                btnNext.classList.remove('bg-blue-600', 'hover:bg-blue-500');
+                btnNext.classList.add('bg-green-600', 'hover:bg-green-500');
+            } else {
+                btnNext.textContent = 'Next';
+                btnNext.classList.remove('bg-green-600', 'hover:bg-green-500');
+                btnNext.classList.add('bg-blue-600', 'hover:bg-blue-500');
+            }
+        }
+
+        btnNext.addEventListener('click', () => {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateUI();
+            } else {
+                alert("Great job! You have reached the end of the presentation.");
+                // Jika ingin reset kembali ke awal:
+                // currentSlide = 1; 
+                // updateUI();
+            }
+        });
+
+        btnPrev.addEventListener('click', () => {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateUI();
+            }
+        });
+    </script>
+</body>
+</html>
