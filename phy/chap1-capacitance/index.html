@@ -1147,135 +1147,179 @@ const tauReadout = document.getElementById('tauReadout');
 
 let animState = 'idle'; // idle | charging | discharging
 let animStart = 0;
-const ANIM_DURATION = 2600; // ms, fixed visual duration regardless of real tau
+const ANIM_DURATION = 2600; // ms, durasi visual animasi
 
 function getTau(){
   const R_kohm = parseFloat(rSlider.value);
   const C_uF = parseFloat(cCircuitSlider.value);
   return (R_kohm*1000) * (C_uF*1e-6);
 }
+
 function renderCircuitLabels(){
   rLabel.textContent = parseFloat(rSlider.value).toFixed(1)+' kΩ';
   cCircuitLabel.textContent = parseFloat(cCircuitSlider.value).toFixed(0)+' µF';
   tauReadout.textContent = getTau().toFixed(2)+' s';
 }
-[rSlider,cCircuitSlider].forEach(el=>el.addEventListener('input', ()=>{renderCircuitLabels(); drawCircuit(currentFrac());}));
+
+// Saat slider digeser, reset animasi agar grafik tidak error
+[rSlider,cCircuitSlider].forEach(el=>el.addEventListener('input', ()=>{
+  renderCircuitLabels();
+  animState = 'idle';
+  drawCircuit(0); // Gambar ulang dalam keadaan kosong
+}));
 renderCircuitLabels();
 
 function currentFrac(){
-  if(animState==='idle') return 0;
-  const t = (performance.now()-animStart)/ANIM_DURATION;
-  const clamped = Math.min(1, Math.max(0,t));
-  if(animState==='charging') return 1-Math.exp(-4*clamped);
-  if(animState==='discharging') return Math.exp(-4*clamped);
-  return 0;
+  if(animState === 'idle') return 0; 
+  const t = (performance.now() - animStart) / ANIM_DURATION;
+  return Math.min(1, Math.max(0, t));
 }
 
 function drawCircuit(frac){
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0,0,W,H);
 
-  // wires
+  // --- 1. MENGGAMBAR DIAGRAM SIRKUIT ---
+  // Koordinat batas kotak sirkuit
+  const leftX = 60, rightX = 320, topY = 50, botY = 140;
+
   ctx.strokeStyle = '#3A4166';
   ctx.lineWidth = 2.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  // Kabel Kiri & Baterai
   ctx.beginPath();
-  ctx.moveTo(40,60); ctx.lineTo(40,170); ctx.lineTo(90,170);
-  ctx.moveTo(40,60); ctx.lineTo(90,60);
-  ctx.moveTo(150,60); ctx.lineTo(230,60);
-  ctx.moveTo(150,170); ctx.lineTo(230,170);
-  ctx.moveTo(290,60); ctx.lineTo(340,60); ctx.lineTo(340,170); ctx.lineTo(290,170);
+  ctx.moveTo(leftX, topY);
+  ctx.lineTo(leftX, 85);
+  ctx.moveTo(leftX, 105);
+  ctx.lineTo(leftX, botY);
   ctx.stroke();
 
-  // battery symbol
   ctx.strokeStyle = '#8C96B8';
   ctx.beginPath();
-  ctx.moveTo(90,50); ctx.lineTo(90,70);
-  ctx.moveTo(102,42); ctx.lineTo(102,78);
+  ctx.moveTo(leftX - 12, 85); ctx.lineTo(leftX + 12, 85); // Terminal + (panjang)
+  ctx.moveTo(leftX - 7, 105); ctx.lineTo(leftX + 7, 105); // Terminal - (pendek)
   ctx.stroke();
-  ctx.fillStyle='#8C96B8';
-  ctx.font='10px IBM Plex Mono';
-  ctx.fillText('V', 68, 68);
+  ctx.fillStyle = '#8C96B8'; ctx.font = '11px IBM Plex Mono';
+  ctx.fillText('V', leftX - 24, 99);
+  ctx.fillText('+', leftX + 16, 88);
 
-  // resistor (zigzag)
-  ctx.strokeStyle = '#FFB300';
+  // Kabel Atas & Resistor
+  ctx.strokeStyle = '#3A4166';
   ctx.beginPath();
-  let rx = 150, ry=60;
-  ctx.moveTo(rx,ry);
-  for(let i=0;i<6;i++){ ctx.lineTo(rx+10+i*13, ry + (i%2===0?-8:8)); }
-  ctx.lineTo(230,ry);
+  ctx.moveTo(leftX, topY);
+  ctx.lineTo(150, topY);
+  // Garis Zig-zag Resistor
+  ctx.lineTo(158, topY - 8); ctx.lineTo(174, topY + 8);
+  ctx.lineTo(190, topY - 8); ctx.lineTo(206, topY + 8);
+  ctx.lineTo(222, topY - 8); ctx.lineTo(230, topY);
+  ctx.lineTo(rightX, topY);
   ctx.stroke();
-  ctx.fillStyle='#FFB300';
-  ctx.fillText('R', 185, 46);
+  ctx.fillStyle = '#FFB300';
+  ctx.fillText('R', 185, topY - 14);
 
-  // capacitor plates (right side, vertical)
-  const plateGap = 26;
-  const px = 260;
-  const glow = Math.max(0.12, frac);
-  ctx.fillStyle = `rgba(74,58,255,${0.25+glow*0.55})`;
-  ctx.fillRect(px-3, 40, 6, 90);
-  ctx.fillStyle = `rgba(20,199,165,${0.25+glow*0.55})`;
-  ctx.fillRect(px+plateGap-3, 40, 6, 90);
-  ctx.fillStyle='#5B6478';
-  ctx.font='9px IBM Plex Mono';
-  ctx.fillText('C', px+8, 30);
+  // Kabel Bawah (Ground)
+  ctx.strokeStyle = '#3A4166';
+  ctx.beginPath();
+  ctx.moveTo(leftX, botY);
+  ctx.lineTo(rightX, botY);
+  ctx.stroke();
 
-  // moving charge dot along top wire when charging
-  if(animState!=='idle'){
-    const dotX = 40 + frac*(px-40-plateGap/2)*0.94;
+  // Kabel Kanan & Kapasitor
+  ctx.beginPath();
+  ctx.moveTo(rightX, topY);
+  ctx.lineTo(rightX, 85); // Turun ke pelat atas
+  ctx.moveTo(rightX, 105); // Dari pelat bawah turun
+  ctx.lineTo(rightX, botY);
+  ctx.stroke();
+
+  // Menghitung voltase saat ini untuk mengatur intensitas warna pelat
+  let voltageLevel = 0;
+  if(animState === 'charging'){
+     voltageLevel = 1 - Math.exp(-5 * frac);
+  } else if(animState === 'discharging'){
+     voltageLevel = Math.exp(-5 * frac);
+  }
+
+  const glow = Math.max(0.1, voltageLevel);
+  
+  // Pelat Atas (+)
+  ctx.fillStyle = `rgba(74,58,255,${0.2 + glow*0.8})`;
+  ctx.fillRect(rightX - 18, 81, 36, 6);
+  
+  // Pelat Bawah (-)
+  ctx.fillStyle = `rgba(20,199,165,${0.2 + glow*0.8})`;
+  ctx.fillRect(rightX - 18, 103, 36, 6);
+  
+  ctx.fillStyle = '#5B6478';
+  ctx.fillText('C', rightX + 22, 97);
+
+  // --- 2. MENGGAMBAR GRAFIK V(t) ---
+  const gX = 60, gY = 220, gW = 260, gH = 50;
+  
+  // Sumbu X dan Y
+  ctx.strokeStyle = '#26304F';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(gX, gY); ctx.lineTo(gX + gW, gY); // X
+  ctx.moveTo(gX, gY); ctx.lineTo(gX, gY - gH - 10); // Y
+  ctx.stroke();
+  
+  ctx.fillStyle = '#5B6478'; ctx.font = '10px IBM Plex Mono';
+  ctx.fillText('V(t)', gX - 28, gY - gH);
+  ctx.fillText('t', gX + gW + 6, gY + 4);
+
+  // Kurva Grafik
+  if(animState !== 'idle') {
+    ctx.strokeStyle = '#4A3AFF';
+    ctx.lineWidth = 2.5;
     ctx.beginPath();
-    ctx.fillStyle = animState==='charging' ? '#FFB300' : '#14C7A5';
-    ctx.arc(Math.min(dotX,px-plateGap/2-10), 60, 4, 0, Math.PI*2);
-    ctx.fill();
-  }
+    
+    const steps = 100;
+    // Batasi seberapa jauh garis digambar (membuat efek animasi berjalan dari kiri ke kanan)
+    const drawLimit = Math.floor(frac * steps); 
 
-  // voltage curve
-  const gx=40, gy=200, gw=300, gh=1; // baseline reference not used directly
-  ctx.strokeStyle='#26304F';
-  ctx.lineWidth=1;
-  ctx.beginPath(); ctx.moveTo(40,205); ctx.lineTo(340,205); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(40,205); ctx.lineTo(40,150); ctx.stroke();
-  ctx.fillStyle='#5B6478'; ctx.font='9px IBM Plex Mono';
-  ctx.fillText('V(t)', 44, 148);
-  ctx.fillText('t', 336, 216);
-
-  ctx.strokeStyle='#4A3AFF';
-  ctx.lineWidth=2;
-  ctx.beginPath();
-  const steps=60;
-  for(let i=0;i<=steps;i++){
-    const tt = i/steps;
-    let val;
-    if(animState==='charging'){
-      const localT = Math.min(tt, frac<1? tt : 1);
-      val = 1-Math.exp(-4*Math.min(tt, (performance.now()-animStart)/ANIM_DURATION));
-    } else if(animState==='discharging'){
-      val = Math.exp(-4*Math.min(tt, (performance.now()-animStart)/ANIM_DURATION));
-    } else { val = 0; }
-    val = Math.max(0,Math.min(1,val));
-    const xx = 40 + tt*300;
-    const yy = 205 - val*50;
-    if(i===0) ctx.moveTo(xx,yy); else ctx.lineTo(xx,yy);
+    for(let i = 0; i <= drawLimit; i++){
+      const t = i / steps; 
+      let v = 0;
+      
+      // 5 tau (5 konstanta waktu) = kapasitor dianggap penuh ~99.3%
+      if(animState === 'charging'){
+        v = 1 - Math.exp(-5 * t); 
+      } else if (animState === 'discharging'){
+        v = Math.exp(-5 * t);
+      }
+      
+      const px = gX + t * gW;
+      const py = gY - (v * gH);
+      
+      if(i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
   }
-  ctx.stroke();
 }
-drawCircuit(0);
+drawCircuit(0); 
 
 function animateFrame(){
   const frac = currentFrac();
   drawCircuit(frac);
-  const elapsed = performance.now()-animStart;
-  if(animState!=='idle' && elapsed < ANIM_DURATION+50){
+  
+  if(frac < 1){
     requestAnimationFrame(animateFrame);
-  } else if(animState!=='idle'){
-    animState = animState; // hold final frame
   }
 }
+
 document.getElementById('chargeBtn').addEventListener('click', ()=>{
-  animState='charging'; animStart=performance.now();
+  animState = 'charging'; 
+  animStart = performance.now();
   requestAnimationFrame(animateFrame);
 });
+
 document.getElementById('dischargeBtn').addEventListener('click', ()=>{
-  animState='discharging'; animStart=performance.now();
+  animState = 'discharging'; 
+  animStart = performance.now();
   requestAnimationFrame(animateFrame);
 });
 
