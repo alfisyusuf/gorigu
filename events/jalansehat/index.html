@@ -60,9 +60,7 @@
             }
         }
 
-        /* Setiap .a3-page = 1 lembar A3 fisik. Isinya dibatasi persis
-           agar tidak pernah melebihi tinggi kertas -> tidak ada kupon
-           yang kepotong pindah halaman. */
+        /* Setiap .a3-page = 1 lembar A3 fisik. */
         .a3-page {
             width: 297mm;
             height: 420mm;
@@ -223,9 +221,10 @@
                             </div>
                         </div>
 
+                        <!-- BAGIAN INI YANG DIPERBAIKI (MENGHAPUS EFEK GRADASI) -->
                         <div class="flex flex-col justify-center items-end z-10 w-1/3">
                             <span class="text-[8px] font-bold text-gray-400 mb-0.5 tracking-widest uppercase">No. Peserta</span>
-                            <span class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-br from-red-600 to-red-900">
+                            <span class="text-4xl font-black text-red-700">
                                 ${padded}
                             </span>
                         </div>
