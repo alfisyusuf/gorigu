@@ -202,10 +202,12 @@
     font-family:var(--font-mono);
     background:var(--ink);
     color:#F5F7FF;
-    padding:3px 8px;
+    padding:10px 12px; /* Ruang atas-bawah dan kiri-kanan diperbesar */
     border-radius:7px;
     font-size:12.5px;
     white-space:nowrap;
+    display:inline-block; /* Penting: memaksa background membungkus seluruh tinggi konten */
+    vertical-align:middle; /* Menjaga posisi kotak tetap sejajar dengan teks di sebelahnya */
   }
 
   /* HERO plates */
@@ -320,6 +322,7 @@
 
   input[type=range]{
     -webkit-appearance:none;
+    appearance: none;
     width:100%;
     height:6px;
     border-radius:6px;
@@ -610,6 +613,33 @@
   @media (max-width:400px){
     .app-body{padding:16px 14px 22px;}
   }
+
+  /* CSS Khusus Rumus Matematika (Pecahan, Subscript, Superscript) */
+  code.formula .frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    font-size: 0.95em;
+    margin: 0 4px;
+  }
+  code.formula .frac .num {
+    border-bottom: 1.5px solid currentColor;
+    padding: 2px 4px 1px;
+    line-height: 1;
+  }
+  code.formula .frac .den {
+    padding: 1px 4px 2px;
+    line-height: 1.1;
+  }
+  code.formula sub, code.formula sup {
+    font-size: 0.75em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  code.formula sup { top: -0.4em; }
+  code.formula sub { bottom: -0.2em; }
 </style>
 </head>
 <body>
@@ -674,7 +704,7 @@
       <div class="card">
         <h3><span class="badge">C</span>Capacitance, in one line</h3>
         <p class="body-text"><strong>Capacitance</strong> tells you how much charge a capacitor can hold for every volt pushed across it. A bigger capacitance means more charge stored at the same voltage.</p>
-        <p class="body-text" style="margin-bottom:0"><code class="formula">C = Q / V</code> &nbsp; Unit: <strong>Farad (F)</strong>. One Farad is huge, so real capacitors are usually measured in µF (microfarad), nF (nanofarad) or pF (picofarad).</p>
+        <p class="body-text" style="margin-bottom:0"><code class="formula">C = <span class="frac"><span class="num">Q</span><span class="den">V</span></span></code> &nbsp; Unit: <strong>Farad (F)</strong>. One Farad is huge, so real capacitors are usually measured in µF (microfarad), nF (nanofarad) or pF (picofarad).</p>
       </div>
 
       <div class="card tint-electric">
@@ -708,7 +738,7 @@
       <div class="card">
         <h3><span class="badge">A</span>Parallel-plate capacitor</h3>
         <p class="body-text">For flat plates facing each other:</p>
-        <p class="body-text"><code class="formula">C = ε₀ · εᵣ · A / d</code></p>
+        <p class="body-text"><code class="formula">C = <span class="frac"><span class="num">ε<sub>0</sub> · ε<sub>r</sub> · A</span><span class="den">d</span></span></code></p>
         <div class="control">
           <label>Plate area (A) <span class="val" id="areaLabel">30 cm²</span></label>
           <input type="range" id="areaSlider" min="5" max="100" step="1" value="30">
@@ -848,7 +878,7 @@
 
       <div class="card tint-spark">
         <h3><span class="badge" style="background:var(--spark)">E</span>Energy stored</h3>
-        <p class="body-text"><code class="formula">E = ½ · C · V²</code></p>
+        <p class="body-text"><code class="formula">E = <span class="frac"><span class="num">1</span><span class="den">2</span></span> · C · V<sup>2</sup></code></p>
         <div class="control">
           <label>Capacitance (C) <span class="val" id="ecLabel">100 µF</span></label>
           <input type="range" id="ecSlider" min="1" max="1000" step="1" value="100">
@@ -1334,9 +1364,12 @@ function setCombineMode(mode){
   combineMode=mode;
   document.getElementById('btnParallel').classList.toggle('active', mode==='parallel');
   document.getElementById('btnSeries').classList.toggle('active', mode==='series');
+  
+  // Memasukkan HTML pecahan dan subscript
   combineFormula.innerHTML = mode==='parallel'
-    ? '<code class="formula">C_total = C₁ + C₂</code>'
-    : '<code class="formula">1/C_total = 1/C₁ + 1/C₂</code>';
+    ? '<code class="formula">C<sub>total</sub> = C<sub>1</sub> + C<sub>2</sub></code>'
+    : '<code class="formula"><span class="frac"><span class="num">1</span><span class="den">C<sub>total</sub></span></span> = <span class="frac"><span class="num">1</span><span class="den">C<sub>1</sub></span></span> + <span class="frac"><span class="num">1</span><span class="den">C<sub>2</sub></span></span></code>';
+  
   renderCombine();
 }
 function renderCombine(){
