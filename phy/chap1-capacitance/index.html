@@ -640,6 +640,44 @@
   }
   code.formula sup { top: -0.4em; }
   code.formula sub { bottom: -0.2em; }
+
+  /* =========================================
+     MOBILE NATIVE OVERRIDE 
+     Menghilangkan efek "Jendela di dalam jendela" saat dibuka di HP
+  ========================================= */
+  @media (max-width: 600px) {
+    body {
+      padding: 0;
+      background: var(--card); /* Menyatukan background dengan warna aplikasi */
+    }
+    body::before {
+      display: none; /* Menghilangkan pattern jaring-jaring di luar aplikasi */
+    }
+    .app-shell {
+      max-width: 100%;
+      height: 100vh;
+      height: 100dvh; /* Menggunakan Dynamic Viewport agar tidak tertutup UI browser */
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .notch-bar {
+      display: none; /* HP asli sudah punya poni (notch), jadi poni buatan dihapus */
+    }
+    .app-body {
+      height: auto;
+      flex: 1; /* Area konten memanjang otomatis mengisi ruang tengah */
+      max-height: none;
+      padding-bottom: 40px; /* Jarak napas ekstra di bawah konten */
+    }
+    .bottom-nav {
+      /* Karena app-shell kini flex-column, nav otomatis menempel ke dasar layar */
+      padding-bottom: env(safe-area-inset-bottom, 12px); /* Mencegah bentrok dengan garis navigasi gesture iPhone/Android modern */
+      border-top: 1.5px solid var(--line);
+    }
+  }
 </style>
 </head>
 <body>
