@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misi Pengejaran: Listrik Statis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    options: { renderActions: { addMenu: [] } }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  :root{
+    --bg: #F8F9FA;
+    --paper: #FFFFFF;
+    --ink: #16181D;
+    --ink-soft: #454C58;
+    --border: #D7DCE3;
+
+    --vector: #1D4ED8;
+    --vector-tint: #E7EEFE;
+    --gauss: #0F766E;
+    --gauss-tint: #E4F5F2;
+    --potensial: #6D28D9;
+    --potensial-tint: #F0E9FC;
+    --kapasitor: #B45309;
+    --kapasitor-tint: #FDEEDA;
+
+    --good: #15803D;
+    --good-tint: #E5F6EA;
+    --bad: #C2410C;
+    --bad-tint: #FDEBE0;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4,.eyebrow,.step-badge{ font-family:'Plus Jakarta Sans', sans-serif; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 28px; }
+
+  a{ color:inherit; }
+
+  /* ============ TOP PROGRESS NAV ============ */
+  .topnav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(248,249,250,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:2px solid var(--ink);
+    padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    flex-wrap:wrap;
+  }
+  .topnav .brand{ font-weight:800; font-size:20px; letter-spacing:-0.01em; }
+  .topnav .brand span{ color:var(--vector); }
+  .topnav nav{ display:flex; gap:10px; flex-wrap:wrap; }
+  .topnav nav a{
+    text-decoration:none; font-weight:700; font-size:15px;
+    padding:8px 14px; border-radius:999px; border:2px solid var(--border);
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .topnav nav a:hover{ border-color:var(--ink); color:var(--ink); }
+
+  /* ============ HERO ============ */
+  .hero{ padding:64px 0 40px; text-align:center; }
+  .eyebrow{
+    display:inline-block; font-weight:700; font-size:14px; letter-spacing:0.12em;
+    text-transform:uppercase; color:var(--vector); background:var(--vector-tint);
+    padding:8px 18px; border-radius:999px; margin-bottom:20px;
+  }
+  .hero h1{
+    font-size:clamp(34px,5.2vw,56px);
+    font-weight:800; line-height:1.12; letter-spacing:-0.02em;
+    margin:0 0 20px;
+  }
+  .hero h1 em{ font-style:normal; color:var(--vector); }
+  .hero p.lede{
+    max-width:640px; margin:0 auto 36px; font-size:20px; color:var(--ink-soft);
+  }
+
+  .diagnostic-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
+    max-width:900px; margin:0 auto;
+  }
+  .diag-btn{
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    background:var(--paper); border:2.5px solid var(--ink); border-radius:18px;
+    padding:26px 18px; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif;
+    font-weight:700; font-size:19px; color:var(--ink);
+    box-shadow:6px 6px 0 var(--border);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .diag-btn .ico{ font-size:34px; }
+  .diag-btn:hover{ transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--border); }
+  .diag-btn:active{ transform:translate(0,0); box-shadow:2px 2px 0 var(--border); }
+  .diag-btn.b-vector{ box-shadow:6px 6px 0 var(--vector); }
+  .diag-btn.b-vector:hover{ box-shadow:9px 9px 0 var(--vector); }
+  .diag-btn.b-gauss{ box-shadow:6px 6px 0 var(--gauss); }
+  .diag-btn.b-gauss:hover{ box-shadow:9px 9px 0 var(--gauss); }
+  .diag-btn.b-kap{ box-shadow:6px 6px 0 var(--kapasitor); }
+  .diag-btn.b-kap:hover{ box-shadow:9px 9px 0 var(--kapasitor); }
+
+  /* ============ SECTION SHELL ============ */
+  section{ padding:70px 0; border-top:2px solid var(--border); }
+  .section-head{ text-align:center; max-width:680px; margin:0 auto 44px; }
+  .section-head .kicker{
+    font-weight:800; font-size:14px; letter-spacing:0.1em; text-transform:uppercase;
+  }
+  .section-head h2{ font-size:clamp(28px,3.8vw,40px); margin:10px 0 12px; font-weight:800; }
+  .section-head p{ color:var(--ink-soft); font-size:19px; margin:0; }
+
+  /* ============ GRIMOIRE ============ */
+  .grim-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+  .grim-card{
+    background:var(--paper); border:2px solid var(--ink); border-radius:16px;
+    padding:26px 26px 22px; border-left-width:10px;
+  }
+  .grim-card.c-vector{ border-left-color:var(--vector); }
+  .grim-card.c-gauss{ border-left-color:var(--gauss); }
+  .grim-card.c-potensial{ border-left-color:var(--potensial); }
+  .grim-card.c-kap{ border-left-color:var(--kapasitor); }
+  .grim-card h3{ margin:0 0 14px; font-size:22px; font-weight:800; }
+  .formula-line{
+    display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+    padding:10px 0; border-bottom:1px dashed var(--border);
+  }
+  .formula-line:last-of-type{ border-bottom:none; }
+  .formula-line .feq{ font-size:22px; font-weight:700; white-space:nowrap; }
+  .formula-line .fnote{ font-size:14.5px; color:var(--ink-soft); text-align:right; }
+  .grim-const{ margin-top:12px; font-size:14.5px; color:var(--ink-soft); font-weight:600; }
+
+  /* ============ CALLOUT BOXES ============ */
+  .box{ border-radius:14px; padding:20px 22px; margin:24px 0; font-size:17.5px; border:2px solid; }
+  .box .box-label{ display:block; font-weight:800; font-size:13.5px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+  .box.tip{ background:var(--vector-tint); border-color:var(--vector); }
+  .box.tip .box-label{ color:var(--vector); }
+  .box.key{ background:var(--gauss-tint); border-color:var(--gauss); }
+  .box.key .box-label{ color:var(--gauss); }
+  .box.warn{ background:var(--bad-tint); border-color:var(--bad); }
+  .box.warn .box-label{ color:var(--bad); }
+
+  /* ============ STEP SECTIONS ============ */
+  .step-badge{
+    display:inline-flex; align-items:center; gap:8px; font-weight:800; font-size:14px;
+    letter-spacing:0.08em; text-transform:uppercase; padding:7px 16px; border-radius:999px;
+    color:#fff;
+  }
+  .step-badge.s1{ background:var(--vector); }
+  .step-badge.s2{ background:var(--gauss); }
+  .step-badge.s3{ background:var(--kapasitor); }
+
+  .concept-card{
+    background:var(--paper); border:2px solid var(--border); border-radius:16px;
+    padding:26px 28px; margin-bottom:24px;
+  }
+  .concept-card h4{ margin:0 0 10px; font-size:21px; font-weight:800; }
+
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+
+  .worked{
+    background:var(--paper); border:2.5px solid var(--ink); border-radius:16px;
+    padding:28px 28px 24px; margin-top:28px;
+  }
+  .worked .wlabel{
+    display:flex; align-items:center; gap:10px; font-weight:800; font-size:15px;
+    text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft); margin-bottom:14px;
+  }
+  .worked .wlabel .dot{
+    width:26px; height:26px; border-radius:50%; background:var(--ink); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+  }
+  .worked .prompt{ font-size:19px; margin-bottom:18px; }
+  .worked .step-line{
+    display:flex; gap:14px; padding:10px 0; border-top:1px dashed var(--border);
+  }
+  .worked .step-line:first-of-type{ border-top:none; }
+  .worked .step-line .n{
+    flex:0 0 auto; width:28px; height:28px; border-radius:50%;
+    background:var(--vector-tint); color:var(--vector); font-weight:800; font-size:14px;
+    display:flex; align-items:center; justify-content:center; margin-top:3px;
+  }
+  .worked.g .step-line .n{ background:var(--gauss-tint); color:var(--gauss); }
+  .worked.k .step-line .n{ background:var(--kapasitor-tint); color:var(--kapasitor); }
+  .worked .answer{
+    margin-top:16px; padding:14px 18px; background:var(--good-tint); border:2px solid var(--good);
+    border-radius:10px; font-weight:700; color:var(--good); font-size:18px;
+  }
+
+  .mini-box{
+    background:var(--potensial-tint); border:2px solid var(--potensial); border-radius:14px;
+    padding:18px 20px; margin-top:20px; font-size:16.5px;
+  }
+  .mini-box .mlabel{ font-weight:800; color:var(--potensial); font-size:13.5px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; display:block; }
+
+  /* ============ DOJO / QUIZ ============ */
+  .quiz-card{
+    background:var(--paper); border:2.5px solid var(--ink); border-radius:16px;
+    padding:26px 28px; margin-bottom:22px;
+  }
+  .quiz-card .qnum{ font-size:14px; font-weight:800; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+  .quiz-card .qtext{ font-size:20px; font-weight:700; margin:0 0 18px; }
+  .opt-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .opt{
+    text-align:left; background:var(--bg); border:2px solid var(--border); border-radius:12px;
+    padding:14px 16px; font-size:17px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif;
+    color:var(--ink); transition:border-color .1s ease, background .1s ease;
+  }
+  .opt:hover:not(:disabled){ border-color:var(--ink); }
+  .opt:disabled{ cursor:default; }
+  .opt.correct{ background:var(--good-tint); border-color:var(--good); color:var(--good); }
+  .opt.wrong{ background:var(--bad-tint); border-color:var(--bad); color:var(--bad); }
+  .opt.dim{ opacity:0.5; }
+  .feedback{
+    display:none; margin-top:16px; padding:16px 18px; border-radius:12px; font-size:16.5px; border:2px solid;
+  }
+  .feedback.show{ display:block; }
+  .feedback.good{ background:var(--good-tint); border-color:var(--good); color:#0F5C2C; }
+  .feedback.bad{ background:var(--bad-tint); border-color:var(--bad); color:#9A360A; }
+  .feedback strong{ display:block; margin-bottom:4px; font-size:15px; text-transform:uppercase; letter-spacing:0.05em; }
+
+  .score-strip{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    font-weight:700; font-size:18px; margin-bottom:30px; color:var(--ink-soft);
+  }
+  .score-strip .num{ font-family:'Plus Jakarta Sans',sans-serif; font-size:22px; color:var(--ink); }
+
+  footer{ text-align:center; padding:50px 28px 70px; color:var(--ink-soft); font-size:15px; }
+
+  @media (max-width: 760px){
+    body{ font-size:18px; }
+    .diagnostic-grid{ grid-template-columns:1fr; }
+    .grim-grid{ grid-template-columns:1fr; }
+    .two-col{ grid-template-columns:1fr; }
+    .opt-grid{ grid-template-columns:1fr; }
+    .topnav{ padding:12px 18px; }
+    .wrap{ padding:0 18px; }
+    section{ padding:50px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand">⚡ Misi <span>Elektrostatika</span></div>
+  <nav>
+    <a href="#grimoire">Kitab Rumus</a>
+    <a href="#vektor">1. Vektor</a>
+    <a href="#gauss">2. Gauss &amp; Potensial</a>
+    <a href="#kapasitor">3. Kapasitor</a>
+    <a href="#dojo">Dojo</a>
+  </nav>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" style="border-top:none;">
+  <div class="wrap">
+    <span class="eyebrow">Persiapan Daily Test · Listrik Statis</span>
+    <h1>Misi Pengejaran: <em>Persiapan Daily Test</em><br>Listrik Statis!</h1>
+    <p class="lede">Tenang, ketinggalan sedikit itu wajar. Halaman ini dirancang supaya kamu bisa mengejar ketertinggalan dalam waktu singkat — cukup pilih bagian yang paling bikin bingung, dan kita bereskan pelan-pelan bersama.</p>
+
+    <div class="diagnostic-grid">
+      <button class="diag-btn b-vector" onclick="document.getElementById('vektor').scrollIntoView({behavior:'smooth'})">
+        <span class="ico">😵‍💫</span> Saya bingung Vektor
+      </button>
+      <button class="diag-btn b-gauss" onclick="document.getElementById('gauss').scrollIntoView({behavior:'smooth'})">
+        <span class="ico">🕳️</span> Lupa Hukum Gauss
+      </button>
+      <button class="diag-btn b-kap" onclick="document.getElementById('kapasitor').scrollIntoView({behavior:'smooth'})">
+        <span class="ico">🔋</span> Kapasitor bikin pusing
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GRIMOIRE / CHEAT SHEET ============ -->
+<section id="grimoire">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker" style="color:var(--vector);">📖 Referensi Cepat</span>
+      <h2>Kitab Rumus Kilat</h2>
+      <p>Empat kelompok rumus yang paling sering muncul di ujian. Simpan halaman ini terbuka saat belajar.</p>
+    </div>
+
+    <div class="grim-grid">
+      <div class="grim-card c-vector">
+        <h3>⚡ Gaya &amp; Medan Listrik</h3>
+        <div class="formula-line"><span class="feq">\( F = k \dfrac{q_1 q_2}{r^2} \)</span><span class="fnote">Cari GAYA antar dua muatan titik</span></div>
+        <div class="formula-line"><span class="feq">\( E = k \dfrac{q}{r^2} \)</span><span class="fnote">Cari MEDAN akibat satu muatan</span></div>
+        <div class="grim-const">k = 9 × 10⁹ N·m²/C²</div>
+      </div>
+
+      <div class="grim-card c-gauss">
+        <h3>🕳️ Hukum Gauss</h3>
+        <div class="formula-line"><span class="feq">\( \Phi = E A \cos\theta = \dfrac{Q}{\varepsilon_0} \)</span><span class="fnote">Fluks menembus permukaan tertutup</span></div>
+        <div class="grim-const">ε₀ = 8,85 × 10⁻¹² C²/N·m²<br>Di dalam konduktor berongga: <strong>E = 0</strong></div>
+      </div>
+
+      <div class="grim-card c-potensial">
+        <h3>⛰️ Potensial &amp; Energi</h3>
+        <div class="formula-line"><span class="feq">\( V = k \dfrac{q}{r} \)</span><span class="fnote">Potensial akibat satu muatan (skalar)</span></div>
+        <div class="formula-line"><span class="feq">\( W = q(V_2 - V_1) \)</span><span class="fnote">Usaha memindahkan muatan</span></div>
+        <div class="grim-const">V dan energi potensial dijumlah langsung — tidak perlu Pythagoras.</div>
+      </div>
+
+      <div class="grim-card c-kap">
+        <h3>🔋 Kapasitor</h3>
+        <div class="formula-line"><span class="feq">\( C = \dfrac{Q}{V} \)</span><span class="fnote">Definisi kapasitansi</span></div>
+        <div class="formula-line"><span class="feq">\( C = \dfrac{\varepsilon_0 \varepsilon_r A}{d} \)</span><span class="fnote">Kapasitor pelat sejajar</span></div>
+        <div class="grim-const">Seri: \( \frac{1}{C_s} = \frac{1}{C_1}+\frac{1}{C_2}+... \) &nbsp;(hasil selalu lebih kecil)<br>Paralel: \( C_p = C_1+C_2+... \) &nbsp;(hasil selalu lebih besar)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STEP 1: VECTOR ============ -->
+<section id="vektor">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="step-badge s1">Langkah 1 dari 3</span>
+      <h2 style="margin-top:16px;">Analisis Gaya &amp; Vektor</h2>
+      <p>Sebelum menghitung angka, gambar dulu arah setiap gaya. Ada dua pola yang wajib kamu kenali.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="concept-card">
+        <h4>🔹 Segaris (Kolinear)</h4>
+        <p>Jika dua gaya bekerja pada satu garis lurus yang sama:</p>
+        <ul>
+          <li>Searah → dijumlahkan.</li>
+          <li>Berlawanan arah → dikurangkan (diselisihkan), arah hasil mengikuti gaya yang lebih besar.</li>
+        </ul>
+      </div>
+      <div class="concept-card">
+        <h4>🔹 Tegak Lurus (Perpendicular)</h4>
+        <p>Jika dua gaya saling tegak lurus (membentuk sudut 90°), gabungkan dengan Teorema Pythagoras:</p>
+        <p style="text-align:center; font-weight:700; font-size:20px;">\( F_{total} = \sqrt{F_1^2 + F_2^2} \)</p>
+      </div>
+    </div>
+
+    <div class="box tip">
+      <span class="box-label">Kunci Sukses</span>
+      Muatan sejenis (+ dan +, atau − dan −) selalu <strong>tolak-menolak</strong>. Muatan berbeda jenis (+ dan −) selalu <strong>tarik-menarik</strong>. Gambar anak panahnya dulu, baru hitung besarnya.
+    </div>
+
+    <div class="worked">
+      <div class="wlabel"><span class="dot">✓</span> Contoh Soal Terpandu — Gaya Segaris</div>
+      <p class="prompt">Tiga muatan segaris. Muatan A (\(+2\,\mu\text{C}\)) di kiri, muatan B (\(-1\,\mu\text{C}\)) di tengah, dan muatan C (\(+4\,\mu\text{C}\)) di kanan. Jarak A–B = 3 cm, dan jarak B–C = 3 cm. Tentukan besar dan arah gaya Coulomb total yang dialami muatan B!</p>
+
+      <div class="step-line"><span class="n">1</span><span>A bermuatan + dan B bermuatan −, jadi keduanya tarik-menarik: gaya pada B menuju A (ke kiri).<br>\( F_{BA} = 9\times10^9 \dfrac{(2\times10^{-6})(1\times10^{-6})}{(0.03)^2} = 20\ \text{N (ke kiri)} \)</span></div>
+      <div class="step-line"><span class="n">2</span><span>C bermuatan + dan B bermuatan −, jadi keduanya juga tarik-menarik: gaya pada B menuju C (ke kanan).<br>\( F_{BC} = 9\times10^9 \dfrac{(1\times10^{-6})(4\times10^{-6})}{(0.03)^2} = 40\ \text{N (ke kanan)} \)</span></div>
+      <div class="step-line"><span class="n">3</span><span>Kedua gaya berlawanan arah dan segaris, jadi diselisihkan:<br>\( \Sigma F_B = F_{BC} - F_{BA} = 40 - 20 = 20\ \text{N} \)</span></div>
+
+      <div class="answer">Jawaban: gaya total pada B = 20 N, arahnya ke KANAN (mengikuti gaya yang lebih besar, yaitu tarikan dari C).</div>
+    </div>
+
+    <div class="mini-box">
+      <span class="mlabel">Cek Cepat — Pola Tegak Lurus</span>
+      Dua gaya 5 N dan 12 N saling tegak lurus? Langsung pakai Pythagoras: \( \sqrt{5^2+12^2} = \sqrt{169} = 13\ \text{N} \). Ingat-ingat pasangan Pythagoras populer: <strong>3–4–5</strong>, <strong>6–8–10</strong>, dan <strong>5–12–13</strong> — sering muncul di soal ujian!
+    </div>
+  </div>
+</section>
+
+<!-- ============ STEP 2: GAUSS & POTENTIAL ============ -->
+<section id="gauss">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="step-badge s2">Langkah 2 dari 3</span>
+      <h2 style="margin-top:16px;">Hukum Gauss &amp; Potensial Listrik</h2>
+      <p>Fluks itu sederhana: hitung "seberapa banyak garis medan menembus suatu permukaan".</p>
+    </div>
+
+    <div class="concept-card">
+      <h4>🕳️ Fakta Penting: Konduktor Berongga</h4>
+      <p>Pada bola konduktor bermuatan, semua muatan tersebar merata di <strong>permukaan luar</strong>. Akibatnya, medan listrik <strong>di dalam</strong> konduktor (untuk \( r < R \)) <strong>selalu nol</strong> — berapa pun besar muatannya. Ini poin yang paling sering ditanyakan sebagai soal benar/salah!</p>
+    </div>
+
+    <div class="box key">
+      <span class="box-label">Konsep Kunci</span>
+      Hukum Gauss: \( \Phi = E \cdot A \cdot \cos\theta = \dfrac{Q_{enclosed}}{\varepsilon_0} \). Untuk muatan titik, permukaan Gauss berbentuk bola dengan luas \( A = 4\pi r^2 \), sehingga didapat rumus medan yang sudah kamu kenal: \( E = k \dfrac{Q}{r^2} \), dengan \( k = \dfrac{1}{4\pi\varepsilon_0} \approx 9\times10^9 \).
+    </div>
+
+    <div class="worked g">
+      <div class="wlabel"><span class="dot">✓</span> Contoh Soal Terpandu — Medan Listrik</div>
+      <p class="prompt">Tentukan kuat medan listrik pada jarak \( r = 0{,}3 \) m dari muatan titik \( Q = 2\times10^{-6} \) C!</p>
+
+      <div class="step-line"><span class="n">1</span><span>Gunakan rumus \( E = \dfrac{kQ}{r^2} \).</span></div>
+      <div class="step-line"><span class="n">2</span><span>Masukkan angka: \( E = \dfrac{9\times10^9 \times 2\times10^{-6}}{(0.3)^2} = \dfrac{1{,}8\times10^4}{0{,}09} \)</span></div>
+      <div class="step-line"><span class="n">3</span><span>Hasil: \( E = 2\times10^5 \) N/C.</span></div>
+
+      <div class="answer">Jawaban: E = 2 × 10⁵ N/C.</div>
+    </div>
+
+    <div class="mini-box">
+      <span class="mlabel">Bonus — Contoh Potensial Listrik</span>
+      Berapa potensial \( V \) pada \( r = 0{,}5 \) m dari muatan \( Q = 3\times10^{-6} \) C? Gunakan \( V = \dfrac{kQ}{r} = \dfrac{9\times10^9 \times 3\times10^{-6}}{0{,}5} = \dfrac{2{,}7\times10^4}{0{,}5} = 5{,}4\times10^4 \) V. Ingat, \( V \) adalah besaran <strong>skalar</strong> — kalau ada beberapa muatan, potensialnya cukup dijumlahkan langsung, tanpa Pythagoras!
+    </div>
+  </div>
+</section>
+
+<!-- ============ STEP 3: CAPACITORS ============ -->
+<section id="kapasitor">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="step-badge s3">Langkah 3 dari 3</span>
+      <h2 style="margin-top:16px;">Kapasitor</h2>
+      <p>Kapasitor menyimpan muatan listrik. Tiga hal yang wajib kamu kuasai: definisi, geometri pelat sejajar, dan rangkaian seri/paralel.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="concept-card">
+        <h4>🔋 Definisi Kapasitansi</h4>
+        <p>\( C = \dfrac{Q}{V} \) — kapasitansi adalah muatan yang tersimpan per satuan tegangan. Satuannya Farad (F), dinamai dari Michael Faraday. Kapasitor di soal biasanya bersatuan µF (mikrofarad).</p>
+      </div>
+      <div class="concept-card">
+        <h4>📐 Kapasitor Pelat Sejajar</h4>
+        <p>\( C = \dfrac{\varepsilon_0 \varepsilon_r A}{d} \) — kapasitansi makin besar jika luas pelat (A) makin besar, atau jarak antar pelat (d) makin kecil, atau memakai bahan dielektrik.</p>
+      </div>
+    </div>
+
+    <div class="box tip">
+      <span class="box-label">Intuisi Seri vs Paralel</span>
+      <strong>Seri</strong>: \( \dfrac{1}{C_s} = \dfrac{1}{C_1}+\dfrac{1}{C_2}+... \) — hasil akhirnya selalu lebih KECIL dari kapasitor terkecil dalam rangkaian. <strong>Paralel</strong>: \( C_p = C_1+C_2+... \) — hasil akhirnya selalu lebih BESAR dari kapasitor terbesar dalam rangkaian.
+    </div>
+
+    <div class="worked k">
+      <div class="wlabel"><span class="dot">✓</span> Contoh Soal Terpandu — Mencari Kapasitansi</div>
+      <p class="prompt">Sebuah kapasitor menyimpan muatan \( 6\times10^{-4} \) C ketika dihubungkan ke baterai 12 V. Hitung kapasitansinya!</p>
+
+      <div class="step-line"><span class="n">1</span><span>Diketahui: \( Q = 6\times10^{-4} \) C, \( V = 12 \) V.</span></div>
+      <div class="step-line"><span class="n">2</span><span>Gunakan \( C = \dfrac{Q}{V} \).</span></div>
+      <div class="step-line"><span class="n">3</span><span>\( C = \dfrac{6\times10^{-4}}{12} = 5\times10^{-5}\ \text{F} = 50\ \mu\text{F} \)</span></div>
+
+      <div class="answer">Jawaban: C = 50 µF.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DOJO / SELF-TEST ============ -->
+<section id="dojo">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="kicker" style="color:var(--kapasitor);">🥋 Ruang Latihan</span>
+      <h2>Dojo — Uji Dirimu Sendiri</h2>
+      <p>Lima soal singkat untuk mengecek pemahamanmu. Jawab dulu sebelum lihat pembahasan — tidak apa kalau salah, yang penting kamu belajar dari sana.</p>
+    </div>
+
+    <div class="score-strip">Skor kamu: <span class="num"><span id="scoreVal">0</span> / 5</span></div>
+
+    <div id="quizContainer"></div>
+  </div>
+</section>
+
+<footer>
+  Semangat belajar! Kesalahan hari ini adalah bekal untuk daily test besok. 💪
+</footer>
+
+<script>
+  const quizData = [
+    {
+      q: "Apa yang disimpan oleh sebuah kapasitor?",
+      options: ["Muatan listrik", "Gaya magnet", "Gelombang suara", "Energi cahaya"],
+      correct: 0,
+      explain: "Kapasitor menyimpan muatan listrik pada pelat-pelatnya, sehingga tercipta medan listrik di antara keduanya."
+    },
+    {
+      q: "Rumus manakah yang tepat untuk mendefinisikan kapasitansi?",
+      options: ["C = Q × V", "C = V / Q", "C = Q / V", "C = Q + V"],
+      correct: 2,
+      explain: "Kapasitansi adalah muatan yang tersimpan per satuan tegangan: C = Q / V."
+    },
+    {
+      q: "Kuat medan listrik di dalam bola konduktor berongga (r < R) adalah...",
+      options: ["Sama dengan di permukaan", "Selalu nol", "Tak terhingga", "Tergantung besar muatan"],
+      correct: 1,
+      explain: "Karena semua muatan bebas bergerak ke permukaan luar konduktor, medan listrik di dalamnya selalu nol, berapa pun besar muatannya."
+    },
+    {
+      q: "Dua gaya, 5 N dan 12 N, saling tegak lurus. Berapa besar gaya resultannya?",
+      options: ["17 N", "7 N", "13 N", "60 N"],
+      correct: 2,
+      explain: "Karena tegak lurus, pakai Pythagoras: √(5² + 12²) = √169 = 13 N. Ini salah satu tripel Pythagoras populer!"
+    },
+    {
+      q: "Dua gaya segaris berlawanan arah: 10 N ke kanan dan 4 N ke kiri. Berapa resultannya?",
+      options: ["14 N ke kanan", "6 N ke kanan", "6 N ke kiri", "14 N ke kiri"],
+      correct: 1,
+      explain: "Karena berlawanan arah dan segaris, gaya diselisihkan: 10 − 4 = 6 N, arahnya mengikuti gaya yang lebih besar, yaitu ke kanan."
+    }
+  ];
+
+  let score = 0;
+  const container = document.getElementById('quizContainer');
+  const scoreVal = document.getElementById('scoreVal');
+
+  quizData.forEach((item, qi) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+
+    const numEl = document.createElement('div');
+    numEl.className = 'qnum';
+    numEl.textContent = 'Soal ' + (qi + 1) + ' dari ' + quizData.length;
+    card.appendChild(numEl);
+
+    const qEl = document.createElement('p');
+    qEl.className = 'qtext';
+    qEl.textContent = item.q;
+    card.appendChild(qEl);
+
+    const optGrid = document.createElement('div');
+    optGrid.className = 'opt-grid';
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback';
+
+    let answered = false;
+
+    item.options.forEach((optText, oi) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.textContent = optText;
+      btn.addEventListener('click', () => {
+        if (answered) return;
+        answered = true;
+
+        const allOpts = optGrid.querySelectorAll('.opt');
+        allOpts.forEach((o, idx) => {
+          o.disabled = true;
+          if (idx === item.correct) o.classList.add('correct');
+          else if (idx === oi) o.classList.add('wrong');
+          else o.classList.add('dim');
+        });
+
+        feedback.classList.add('show');
+        if (oi === item.correct) {
+          score++;
+          scoreVal.textContent = score;
+          feedback.classList.add('good');
+          feedback.innerHTML = '<strong>Betul!</strong>' + item.explain;
+        } else {
+          feedback.classList.add('bad');
+          feedback.innerHTML = '<strong>Belum tepat, ini penjelasannya:</strong>' + item.explain;
+        }
+      });
+      optGrid.appendChild(btn);
+    });
+
+    card.appendChild(optGrid);
+    card.appendChild(feedback);
+    container.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
