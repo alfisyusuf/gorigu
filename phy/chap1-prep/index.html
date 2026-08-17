@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Misi Pengejaran: Listrik Statis</title>
+<title>Misi Pengejaran: Listrik Statis / Electrostatics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -51,6 +51,32 @@
     font-size:18px;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
+  }
+
+  /* ============ LANGUAGE TOGGLE LOGIC ============ */
+  body.lang-id .lang-en { display: none !important; }
+  body.lang-en .lang-id { display: none !important; }
+
+  .lang-toggle-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .lang-toggle-btn:hover {
+    transform: translateY(-3px);
+    background: var(--ink-soft);
   }
 
   h1,h2,h3,h4,.eyebrow,.step-badge{ font-family:'Plus Jakarta Sans', sans-serif; }
@@ -140,7 +166,7 @@
   .grim-card.c-kap{ border-left-color:var(--kapasitor); }
   .grim-card h3{ margin:0 0 14px; font-size:22px; font-weight:800; }
   .formula-line{
-    display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
     padding:10px 0; border-bottom:1px dashed var(--border);
   }
   .formula-line:last-of-type{ border-bottom:none; }
@@ -257,15 +283,17 @@
   }
 </style>
 </head>
-<body>
+<body class="lang-id">
+
+<button id="langToggleBtn" class="lang-toggle-btn" onclick="toggleLang()">🇬🇧 EN</button>
 
 <div class="topnav">
-  <div class="brand">⚡ Misi <span>Elektrostatika</span></div>
+  <div class="brand">⚡ <span class="lang-id">Misi</span><span class="lang-en">Mission</span> <span><span class="lang-id">Elektrostatika</span><span class="lang-en">Electrostatics</span></span></div>
   <nav>
-    <a href="#grimoire">Kitab Rumus</a>
-    <a href="#vektor">1. Vektor</a>
-    <a href="#gauss">2. Gauss &amp; Potensial</a>
-    <a href="#kapasitor">3. Kapasitor</a>
+    <a href="#grimoire"><span class="lang-id">Kitab Rumus</span><span class="lang-en">Formula Grimoire</span></a>
+    <a href="#vektor">1. <span class="lang-id">Vektor</span><span class="lang-en">Vectors</span></a>
+    <a href="#gauss">2. Gauss &amp; <span class="lang-id">Potensial</span><span class="lang-en">Potential</span></a>
+    <a href="#kapasitor">3. <span class="lang-id">Kapasitor</span><span class="lang-en">Capacitors</span></a>
     <a href="#dojo">Dojo</a>
   </nav>
 </div>
@@ -273,19 +301,31 @@
 <!-- ============ HERO ============ -->
 <section class="hero" style="border-top:none;">
   <div class="wrap">
-    <span class="eyebrow">Persiapan Daily Test · Listrik Statis</span>
-    <h1>Misi Pengejaran: <em>Persiapan Daily Test</em><br>Listrik Statis!</h1>
-    <p class="lede">Tenang, ketinggalan sedikit itu wajar. Halaman ini dirancang supaya kamu bisa mengejar ketertinggalan dalam waktu singkat — cukup pilih bagian yang paling bikin bingung, dan kita bereskan pelan-pelan bersama.</p>
+    <span class="eyebrow"><span class="lang-id">Persiapan Daily Test · Listrik Statis</span><span class="lang-en">Daily Test Prep · Electrostatics</span></span>
+    <h1>
+      <span class="lang-id">Misi Pengejaran: <em>Persiapan Daily Test</em><br>Listrik Statis!</span>
+      <span class="lang-en">Catch-Up Mission: <em>Daily Test Prep</em><br>Electrostatics!</span>
+    </h1>
+    <p class="lede">
+      <span class="lang-id">Tenang, ketinggalan sedikit itu wajar. Halaman ini dirancang supaya kamu bisa mengejar ketertinggalan dalam waktu singkat — cukup pilih bagian yang paling bikin bingung, dan kita bereskan pelan-pelan bersama.</span>
+      <span class="lang-en">Don't worry, falling a bit behind is normal. This page is designed to help you catch up quickly — just pick the part that confuses you the most, and we'll sort it out step by step.</span>
+    </p>
 
     <div class="diagnostic-grid">
       <button class="diag-btn b-vector" onclick="document.getElementById('vektor').scrollIntoView({behavior:'smooth'})">
-        <span class="ico">😵‍💫</span> Saya bingung Vektor
+        <span class="ico">😵‍💫</span> 
+        <span class="lang-id">Saya bingung Vektor</span>
+        <span class="lang-en">I'm confused by Vectors</span>
       </button>
       <button class="diag-btn b-gauss" onclick="document.getElementById('gauss').scrollIntoView({behavior:'smooth'})">
-        <span class="ico">🕳️</span> Lupa Hukum Gauss
+        <span class="ico">🕳️</span> 
+        <span class="lang-id">Lupa Hukum Gauss</span>
+        <span class="lang-en">Forgot Gauss's Law</span>
       </button>
       <button class="diag-btn b-kap" onclick="document.getElementById('kapasitor').scrollIntoView({behavior:'smooth'})">
-        <span class="ico">🔋</span> Kapasitor bikin pusing
+        <span class="ico">🔋</span> 
+        <span class="lang-id">Kapasitor bikin pusing</span>
+        <span class="lang-en">Capacitors cause headaches</span>
       </button>
     </div>
   </div>
@@ -295,37 +335,70 @@
 <section id="grimoire">
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker" style="color:var(--vector);">📖 Referensi Cepat</span>
-      <h2>Kitab Rumus Kilat</h2>
-      <p>Empat kelompok rumus yang paling sering muncul di ujian. Simpan halaman ini terbuka saat belajar.</p>
+      <span class="kicker" style="color:var(--vector);">📖 <span class="lang-id">Referensi Cepat</span><span class="lang-en">Quick Reference</span></span>
+      <h2><span class="lang-id">Kitab Rumus Kilat</span><span class="lang-en">Quick Formula Grimoire</span></h2>
+      <p>
+        <span class="lang-id">Empat kelompok rumus yang paling sering muncul di ujian. Simpan halaman ini terbuka saat belajar.</span>
+        <span class="lang-en">Four formula groups that appear most often in exams. Keep this page open while studying.</span>
+      </p>
     </div>
 
     <div class="grim-grid">
       <div class="grim-card c-vector">
-        <h3>⚡ Gaya &amp; Medan Listrik</h3>
-        <div class="formula-line"><span class="feq">\( F = k \dfrac{q_1 q_2}{r^2} \)</span><span class="fnote">Cari GAYA antar dua muatan titik</span></div>
-        <div class="formula-line"><span class="feq">\( E = k \dfrac{q}{r^2} \)</span><span class="fnote">Cari MEDAN akibat satu muatan</span></div>
+        <h3>⚡ <span class="lang-id">Gaya &amp; Medan Listrik</span><span class="lang-en">Force &amp; Electric Field</span></h3>
+        <div class="formula-line">
+          <span class="feq">\( F = k \dfrac{q_1 q_2}{r^2} \)</span>
+          <span class="fnote"><span class="lang-id">Cari GAYA antar dua muatan titik</span><span class="lang-en">Find FORCE between two point charges</span></span>
+        </div>
+        <div class="formula-line">
+          <span class="feq">\( E = k \dfrac{q}{r^2} \)</span>
+          <span class="fnote"><span class="lang-id">Cari MEDAN akibat satu muatan</span><span class="lang-en">Find FIELD from a single charge</span></span>
+        </div>
         <div class="grim-const">k = 9 × 10⁹ N·m²/C²</div>
       </div>
 
       <div class="grim-card c-gauss">
-        <h3>🕳️ Hukum Gauss</h3>
-        <div class="formula-line"><span class="feq">\( \Phi = E A \cos\theta = \dfrac{Q}{\varepsilon_0} \)</span><span class="fnote">Fluks menembus permukaan tertutup</span></div>
-        <div class="grim-const">ε₀ = 8,85 × 10⁻¹² C²/N·m²<br>Di dalam konduktor berongga: <strong>E = 0</strong></div>
+        <h3>🕳️ <span class="lang-id">Hukum Gauss</span><span class="lang-en">Gauss's Law</span></h3>
+        <div class="formula-line">
+          <span class="feq">\( \Phi = E A \cos\theta = \dfrac{Q}{\varepsilon_0} \)</span>
+          <span class="fnote"><span class="lang-id">Fluks menembus permukaan tertutup</span><span class="lang-en">Flux through a closed surface</span></span>
+        </div>
+        <div class="grim-const">
+          ε₀ = 8.85 × 10⁻¹² C²/N·m²<br>
+          <span class="lang-id">Di dalam konduktor berongga:</span><span class="lang-en">Inside a hollow conductor:</span> <strong>E = 0</strong>
+        </div>
       </div>
 
       <div class="grim-card c-potensial">
-        <h3>⛰️ Potensial &amp; Energi</h3>
-        <div class="formula-line"><span class="feq">\( V = k \dfrac{q}{r} \)</span><span class="fnote">Potensial akibat satu muatan (skalar)</span></div>
-        <div class="formula-line"><span class="feq">\( W = q(V_2 - V_1) \)</span><span class="fnote">Usaha memindahkan muatan</span></div>
-        <div class="grim-const">V dan energi potensial dijumlah langsung — tidak perlu Pythagoras.</div>
+        <h3>⛰️ <span class="lang-id">Potensial &amp; Energi</span><span class="lang-en">Potential &amp; Energy</span></h3>
+        <div class="formula-line">
+          <span class="feq">\( V = k \dfrac{q}{r} \)</span>
+          <span class="fnote"><span class="lang-id">Potensial akibat satu muatan (skalar)</span><span class="lang-en">Potential from a single charge (scalar)</span></span>
+        </div>
+        <div class="formula-line">
+          <span class="feq">\( W = q(V_2 - V_1) \)</span>
+          <span class="fnote"><span class="lang-id">Usaha memindahkan muatan</span><span class="lang-en">Work to move a charge</span></span>
+        </div>
+        <div class="grim-const">
+          <span class="lang-id">V dan energi potensial dijumlah langsung — tidak perlu Pythagoras.</span>
+          <span class="lang-en">V and potential energy are added directly — no Pythagoras needed.</span>
+        </div>
       </div>
 
       <div class="grim-card c-kap">
-        <h3>🔋 Kapasitor</h3>
-        <div class="formula-line"><span class="feq">\( C = \dfrac{Q}{V} \)</span><span class="fnote">Definisi kapasitansi</span></div>
-        <div class="formula-line"><span class="feq">\( C = \dfrac{\varepsilon_0 \varepsilon_r A}{d} \)</span><span class="fnote">Kapasitor pelat sejajar</span></div>
-        <div class="grim-const">Seri: \( \frac{1}{C_s} = \frac{1}{C_1}+\frac{1}{C_2}+... \) &nbsp;(hasil selalu lebih kecil)<br>Paralel: \( C_p = C_1+C_2+... \) &nbsp;(hasil selalu lebih besar)</div>
+        <h3>🔋 <span class="lang-id">Kapasitor</span><span class="lang-en">Capacitors</span></h3>
+        <div class="formula-line">
+          <span class="feq">\( C = \dfrac{Q}{V} \)</span>
+          <span class="fnote"><span class="lang-id">Definisi kapasitansi</span><span class="lang-en">Definition of capacitance</span></span>
+        </div>
+        <div class="formula-line">
+          <span class="feq">\( C = \dfrac{\varepsilon_0 \varepsilon_r A}{d} \)</span>
+          <span class="fnote"><span class="lang-id">Kapasitor pelat sejajar</span><span class="lang-en">Parallel-plate capacitor</span></span>
+        </div>
+        <div class="grim-const">
+          <span class="lang-id">Seri:</span><span class="lang-en">Series:</span> \( \frac{1}{C_s} = \frac{1}{C_1}+\frac{1}{C_2}+... \) &nbsp;(<span class="lang-id">hasil selalu lebih kecil</span><span class="lang-en">result is always smaller</span>)<br>
+          <span class="lang-id">Paralel:</span><span class="lang-en">Parallel:</span> \( C_p = C_1+C_2+... \) &nbsp;(<span class="lang-id">hasil selalu lebih besar</span><span class="lang-en">result is always larger</span>)
+        </div>
       </div>
     </div>
   </div>
@@ -335,46 +408,84 @@
 <section id="vektor">
   <div class="wrap">
     <div class="section-head">
-      <span class="step-badge s1">Langkah 1 dari 3</span>
-      <h2 style="margin-top:16px;">Analisis Gaya &amp; Vektor</h2>
-      <p>Sebelum menghitung angka, gambar dulu arah setiap gaya. Ada dua pola yang wajib kamu kenali.</p>
+      <span class="step-badge s1"><span class="lang-id">Langkah 1 dari 3</span><span class="lang-en">Step 1 of 3</span></span>
+      <h2 style="margin-top:16px;"><span class="lang-id">Analisis Gaya &amp; Vektor</span><span class="lang-en">Force &amp; Vector Analysis</span></h2>
+      <p>
+        <span class="lang-id">Sebelum menghitung angka, gambar dulu arah setiap gaya. Ada dua pola yang wajib kamu kenali.</span>
+        <span class="lang-en">Before crunching numbers, draw the direction of each force first. There are two patterns you must recognize.</span>
+      </p>
     </div>
 
     <div class="two-col">
       <div class="concept-card">
-        <h4>🔹 Segaris (Kolinear)</h4>
-        <p>Jika dua gaya bekerja pada satu garis lurus yang sama:</p>
+        <h4>🔹 <span class="lang-id">Segaris (Kolinear)</span><span class="lang-en">Collinear</span></h4>
+        <p>
+          <span class="lang-id">Jika dua gaya bekerja pada satu garis lurus yang sama:</span>
+          <span class="lang-en">If two forces act along the same straight line:</span>
+        </p>
         <ul>
-          <li>Searah → dijumlahkan.</li>
-          <li>Berlawanan arah → dikurangkan (diselisihkan), arah hasil mengikuti gaya yang lebih besar.</li>
+          <li><span class="lang-id">Searah &rarr; dijumlahkan.</span><span class="lang-en">Same direction &rarr; add.</span></li>
+          <li><span class="lang-id">Berlawanan arah &rarr; dikurangkan (diselisihkan), arah hasil mengikuti gaya yang lebih besar.</span><span class="lang-en">Opposite directions &rarr; subtract, the resulting direction follows the larger force.</span></li>
         </ul>
       </div>
       <div class="concept-card">
-        <h4>🔹 Tegak Lurus (Perpendicular)</h4>
-        <p>Jika dua gaya saling tegak lurus (membentuk sudut 90°), gabungkan dengan Teorema Pythagoras:</p>
+        <h4>🔹 <span class="lang-id">Tegak Lurus (Perpendicular)</span><span class="lang-en">Perpendicular</span></h4>
+        <p>
+          <span class="lang-id">Jika dua gaya saling tegak lurus (membentuk sudut 90°), gabungkan dengan Teorema Pythagoras:</span>
+          <span class="lang-en">If two forces are perpendicular (forming a 90° angle), combine them using the Pythagorean Theorem:</span>
+        </p>
         <p style="text-align:center; font-weight:700; font-size:20px;">\( F_{total} = \sqrt{F_1^2 + F_2^2} \)</p>
       </div>
     </div>
 
     <div class="box tip">
-      <span class="box-label">Kunci Sukses</span>
-      Muatan sejenis (+ dan +, atau − dan −) selalu <strong>tolak-menolak</strong>. Muatan berbeda jenis (+ dan −) selalu <strong>tarik-menarik</strong>. Gambar anak panahnya dulu, baru hitung besarnya.
+      <span class="box-label"><span class="lang-id">Kunci Sukses</span><span class="lang-en">Key to Success</span></span>
+      <span class="lang-id">Muatan sejenis (+ dan +, atau − dan −) selalu <strong>tolak-menolak</strong>. Muatan berbeda jenis (+ dan −) selalu <strong>tarik-menarik</strong>. Gambar anak panahnya dulu, baru hitung besarnya.</span>
+      <span class="lang-en">Like charges (+ and +, or − and −) always <strong>repel</strong>. Opposite charges (+ and −) always <strong>attract</strong>. Draw the arrows first, then calculate the magnitude.</span>
     </div>
 
     <div class="worked">
-      <div class="wlabel"><span class="dot">✓</span> Contoh Soal Terpandu — Gaya Segaris</div>
-      <p class="prompt">Tiga muatan segaris. Muatan A (\(+2\,\mu\text{C}\)) di kiri, muatan B (\(-1\,\mu\text{C}\)) di tengah, dan muatan C (\(+4\,\mu\text{C}\)) di kanan. Jarak A–B = 3 cm, dan jarak B–C = 3 cm. Tentukan besar dan arah gaya Coulomb total yang dialami muatan B!</p>
+      <div class="wlabel"><span class="dot">✓</span> <span class="lang-id">Contoh Soal Terpandu — Gaya Segaris</span><span class="lang-en">Guided Example — Collinear Forces</span></div>
+      <p class="prompt">
+        <span class="lang-id">Tiga muatan segaris. Muatan A (\(+2\,\mu\text{C}\)) di kiri, muatan B (\(-1\,\mu\text{C}\)) di tengah, dan muatan C (\(+4\,\mu\text{C}\)) di kanan. Jarak A–B = 3 cm, dan jarak B–C = 3 cm. Tentukan besar dan arah gaya Coulomb total yang dialami muatan B!</span>
+        <span class="lang-en">Three collinear charges. Charge A (\(+2\,\mu\text{C}\)) is on the left, charge B (\(-1\,\mu\text{C}\)) is in the middle, and charge C (\(+4\,\mu\text{C}\)) is on the right. Distance A–B = 3 cm, and B–C = 3 cm. Determine the magnitude and direction of the total Coulomb force on charge B!</span>
+      </p>
 
-      <div class="step-line"><span class="n">1</span><span>A bermuatan + dan B bermuatan −, jadi keduanya tarik-menarik: gaya pada B menuju A (ke kiri).<br>\( F_{BA} = 9\times10^9 \dfrac{(2\times10^{-6})(1\times10^{-6})}{(0.03)^2} = 20\ \text{N (ke kiri)} \)</span></div>
-      <div class="step-line"><span class="n">2</span><span>C bermuatan + dan B bermuatan −, jadi keduanya juga tarik-menarik: gaya pada B menuju C (ke kanan).<br>\( F_{BC} = 9\times10^9 \dfrac{(1\times10^{-6})(4\times10^{-6})}{(0.03)^2} = 40\ \text{N (ke kanan)} \)</span></div>
-      <div class="step-line"><span class="n">3</span><span>Kedua gaya berlawanan arah dan segaris, jadi diselisihkan:<br>\( \Sigma F_B = F_{BC} - F_{BA} = 40 - 20 = 20\ \text{N} \)</span></div>
+      <div class="step-line">
+        <span class="n">1</span>
+        <span>
+          <span class="lang-id">A bermuatan + dan B bermuatan −, jadi keduanya tarik-menarik: gaya pada B menuju A (ke kiri).</span>
+          <span class="lang-en">A is + and B is −, so they attract: the force on B is towards A (to the left).</span><br>
+          \( F_{BA} = 9\times10^9 \dfrac{(2\times10^{-6})(1\times10^{-6})}{(0.03)^2} = 20\ \text{N} \) <span class="lang-id">(ke kiri)</span><span class="lang-en">(left)</span>
+        </span>
+      </div>
+      <div class="step-line">
+        <span class="n">2</span>
+        <span>
+          <span class="lang-id">C bermuatan + dan B bermuatan −, jadi keduanya juga tarik-menarik: gaya pada B menuju C (ke kanan).</span>
+          <span class="lang-en">C is + and B is −, so they also attract: the force on B is towards C (to the right).</span><br>
+          \( F_{BC} = 9\times10^9 \dfrac{(1\times10^{-6})(4\times10^{-6})}{(0.03)^2} = 40\ \text{N} \) <span class="lang-id">(ke kanan)</span><span class="lang-en">(right)</span>
+        </span>
+      </div>
+      <div class="step-line">
+        <span class="n">3</span>
+        <span>
+          <span class="lang-id">Kedua gaya berlawanan arah dan segaris, jadi diselisihkan:</span>
+          <span class="lang-en">The forces are opposite and collinear, so we subtract them:</span><br>
+          \( \Sigma F_B = F_{BC} - F_{BA} = 40 - 20 = 20\ \text{N} \)
+        </span>
+      </div>
 
-      <div class="answer">Jawaban: gaya total pada B = 20 N, arahnya ke KANAN (mengikuti gaya yang lebih besar, yaitu tarikan dari C).</div>
+      <div class="answer">
+        <span class="lang-id">Jawaban: gaya total pada B = 20 N, arahnya ke KANAN (mengikuti gaya yang lebih besar, yaitu tarikan dari C).</span>
+        <span class="lang-en">Answer: total force on B = 20 N, direction is to the RIGHT (following the larger force, which is the pull from C).</span>
+      </div>
     </div>
 
     <div class="mini-box">
-      <span class="mlabel">Cek Cepat — Pola Tegak Lurus</span>
-      Dua gaya 5 N dan 12 N saling tegak lurus? Langsung pakai Pythagoras: \( \sqrt{5^2+12^2} = \sqrt{169} = 13\ \text{N} \). Ingat-ingat pasangan Pythagoras populer: <strong>3–4–5</strong>, <strong>6–8–10</strong>, dan <strong>5–12–13</strong> — sering muncul di soal ujian!
+      <span class="mlabel"><span class="lang-id">Cek Cepat — Pola Tegak Lurus</span><span class="lang-en">Quick Check — Perpendicular Pattern</span></span>
+      <span class="lang-id">Dua gaya 5 N dan 12 N saling tegak lurus? Langsung pakai Pythagoras: \( \sqrt{5^2+12^2} = \sqrt{169} = 13\ \text{N} \). Ingat-ingat pasangan Pythagoras populer: <strong>3–4–5</strong>, <strong>6–8–10</strong>, dan <strong>5–12–13</strong> — sering muncul di soal ujian!</span>
+      <span class="lang-en">Two perpendicular forces of 5 N and 12 N? Use Pythagoras directly: \( \sqrt{5^2+12^2} = \sqrt{169} = 13\ \text{N} \). Remember popular Pythagorean triples: <strong>3–4–5</strong>, <strong>6–8–10</strong>, and <strong>5–12–13</strong> — they appear often in exams!</span>
     </div>
   </div>
 </section>
@@ -383,35 +494,65 @@
 <section id="gauss">
   <div class="wrap">
     <div class="section-head">
-      <span class="step-badge s2">Langkah 2 dari 3</span>
-      <h2 style="margin-top:16px;">Hukum Gauss &amp; Potensial Listrik</h2>
-      <p>Fluks itu sederhana: hitung "seberapa banyak garis medan menembus suatu permukaan".</p>
+      <span class="step-badge s2"><span class="lang-id">Langkah 2 dari 3</span><span class="lang-en">Step 2 of 3</span></span>
+      <h2 style="margin-top:16px;"><span class="lang-id">Hukum Gauss &amp; Potensial Listrik</span><span class="lang-en">Gauss's Law &amp; Electric Potential</span></h2>
+      <p>
+        <span class="lang-id">Fluks itu sederhana: hitung "seberapa banyak garis medan menembus suatu permukaan".</span>
+        <span class="lang-en">Flux is simple: count "how many field lines pierce through a surface".</span>
+      </p>
     </div>
 
     <div class="concept-card">
-      <h4>🕳️ Fakta Penting: Konduktor Berongga</h4>
-      <p>Pada bola konduktor bermuatan, semua muatan tersebar merata di <strong>permukaan luar</strong>. Akibatnya, medan listrik <strong>di dalam</strong> konduktor (untuk \( r < R \)) <strong>selalu nol</strong> — berapa pun besar muatannya. Ini poin yang paling sering ditanyakan sebagai soal benar/salah!</p>
+      <h4>🕳️ <span class="lang-id">Fakta Penting: Konduktor Berongga</span><span class="lang-en">Crucial Fact: Hollow Conductors</span></h4>
+      <p>
+        <span class="lang-id">Pada bola konduktor bermuatan, semua muatan tersebar merata di <strong>permukaan luar</strong>. Akibatnya, medan listrik <strong>di dalam</strong> konduktor (untuk \( r < R \)) <strong>selalu nol</strong> — berapa pun besar muatannya. Ini poin yang paling sering ditanyakan sebagai soal benar/salah!</span>
+        <span class="lang-en">On a charged hollow conducting sphere, all charges spread evenly on the <strong>outer surface</strong>. As a result, the electric field <strong>inside</strong> the conductor (for \( r < R \)) is <strong>always zero</strong> — regardless of the total charge. This is the most frequently asked true/false question!</span>
+      </p>
     </div>
 
     <div class="box key">
-      <span class="box-label">Konsep Kunci</span>
-      Hukum Gauss: \( \Phi = E \cdot A \cdot \cos\theta = \dfrac{Q_{enclosed}}{\varepsilon_0} \). Untuk muatan titik, permukaan Gauss berbentuk bola dengan luas \( A = 4\pi r^2 \), sehingga didapat rumus medan yang sudah kamu kenal: \( E = k \dfrac{Q}{r^2} \), dengan \( k = \dfrac{1}{4\pi\varepsilon_0} \approx 9\times10^9 \).
+      <span class="box-label"><span class="lang-id">Konsep Kunci</span><span class="lang-en">Key Concept</span></span>
+      <span class="lang-id">Hukum Gauss: \( \Phi = E \cdot A \cdot \cos\theta = \dfrac{Q_{enclosed}}{\varepsilon_0} \). Untuk muatan titik, permukaan Gauss berbentuk bola dengan luas \( A = 4\pi r^2 \), sehingga didapat rumus medan yang sudah kamu kenal: \( E = k \dfrac{Q}{r^2} \), dengan \( k = \dfrac{1}{4\pi\varepsilon_0} \approx 9\times10^9 \).</span>
+      <span class="lang-en">Gauss's Law: \( \Phi = E \cdot A \cdot \cos\theta = \dfrac{Q_{enclosed}}{\varepsilon_0} \). For a point charge, the Gaussian surface is a sphere with area \( A = 4\pi r^2 \), which gives the familiar field formula: \( E = k \dfrac{Q}{r^2} \), where \( k = \dfrac{1}{4\pi\varepsilon_0} \approx 9\times10^9 \).</span>
     </div>
 
     <div class="worked g">
-      <div class="wlabel"><span class="dot">✓</span> Contoh Soal Terpandu — Medan Listrik</div>
-      <p class="prompt">Tentukan kuat medan listrik pada jarak \( r = 0{,}3 \) m dari muatan titik \( Q = 2\times10^{-6} \) C!</p>
+      <div class="wlabel"><span class="dot">✓</span> <span class="lang-id">Contoh Soal Terpandu — Medan Listrik</span><span class="lang-en">Guided Example — Electric Field</span></div>
+      <p class="prompt">
+        <span class="lang-id">Tentukan kuat medan listrik pada jarak \( r = 0{,}3 \) m dari muatan titik \( Q = 2\times10^{-6} \) C!</span>
+        <span class="lang-en">Determine the electric field strength at a distance \( r = 0.3 \) m from a point charge \( Q = 2\times10^{-6} \) C!</span>
+      </p>
 
-      <div class="step-line"><span class="n">1</span><span>Gunakan rumus \( E = \dfrac{kQ}{r^2} \).</span></div>
-      <div class="step-line"><span class="n">2</span><span>Masukkan angka: \( E = \dfrac{9\times10^9 \times 2\times10^{-6}}{(0.3)^2} = \dfrac{1{,}8\times10^4}{0{,}09} \)</span></div>
-      <div class="step-line"><span class="n">3</span><span>Hasil: \( E = 2\times10^5 \) N/C.</span></div>
+      <div class="step-line">
+        <span class="n">1</span>
+        <span>
+          <span class="lang-id">Gunakan rumus \( E = \dfrac{kQ}{r^2} \).</span>
+          <span class="lang-en">Use the formula \( E = \dfrac{kQ}{r^2} \).</span>
+        </span>
+      </div>
+      <div class="step-line">
+        <span class="n">2</span>
+        <span>
+          <span class="lang-id">Masukkan angka:</span><span class="lang-en">Plug in the numbers:</span> \( E = \dfrac{9\times10^9 \times 2\times10^{-6}}{(0.3)^2} = \dfrac{1{,}8\times10^4}{0{,}09} \)
+        </span>
+      </div>
+      <div class="step-line">
+        <span class="n">3</span>
+        <span>
+          <span class="lang-id">Hasil:</span><span class="lang-en">Result:</span> \( E = 2\times10^5 \) N/C.
+        </span>
+      </div>
 
-      <div class="answer">Jawaban: E = 2 × 10⁵ N/C.</div>
+      <div class="answer">
+        <span class="lang-id">Jawaban: E = 2 × 10⁵ N/C.</span>
+        <span class="lang-en">Answer: E = 2 × 10⁵ N/C.</span>
+      </div>
     </div>
 
     <div class="mini-box">
-      <span class="mlabel">Bonus — Contoh Potensial Listrik</span>
-      Berapa potensial \( V \) pada \( r = 0{,}5 \) m dari muatan \( Q = 3\times10^{-6} \) C? Gunakan \( V = \dfrac{kQ}{r} = \dfrac{9\times10^9 \times 3\times10^{-6}}{0{,}5} = \dfrac{2{,}7\times10^4}{0{,}5} = 5{,}4\times10^4 \) V. Ingat, \( V \) adalah besaran <strong>skalar</strong> — kalau ada beberapa muatan, potensialnya cukup dijumlahkan langsung, tanpa Pythagoras!
+      <span class="mlabel"><span class="lang-id">Bonus — Contoh Potensial Listrik</span><span class="lang-en">Bonus — Electric Potential Example</span></span>
+      <span class="lang-id">Berapa potensial \( V \) pada \( r = 0{,}5 \) m dari muatan \( Q = 3\times10^{-6} \) C? Gunakan \( V = \dfrac{kQ}{r} = \dfrac{9\times10^9 \times 3\times10^{-6}}{0{,}5} = \dfrac{2{,}7\times10^4}{0{,}5} = 5{,}4\times10^4 \) V. Ingat, \( V \) adalah besaran <strong>skalar</strong> — kalau ada beberapa muatan, potensialnya cukup dijumlahkan langsung, tanpa Pythagoras!</span>
+      <span class="lang-en">What is the potential \( V \) at \( r = 0.5 \) m from a charge \( Q = 3\times10^{-6} \) C? Use \( V = \dfrac{kQ}{r} = \dfrac{9\times10^9 \times 3\times10^{-6}}{0.5} = \dfrac{2.7\times10^4}{0.5} = 5.4\times10^4 \) V. Remember, \( V \) is a <strong>scalar</strong> quantity — if there are multiple charges, just add the potentials directly, no Pythagoras needed!</span>
     </div>
   </div>
 </section>
@@ -420,36 +561,71 @@
 <section id="kapasitor">
   <div class="wrap">
     <div class="section-head">
-      <span class="step-badge s3">Langkah 3 dari 3</span>
-      <h2 style="margin-top:16px;">Kapasitor</h2>
-      <p>Kapasitor menyimpan muatan listrik. Tiga hal yang wajib kamu kuasai: definisi, geometri pelat sejajar, dan rangkaian seri/paralel.</p>
+      <span class="step-badge s3"><span class="lang-id">Langkah 3 dari 3</span><span class="lang-en">Step 3 of 3</span></span>
+      <h2 style="margin-top:16px;"><span class="lang-id">Kapasitor</span><span class="lang-en">Capacitors</span></h2>
+      <p>
+        <span class="lang-id">Kapasitor menyimpan muatan listrik. Tiga hal yang wajib kamu kuasai: definisi, geometri pelat sejajar, dan rangkaian seri/paralel.</span>
+        <span class="lang-en">Capacitors store electric charge. Three things you must master: definition, parallel-plate geometry, and series/parallel circuits.</span>
+      </p>
     </div>
 
     <div class="two-col">
       <div class="concept-card">
-        <h4>🔋 Definisi Kapasitansi</h4>
-        <p>\( C = \dfrac{Q}{V} \) — kapasitansi adalah muatan yang tersimpan per satuan tegangan. Satuannya Farad (F), dinamai dari Michael Faraday. Kapasitor di soal biasanya bersatuan µF (mikrofarad).</p>
+        <h4>🔋 <span class="lang-id">Definisi Kapasitansi</span><span class="lang-en">Definition of Capacitance</span></h4>
+        <p>
+          \( C = \dfrac{Q}{V} \) — 
+          <span class="lang-id">kapasitansi adalah muatan yang tersimpan per satuan tegangan. Satuannya Farad (F), dinamai dari Michael Faraday. Kapasitor di soal biasanya bersatuan µF (mikrofarad).</span>
+          <span class="lang-en">capacitance is the charge stored per unit of voltage. Its unit is the Farad (F), named after Michael Faraday. In problems, capacitors are usually measured in µF (microfarads).</span>
+        </p>
       </div>
       <div class="concept-card">
-        <h4>📐 Kapasitor Pelat Sejajar</h4>
-        <p>\( C = \dfrac{\varepsilon_0 \varepsilon_r A}{d} \) — kapasitansi makin besar jika luas pelat (A) makin besar, atau jarak antar pelat (d) makin kecil, atau memakai bahan dielektrik.</p>
+        <h4>📐 <span class="lang-id">Kapasitor Pelat Sejajar</span><span class="lang-en">Parallel-Plate Capacitor</span></h4>
+        <p>
+          \( C = \dfrac{\varepsilon_0 \varepsilon_r A}{d} \) — 
+          <span class="lang-id">kapasitansi makin besar jika luas pelat (A) makin besar, atau jarak antar pelat (d) makin kecil, atau memakai bahan dielektrik.</span>
+          <span class="lang-en">capacitance increases if the plate area (A) gets larger, or the distance between plates (d) gets smaller, or a dielectric material is used.</span>
+        </p>
       </div>
     </div>
 
     <div class="box tip">
-      <span class="box-label">Intuisi Seri vs Paralel</span>
-      <strong>Seri</strong>: \( \dfrac{1}{C_s} = \dfrac{1}{C_1}+\dfrac{1}{C_2}+... \) — hasil akhirnya selalu lebih KECIL dari kapasitor terkecil dalam rangkaian. <strong>Paralel</strong>: \( C_p = C_1+C_2+... \) — hasil akhirnya selalu lebih BESAR dari kapasitor terbesar dalam rangkaian.
+      <span class="box-label"><span class="lang-id">Intuisi Seri vs Paralel</span><span class="lang-en">Series vs Parallel Intuition</span></span>
+      <strong><span class="lang-id">Seri</span><span class="lang-en">Series</span></strong>: \( \dfrac{1}{C_s} = \dfrac{1}{C_1}+\dfrac{1}{C_2}+... \) — 
+      <span class="lang-id">hasil akhirnya selalu lebih KECIL dari kapasitor terkecil dalam rangkaian.</span>
+      <span class="lang-en">the final result is always SMALLER than the smallest capacitor in the circuit.</span>
+      <br><strong><span class="lang-id">Paralel</span><span class="lang-en">Parallel</span></strong>: \( C_p = C_1+C_2+... \) — 
+      <span class="lang-id">hasil akhirnya selalu lebih BESAR dari kapasitor terbesar dalam rangkaian.</span>
+      <span class="lang-en">the final result is always LARGER than the largest capacitor in the circuit.</span>
     </div>
 
     <div class="worked k">
-      <div class="wlabel"><span class="dot">✓</span> Contoh Soal Terpandu — Mencari Kapasitansi</div>
-      <p class="prompt">Sebuah kapasitor menyimpan muatan \( 6\times10^{-4} \) C ketika dihubungkan ke baterai 12 V. Hitung kapasitansinya!</p>
+      <div class="wlabel"><span class="dot">✓</span> <span class="lang-id">Contoh Soal Terpandu — Mencari Kapasitansi</span><span class="lang-en">Guided Example — Finding Capacitance</span></div>
+      <p class="prompt">
+        <span class="lang-id">Sebuah kapasitor menyimpan muatan \( 6\times10^{-4} \) C ketika dihubungkan ke baterai 12 V. Hitung kapasitansinya!</span>
+        <span class="lang-en">A capacitor stores a charge of \( 6\times10^{-4} \) C when connected to a 12 V battery. Calculate its capacitance!</span>
+      </p>
 
-      <div class="step-line"><span class="n">1</span><span>Diketahui: \( Q = 6\times10^{-4} \) C, \( V = 12 \) V.</span></div>
-      <div class="step-line"><span class="n">2</span><span>Gunakan \( C = \dfrac{Q}{V} \).</span></div>
-      <div class="step-line"><span class="n">3</span><span>\( C = \dfrac{6\times10^{-4}}{12} = 5\times10^{-5}\ \text{F} = 50\ \mu\text{F} \)</span></div>
+      <div class="step-line">
+        <span class="n">1</span>
+        <span>
+          <span class="lang-id">Diketahui:</span><span class="lang-en">Given:</span> \( Q = 6\times10^{-4} \) C, \( V = 12 \) V.
+        </span>
+      </div>
+      <div class="step-line">
+        <span class="n">2</span>
+        <span>
+          <span class="lang-id">Gunakan</span><span class="lang-en">Use</span> \( C = \dfrac{Q}{V} \).
+        </span>
+      </div>
+      <div class="step-line">
+        <span class="n">3</span>
+        <span>\( C = \dfrac{6\times10^{-4}}{12} = 5\times10^{-5}\ \text{F} = 50\ \mu\text{F} \)</span>
+      </div>
 
-      <div class="answer">Jawaban: C = 50 µF.</div>
+      <div class="answer">
+        <span class="lang-id">Jawaban: C = 50 µF.</span>
+        <span class="lang-en">Answer: C = 50 µF.</span>
+      </div>
     </div>
   </div>
 </section>
@@ -458,52 +634,93 @@
 <section id="dojo">
   <div class="wrap">
     <div class="section-head">
-      <span class="kicker" style="color:var(--kapasitor);">🥋 Ruang Latihan</span>
-      <h2>Dojo — Uji Dirimu Sendiri</h2>
-      <p>Lima soal singkat untuk mengecek pemahamanmu. Jawab dulu sebelum lihat pembahasan — tidak apa kalau salah, yang penting kamu belajar dari sana.</p>
+      <span class="kicker" style="color:var(--kapasitor);">🥋 <span class="lang-id">Ruang Latihan</span><span class="lang-en">Training Room</span></span>
+      <h2><span class="lang-id">Dojo — Uji Dirimu Sendiri</span><span class="lang-en">Dojo — Test Yourself</span></h2>
+      <p>
+        <span class="lang-id">Lima soal singkat untuk mengecek pemahamanmu. Jawab dulu sebelum lihat pembahasan — tidak apa kalau salah, yang penting kamu belajar dari sana.</span>
+        <span class="lang-en">Five quick questions to check your understanding. Answer before looking at the explanation—it's okay to be wrong, learning from it is what matters.</span>
+      </p>
     </div>
 
-    <div class="score-strip">Skor kamu: <span class="num"><span id="scoreVal">0</span> / 5</span></div>
+    <div class="score-strip">
+      <span class="lang-id">Skor kamu:</span><span class="lang-en">Your score:</span> 
+      <span class="num"><span id="scoreVal">0</span> / 5</span>
+    </div>
 
     <div id="quizContainer"></div>
   </div>
 </section>
 
 <footer>
-  Semangat belajar! Kesalahan hari ini adalah bekal untuk daily test besok. 💪
+  <span class="lang-id">Semangat belajar! Kesalahan hari ini adalah bekal untuk daily test besok. 💪</span>
+  <span class="lang-en">Keep up the spirit! Today's mistakes are stepping stones for tomorrow's daily test. 💪</span>
 </footer>
 
 <script>
+  // Language Toggle Function
+  let currentLang = 'id';
+  function toggleLang() {
+    const body = document.body;
+    const btn = document.getElementById('langToggleBtn');
+    if (currentLang === 'id') {
+      body.classList.remove('lang-id');
+      body.classList.add('lang-en');
+      currentLang = 'en';
+      btn.innerHTML = '🇮🇩 ID'; 
+    } else {
+      body.classList.remove('lang-en');
+      body.classList.add('lang-id');
+      currentLang = 'id';
+      btn.innerHTML = '🇬🇧 EN';
+    }
+  }
+
+  // Quiz Data with Dual Language Spans
   const quizData = [
     {
-      q: "Apa yang disimpan oleh sebuah kapasitor?",
-      options: ["Muatan listrik", "Gaya magnet", "Gelombang suara", "Energi cahaya"],
+      q: '<span class="lang-id">Apa yang disimpan oleh sebuah kapasitor?</span><span class="lang-en">What does a capacitor store?</span>',
+      options: [
+        '<span class="lang-id">Muatan listrik</span><span class="lang-en">Electric charge</span>', 
+        '<span class="lang-id">Gaya magnet</span><span class="lang-en">Magnetic force</span>', 
+        '<span class="lang-id">Gelombang suara</span><span class="lang-en">Sound waves</span>', 
+        '<span class="lang-id">Energi cahaya</span><span class="lang-en">Light energy</span>'
+      ],
       correct: 0,
-      explain: "Kapasitor menyimpan muatan listrik pada pelat-pelatnya, sehingga tercipta medan listrik di antara keduanya."
+      explain: '<span class="lang-id">Kapasitor menyimpan muatan listrik pada pelat-pelatnya, sehingga tercipta medan listrik di antara keduanya.</span><span class="lang-en">Capacitors store electric charge on their plates, creating an electric field between them.</span>'
     },
     {
-      q: "Rumus manakah yang tepat untuk mendefinisikan kapasitansi?",
+      q: '<span class="lang-id">Rumus manakah yang tepat untuk mendefinisikan kapasitansi?</span><span class="lang-en">Which formula correctly defines capacitance?</span>',
       options: ["C = Q × V", "C = V / Q", "C = Q / V", "C = Q + V"],
       correct: 2,
-      explain: "Kapasitansi adalah muatan yang tersimpan per satuan tegangan: C = Q / V."
+      explain: '<span class="lang-id">Kapasitansi adalah muatan yang tersimpan per satuan tegangan: C = Q / V.</span><span class="lang-en">Capacitance is the charge stored per unit of voltage: C = Q / V.</span>'
     },
     {
-      q: "Kuat medan listrik di dalam bola konduktor berongga (r < R) adalah...",
-      options: ["Sama dengan di permukaan", "Selalu nol", "Tak terhingga", "Tergantung besar muatan"],
+      q: '<span class="lang-id">Kuat medan listrik di dalam bola konduktor berongga (r &lt; R) adalah...</span><span class="lang-en">The electric field strength inside a hollow conducting sphere (r &lt; R) is...</span>',
+      options: [
+        '<span class="lang-id">Sama dengan di permukaan</span><span class="lang-en">Same as on the surface</span>', 
+        '<span class="lang-id">Selalu nol</span><span class="lang-en">Always zero</span>', 
+        '<span class="lang-id">Tak terhingga</span><span class="lang-en">Infinite</span>', 
+        '<span class="lang-id">Tergantung besar muatan</span><span class="lang-en">Depends on the charge amount</span>'
+      ],
       correct: 1,
-      explain: "Karena semua muatan bebas bergerak ke permukaan luar konduktor, medan listrik di dalamnya selalu nol, berapa pun besar muatannya."
+      explain: '<span class="lang-id">Karena semua muatan bebas bergerak ke permukaan luar konduktor, medan listrik di dalamnya selalu nol, berapa pun besar muatannya.</span><span class="lang-en">Since all free charges move to the outer surface of the conductor, the electric field inside is always zero, regardless of the amount of charge.</span>'
     },
     {
-      q: "Dua gaya, 5 N dan 12 N, saling tegak lurus. Berapa besar gaya resultannya?",
+      q: '<span class="lang-id">Dua gaya, 5 N dan 12 N, saling tegak lurus. Berapa besar gaya resultannya?</span><span class="lang-en">Two forces, 5 N and 12 N, are perpendicular to each other. What is the magnitude of the resultant force?</span>',
       options: ["17 N", "7 N", "13 N", "60 N"],
       correct: 2,
-      explain: "Karena tegak lurus, pakai Pythagoras: √(5² + 12²) = √169 = 13 N. Ini salah satu tripel Pythagoras populer!"
+      explain: '<span class="lang-id">Karena tegak lurus, pakai Pythagoras: √(5² + 12²) = √169 = 13 N. Ini salah satu tripel Pythagoras populer!</span><span class="lang-en">Because they are perpendicular, use Pythagoras: √(5² + 12²) = √169 = 13 N. This is one of the popular Pythagorean triples!</span>'
     },
     {
-      q: "Dua gaya segaris berlawanan arah: 10 N ke kanan dan 4 N ke kiri. Berapa resultannya?",
-      options: ["14 N ke kanan", "6 N ke kanan", "6 N ke kiri", "14 N ke kiri"],
+      q: '<span class="lang-id">Dua gaya segaris berlawanan arah: 10 N ke kanan dan 4 N ke kiri. Berapa resultannya?</span><span class="lang-en">Two collinear forces acting in opposite directions: 10 N to the right and 4 N to the left. What is the resultant?</span>',
+      options: [
+        '<span class="lang-id">14 N ke kanan</span><span class="lang-en">14 N to the right</span>', 
+        '<span class="lang-id">6 N ke kanan</span><span class="lang-en">6 N to the right</span>', 
+        '<span class="lang-id">6 N ke kiri</span><span class="lang-en">6 N to the left</span>', 
+        '<span class="lang-id">14 N ke kiri</span><span class="lang-en">14 N to the left</span>'
+      ],
       correct: 1,
-      explain: "Karena berlawanan arah dan segaris, gaya diselisihkan: 10 − 4 = 6 N, arahnya mengikuti gaya yang lebih besar, yaitu ke kanan."
+      explain: '<span class="lang-id">Karena berlawanan arah dan segaris, gaya diselisihkan: 10 − 4 = 6 N, arahnya mengikuti gaya yang lebih besar, yaitu ke kanan.</span><span class="lang-en">Since they act in opposite directions along the same line, subtract them: 10 − 4 = 6 N, the direction follows the larger force, which is to the right.</span>'
     }
   ];
 
@@ -517,12 +734,12 @@
 
     const numEl = document.createElement('div');
     numEl.className = 'qnum';
-    numEl.textContent = 'Soal ' + (qi + 1) + ' dari ' + quizData.length;
+    numEl.innerHTML = '<span class="lang-id">Soal ' + (qi + 1) + ' dari ' + quizData.length + '</span><span class="lang-en">Question ' + (qi + 1) + ' of ' + quizData.length + '</span>';
     card.appendChild(numEl);
 
     const qEl = document.createElement('p');
     qEl.className = 'qtext';
-    qEl.textContent = item.q;
+    qEl.innerHTML = item.q;
     card.appendChild(qEl);
 
     const optGrid = document.createElement('div');
@@ -536,7 +753,7 @@
     item.options.forEach((optText, oi) => {
       const btn = document.createElement('button');
       btn.className = 'opt';
-      btn.textContent = optText;
+      btn.innerHTML = optText;
       btn.addEventListener('click', () => {
         if (answered) return;
         answered = true;
@@ -554,10 +771,10 @@
           score++;
           scoreVal.textContent = score;
           feedback.classList.add('good');
-          feedback.innerHTML = '<strong>Betul!</strong>' + item.explain;
+          feedback.innerHTML = '<span class="lang-id"><strong>Betul!</strong></span><span class="lang-en"><strong>Correct!</strong></span>' + item.explain;
         } else {
           feedback.classList.add('bad');
-          feedback.innerHTML = '<strong>Belum tepat, ini penjelasannya:</strong>' + item.explain;
+          feedback.innerHTML = '<span class="lang-id"><strong>Belum tepat, ini penjelasannya:</strong></span><span class="lang-en"><strong>Not quite, here is the explanation:</strong></span>' + item.explain;
         }
       });
       optGrid.appendChild(btn);
