@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kunci Jawaban - Formative Assessment Electrostatics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  :root {
+    --bg-color: #F8FAFC;
+    --surface: #FFFFFF;
+    --ink: #1E293B;
+    --ink-light: #64748B;
+    --primary: #6366F1;
+    --primary-light: #EEF2FF;
+    --success: #10B981;
+    --success-light: #D1FAE5;
+    --border: #E2E8F0;
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background-color: var(--bg-color); color: var(--ink); font-family: var(--font-body); line-height: 1.6; padding-bottom: 60px; }
+
+  header {
+    background: var(--surface); border-bottom: 2px solid var(--border);
+    padding: 24px; text-align: center; position: sticky; top: 0; z-index: 10;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  }
+  .header-title { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--ink); }
+  .header-subtitle { font-size: 0.9rem; font-weight: 600; color: var(--ink-light); letter-spacing: 0.05em; margin-top: 4px; }
+
+  .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+
+  .key-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+    padding: 24px 28px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    display: flex; flex-direction: column; gap: 16px;
+  }
+
+  .card-top { display: flex; align-items: flex-start; gap: 16px; }
+  .q-badge {
+    background: var(--primary); color: white; font-family: var(--font-heading);
+    font-weight: 800; font-size: 1.1rem; padding: 8px 16px; border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .q-content { flex-grow: 1; }
+  .answer-highlight {
+    display: inline-block; background: var(--success-light); color: #065F46;
+    font-weight: 700; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--success);
+    margin-bottom: 12px; font-size: 1.05rem;
+  }
+  
+  .explanation {
+    background: #F8FAFC; border-left: 4px solid var(--primary);
+    padding: 16px 20px; border-radius: 0 8px 8px 0; font-size: 0.95rem; color: var(--ink);
+  }
+  .explanation strong { color: var(--primary); font-family: var(--font-heading); }
+
+  .tf-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 12px; }
+  .tf-item { background: #F1F5F9; padding: 10px 14px; border-radius: 8px; font-size: 0.95rem; font-weight: 500;}
+  .tf-item span { font-weight: 800; color: var(--success); margin-right: 8px; }
+  .tf-item span.false { color: #E11D48; }
+
+  @media (max-width: 600px) {
+    .card-top { flex-direction: column; }
+    .q-badge { align-self: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-title">Kunci Jawaban & Pembahasan</div>
+  <div class="header-subtitle">SIMULASI ELECTROSTATICS • SMA ABBS SURAKARTA</div>
+</header>
+
+<div class="container">
+
+  <div class="key-card">
+    <div class="card-top">
+      <div class="q-badge">Q01</div>
+      <div class="q-content">
+        <div class="tf-grid">
+          <div class="tf-item"><span>[TRUE]</span> Medan listrik di rongga bola (r < R) bernilai nol.</div>
+          <div class="tf-item"><span class="false">[FALSE]</span> Potensial listrik di dalam rongga bola bernilai nol.</div>
+          <div class="tf-item"><span>[TRUE]</span> Muatan terdistribusi merata di permukaan luar bola.</div>
+        </div>
+        <div class="explanation">
+          <strong>Pembahasan Singkat:</strong> Sifat utama konduktor adalah muatan bebas bergerak hingga saling tolak-menolak sejauh mungkin (berkumpul di permukaan luar). Akibatnya, kuat medan ($E$) di dalam rongga adalah 0. Namun, potensial ($V$) di dalam bola <strong>tidak nol</strong>, melainkan konstan dan sama dengan potensial di permukaannya.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-card">
+    <div class="card-top">
+      <div class="q-badge">Q02</div>
+      <div class="q-content">
+        <div class="tf-grid">
+          <div class="tf-item">1. Gaya Elektrostatis $\rightarrow$ <strong>F = k(q₁q₂) / r²</strong> (Coulomb's Law)</div>
+          <div class="tf-item">2. Fluks Listrik $\rightarrow$ <strong>Φ = E A cos(θ)</strong> (Gauss's Law)</div>
+          <div class="tf-item">3. Kemampuan simpan muatan $\rightarrow$ <strong>C = Q / V</strong> (Capacitance)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-card">
+    <div class="card-top">
+      <div class="q-badge">Q03</div>
+      <div class="q-content">
+        <div class="answer-highlight">D. It becomes 1/9 of its original value.</div>
+        <div class="explanation">
+          <strong>Pembahasan Singkat:</strong> Menurut Hukum Coulomb, gaya berbanding terbalik dengan kuadrat jarak ($F \propto 1/r^2$). Jika jarak ($r$) dijadikan 3 kali lipat (tripled), maka gaya menjadi $1/3^2 = 1/9$ dari gaya semula.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-card">
+    <div class="card-top">
+      <div class="q-badge">Q04</div>
+      <div class="q-content">
+        <div class="answer-highlight">B. 10 N</div>
+        <div class="explanation">
+          <strong>Pembahasan Singkat:</strong> Kedua gaya saling tegak lurus (Utara dan Timur). Gunakan teorema Pythagoras untuk mencari resultannya: $F_{res} = \sqrt{6^2 + 8^2} = \sqrt{36 + 64} = \sqrt{100} = 10$ N.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-card">
+    <div class="card-top">
+      <div class="q-badge">Q05</div>
+      <div class="q-content">
+        <div class="answer-highlight">C. 2 µF</div>
+        <div class="explanation">
+          <strong>Pembahasan Singkat:</strong> Untuk kapasitor seri, perhitungannya menggunakan kebalikan (seperti resistor paralel). <br>
+          $\frac{1}{C_{total}} = \frac{1}{6} + \frac{1}{6} + \frac{1}{6} = \frac{3}{6}$<br>
+          $C_{total} = \frac{6}{3} = 2$ µF.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-card">
+    <div class="card-top">
+      <div class="q-badge">Q06</div>
+      <div class="q-content">
+        <div class="answer-highlight">A. It increases the capacitance of the capacitor.</div>
+        <div class="explanation">
+          <strong>Pembahasan Singkat:</strong> Memasukkan bahan dielektrik akan menurunkan kuat medan listrik internal, sehingga beda potensial ($V$) antar pelat menurun. Karena $C = Q/V$, penurunan $V$ menyebabkan kapasitas ($C$) meningkat.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-card">
+    <div class="card-top">
+      <div class="q-badge">Q07</div>
+      <div class="q-content">
+        <div class="answer-highlight">C. 10 J</div>
+        <div class="explanation">
+          <strong>Pembahasan Singkat:</strong> Usaha ($W$) untuk memindahkan muatan sama dengan perubahan energi potensial listrik. <br>
+          $W = q \cdot \Delta V = q \cdot (V_2 - V_1)$ <br>
+          $W = 2 \text{ C} \cdot (8\text{ V} - 3\text{ V}) = 2 \cdot 5 = 10$ Joule.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-card">
+    <div class="card-top">
+      <div class="q-badge">Q08</div>
+      <div class="q-content">
+        <div class="answer-highlight">D. They always point away from positive charges and towards negative charges.</div>
+        <div class="explanation">
+          <strong>Pembahasan Singkat:</strong> Sifat alami garis gaya medan listrik adalah selalu memancar keluar (menjauhi) dari muatan positif dan masuk (menuju) ke muatan negatif.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-card">
+    <div class="card-top">
+      <div class="q-badge">Q09</div>
+      <div class="q-content">
+        <div class="answer-highlight">A. Vector A (Right)</div>
+        <div class="explanation">
+          <strong>Pembahasan Singkat:</strong> Titik P berada di tengah. <br>
+          - Muatan kiri (+Q) akan "menolak" titik P ke arah <strong>Kanan</strong>. <br>
+          - Muatan kanan (-Q) akan "menarik" titik P ke arah <strong>Kanan</strong>. <br>
+          Karena kedua vektor medan listrik searah ke kanan, maka resultannya ($E_{total}$) pasti mengarah ke <strong>Kanan</strong>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-card">
+    <div class="card-top">
+      <div class="q-badge">Q10</div>
+      <div class="q-content">
+        <div class="answer-highlight">1 (Increase Area), 3 (Decrease Distance), 4 (Insert Dielectric)</div>
+        <div class="explanation">
+          <strong>Pembahasan Singkat:</strong> Berdasarkan rumus kapasitas kapasitor keping sejajar: $C = \frac{\varepsilon_0 \varepsilon_r A}{d}$ <br>
+          Nilai $C$ berbanding lurus dengan luas penampang ($A$) dan permitivitas dielektrik ($\varepsilon_r$), serta berbanding terbalik dengan jarak antar keping ($d$). Maka cara memperbesarnya adalah memperbesar $A$, mengecilkan $d$, dan menyisipkan dielektrik.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
