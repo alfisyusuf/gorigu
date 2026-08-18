@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulasi Asesmen Elektrostatika</title>
+<title>Physics Assessment: Electrostatics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script>
   window.MathJax = {
@@ -18,206 +18,188 @@
 
 <style>
   :root {
-    --bg: #F3F4F6;
-    --paper: #FFFFFF;
-    --ink: #1F2937;
-    --ink-light: #4B5563;
-    --primary: #2563EB;
-    --primary-light: #EFF6FF;
-    --border: #E5E7EB;
-    --success: #16A34A;
-    --danger: #DC2626;
+    --bg-color: #F4F7FE;
+    --surface: #FFFFFF;
+    --ink: #1E293B;
+    --ink-light: #64748B;
+    --primary: #6366F1;
+    --primary-hover: #4F46E5;
+    --primary-light: #EEF2FF;
+    --border: #E2E8F0;
+    --success: #10B981;
+    --success-light: #D1FAE5;
+    --danger: #EF4444;
+    --danger-light: #FEE2E2;
+    --accent: #F59E0B;
+    --radius: 20px;
+    --font-heading: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
   }
 
-  * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
-  body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); line-height: 1.6; }
-  h1, h2, h3, h4, .brand { font-family: 'Plus Jakarta Sans', sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background-color: var(--bg-color); color: var(--ink); font-family: var(--font-body); line-height: 1.6; padding-bottom: 80px; }
 
-  header { background: var(--paper); padding: 20px 24px; border-bottom: 2px solid var(--border); text-align: center; }
-  .brand { font-size: 24px; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
-  .subtitle { font-size: 14px; color: var(--ink-light); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
-
-  .container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+  /* --- HEADER & NAVIGATION --- */
+  header {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    padding: 16px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  }
+  .brand-group { display: flex; flex-direction: column; }
+  .brand-title { font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; color: var(--ink); }
+  .brand-subtitle { font-size: 0.75rem; font-weight: 600; color: var(--ink-light); text-transform: uppercase; letter-spacing: 0.05em; }
   
-  .card { background: var(--paper); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; margin-bottom: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-  .card-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
-  .q-num { background: var(--primary); color: white; font-weight: 700; padding: 4px 10px; border-radius: 6px; font-size: 14px; }
-  .q-type { font-size: 13px; color: var(--ink-light); font-weight: 600; text-transform: uppercase; }
+  .timer-widget {
+    background: var(--primary-light); color: var(--primary); border: 1px solid #C7D2FE;
+    padding: 8px 16px; border-radius: 99px; font-family: var(--font-heading); font-weight: 800;
+    font-size: 1rem; display: flex; align-items: center; gap: 8px;
+  }
+  .timer-widget.warning { background: var(--danger-light); color: var(--danger); border-color: #FECACA; }
 
-  .question-text { font-size: 17px; font-weight: 500; margin-bottom: 20px; }
+  /* --- MAIN CONTAINER --- */
+  .container { max-width: 860px; margin: 40px auto; padding: 0 20px; }
+  .exam-header { text-align: center; margin-bottom: 40px; }
+  .exam-header h1 { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; color: var(--ink); }
+  .exam-header p { font-size: 1.1rem; color: var(--ink-light); max-width: 600px; margin: 0 auto; }
 
-  /* Type: Match */
-  .match-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 12px; background: var(--bg); border-radius: 8px; }
-  .match-row select { padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border); font-size: 16px; font-weight: 600; cursor: pointer; }
+  /* --- QUESTION CARDS --- */
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 32px; margin-bottom: 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 15px 35px -5px rgba(0,0,0,0.05); }
+  
+  .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .q-number { background: var(--primary); color: white; font-family: var(--font-heading); font-weight: 800; padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; }
+  .q-type { font-size: 0.85rem; font-weight: 700; color: var(--ink-light); text-transform: uppercase; letter-spacing: 0.05em; }
+  
+  .question-text { font-size: 1.1rem; font-weight: 500; margin-bottom: 24px; color: var(--ink); }
 
-  /* Type: Options (Radio/Checkbox) */
-  .opt-label { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border: 2px solid var(--border); border-radius: 8px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; }
-  .opt-label:hover { background: var(--primary-light); border-color: #93C5FD; }
-  .opt-label input { margin-top: 4px; transform: scale(1.2); cursor: pointer; }
-  .opt-label:has(input:checked) { background: var(--primary-light); border-color: var(--primary); }
+  /* --- INPUT STYLES --- */
+  /* Multiple Choice & MCMA */
+  .option-label {
+    display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px;
+    border: 2px solid var(--border); border-radius: 12px; margin-bottom: 12px;
+    cursor: pointer; transition: all 0.2s ease; background: var(--surface);
+  }
+  .option-label:hover { border-color: #A5B4FC; background: #FAFAFA; }
+  .option-label input { margin-top: 4px; transform: scale(1.3); cursor: pointer; accent-color: var(--primary); }
+  .option-label.selected { background: var(--primary-light); border-color: var(--primary); }
+  .option-text { font-size: 1rem; font-weight: 500; }
 
-  /* Type: TKA Table (T/F) */
-  .tka-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
-  .tka-table th, .tka-table td { border: 1px solid var(--border); padding: 12px; text-align: center; }
-  .tka-table th { background: var(--bg); font-size: 14px; font-weight: 700; }
-  .tka-table td.text-left { text-align: left; font-size: 15.5px; }
-  .tka-radio { transform: scale(1.3); cursor: pointer; }
+  /* Matching */
+  .match-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: #F8FAFC; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border); }
+  .match-text { font-weight: 500; width: 60%; }
+  .match-select { width: 35%; padding: 10px; border-radius: 8px; border: 2px solid var(--border); font-family: var(--font-body); font-weight: 600; color: var(--ink); cursor: pointer; outline: none; transition: border-color 0.2s; }
+  .match-select:focus { border-color: var(--primary); }
 
-  /* Type: Vector Options */
-  .vector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
-  .vector-opt { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.2s; }
-  .vector-opt:hover { background: var(--primary-light); border-color: #93C5FD; }
-  .vector-opt:has(input:checked) { border-color: var(--primary); background: var(--primary-light); }
-  .vector-opt svg { width: 60px; height: 60px; }
+  /* True/False Table */
+  .tf-table { width: 100%; border-collapse: collapse; margin-top: 10px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .tf-table th, .tf-table td { padding: 16px; border-bottom: 1px solid var(--border); }
+  .tf-table th { background: #F8FAFC; font-family: var(--font-heading); font-weight: 700; text-align: left; }
+  .tf-table th.center, .tf-table td.center { text-align: center; width: 100px; }
+  .tf-table tr:last-child td { border-bottom: none; }
+  .tf-table input[type="radio"] { transform: scale(1.4); accent-color: var(--primary); cursor: pointer; }
 
-  /* Submit Area */
-  .submit-area { text-align: center; margin: 40px 0 60px; }
-  .btn-submit { background: var(--primary); color: white; border: none; padding: 14px 32px; font-size: 18px; font-weight: 700; border-radius: 8px; cursor: pointer; font-family: 'Plus Jakarta Sans'; transition: 0.2s; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
-  .btn-submit:hover { background: #1D4ED8; transform: translateY(-2px); }
+  /* Visual/Vector Options */
+  .visual-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .visual-opt { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; border: 2px solid var(--border); border-radius: 16px; cursor: pointer; transition: all 0.2s ease; background: var(--surface); }
+  .visual-opt:hover { border-color: #A5B4FC; background: #FAFAFA; }
+  .visual-opt.selected { border-color: var(--primary); background: var(--primary-light); }
+  .visual-opt svg { width: 80px; height: 80px; }
+  .visual-opt strong { font-family: var(--font-heading); font-weight: 700; }
 
-  #result { display: none; background: var(--paper); border: 2px solid var(--success); border-radius: 12px; padding: 30px; text-align: center; margin-bottom: 40px; }
-  .score-display { font-size: 48px; font-weight: 800; color: var(--success); font-family: 'Plus Jakarta Sans'; line-height: 1; margin: 10px 0; }
+  /* --- SUBMIT & RESULTS --- */
+  .submit-wrapper { text-align: center; margin-top: 50px; }
+  .btn-submit {
+    background: var(--primary); color: white; border: none; padding: 18px 48px;
+    font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; border-radius: 99px;
+    cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+  }
+  .btn-submit:hover { background: var(--primary-hover); transform: translateY(-3px); box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.5); }
 
-  @media (max-width: 600px) {
-    .match-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .match-row select { width: 100%; }
+  /* Results Modal */
+  .overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; }
+  .overlay.show { display: flex; opacity: 1; }
+  .result-modal { background: var(--surface); border-radius: 24px; padding: 48px; max-width: 400px; width: 90%; text-align: center; transform: translateY(20px); transition: transform 0.3s ease; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+  .overlay.show .result-modal { transform: translateY(0); }
+  .result-icon { font-size: 64px; margin-bottom: 16px; line-height: 1; }
+  .result-title { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; }
+  .result-score { font-family: var(--font-heading); font-size: 4.5rem; font-weight: 800; color: var(--primary); line-height: 1; margin: 20px 0; }
+  .btn-outline { background: transparent; border: 2px solid var(--border); padding: 12px 24px; border-radius: 99px; font-weight: 700; cursor: pointer; margin-top: 20px; transition: 0.2s; }
+  .btn-outline:hover { background: #F8FAFC; border-color: var(--ink-light); }
+
+  /* Answer Highlights */
+  .correct-ans { background: var(--success-light) !important; border-color: var(--success) !important; color: #065F46; }
+  .wrong-ans { background: var(--danger-light) !important; border-color: var(--danger) !important; color: #991B1B; }
+
+  @media (max-width: 768px) {
+    .match-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .match-text { width: 100%; }
+    .match-select { width: 100%; }
+    .tf-table th, .tf-table td { padding: 12px 8px; font-size: 0.9rem; }
+    .tf-table th.center, .tf-table td.center { width: 60px; }
+    .visual-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">Instrumen Penilaian Harian</div>
-  <div class="subtitle">Fisika Kelas XII • SMA ABBS Surakarta</div>
+  <div class="brand-group">
+    <div class="brand-title">Formative Assessment</div>
+    <div class="brand-subtitle">Grade 12 Physics • SMA ABBS Surakarta</div>
+  </div>
+  <div class="timer-widget" id="timer">
+    ⏱ 40:00
+  </div>
 </header>
 
 <div class="container">
+  <div class="exam-header">
+    <h1>Electrostatics Mastery</h1>
+    <p>Read each question carefully. You have 40 minutes to complete 10 questions covering Coulomb's Law, Gauss's Law, Electric Potential, and Capacitors.</p>
+  </div>
+
   <form id="examForm">
-    
-    <div class="card">
-      <div class="card-header">
-        <span class="q-num">Soal 1</span>
-        <span class="q-type">Menjodohkan</span>
-      </div>
-      <div class="question-text">
-        Pasangkan konsep fisika berikut dengan persamaan matematika yang paling tepat!
-      </div>
-      
-      <div class="match-row">
-        <span>Gaya interaksi antara dua muatan titik</span>
-        <select name="q1_a" required>
-          <option value="" disabled selected>-- Pilih Persamaan --</option>
-          <option value="gauss">Φ = E A cos(θ)</option>
-          <option value="coulomb">F = k(q1 q2) / r²</option>
-          <option value="capacitance">C = Q / V</option>
-          <option value="potential">V = k(Q) / r</option>
-        </select>
-      </div>
-      <div class="match-row">
-        <span>Kemampuan menyimpan muatan tiap satuan beda potensial</span>
-        <select name="q1_b" required>
-          <option value="" disabled selected>-- Pilih Persamaan --</option>
-          <option value="gauss">Φ = E A cos(θ)</option>
-          <option value="coulomb">F = k(q1 q2) / r²</option>
-          <option value="capacitance">C = Q / V</option>
-          <option value="potential">V = k(Q) / r</option>
-        </select>
-      </div>
-      <div class="match-row">
-        <span>Fluks listrik yang menembus suatu luasan tertutup</span>
-        <select name="q1_c" required>
-          <option value="" disabled selected>-- Pilih Persamaan --</option>
-          <option value="gauss">Φ = E A cos(θ)</option>
-          <option value="coulomb">F = k(q1 q2) / r²</option>
-          <option value="capacitance">C = Q / V</option>
-          <option value="potential">V = k(Q) / r</option>
-        </select>
-      </div>
-    </div>
 
+    <!-- BLOCK 1: TABLE & MATCHING -->
     <div class="card">
       <div class="card-header">
-        <span class="q-num">Soal 2</span>
-        <span class="q-type">Pemodelan Matematis</span>
+        <span class="q-number">01</span>
+        <span class="q-type">True / False Analysis</span>
       </div>
       <div class="question-text">
-        Seorang peneliti ingin mengukur usaha yang diperlukan untuk memindahkan sebuah muatan uji positif \( q \) dari titik A ke titik B di dalam medan listrik yang dihasilkan oleh muatan sumber \( Q \). Jika potensial di titik A adalah \( V_A \) dan di titik B adalah \( V_B \), persamaan mana yang harus digunakan peneliti tersebut?
+        A hollow conducting sphere of radius \( R \) is given a net positive charge \( +Q \). Determine whether the following statements are <strong>True</strong> or <strong>False</strong>.
       </div>
-      <label class="opt-label">
-        <input type="radio" name="q2" value="A" required>
-        <span>\( W = q (V_B - V_A) \)</span>
-      </label>
-      <label class="opt-label">
-        <input type="radio" name="q2" value="B">
-        <span>\( W = k \frac{Q q}{r^2} \)</span>
-      </label>
-      <label class="opt-label">
-        <input type="radio" name="q2" value="C">
-        <span>\( W = \frac{1}{2} C V^2 \)</span>
-      </label>
-      <label class="opt-label">
-        <input type="radio" name="q2" value="D">
-        <span>\( W = q (E_B - E_A) \)</span>
-      </label>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <span class="q-num">Soal 3</span>
-        <span class="q-type">Pemahaman Dasar (C2)</span>
-      </div>
-      <div class="question-text">
-        Jika jarak antara dua muatan titik diperbesar menjadi <strong>dua kali lipat</strong> dari jarak semula, apa yang akan terjadi pada besar gaya Coulomb di antara keduanya?
-      </div>
-      <label class="opt-label">
-        <input type="radio" name="q3" value="A" required>
-        <span>Gaya menjadi dua kali lipat lebih besar.</span>
-      </label>
-      <label class="opt-label">
-        <input type="radio" name="q3" value="B">
-        <span>Gaya menjadi setengah dari semula.</span>
-      </label>
-      <label class="opt-label">
-        <input type="radio" name="q3" value="C">
-        <span>Gaya menjadi seperempat dari semula.</span>
-      </label>
-      <label class="opt-label">
-        <input type="radio" name="q3" value="D">
-        <span>Gaya tetap sama, karena muatannya tidak berubah.</span>
-      </label>
-    </div>
-
-    <div class="card">
-      <div class="card-header">
-        <span class="q-num">Soal 4</span>
-        <span class="q-type">Analisis Pernyataan (Benar/Salah)</span>
-      </div>
-      <div class="question-text">
-        Sebuah bola konduktor berongga dengan jari-jari \( R \) diberi muatan sebesar \( +Q \). Tentukan Benar (B) atau Salah (S) untuk masing-masing pernyataan berikut!
-      </div>
-      <table class="tka-table">
+      <table class="tf-table">
         <thead>
           <tr>
-            <th>Pernyataan</th>
-            <th width="80">Benar</th>
-            <th width="80">Salah</th>
+            <th>Statement</th>
+            <th class="center">True</th>
+            <th class="center">False</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="text-left">Kuat medan listrik di dalam rongga bola (\( r < R \)) selalu bernilai nol.</td>
-            <td><input type="radio" name="q4_1" value="B" class="tka-radio" required></td>
-            <td><input type="radio" name="q4_1" value="S" class="tka-radio"></td>
+            <td>The electric field inside the hollow cavity (\( r < R \)) is zero.</td>
+            <td class="center"><input type="radio" name="q1a" value="T" required></td>
+            <td class="center"><input type="radio" name="q1a" value="F"></td>
           </tr>
           <tr>
-            <td class="text-left">Potensial listrik di dalam rongga bola (\( r < R \)) bernilai nol.</td>
-            <td><input type="radio" name="q4_2" value="B" class="tka-radio" required></td>
-            <td><input type="radio" name="q4_2" value="S" class="tka-radio"></td>
+            <td>The electric potential inside the hollow cavity (\( r < R \)) is zero.</td>
+            <td class="center"><input type="radio" name="q1b" value="T" required></td>
+            <td class="center"><input type="radio" name="q1b" value="F"></td>
           </tr>
           <tr>
-            <td class="text-left">Seluruh muatan \( +Q \) terdistribusi merata hanya di permukaan luar bola.</td>
-            <td><input type="radio" name="q4_3" value="B" class="tka-radio" required></td>
-            <td><input type="radio" name="q4_3" value="S" class="tka-radio"></td>
+            <td>All the free charges reside exclusively on the outer surface of the sphere.</td>
+            <td class="center"><input type="radio" name="q1c" value="T" required></td>
+            <td class="center"><input type="radio" name="q1c" value="F"></td>
           </tr>
         </tbody>
       </table>
@@ -225,184 +207,390 @@
 
     <div class="card">
       <div class="card-header">
-        <span class="q-num">Soal 5</span>
-        <span class="q-type">Pilihan Ganda Kompleks</span>
+        <span class="q-number">02</span>
+        <span class="q-type">Matching</span>
       </div>
       <div class="question-text">
-        Manakah dari perlakuan berikut yang dapat <strong>memperbesar kapasitas</strong> (kapasitansi) sebuah kapasitor keping sejajar? <em>(Pilih 3 jawaban yang benar)</em>
+        Match the physical concept on the left with the correct mathematical equation on the right.
       </div>
-      <label class="opt-label">
-        <input type="checkbox" name="q5" value="1">
-        <span>Memperbesar tegangan (beda potensial) baterai yang dihubungkan.</span>
-      </label>
-      <label class="opt-label">
-        <input type="checkbox" name="q5" value="2">
-        <span>Memperbesar luas penampang keping kapasitor.</span>
-      </label>
-      <label class="opt-label">
-        <input type="checkbox" name="q5" value="3">
-        <span>Menyisipkan bahan dielektrik (seperti mika atau kertas) di antara keping.</span>
-      </label>
-      <label class="opt-label">
-        <input type="checkbox" name="q5" value="4">
-        <span>Memperkecil jarak antar keping kapasitor.</span>
-      </label>
-      <label class="opt-label">
-        <input type="checkbox" name="q5" value="5">
-        <span>Memperbesar muatan listrik pada kapasitor.</span>
-      </label>
+      <div class="match-row">
+        <div class="match-text">1. The electrostatic force between two point charges</div>
+        <select name="q2a" class="match-select" required>
+          <option value="" disabled selected>Select Equation</option>
+          <option value="gauss">Φ = E A cos(θ)</option>
+          <option value="coulomb">F = k(q₁q₂) / r²</option>
+          <option value="capacitance">C = Q / V</option>
+          <option value="potential">V = k(Q) / r</option>
+        </select>
+      </div>
+      <div class="match-row">
+        <div class="match-text">2. The total electric flux passing through a closed surface</div>
+        <select name="q2b" class="match-select" required>
+          <option value="" disabled selected>Select Equation</option>
+          <option value="gauss">Φ = E A cos(θ)</option>
+          <option value="coulomb">F = k(q₁q₂) / r²</option>
+          <option value="capacitance">C = Q / V</option>
+          <option value="potential">V = k(Q) / r</option>
+        </select>
+      </div>
+      <div class="match-row">
+        <div class="match-text">3. The ability of a component to store charge per unit of voltage</div>
+        <select name="q2c" class="match-select" required>
+          <option value="" disabled selected>Select Equation</option>
+          <option value="gauss">Φ = E A cos(θ)</option>
+          <option value="coulomb">F = k(q₁q₂) / r²</option>
+          <option value="capacitance">C = Q / V</option>
+          <option value="potential">V = k(Q) / r</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- BLOCK 2: SINGLE MCQ -->
+    <div class="card">
+      <div class="card-header">
+        <span class="q-number">03</span>
+        <span class="q-type">Multiple Choice • Concept</span>
+      </div>
+      <div class="question-text">
+        According to Coulomb's Law, if the distance between two charged particles is <strong>tripled</strong> (increased to 3 times its original value), what happens to the magnitude of the electrostatic force between them?
+      </div>
+      <label class="option-label"><input type="radio" name="q3" value="A" required><span class="option-text">It becomes 3 times larger.</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="B"><span class="option-text">It becomes 9 times larger.</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="C"><span class="option-text">It becomes \( \frac{1}{3} \) of its original value.</span></label>
+      <label class="option-label"><input type="radio" name="q3" value="D"><span class="option-text">It becomes \( \frac{1}{9} \) of its original value.</span></label>
     </div>
 
     <div class="card">
       <div class="card-header">
-        <span class="q-num">Soal 6</span>
-        <span class="q-type">Analisis Vektor (Visual)</span>
+        <span class="q-number">04</span>
+        <span class="q-type">Multiple Choice • Calculation</span>
       </div>
       <div class="question-text">
-        Perhatikan konfigurasi muatan di bawah ini. Terdapat muatan <strong>Positif (+Q)</strong> di sebelah kiri dan muatan <strong>Negatif (-Q)</strong> di sebelah kanan. Titik <strong>P</strong> berada tepat di tengah-tengah garis hubung kedua muatan.<br><br>
+        A test charge experiences two mutually perpendicular electric forces from nearby charges: <strong>6 N directed North</strong> and <strong>8 N directed East</strong>. What is the magnitude of the resultant force experienced by the test charge?
+      </div>
+      <label class="option-label"><input type="radio" name="q4" value="A" required><span class="option-text">14 N</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="B"><span class="option-text">10 N</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="C"><span class="option-text">2 N</span></label>
+      <label class="option-label"><input type="radio" name="q4" value="D"><span class="option-text">48 N</span></label>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="q-number">05</span>
+        <span class="q-type">Multiple Choice • Calculation</span>
+      </div>
+      <div class="question-text">
+        Three identical capacitors, each with a capacitance of <strong>6 µF</strong>, are connected in <strong>series</strong> across a voltage source. What is the total equivalent capacitance of this circuit?
+      </div>
+      <label class="option-label"><input type="radio" name="q5" value="A" required><span class="option-text">18 µF</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="B"><span class="option-text">9 µF</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="C"><span class="option-text">2 µF</span></label>
+      <label class="option-label"><input type="radio" name="q5" value="D"><span class="option-text">0.5 µF</span></label>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="q-number">06</span>
+        <span class="q-type">Multiple Choice • Concept</span>
+      </div>
+      <div class="question-text">
+        What is the primary physical effect of inserting a <strong>dielectric material</strong> (like glass or mica) between the plates of a fully charged, isolated parallel-plate capacitor?
+      </div>
+      <label class="option-label"><input type="radio" name="q6" value="A" required><span class="option-text">It increases the capacitance of the capacitor.</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="B"><span class="option-text">It decreases the capacitance of the capacitor.</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="C"><span class="option-text">It allows charge to flow freely between the plates.</span></label>
+      <label class="option-label"><input type="radio" name="q6" value="D"><span class="option-text">It increases the electric field strength between the plates.</span></label>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="q-number">07</span>
+        <span class="q-type">Multiple Choice • Calculation</span>
+      </div>
+      <div class="question-text">
+        How much work is required to move a charge of <strong>2 C</strong> from a point where the electric potential is <strong>3 V</strong> to a point where the electric potential is <strong>8 V</strong>?
+      </div>
+      <label class="option-label"><input type="radio" name="q7" value="A" required><span class="option-text">22 J</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="B"><span class="option-text">16 J</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="C"><span class="option-text">10 J</span></label>
+      <label class="option-label"><input type="radio" name="q7" value="D"><span class="option-text">5 J</span></label>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="q-number">08</span>
+        <span class="q-type">Multiple Choice • Concept</span>
+      </div>
+      <div class="question-text">
+        Which of the following statements correctly describes the behavior of <strong>electric field lines</strong>?
+      </div>
+      <label class="option-label"><input type="radio" name="q8" value="A" required><span class="option-text">They originate from negative charges and terminate on positive charges.</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="B"><span class="option-text">They frequently cross each other in regions of high charge density.</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="C"><span class="option-text">They form closed loops, just like magnetic field lines.</span></label>
+      <label class="option-label"><input type="radio" name="q8" value="D"><span class="option-text">They always point away from positive charges and towards negative charges.</span></label>
+    </div>
+
+    <!-- BLOCK 3: HOTS / VISUAL / MCMA -->
+    <div class="card">
+      <div class="card-header">
+        <span class="q-number">09</span>
+        <span class="q-type">Visual Analysis • Vector</span>
+      </div>
+      <div class="question-text">
+        Observe the charge configuration below. A <strong>Positive charge (+Q)</strong> is on the left, and a <strong>Negative charge (-Q)</strong> is on the right. Point <strong>P</strong> is located exactly halfway between them.<br><br>
         
-        <div style="text-align:center; margin: 10px 0;">
-          <svg width="240" height="80" viewBox="0 0 240 80">
-            <line x1="40" y1="40" x2="200" y2="40" stroke="var(--border)" stroke-width="2" stroke-dasharray="5,5"/>
-            <circle cx="40" cy="40" r="16" fill="#EF4444"/>
-            <text x="40" y="45" fill="white" font-size="16" font-weight="bold" text-anchor="middle">+Q</text>
-            <circle cx="200" cy="40" r="16" fill="#3B82F6"/>
-            <text x="200" y="45" fill="white" font-size="16" font-weight="bold" text-anchor="middle">-Q</text>
-            <circle cx="120" cy="40" r="4" fill="var(--ink)"/>
-            <text x="120" y="28" font-size="14" font-weight="bold" text-anchor="middle">Titik P</text>
+        <div style="text-align:center; margin: 20px 0; background: #F8FAFC; padding: 20px; border-radius: 12px; border: 1px dashed #CBD5E1;">
+          <svg width="280" height="80" viewBox="0 0 280 80">
+            <line x1="40" y1="40" x2="240" y2="40" stroke="#94A3B8" stroke-width="2" stroke-dasharray="6,6"/>
+            <!-- +Q -->
+            <circle cx="40" cy="40" r="18" fill="#EF4444"/>
+            <text x="40" y="45" fill="white" font-size="14" font-weight="800" text-anchor="middle" font-family="sans-serif">+Q</text>
+            <!-- -Q -->
+            <circle cx="240" cy="40" r="18" fill="#3B82F6"/>
+            <text x="240" y="45" fill="white" font-size="14" font-weight="800" text-anchor="middle" font-family="sans-serif">-Q</text>
+            <!-- Point P -->
+            <circle cx="140" cy="40" r="5" fill="#1E293B"/>
+            <text x="140" y="25" font-size="14" font-weight="800" text-anchor="middle" fill="#1E293B" font-family="sans-serif">Point P</text>
           </svg>
         </div>
 
-        Manakah gambar vektor di bawah ini yang menunjukkan arah <strong>Resultan Kuat Medan Listrik (\( E_{total} \))</strong> di Titik P?
+        Which vector best represents the direction of the <strong>Resultant Electric Field (\( E_{total} \))</strong> at Point P?
       </div>
       
-      <div class="vector-grid">
-        <label class="vector-opt">
-          <input type="radio" name="q6" value="A" required>
+      <div class="visual-grid">
+        <label class="visual-opt">
+          <input type="radio" name="q9" value="A" required style="display:none;">
           <svg viewBox="0 0 100 100">
+            <!-- Arrow Right -->
             <path d="M20,50 L75,50 M60,35 L75,50 L60,65" stroke="var(--ink)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <strong>Vektor A</strong>
+          <strong>Vector A (Right)</strong>
         </label>
         
-        <label class="vector-opt">
-          <input type="radio" name="q6" value="B">
+        <label class="visual-opt">
+          <input type="radio" name="q9" value="B" style="display:none;">
           <svg viewBox="0 0 100 100">
+            <!-- Arrow Left -->
             <path d="M80,50 L25,50 M40,35 L25,50 L40,65" stroke="var(--ink)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <strong>Vektor B</strong>
+          <strong>Vector B (Left)</strong>
         </label>
         
-        <label class="vector-opt">
-          <input type="radio" name="q6" value="C">
+        <label class="visual-opt">
+          <input type="radio" name="q9" value="C" style="display:none;">
           <svg viewBox="0 0 100 100">
+            <!-- Arrow Up -->
             <path d="M50,80 L50,25 M35,40 L50,25 L65,40" stroke="var(--ink)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <strong>Vektor C</strong>
+          <strong>Vector C (Up)</strong>
         </label>
 
-        <label class="vector-opt">
-          <input type="radio" name="q6" value="D">
-          <div style="display:flex; align-items:center; justify-content:center; width:60px; height:60px;">
-            <span style="font-size:24px; font-weight:800; color:var(--ink);">0</span>
+        <label class="visual-opt">
+          <input type="radio" name="q9" value="D" style="display:none;">
+          <div style="display:flex; align-items:center; justify-content:center; width:80px; height:80px;">
+            <span style="font-size:32px; font-weight:800; color:var(--ink); font-family:sans-serif;">0</span>
           </div>
-          <strong>Nol</strong>
+          <strong>Zero Field</strong>
         </label>
       </div>
     </div>
 
-    <div id="result">
-      <h3>Simulasi Selesai!</h3>
-      <div class="subtitle">Skor Akhir Kamu:</div>
-      <div class="score-display"><span id="scoreVal">0</span> / 100</div>
-      <p style="color:var(--ink-light); margin-top:8px;">Silakan refresh halaman untuk mencoba lagi.</p>
+    <div class="card">
+      <div class="card-header">
+        <span class="q-number">10</span>
+        <span class="q-type">Multiple Answer • HOTS</span>
+      </div>
+      <div class="question-text">
+        Based on the parallel-plate capacitor equation \( C = \frac{\varepsilon_0 \varepsilon_r A}{d} \), which of the following physical changes will <strong>increase the capacitance</strong> of the component? <br><br><em>(Select exactly 3 correct answers)</em>
+      </div>
+      <label class="option-label">
+        <input type="checkbox" name="q10" value="1">
+        <span class="option-text">Increasing the overlapping surface area (A) of the metal plates.</span>
+      </label>
+      <label class="option-label">
+        <input type="checkbox" name="q10" value="2">
+        <span class="option-text">Increasing the distance (d) between the two plates.</span>
+      </label>
+      <label class="option-label">
+        <input type="checkbox" name="q10" value="3">
+        <span class="option-text">Decreasing the distance (d) between the two plates.</span>
+      </label>
+      <label class="option-label">
+        <input type="checkbox" name="q10" value="4">
+        <span class="option-text">Inserting a dielectric material (like mica) between the plates.</span>
+      </label>
+      <label class="option-label">
+        <input type="checkbox" name="q10" value="5">
+        <span class="option-text">Connecting the capacitor to a battery with a higher voltage.</span>
+      </label>
     </div>
 
-    <div class="submit-area" id="submitArea">
-      <button type="submit" class="btn-submit">Kumpulkan & Proses Nilai</button>
+    <!-- SUBMIT -->
+    <div class="submit-wrapper">
+      <button type="submit" class="btn-submit" id="submitBtn">Submit Assessment 🚀</button>
     </div>
 
   </form>
 </div>
 
+<!-- RESULTS MODAL -->
+<div class="overlay" id="resultOverlay">
+  <div class="result-modal">
+    <div class="result-icon" id="resultIcon">🎉</div>
+    <div class="result-title" id="resultTitle">Assessment Complete!</div>
+    <p style="color:var(--ink-light);">Your final score is:</p>
+    <div class="result-score"><span id="scoreVal">0</span></div>
+    <p id="resultMessage" style="color:var(--ink-light); margin-bottom: 24px; font-weight: 500;">Great effort!</p>
+    <button class="btn-outline" onclick="location.reload()">Try Again</button>
+  </div>
+</div>
+
 <script>
+  // --- UI Interactions ---
+  // Highlight selected radio buttons
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      // Find parent container (.card)
+      const card = this.closest('.card');
+      // Reset all labels in this card
+      card.querySelectorAll('.option-label, .visual-opt').forEach(lbl => {
+        lbl.classList.remove('selected');
+      });
+      // Add 'selected' to the parent label of the checked radio
+      this.closest('label').classList.add('selected');
+    });
+  });
+
+  // Highlight selected checkboxes
+  document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      if(this.checked) {
+        this.closest('label').classList.add('selected');
+      } else {
+        this.closest('label').classList.remove('selected');
+      }
+    });
+  });
+
+  // --- Countdown Timer ---
+  let timeLeft = 40 * 60; // 40 minutes
+  const timerElement = document.getElementById('timer');
+  
+  const timerInterval = setInterval(() => {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    
+    timerElement.innerHTML = `⏱ ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    if (timeLeft <= 300) { // 5 minutes left warning
+      timerElement.classList.add('warning');
+    }
+    
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timerElement.innerHTML = "⏱ 00:00";
+      document.getElementById('examForm').dispatchEvent(new Event('submit')); // Auto submit
+    }
+    timeLeft--;
+  }, 1000);
+
+  // --- Grading Logic ---
   document.getElementById('examForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    let score = 0;
+    clearInterval(timerInterval); // Stop timer
     
-    // Kunci Jawaban
-    const answers = {
-      q1_a: 'coulomb',       // Gaya interaksi
-      q1_b: 'capacitance',   // Kemampuan menyimpan
-      q1_c: 'gauss',         // Fluks listrik
-      q2: 'A',               // W = q(Vb - Va)
-      q3: 'C',               // 1/4 semula
-      q4_1: 'B',             // E = 0 di dalam
-      q4_2: 'S',             // V konstan, tidak nol
-      q4_3: 'B',             // Muatan di luar
-      q6: 'A'                // +Q mendorong ke kanan, -Q menarik ke kanan (total ke kanan)
-    };
-
+    let score = 0;
     const formData = new FormData(this);
 
-    // Evaluasi Soal 1 (Menjodohkan) - Bobot: 15 (5 per item)
-    if(formData.get('q1_a') === answers.q1_a) score += 5;
-    if(formData.get('q1_b') === answers.q1_b) score += 5;
-    if(formData.get('q1_c') === answers.q1_c) score += 5;
+    // Answer Key
+    const answers = {
+      q1a: 'T', // E=0 inside
+      q1b: 'F', // V is constant, not zero
+      q1c: 'T', // Charges on surface
+      q2a: 'coulomb',
+      q2b: 'gauss',
+      q2c: 'capacitance',
+      q3: 'D', // 1/9
+      q4: 'B', // 10 N
+      q5: 'C', // 2 µF
+      q6: 'A', // Increases capacitance
+      q7: 'C', // 10 J
+      q8: 'D', // Away from +, towards -
+      q9: 'A'  // Vector Right
+    };
 
-    // Evaluasi Soal 2 (Cerita) - Bobot: 15
-    if(formData.get('q2') === answers.q2) score += 15;
+    // Calculate Blocks 1 & 2 (10 points per question group)
+    // Q1 (T/F) - 10 pts total (3.33 pts each, let's round to 10 if all correct)
+    let q1Score = 0;
+    if(formData.get('q1a') === answers.q1a) q1Score += 3.33;
+    if(formData.get('q1b') === answers.q1b) q1Score += 3.33;
+    if(formData.get('q1c') === answers.q1c) q1Score += 3.34;
+    score += q1Score;
 
-    // Evaluasi Soal 3 (C2) - Bobot: 10
+    // Q2 (Match) - 10 pts total
+    let q2Score = 0;
+    if(formData.get('q2a') === answers.q2a) q2Score += 3.33;
+    if(formData.get('q2b') === answers.q2b) q2Score += 3.33;
+    if(formData.get('q2c') === answers.q2c) q2Score += 3.34;
+    score += q2Score;
+
+    // Q3 to Q8 (Single MCQ) - 10 pts each = 60 pts
     if(formData.get('q3') === answers.q3) score += 10;
+    if(formData.get('q4') === answers.q4) score += 10;
+    if(formData.get('q5') === answers.q5) score += 10;
+    if(formData.get('q6') === answers.q6) score += 10;
+    if(formData.get('q7') === answers.q7) score += 10;
+    if(formData.get('q8') === answers.q8) score += 10;
 
-    // Evaluasi Soal 4 (T/F) - Bobot: 15 (5 per item)
-    if(formData.get('q4_1') === answers.q4_1) score += 5;
-    if(formData.get('q4_2') === answers.q4_2) score += 5;
-    if(formData.get('q4_3') === answers.q4_3) score += 5;
+    // Q9 (Visual) - 10 pts
+    if(formData.get('q9') === answers.q9) score += 10;
 
-    // Evaluasi Soal 5 (MCMA) - Bobot: 25 
-    // Kunci: 2, 3, 4 (Luas, Dielektrik, Jarak)
-    const q5_selected = formData.getAll('q5');
-    const q5_correct = ['2', '3', '4'];
+    // Q10 (MCMA) - 10 pts
+    // Correct keys: 1 (Area), 3 (Decrease d), 4 (Dielectric)
+    const q10_selected = formData.getAll('q10');
+    const q10_correct = ['1', '3', '4'];
     
-    // Syarat dapat 25 poin: Pilih tepat 3, dan semuanya benar
-    if (q5_selected.length === 3) {
-      const isPerfect = q5_selected.every(val => q5_correct.includes(val));
-      if (isPerfect) {
-        score += 25;
-      } else {
-        // Jika pilih 3 tapi ada yang salah, berikan partial point
-        let matchCount = q5_selected.filter(val => q5_correct.includes(val)).length;
-        score += (matchCount * 5); 
+    if (q10_selected.length === 3) {
+      const isPerfect = q10_selected.every(val => q10_correct.includes(val));
+      if (isPerfect) score += 10;
+      else {
+        let matchCount = q10_selected.filter(val => q10_correct.includes(val)).length;
+        score += (matchCount * 3.33);
       }
     } else {
-      // Partial point jika kurang/lebih dari 3
-      let matchCount = q5_selected.filter(val => q5_correct.includes(val)).length;
-      score += (matchCount * 5);
-      // Penalti jika mencentang jawaban salah
-      let wrongCount = q5_selected.filter(val => !q5_correct.includes(val)).length;
-      score -= (wrongCount * 3); 
+      let matchCount = q10_selected.filter(val => q10_correct.includes(val)).length;
+      let wrongCount = q10_selected.filter(val => !q10_correct.includes(val)).length;
+      let q10Score = (matchCount * 3.33) - (wrongCount * 3);
+      if (q10Score > 0) score += q10Score;
     }
 
-    // Evaluasi Soal 6 (Visual/Vektor) - Bobot: 20
-    if(formData.get('q6') === answers.q6) score += 20;
+    // Final formatting
+    score = Math.round(score);
+    if(score < 0) score = 0;
+    if(score > 100) score = 100;
 
-    // Mencegah nilai minus pada grading MCMA parsial
-    if (score < 0) score = 0;
-    if (score > 100) score = 100;
-
-    // Tampilkan hasil
+    // Show Results
     document.getElementById('scoreVal').innerText = score;
-    document.getElementById('result').style.display = 'block';
-    document.getElementById('submitArea').style.display = 'none';
     
-    // Auto-scroll ke atas hasil
-    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const icon = document.getElementById('resultIcon');
+    const title = document.getElementById('resultTitle');
+    const message = document.getElementById('resultMessage');
 
-    // Nonaktifkan semua input
-    const inputs = this.querySelectorAll('input, select');
-    inputs.forEach(input => input.disabled = true);
+    if (score >= 85) {
+      icon.innerText = "🏆";
+      title.innerText = "Outstanding!";
+      message.innerText = "Excellent grasp of electrostatics concepts.";
+    } else if (score >= 70) {
+      icon.innerText = "👏";
+      title.innerText = "Good Job!";
+      message.innerText = "You have a solid foundation. Just a few tweaks needed.";
+    } else {
+      icon.innerText = "📚";
+      title.innerText = "Keep Practicing!";
+      message.innerText = "Review the concepts and try again. You'll get it!";
+    }
+
+    document.getElementById('resultOverlay').classList.add('show');
   });
 </script>
 
