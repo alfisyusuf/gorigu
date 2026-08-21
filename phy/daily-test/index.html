@@ -53,16 +53,18 @@
   .q-type { color: var(--text-muted); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
   .q-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 24px; }
 
-  /* Inputs & Options */
+  /* Inputs & Options dengan CSS Modern :has() */
   .opt-label { display: flex; gap: 16px; padding: 16px; border: 2px solid var(--border); border-radius: 12px; margin-bottom: 12px; cursor: pointer; transition: 0.2s; align-items: flex-start; }
   .opt-label:hover { border-color: #A5B4FC; background: #FAFAFA; }
   .opt-label input { margin-top: 4px; transform: scale(1.2); accent-color: var(--primary); }
+  .opt-label:has(input:checked) { border-color: var(--primary); background: var(--primary-light); }
   
   /* Tipe Visual Grid */
   .visual-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
   .visual-card { border: 2px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; }
-  .visual-card:hover { border-color: var(--primary); background: var(--primary-light); }
+  .visual-card:hover { border-color: #A5B4FC; background: #FAFAFA; }
   .visual-card input { display: none; }
+  .visual-card:has(input:checked) { border-color: var(--primary); background: var(--primary-light); }
   
   /* Tipe TF Table */
   .tf-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -87,27 +89,34 @@
   .btn:hover { background: var(--primary-hover); transform: translateY(-2px); }
   .btn:disabled { background: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; }
   
+  .btn-outline { background: transparent; color: var(--text-main); border: 2px solid var(--border); padding: 16px 32px; border-radius: 99px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.3s; width: 100%; margin-bottom: 16px; }
+  .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+
   input[type="text"] { width: 100%; padding: 16px; border: 2px solid var(--border); border-radius: 12px; font-size: 1rem; margin-bottom: 16px; transition: 0.2s; outline: none; }
   input[type="text"]:focus { border-color: var(--primary); }
   
+  /* Autocomplete Dropdown */
+  .input-wrapper { position: relative; text-align: left; margin-bottom: 16px; }
+  .suggestion-box {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    max-height: 200px; overflow-y: auto; z-index: 100;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15); display: none; margin-top: 8px;
+  }
+  .suggestion-item { padding: 14px 16px; border-bottom: 1px solid var(--bg); cursor: pointer; transition: 0.2s; font-size: 0.95rem; }
+  .suggestion-item:hover { background: var(--primary-light); color: var(--primary); padding-left: 20px; }
+  .suggestion-item:last-child { border-bottom: none; }
+
   /* Floating Desmos */
   .desmos-btn { position: fixed; bottom: 20px; right: 20px; z-index: 100; background: var(--success); box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4); border-radius: 99px; padding: 12px 24px; color: white; font-weight: 700; border: none; cursor: pointer; }
   .desmos-modal { position: fixed; bottom: 80px; right: 20px; width: 350px; height: 450px; background: white; border-radius: 16px; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.2); z-index: 99; border: 1px solid var(--border); display: none; overflow: hidden; }
 
   .status-badge { display: inline-block; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 0.85rem; margin-top: 10px; }
   .status-danger { background: #FEE2E2; color: var(--danger); }
-
-    /* Autocomplete Dropdown */
-    .input-wrapper { position: relative; text-align: left; margin-bottom: 16px; }
-    .suggestion-box {
-    position: absolute; top: 100%; left: 0; right: 0;
-    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    max-height: 200px; overflow-y: auto; z-index: 100;
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15); display: none; margin-top: 8px;
-    }
-    .suggestion-item { padding: 14px 16px; border-bottom: 1px solid var(--bg); cursor: pointer; transition: 0.2s; font-size: 0.95rem; }
-    .suggestion-item:hover { background: var(--primary-light); color: var(--primary); padding-left: 20px; }
-    .suggestion-item:last-child { border-bottom: none; }
+  
+  /* Auto-save notification */
+  .toast { position: fixed; bottom: 20px; left: 20px; background: var(--text-main); color: white; padding: 12px 24px; border-radius: 99px; font-size: 0.9rem; font-weight: 600; opacity: 0; transform: translateY(20px); transition: 0.3s; z-index: 1000; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
@@ -162,8 +171,9 @@
 
     <form id="examForm"></form>
     
-    <div style="margin-top: 40px; text-align: center;">
-      <button class="btn" id="btnSubmit" onclick="submitExam(false)" style="max-width: 300px;">Kumpulkan Jawaban</button>
+    <div style="margin-top: 40px; text-align: center; max-width: 400px; margin-left: auto; margin-right: auto;">
+      <button class="btn-outline" id="btnSave" onclick="simpanManual()">💾 Simpan Sementara</button>
+      <button class="btn" id="btnSubmit" onclick="submitExam(false)">Akhiri dan Kumpulkan</button>
     </div>
   </div>
 
@@ -187,6 +197,9 @@
   <iframe src="https://www.desmos.com/scientific" width="100%" height="100%" frameborder="0"></iframe>
 </div>
 
+<!-- TOAST NOTIFICATION -->
+<div id="toast" class="toast">Progres berhasil disimpan.</div>
+
 <script>
   // --- KONFIGURASI API ---
   const API_URL = "https://script.google.com/macros/s/AKfycbxO7nduuMCiMq9WpqH4zYQUQJwBTC60k82KBeNwGqWBV9CJmxX0DreC4n_GkHokuJwVdg/exec"; 
@@ -194,21 +207,23 @@
   
   // --- STATE SYSTEM ---
   let bankSoal = [];
+  let dataSiswaBank = []; 
   let sesi = { nama: "", kelas: "", mulai: null, pelanggaran: [] };
   let countPelanggaran = 0;
   let timerId = null;
-  let sisaDetik = DURASI_MENIT * 60;
+  let autoSaveId = null;
+  let sisaDetik = 0;
+  let isPopupAktif = false; // Penanda untuk bypass deteksi kecurangan saat alert muncul
 
   // --- INITIAL LOAD ---
   window.onload = async () => {
     try {
-      // Menarik data Soal dan daftar Siswa secara bersamaan
       const [resSoal, resSiswa] = await Promise.all([
         fetch(API_URL + "?action=getSoal"),
         fetch(API_URL + "?action=getSiswa")
       ]);
       
-      bankSoal = await resSoal.json();
+      bankSoal = await resSoal.json(); // Data soal fresh dari server
       dataSiswaBank = await resSiswa.json();
       
       document.getElementById('screen-loading').classList.remove('active');
@@ -229,7 +244,7 @@
     
     if (!val) { 
       suggestBox.style.display = 'none'; 
-      inputKelas.value = ""; // Reset kelas jika nama dihapus
+      inputKelas.value = ""; 
       return; 
     }
 
@@ -241,9 +256,9 @@
         div.className = 'suggestion-item';
         div.innerHTML = `<strong>${s.nama}</strong> <span style="color:var(--text-muted); font-size:0.85em;">- ${s.kelas}</span>`;
         div.onclick = () => {
-          inputNama.value = s.nama;       // Isi otomatis Nama
-          inputKelas.value = s.kelas;     // Isi otomatis Kelas
-          suggestBox.style.display = 'none'; // Sembunyikan dropdown
+          inputNama.value = s.nama;       
+          inputKelas.value = s.kelas;     
+          suggestBox.style.display = 'none'; 
         };
         suggestBox.appendChild(div);
       });
@@ -253,32 +268,72 @@
     }
   });
 
-  // Menyembunyikan dropdown jika siswa mengklik di luar area input
   document.addEventListener('click', function(e) {
     if (e.target !== inputNama && e.target !== suggestBox) {
       suggestBox.style.display = 'none';
     }
   });
 
-  // --- LOGIC MULAI UJIAN ---
+  // --- LOGIC MULAI UJIAN & PERSISTENSI ---
   function mulaiUjian() {
     const nama = document.getElementById('inputNama').value.trim();
     const kelas = document.getElementById('inputKelas').value.trim();
     
-    if (!nama || !kelas) return alert("Mohon lengkapi Nama dan Kelas!");
+    if (!nama || !kelas) {
+      isPopupAktif = true;
+      alert("Mohon lengkapi Nama dan Kelas!");
+      setTimeout(() => isPopupAktif = false, 500);
+      return;
+    }
 
-    sesi.nama = nama;
-    sesi.kelas = kelas;
-    sesi.mulai = new Date().toISOString();
+    const storageKey = 'exam_data_' + nama.replace(/\s+/g, '_');
+    const existingData = localStorage.getItem(storageKey);
+    let savedAnswers = null;
 
+    if (existingData) {
+      const parsedData = JSON.parse(existingData);
+      
+      if (parsedData.isSubmitted) {
+        isPopupAktif = true;
+        alert("Anda sudah mengumpulkan ujian ini. Tidak dapat mengerjakan ulang.");
+        setTimeout(() => isPopupAktif = false, 500);
+        return;
+      }
+      
+      // Load dari Local Storage
+      sesi = parsedData.sesi;
+      bankSoal = parsedData.bankSoal; // Pastikan menggunakan urutan soal yang lama
+      countPelanggaran = sesi.pelanggaran.length;
+      savedAnswers = parsedData.jawaban;
+      
+      showToast("Melanjutkan sesi ujian sebelumnya...");
+    } else {
+      // Sesi Baru
+      sesi.nama = nama;
+      sesi.kelas = kelas;
+      sesi.mulai = Date.now(); // Gunakan timestamp absolut
+      
+      // Simpan inisiasi awal ke storage
+      simpanStateInternal(storageKey, {});
+    }
+
+    // Pindah Layar
     document.getElementById('screen-login').classList.remove('active');
     document.getElementById('screen-exam').classList.add('active');
-    document.getElementById('displaySiswa').innerText = `${nama} (${kelas})`;
+    document.getElementById('displaySiswa').innerText = `${sesi.nama} (${sesi.kelas})`;
     document.getElementById('btnDesmos').style.display = 'block';
     
-    mulaiTimer();
+    if(countPelanggaran > 0) {
+       document.getElementById('warningBadge').style.display = 'inline-block';
+       document.getElementById('warningBadge').innerText = `Pelanggaran: ${countPelanggaran}`;
+    }
+
     renderSoal();
+    if (savedAnswers) restoreJawaban(savedAnswers);
+
+    mulaiTimer();
     aktifkanAntiCheat();
+    mulaiAutoSave();
   }
 
   // --- RENDER SOAL BERDASARKAN TIPE ---
@@ -295,7 +350,6 @@
         </div>
         <div class="q-text">${soal.pertanyaan}</div>`;
       
-      // 1. Pilihan Ganda Tunggal (MCQ)
       if (soal.tipe === 'MCQ') {
         for (const [key, val] of Object.entries(soal.opsi)) {
           html += `<label class="opt-label">
@@ -304,7 +358,6 @@
           </label>`;
         }
       } 
-      // 2. Pilihan Ganda Kompleks (MCMA)
       else if (soal.tipe === 'MCMA') {
         for (const [key, val] of Object.entries(soal.opsi)) {
           html += `<label class="opt-label">
@@ -313,11 +366,10 @@
           </label>`;
         }
       }
-      // 3. Visual Grid (VISUAL)
       else if (soal.tipe === 'VISUAL') {
         html += `<div class="visual-grid">`;
         for (const [key, val] of Object.entries(soal.opsi)) {
-          html += `<label class="visual-card" onclick="document.querySelectorAll('input[name=ans_${soal.id}]').forEach(r => r.parentElement.style.borderColor='var(--border)'); this.style.borderColor='var(--primary)';">
+          html += `<label class="visual-card">
             <input type="radio" name="ans_${soal.id}" value="${key}" required>
             ${val}
             <div style="margin-top:10px; font-weight:bold;">Opsi ${key}</div>
@@ -325,7 +377,6 @@
         }
         html += `</div>`;
       }
-      // 4. Tabel True/False (TF_TABLE)
       else if (soal.tipe === 'TF_TABLE') {
         html += `<table class="tf-table"><thead><tr><th>Pernyataan</th><th class="center">True</th><th class="center">False</th></tr></thead><tbody>`;
         soal.opsi.forEach(item => {
@@ -337,7 +388,6 @@
         });
         html += `</tbody></table>`;
       }
-      // 5. Menjodohkan (MATCHING)
       else if (soal.tipe === 'MATCHING') {
         soal.opsi.premis.forEach(item => {
           html += `<div class="match-row">
@@ -355,23 +405,92 @@
       form.innerHTML += html;
     });
 
-    // Panggil MathJax untuk merender ulang LaTeX yang baru di-inject
-    if (window.MathJax) {
-      MathJax.typesetPromise();
+    if (window.MathJax) MathJax.typesetPromise();
+  }
+
+  // --- RESTORE JAWABAN (RELOAD SAFE) ---
+  function restoreJawaban(savedAnswers) {
+    for (const [id, answer] of Object.entries(savedAnswers)) {
+      if (Array.isArray(answer)) { 
+        answer.forEach(val => {
+          const el = document.querySelector(`input[name="ans_${id}"][value="${val}"]`);
+          if(el) el.checked = true; 
+        });
+      } else if (typeof answer === 'object') { 
+        for (const [subId, subAns] of Object.entries(answer)) {
+          const el = document.querySelector(`[name="ans_${id}_${subId}"]`);
+          if (el) {
+            if (el.tagName === 'SELECT') el.value = subAns;
+            else if (el.type === 'radio' && el.value === subAns) el.checked = true;
+          }
+        }
+      } else { 
+        const el = document.querySelector(`input[name="ans_${id}"][value="${answer}"]`);
+        if(el) el.checked = true; 
+      }
     }
   }
 
-  // --- LOGIC ANTI CHEAT ---
+  // --- AUTO SAVE & MANUAL SAVE ---
+  function ekstrakJawabanSaatIni() {
+    const formData = new FormData(document.getElementById('examForm'));
+    let jawaban = {};
+    bankSoal.forEach(soal => {
+      if (soal.tipe === 'MCQ' || soal.tipe === 'VISUAL') {
+        jawaban[soal.id] = formData.get(`ans_${soal.id}`) || "";
+      } else if (soal.tipe === 'MCMA') {
+        jawaban[soal.id] = formData.getAll(`ans_${soal.id}`); 
+      } else if (soal.tipe === 'TF_TABLE' || soal.tipe === 'MATCHING') {
+        let subAns = {};
+        let items = soal.tipe === 'TF_TABLE' ? soal.opsi : soal.opsi.premis;
+        items.forEach(item => {
+          subAns[item.id] = formData.get(`ans_${soal.id}_${item.id}`) || "";
+        });
+        jawaban[soal.id] = subAns; 
+      }
+    });
+    return jawaban;
+  }
+
+  function simpanStateInternal(key, jawaban, isSubmitted = false) {
+    const state = {
+      sesi: sesi,
+      bankSoal: bankSoal,
+      jawaban: jawaban,
+      isSubmitted: isSubmitted
+    };
+    localStorage.setItem(key, JSON.stringify(state));
+  }
+
+  function mulaiAutoSave() {
+    autoSaveId = setInterval(() => {
+      const storageKey = 'exam_data_' + sesi.nama.replace(/\s+/g, '_');
+      simpanStateInternal(storageKey, ekstrakJawabanSaatIni());
+    }, 30000); // 30 detik
+  }
+
+  function simpanManual() {
+    const storageKey = 'exam_data_' + sesi.nama.replace(/\s+/g, '_');
+    simpanStateInternal(storageKey, ekstrakJawabanSaatIni());
+    showToast("💾 Jawaban berhasil disimpan!");
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.innerText = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  // --- LOGIC ANTI CHEAT FIX ---
   function aktifkanAntiCheat() {
-    // Deteksi pindah tab
     document.addEventListener("visibilitychange", () => {
-      if (document.hidden) catatPelanggaran("Berpindah Tab / Minimize Browser");
+      if (document.hidden && !isPopupAktif) catatPelanggaran("Berpindah Tab / Minimize Browser");
     });
     
-    // Deteksi buka aplikasi lain (blur)
     window.addEventListener("blur", () => {
-      // Pengecualian agar iframe kalkulator Desmos tidak memicu pelanggaran
-      if(document.activeElement && document.activeElement.tagName === 'IFRAME') return;
+      if (isPopupAktif) return; 
+      if (document.activeElement && document.activeElement.tagName === 'IFRAME') return;
       catatPelanggaran("Kehilangan Fokus / Membuka Aplikasi Lain");
     });
   }
@@ -385,35 +504,47 @@
     badge.style.display = 'inline-block';
     badge.innerText = `Pelanggaran: ${countPelanggaran}`;
     
-    alert(`⚠️ PERINGATAN INTEGRITAS!\nSistem mendeteksi Anda: ${jenis}.\nAktivitas ini dicatat di server pusat.`);
+    // Simpan ke storage secara instan agar tidak hilang jika di-close
+    const storageKey = 'exam_data_' + sesi.nama.replace(/\s+/g, '_');
+    simpanStateInternal(storageKey, ekstrakJawabanSaatIni());
+    
+    isPopupAktif = true;
+    alert(`⚠️ PERINGATAN INTEGRITAS!\nSistem mendeteksi Anda: ${jenis}.\nAktivitas ini dicatat.`);
+    setTimeout(() => { isPopupAktif = false; }, 500); 
   }
 
-  // --- TIMER SYSTEM ---
+  // --- TIMER SYSTEM (ABSOLUTE) ---
   function mulaiTimer() {
     const timerWidget = document.getElementById('timerWidget');
     const display = document.getElementById('timeDisplay');
     timerWidget.style.display = 'flex';
 
     timerId = setInterval(() => {
-      sisaDetik--;
+      // Hitung selisih waktu dari timestamp awal sesi
+      const elapsedMs = Date.now() - sesi.mulai;
+      sisaDetik = (DURASI_MENIT * 60) - Math.floor(elapsedMs / 1000);
+      
+      if(sisaDetik < 0) sisaDetik = 0;
+
       let m = Math.floor(sisaDetik / 60);
       let s = sisaDetik % 60;
       display.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 
-      // Efek peringatan 5 menit terakhir
       if (sisaDetik <= 300) timerWidget.classList.add('warning');
       
-      // Waktu Habis
       if (sisaDetik <= 0) {
         clearInterval(timerId);
-        display.innerText = "00:00";
+        clearInterval(autoSaveId);
+        
+        isPopupAktif = true;
         alert("⏱ WAKTU HABIS! Sistem akan mengumpulkan jawaban Anda secara otomatis.");
+        setTimeout(() => { isPopupAktif = false; }, 500);
+        
         submitExam(true);
       }
     }, 1000);
   }
 
-  // --- KALKULATOR TOGGLE ---
   function toggleDesmos() {
     const modal = document.getElementById('modalDesmos');
     modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
@@ -422,38 +553,26 @@
   // --- PENGUMPULAN & PARSING JAWABAN ---
   async function submitExam(isForced = false) {
     if (!isForced) {
-      if(!confirm("Anda yakin ingin mengumpulkan ujian sekarang?")) return;
+      isPopupAktif = true;
+      const userKonfirm = confirm("Anda yakin ingin mengakhiri dan mengumpulkan ujian sekarang?");
+      setTimeout(() => { isPopupAktif = false; }, 500);
+      
+      if(!userKonfirm) return;
     }
 
     clearInterval(timerId);
-    document.getElementById('btnSubmit').innerText = "Mengenknripsi & Mengirim...";
+    clearInterval(autoSaveId);
+    document.getElementById('btnSubmit').innerText = "Mengenkripsi & Mengirim...";
     document.getElementById('btnSubmit').disabled = true;
+    document.getElementById('btnSave').style.display = 'none';
 
-    // Parsing struktur FormData yang cerdas agar sesuai dengan struktur Auto-Grading Apps Script
-    const formData = new FormData(document.getElementById('examForm'));
-    let jawabanSiswa = {};
+    const jawabanSiswa = ekstrakJawabanSaatIni();
 
-    bankSoal.forEach(soal => {
-      if (soal.tipe === 'MCQ' || soal.tipe === 'VISUAL') {
-        jawabanSiswa[soal.id] = formData.get(`ans_${soal.id}`) || "";
-      } 
-      else if (soal.tipe === 'MCMA') {
-        jawabanSiswa[soal.id] = formData.getAll(`ans_${soal.id}`); // Mengembalikan Array
-      } 
-      else if (soal.tipe === 'TF_TABLE' || soal.tipe === 'MATCHING') {
-        let subAns = {};
-        let items = soal.tipe === 'TF_TABLE' ? soal.opsi : soal.opsi.premis;
-        items.forEach(item => {
-          subAns[item.id] = formData.get(`ans_${soal.id}_${item.id}`) || "";
-        });
-        jawabanSiswa[soal.id] = subAns; // Mengembalikan Object JSON
-      }
-    });
-
+    // Pastikan format ISO string untuk server
     const payload = {
       nama: sesi.nama,
       kelas: sesi.kelas,
-      waktuMulai: sesi.mulai,
+      waktuMulai: new Date(sesi.mulai).toISOString(),
       waktuSelesai: new Date().toISOString(),
       jawaban: jawabanSiswa,
       pelanggaran: sesi.pelanggaran
@@ -465,6 +584,10 @@
         body: JSON.stringify(payload)
       });
       const data = await res.json();
+      
+      // Kunci akses ujian di Local Storage agar tidak bisa masuk lagi
+      const storageKey = 'exam_data_' + sesi.nama.replace(/\s+/g, '_');
+      simpanStateInternal(storageKey, jawabanSiswa, true);
       
       // Tampilkan Hasil
       document.getElementById('screen-exam').classList.remove('active');
@@ -479,9 +602,13 @@
       }
 
     } catch (err) {
+      isPopupAktif = true;
       alert("Terjadi kesalahan jaringan saat mengirim data. Jawaban Anda aman, mohon panggil guru Anda (Error Code: NWT-01).");
+      setTimeout(() => { isPopupAktif = false; }, 500);
+      
       document.getElementById('btnSubmit').innerText = "Coba Kirim Ulang";
       document.getElementById('btnSubmit').disabled = false;
+      document.getElementById('btnSave').style.display = 'inline-block';
     }
   }
 </script>
