@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="jv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khutbah Jum'at: Peringatan Maulid Nabi</title>
+    
+    <!-- Import Font Premium saking Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variabel Warna Kagem Light Mode (Nyaman & Elegan) */
+        :root {
+            --bg-body: #F5F5F0; 
+            --bg-container: #FFFFFF;
+            --text-main: #2D3748;
+            --text-arabic: #1A202C;
+            --text-muted: #718096;
+            --accent: #065F46; /* Ijo NU / Islami */
+            --border-color: #E2E8F0;
+        }
+
+        /* Variabel Warna Kagem Dark Mode (Layar AMOLED Redmi Note 10s) */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #000000; /* Pure black kagem AMOLED */
+                --bg-container: #121212;
+                --text-main: #E2E8F0;
+                --text-arabic: #F7FAFC;
+                --text-muted: #A0AEC0;
+                --accent: #4FD1C5;
+                --border-color: #2D3748;
+            }
+        }
+
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Lora', serif; /* Font Serif kagem kenyamanan maca dangu */
+            line-height: 1.8;
+            font-size: 17px; /* Ukuran ideal kagem HP */
+            -webkit-font-smoothing: antialiased;
+            padding: 15px 10px;
+        }
+
+        .container {
+            max-width: 100%;
+            background: var(--bg-container);
+            padding: 25px 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 1.4rem;
+            color: var(--accent);
+            text-align: center;
+            line-height: 1.3;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-family: system-ui, sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: system-ui, sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-align: center;
+            margin: 30px 0 15px;
+            padding: 5px 15px;
+            background: rgba(6, 95, 70, 0.05);
+            border-radius: 8px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .section-title { background: rgba(79, 209, 197, 0.1); }
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Style Kusus Teks Arab */
+        .arabic {
+            font-family: 'Amiri', serif;
+            font-size: 24px;
+            line-height: 2.2;
+            color: var(--text-arabic);
+            text-align: right;
+            direction: rtl;
+            margin: 20px 0;
+        }
+
+        /* Style Kusus Terjemahan / Ayat */
+        .terjemah {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            border-left: 3px solid var(--accent);
+            padding-left: 15px;
+            margin-top: -5px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .poin-penting {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            color: var(--border-color);
+            letter-spacing: 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Khutbah Jum'at Basa Jawi</h1>
+    <div class="subtitle">Tema: Peringatan Maulid Nabi</div>
+
+    <div class="section-title">KHUTBAH KAPISEPISAN</div>
+
+    <div class="arabic">
+        اَلْحَمْدُ لِلّٰهِ. اَلْحَمْدُ لِلّٰهِ الَّذِيْ أَرْسَلَ رَسُوْلَهُ بِالْهُدَى وَدِيْنِ الْحَقِّ لِيُظْهِرَهُ عَلَى الدِّيْنِ كُلِّهِ. أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللهُ وَحْدَهُ لَاشَرِيْكَ لَهُ، وَأَشْهَدُ أَنَّ سَيِّدَنَا مُحَمَّدًا عَبْدُهُ وَرَسُوْلُهُ، اَلْمَبْعُوْثُ رَحْمَةً لِّلْعَالَمِيْنَ. اَللّٰهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ، وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِيْنَ.
+        <br>
+        أَمَّا بَعْدُ، فَيَا أَيُّهَا الْحَاضِرُوْنَ، اِتَّقُوا اللهَ حَقَّ تُقَاتِهِ وَلَا تَمُوْتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُوْنَ.
+    </div>
+
+    <p><strong>Jamaah Jum’ah ingkang dipun mulyakaken dening Allah SWT,</strong></p>
+    
+    <p>Ing dinten sayyidul aiyyam ingkang kebak barokah menika, khatib tansah wasiat dhumateng dhiri pribadi lan ugi dhumateng para jamaah sedaya: Mangga kita sesarengan ningkataken iman lan taqwa dhumateng ngarsa dalem Allah SWT. Taqwa ingkang sejati, inggih menika nindakaken sedaya dhawuh-Ipun lan nilaraken sedaya awisan-Ipun, supados kita manggih kawilujengan ing donya dumugi akhirat.</p>
+
+    <p>Langkung rumiyin, mangga kita ngunjukaken raos syukur dhumateng Allah SWT, dene ing wekdal menika kita sampun mlebet ing wulan Rabi'ul Awal, utawi ingkang asring kita sebat wulan Mulud. Wulan ingkang kebak sajarah lan kabingahan kagem umat Islam ing saindhenging jagad. Awit ing wulan menika, sampun miyos panutan kita, kekasihing Allah, inggih menika Kanjeng Nabi Agung Muhammad SAW.</p>
+
+    <p><strong>Hadirin jamaah Jum’ah rahimakumullah,</strong></p>
+
+    <p>Miyosipun Kanjeng Nabi Muhammad SAW wonten ing alam donya menika minangka rahmat kagem alam semesta. Kangge mengeti wulan Maulid menika, para ulama lan kiai kita asring paring piwulang supados kita ngawontenaken pangaosan, maos Diba', Barzanji, utawi Simtudduror. Menika sedaya mboten sanes minangka wujud <em>mahabbah</em>, wujud raos tresna kita dhumateng Kanjeng Nabi.</p>
+
+    <p>Nanging, raos tresna menika mboten cekap namung kawedhar ing lisan kemawon. Tresna ingkang sejati kedah dipun wujudaken lumantar tumindak, inggih menika kersa nuladha (nyonto) akhlakipun Kanjeng Nabi wonten ing padintenan.</p>
+
+    <p>Allah SWT sampun paring dhawuh wonten ing Al-Qur'an, Surat Al-Ahzab ayat 21:</p>
+
+    <div class="arabic">
+        لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ لِمَنْ كَانَ يَرْجُو اللَّهَ وَالْيَوْمَ الْآخِرَ وَذَكَرَ اللَّهَ كَثِيرًا
+    </div>
+    
+    <div class="terjemah">
+        "Satemene wis ana ing (dhiri) utusane Allah (Muhammad) iku tuladha kang becik tumprap sira kabeh, (yaiku) tumprap wong kang ngarep-arep (rahmat) Allah lan (kabehjaan) ing dina kiyamat sarta akeh anggone dzikir marang Allah."
+    </div>
+
+    <p><strong>Jamaah Jum’ah ingkang minulya,</strong></p>
+    
+    <p>Menapa kemawon akhlakipun Kanjeng Nabi ingkang saged kita tuladha ing jaman sapunika?</p>
+
+    <p><span class="poin-penting">Ingkang kapisan,</span> Kanjeng Nabi menika priyantun ingkang jujur lan saged dipun pitados (Al-Amin). Wonten ing pundi kemawon kita gesang, dados menapa kemawon pedamelan kita, sipat jujur lan amanah menika kedah dipun jagi. Pedamelan ingkang dipun tindakaken kanthi jujur badhe mbekta barokah dhumateng rejeki lan keluarga kita.</p>
+
+    <p><span class="poin-penting">Ingkang kaping kalih,</span> Kanjeng Nabi menika lembah manah lan mboten nate duka amargi urusan pribadi. Panjenenganipun tansah ngajeni dhumateng tiyang sepuh, welas asih dhumateng lare alit, lan grapyak dhumateng tanggi teparo. Wonten ing gesang bebrayan ing masarakat, mangga dipun jagi karukunan. Menawi wonten benten pamanggih, mangga dipun rembag kanthi sae.</p>
+
+    <p><span class="poin-penting">Ingkang kaping tiga,</span> Kanjeng Nabi menika utusan ingkang nggadhahi sipat pemaaf (gampil paring pangapura). Panjenenganipun asring dipun pitenah, dipun balang watu, nanging malah mbales kanthi pandonga ingkang sae. Ampun gampil nesu, ampun gampil mutus tali silaturahmi namung amargi prekawis donya ingkang sepele.</p>
+
+    <p>Pramila, ing wulan Maulid menika, mangga kita dadosaken momentum kagem <em>muhasabah</em>. Sampun sepinten anggen kita nuladha akhlakipun Kanjeng Nabi? Mangga kita tingkataken anggen kita shalat jamaah, tumindak sae dhateng sesami, sarta kita tingkataken anggen kita maos shalawat.</p>
+
+    <div class="arabic">
+        بَارَكَ اللهُ لِيْ وَلَكُمْ فِيْ اْلقُرْآنِ اْلعَظِيْمِ، وَنَفَعَنِيْ وَإِيَّاكُمْ بِمَا فِيْهِ مِنَ اْلآيَاتِ وَالذِّكْرِ الْحَكِيْمِ. وَتَقَبَّلَ مِنِّيْ وَمِنْكُمْ تِلاَوَتَهُ إِنَّهُ هُوَ السَّمِيْعُ اْلعَلِيْمُ. وَقُلْ رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِيْنَ.
+    </div>
+
+    <div class="divider">•••</div>
+    <div style="text-align: center; font-style: italic; font-size: 0.9rem; color: var(--text-muted); margin-top:-20px; margin-bottom: 20px;">
+        (Khatib lenggah sekedhap sadarurunge mimpin Khutbah kaping kalih)
+    </div>
+
+    <div class="section-title">KHUTBAH KAPING KALIH</div>
+
+    <div class="arabic">
+        اَلْحَمْدُ لِلّٰهِ حَمْدًا كَثِيْرًا كَمَا أَمَرَ. أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيْكَ لَهُ، وَأَشْهَدُ أَنَّ سَيِّدَنَا مُحَمَّدًا عَبْدُهُ وَرَسُوْلُهُ. اَللّٰهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَأَصْحَابِهِ أَجْمَعِيْنَ.<br>
+        أَمَّا بَعْدُ، فَيَا عِبَادَ اللهِ، اِتَّقُوا اللهَ حَقَّ تُقَاتِهِ وَلَا تَمُوْتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُوْنَ.
+    </div>
+
+    <p><strong>Hadirin Jamaah Jum’ah ingkang minulya,</strong></p>
+
+    <p>Wonten ing khutbah kaping kalih menika, mangga kita ngathah-ngathahaken maos shalawat dhumateng Kanjeng Nabi Muhammad SAW, kados dhawuhipun Allah SWT:</p>
+
+    <div class="arabic">
+        إِنَّ اللهَ وَمَلَائِكَتَهُ يُصَلُّوْنَ عَلَى النَّبِيِّ، يَا أَيُّهَا الَّذِيْنَ آمَنُوْا صَلُّوْا عَلَيْهِ وَسَلِّمُوْا تَسْلِيْمًا.<br>
+        اَللّٰهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِ سَيِّدِنَا مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى سَيِّدِنَا إِبْرَاهِيْمَ وَعَلَى آلِ سَيِّدِنَا إِبْرَاهِيْمَ، فِيْ الْعَالَمِيْنَ إِنَّكَ حَمِيْدٌ مَجِيْدٌ.<br><br>
+        اَللّٰهُمَّ اغْفِرْ لِلْمُسْلِمِيْنَ وَالْمُسْلِمَاتِ، وَالْمُؤْمِنِيْنَ وَالْمُؤْمِنَاتِ، اَلْأَحْيَاءِ مِنْهُمْ وَالْأَمْوَاتِ.
+    </div>
+    
+    <div class="terjemah">
+        (Duh Allah, mugi Paduka paring pangapunten dhumateng kaum muslimin lan muslimat, mukminin lan mukminat, ingkang taksih gesang menapa dene ingkang sampun seda).
+    </div>
+
+    <div class="arabic">
+        اَللّٰهُمَّ ارْزُقْنَا مَحَبَّةَ نَبِيِّكَ مُحَمَّدٍ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ، وَاجْعَلْنَا مِمَّنْ يَتَّبِعُ سُنَّتَهُ وَيَقْتَدِي بِأَخْلَاقِهِ.
+    </div>
+
+    <div class="terjemah">
+        (Duh Allah, mugi Paduka paring rizki awujud raos tresna dhumateng Nabi Muhammad SAW, lan mugi Paduka dadosaken kawula kalebet golonganipun tiyang ingkang ndherek sunnahipun sarta nuladha akhlakipun).
+    </div>
+
+    <div class="arabic">
+        رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.<br><br>
+        عِبَادَ اللهِ، إِنَّ اللهَ يَأْمُرُ بِالْعَدْلِ وَالْإِحْسَانِ وَإِيْتَاءِ ذِي الْقُرْبَىٰ وَيَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنْكَرِ وَالْبَغْيِ ۚ يَعِظُكُمْ لَعَلَّكُمْ تَذَكَّرُوْنَ. فَاذْكُرُوا اللهَ الْعَظِيْمَ يَذْكُرْكُمْ، وَاشْكُرُوْهُ عَلَى نِعَمِهِ يَزِدْكُمْ، وَلَذِكْرُ اللهِ أَكْبَرُ.
+    </div>
+</div>
+
+</body>
+</html>
