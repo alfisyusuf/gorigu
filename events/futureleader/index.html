@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karcis Parkir - Future Leader Program</title>
+    <style>
+        :root {
+            /* Ukuran persis 10x5 cm per karcis */
+            --ticket-width: 10cm;
+            --ticket-height: 5cm;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+
+        /* Container untuk layout grid 2 kolom (Kertas A4 muat 2 kolom x 5 baris) */
+        .ticket-container {
+            display: grid;
+            grid-template-columns: repeat(2, var(--ticket-width));
+            background: white;
+        }
+
+        /* Styling Karcis */
+        .ticket {
+            width: var(--ticket-width);
+            height: var(--ticket-height);
+            box-sizing: border-box;
+            border: 1px dashed #000;
+            display: flex;
+            flex-direction: row;
+            background: white;
+            page-break-inside: avoid; /* Mencegah karcis terpotong antar halaman */
+            position: relative;
+        }
+
+        /* Area Informasi (Kiri) */
+        .ticket-left {
+            flex: 1;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 2px dashed #000; /* Garis potong/sobek */
+        }
+
+        /* Area Nomor (Kanan) */
+        .ticket-right {
+            width: 3.5cm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9f9f9;
+        }
+
+        /* Tipografi */
+        .header-parkir {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .header-parkir svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .event-title {
+            font-size: 16px;
+            font-weight: 900;
+            margin: 0;
+            line-height: 1.1;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .school-name {
+            font-size: 10px;
+            margin: 4px 0 0 0;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .details {
+            font-size: 9px;
+            margin-top: auto;
+            color: #000;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #000;
+            padding-top: 4px;
+        }
+
+        .label-no {
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .ticket-number {
+            font-size: 32px;
+            font-weight: 900;
+            color: #000;
+            font-family: monospace;
+        }
+
+        /* Pengaturan Khusus Print */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+                margin: 0;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 0.5cm; 
+            }
+            .controls {
+                display: none !important; /* Sembunyikan tombol saat diprint */
+            }
+            .ticket-container {
+                box-shadow: none;
+                gap: 0;
+            }
+            .ticket-right {
+                background-color: transparent !important;
+                -webkit-print-color-adjust: exact; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <h2>Sistem Cetak Karcis Parkir</h2>
+        <p>Total: 250 Karcis | Ukuran: 10x5 cm</p>
+        <button onclick="window.print()">🖨️ Print Karcis (001 - 250)</button>
+    </div>
+
+    <div class="ticket-container" id="ticket-container">
+        <!-- Karcis akan di-generate otomatis oleh JavaScript di sini -->
+    </div>
+
+    <script>
+        const container = document.getElementById('ticket-container');
+        const totalTickets = 250;
+
+        // Ikon Parkir (P) SVG
+        const iconParkir = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9 17V7h4a3 3 0 0 1 0 6H9"></path></svg>`;
+
+        let htmlContent = '';
+
+        for (let i = 1; i <= totalTickets; i++) {
+            // Format angka menjadi 3 digit (001, 002, dst)
+            const noUrut = String(i).padStart(3, '0');
+            
+            htmlContent += `
+                <div class="ticket">
+                    <div class="ticket-left">
+                        <div class="header-parkir">
+                            ${iconParkir} Karcis Parkir
+                        </div>
+                        <p class="event-title">Future Leader<br>Program</p>
+                        <p class="school-name">SMA ABBS Surakarta</p>
+                        <div class="details">
+                            <span>📍 Taman Balekambang</span>
+                            <span>📅 22 Agustus 2026</span>
+                        </div>
+                    </div>
+                    <div class="ticket-right">
+                        <span class="label-no">No. Urut</span>
+                        <span class="ticket-number">${noUrut}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Masukkan semua HTML ke dalam container
+        container.innerHTML = htmlContent;
+    </script>
+
+</body>
+</html>
