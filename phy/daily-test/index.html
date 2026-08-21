@@ -96,6 +96,18 @@
 
   .status-badge { display: inline-block; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 0.85rem; margin-top: 10px; }
   .status-danger { background: #FEE2E2; color: var(--danger); }
+
+    /* Autocomplete Dropdown */
+    .input-wrapper { position: relative; text-align: left; margin-bottom: 16px; }
+    .suggestion-box {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    max-height: 200px; overflow-y: auto; z-index: 100;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15); display: none; margin-top: 8px;
+    }
+    .suggestion-item { padding: 14px 16px; border-bottom: 1px solid var(--bg); cursor: pointer; transition: 0.2s; font-size: 0.95rem; }
+    .suggestion-item:hover { background: var(--primary-light); color: var(--primary); padding-left: 20px; }
+    .suggestion-item:last-child { border-bottom: none; }
 </style>
 </head>
 <body>
@@ -121,10 +133,14 @@
   <!-- LOGIN SCREEN -->
   <div id="screen-login" class="screen card" style="max-width: 500px; margin: 0 auto; text-align: center;">
     <h2 style="margin-bottom: 8px;">Autentikasi Siswa</h2>
-    <p style="color: var(--text-muted); margin-bottom: 24px;">Masukkan data diri Anda untuk memulai.</p>
+    <p style="color: var(--text-muted); margin-bottom: 24px;">Ketik dan pilih nama Anda dari daftar untuk memulai.</p>
     
-    <input type="text" id="inputNama" placeholder="Nama Lengkap">
-    <input type="text" id="inputKelas" placeholder="Kelas (Contoh: XII 6)">
+    <div class="input-wrapper">
+      <input type="text" id="inputNama" placeholder="Ketik nama Anda di sini..." autocomplete="off" style="margin-bottom: 0;">
+      <div id="suggestionBox" class="suggestion-box"></div>
+    </div>
+    
+    <input type="text" id="inputKelas" placeholder="Kelas akan terisi otomatis" disabled style="background-color: #F8FAFC; color: var(--text-muted); cursor: not-allowed;">
     
     <div style="text-align: left; background: #FFFBEB; border: 1px solid #FCD34D; padding: 16px; border-radius: 12px; margin-bottom: 24px; font-size: 0.9rem;">
       <strong>⚠️ Protokol Integritas Aktif</strong><br>
@@ -186,9 +202,14 @@
   // --- INITIAL LOAD ---
   window.onload = async () => {
     try {
-      // Mengambil soal dari server
-      const res = await fetch(API_URL + "?action=getSoal");
-      bankSoal = await res.json();
+      // Menarik data Soal dan daftar Siswa secara bersamaan
+      const [resSoal, resSiswa] = await Promise.all([
+        fetch(API_URL + "?action=getSoal"),
+        fetch(API_URL + "?action=getSiswa")
+      ]);
+      
+      bankSoal = await resSoal.json();
+      dataSiswaBank = await resSiswa.json();
       
       document.getElementById('screen-loading').classList.remove('active');
       document.getElementById('screen-login').classList.add('active');
@@ -196,6 +217,48 @@
       document.getElementById('screen-loading').innerHTML = `<h2>❌ Gagal Menghubungkan Server</h2><p>Pastikan URL API benar dan koneksi internet stabil.</p>`;
     }
   };
+
+  // --- LOGIC AUTOCOMPLETE SISWA ---
+  const inputNama = document.getElementById('inputNama');
+  const inputKelas = document.getElementById('inputKelas');
+  const suggestBox = document.getElementById('suggestionBox');
+
+  inputNama.addEventListener('input', function() {
+    const val = this.value.toLowerCase();
+    suggestBox.innerHTML = '';
+    
+    if (!val) { 
+      suggestBox.style.display = 'none'; 
+      inputKelas.value = ""; // Reset kelas jika nama dihapus
+      return; 
+    }
+
+    const filter = dataSiswaBank.filter(s => s.nama.toLowerCase().includes(val));
+    if (filter.length > 0) {
+      suggestBox.style.display = 'block';
+      filter.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'suggestion-item';
+        div.innerHTML = `<strong>${s.nama}</strong> <span style="color:var(--text-muted); font-size:0.85em;">- ${s.kelas}</span>`;
+        div.onclick = () => {
+          inputNama.value = s.nama;       // Isi otomatis Nama
+          inputKelas.value = s.kelas;     // Isi otomatis Kelas
+          suggestBox.style.display = 'none'; // Sembunyikan dropdown
+        };
+        suggestBox.appendChild(div);
+      });
+    } else {
+      suggestBox.style.display = 'none';
+      inputKelas.value = "";
+    }
+  });
+
+  // Menyembunyikan dropdown jika siswa mengklik di luar area input
+  document.addEventListener('click', function(e) {
+    if (e.target !== inputNama && e.target !== suggestBox) {
+      suggestBox.style.display = 'none';
+    }
+  });
 
   // --- LOGIC MULAI UJIAN ---
   function mulaiUjian() {
