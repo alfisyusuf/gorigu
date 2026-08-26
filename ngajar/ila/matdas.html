@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembahasan Interaktif - Soal Math Das</title>
+    
+    <!-- Tailwind CSS (via CDN untuk file statis) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax untuk render format Matematika -->
+    <script>
+      MathJax = {
+        tex: { inlineMath: [['\\(', '\\)']] },
+        startup: { typeset: false }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #f0fdf4; /* Hijau super muda yang segar */
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .step-item {
+            display: none;
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col items-center py-10 px-4">
+
+    <!-- Header -->
+    <header class="text-center mb-10">
+        <h1 class="text-3xl md:text-4xl font-bold text-emerald-700 mb-2">Pembahasan Interaktif</h1>
+        <p class="text-emerald-600 font-medium">Referensi: Soal Math Das.pdf</p>
+    </header>
+
+    <!-- Main Card Container -->
+    <main class="bg-white w-full max-w-3xl rounded-2xl shadow-xl shadow-emerald-900/5 overflow-hidden border border-emerald-100">
+        
+        <!-- Progress Bar -->
+        <div class="bg-emerald-50 w-full h-2">
+            <div id="progress-bar" class="bg-emerald-500 h-2 transition-all duration-300" style="width: 0%"></div>
+        </div>
+
+        <div class="p-6 md:p-10">
+            <!-- Question Header -->
+            <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                <span id="question-category" class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider rounded-full">Kategori</span>
+                <span id="question-counter" class="text-slate-400 font-medium text-sm">Soal 1 dari 15</span>
+            </div>
+
+            <!-- Question Content -->
+            <div class="min-h-[120px] flex items-center justify-center mb-8">
+                <h2 id="question-text" class="text-2xl md:text-3xl font-semibold text-center w-full">
+                    <!-- Pertanyaan akan di-render di sini -->
+                </h2>
+            </div>
+
+            <!-- Steps Container -->
+            <div id="steps-container" class="space-y-4 mb-8 min-h-[150px]">
+                <!-- Langkah-langkah penyelesaian muncul bertahap di sini -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3 justify-center border-t border-slate-100 pt-6">
+                <button id="btn-prev" class="px-5 py-2.5 rounded-xl font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    &larr; Sebelumnya
+                </button>
+                <button id="btn-show-step" class="px-6 py-2.5 rounded-xl font-semibold text-white bg-emerald-500 hover:bg-emerald-600 shadow-md shadow-emerald-500/30 transition flex-1 sm:flex-none">
+                    Tampilkan Langkah
+                </button>
+                <button id="btn-next" class="px-5 py-2.5 rounded-xl font-semibold text-white bg-slate-800 hover:bg-slate-900 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    Selanjutnya &rarr;
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Database Soal & Pembahasan
+        const mathData = [
+            // Bagian 1: Calculate it without use calculator!
+            {
+                category: "Aritmatika Dasar",
+                question: "\\( 25 + 18 - 7 \\times 4 = \\dots \\)",
+                steps: [
+                    "Kerjakan operasi perkalian terlebih dahulu: \\( 7 \\times 4 = 28 \\)",
+                    "Substitusikan kembali: \\( 25 + 18 - 28 \\)",
+                    "Lakukan penjumlahan dan pengurangan dari kiri ke kanan.",
+                    "\\( 43 - 28 = 15 \\)",
+                    "**Jawaban Akhir: 15**"
+                ]
+            },
+            {
+                category: "Pecahan",
+                question: "\\( \\frac{3}{4} + \\frac{5}{6} - \\frac{2}{3} = \\dots \\)",
+                steps: [
+                    "Samakan penyebutnya. KPK dari 4, 6, dan 3 adalah 12.",
+                    "Ubah pecahan: \\( \\frac{3 \\times 3}{12} + \\frac{5 \\times 2}{12} - \\frac{2 \\times 4}{12} \\)",
+                    "\\( \\frac{9}{12} + \\frac{10}{12} - \\frac{8}{12} \\)",
+                    "Jumlahkan pembilangnya: \\( 9 + 10 - 8 = 11 \\)",
+                    "**Jawaban Akhir: \\( \\frac{11}{12} \\)**"
+                ]
+            },
+            {
+                category: "Pecahan",
+                question: "\\( 10 \\times \\frac{8}{6} = \\dots \\)",
+                steps: [
+                    "Sederhanakan pecahan \\( \\frac{8}{6} \\) menjadi \\( \\frac{4}{3} \\)",
+                    "Kalikan dengan 10: \\( 10 \\times \\frac{4}{3} \\)",
+                    "\\( = \\frac{40}{3} \\)",
+                    "Ubah ke pecahan campuran (opsional): \\( 13\\frac{1}{3} \\)",
+                    "**Jawaban Akhir: \\( \\frac{40}{3} \\) atau \\( 13\\frac{1}{3} \\)**"
+                ]
+            },
+            {
+                category: "Desimal",
+                question: "\\( \\frac{2,4 \\times 0,05}{0,003} = \\dots \\)",
+                steps: [
+                    "Kalikan pembilangnya terlebih dahulu: \\( 2,4 \\times 0,05 = 0,12 \\)",
+                    "Substitusikan: \\( \\frac{0,12}{0,003} \\)",
+                    "Untuk menghilangkan desimal, kalikan pembilang dan penyebut dengan 1000.",
+                    "\\( \\frac{0,12 \\times 1000}{0,003 \\times 1000} = \\frac{120}{3} \\)",
+                    "**Jawaban Akhir: 40**"
+                ]
+            },
+            {
+                category: "Eksponen",
+                question: "\\( 4 \\times 10^5 + 3 \\times 10^4 = \\dots \\)",
+                steps: [
+                    "Ubah eksponen menjadi nilai sebenarnya.",
+                    "\\( 10^5 = 100.000 \\Rightarrow 4 \\times 10^5 = 400.000 \\)",
+                    "\\( 10^4 = 10.000 \\Rightarrow 3 \\times 10^4 = 30.000 \\)",
+                    "Jumlahkan keduanya: \\( 400.000 + 30.000 = 430.000 \\)",
+                    "**Jawaban Akhir: 430.000 (atau \\( 4,3 \\times 10^5 \\))**"
+                ]
+            },
+            {
+                category: "Pecahan Kompleks",
+                question: "\\( \\frac{\\frac{5}{3}}{4} = \\dots \\)", // Catatan: Typo 'circ' diasumsikan angka 5
+                steps: [
+                    "*Catatan: Simbol '◦' pada soal asli diasumsikan sebagai angka 5.*",
+                    "Membagi dengan 4 sama dengan mengalikan dengan kebalikannya, yaitu \\( \\frac{1}{4} \\).",
+                    "\\( = \\frac{5}{3} \\times \\frac{1}{4} \\)",
+                    "Kalikan pembilang dengan pembilang, penyebut dengan penyebut.",
+                    "**Jawaban Akhir: \\( \\frac{5}{12} \\)**"
+                ]
+            },
+            {
+                category: "Aritmatika Dasar",
+                question: "\\( \\frac{243}{8} = \\dots \\)",
+                steps: [
+                    "Lakukan pembagian biasa (porogapit).",
+                    "\\( 240 \\div 8 = 30 \\), tersisa 3.",
+                    "Sisa 3 dibagi 8 adalah \\( \\frac{3}{8} \\).",
+                    "Dalam bentuk desimal: \\( \\frac{3}{8} = 0,375 \\)",
+                    "**Jawaban Akhir: \\( 30\\frac{3}{8} \\) atau 30,375**"
+                ]
+            },
+            {
+                category: "Eksponen",
+                question: "\\( \\frac{3^4 \\times 9^2}{27^2} = \\dots \\)",
+                steps: [
+                    "Ubah semua basis menjadi 3.",
+                    "\\( 9^2 = (3^2)^2 = 3^4 \\)",
+                    "\\( 27^2 = (3^3)^2 = 3^6 \\)",
+                    "Substitusikan kembali ke persamaan: \\( \\frac{3^4 \\times 3^4}{3^6} \\)",
+                    "Sifat perkalian eksponen (pangkat dijumlah): \\( \\frac{3^8}{3^6} \\)",
+                    "Sifat pembagian eksponen (pangkat dikurang): \\( 3^{8-6} = 3^2 \\)",
+                    "**Jawaban Akhir: 9**"
+                ]
+            },
+            {
+                category: "Persentase",
+                question: "\\( 20\\% \\times 500 = \\dots \\)",
+                steps: [
+                    "Ubah persentase menjadi pecahan: \\( 20\\% = \\frac{20}{100} = \\frac{1}{5} \\)",
+                    "Kalikan dengan 500: \\( \\frac{1}{5} \\times 500 \\)",
+                    "\\( = \\frac{500}{5} \\)",
+                    "**Jawaban Akhir: 100**"
+                ]
+            },
+            {
+                category: "Bentuk Akar",
+                question: "\\( \\frac{\\sqrt{50}}{\\sqrt{2}} + \\sqrt{25} = \\dots \\)",
+                steps: [
+                    "Gabungkan akar pada pembagian: \\( \\frac{\\sqrt{50}}{\\sqrt{2}} = \\sqrt{\\frac{50}{2}} = \\sqrt{25} \\)",
+                    "Substitusikan nilai akar: \\( \\sqrt{25} = 5 \\)",
+                    "Persamaan menjadi: \\( 5 + 5 \\)",
+                    "**Jawaban Akhir: 10**"
+                ]
+            },
+            // Bagian 2: Find the value of x
+            {
+                category: "Aljabar - Persamaan Linear",
+                question: "Cari nilai x: \\( 12x + 10 = 70 \\)",
+                steps: [
+                    "Pindahkan 10 ke ruas kanan (kurangi kedua ruas dengan 10).",
+                    "\\( 12x = 70 - 10 \\)",
+                    "\\( 12x = 60 \\)",
+                    "Bagi kedua ruas dengan 12.",
+                    "\\( x = \\frac{60}{12} \\)",
+                    "**Jawaban Akhir: \\( x = 5 \\)**"
+                ]
+            },
+            {
+                category: "Aljabar - Persamaan Linear",
+                question: "Cari nilai x: \\( \\frac{x}{3} + \\frac{x}{6} = 9 \\)",
+                steps: [
+                    "Samakan penyebut di ruas kiri menjadi 6.",
+                    "\\( \\frac{2x}{6} + \\frac{x}{6} = 9 \\)",
+                    "Gabungkan pembilang: \\( \\frac{3x}{6} = 9 \\)",
+                    "Sederhanakan pecahan: \\( \\frac{x}{2} = 9 \\)",
+                    "Kalikan silang: \\( x = 9 \\times 2 \\)",
+                    "**Jawaban Akhir: \\( x = 18 \\)**"
+                ]
+            },
+            {
+                category: "Aljabar - Persamaan Linear",
+                question: "Cari nilai x: \\( \\frac{2x - 3}{5} = \\frac{x + 4}{3} \\)",
+                steps: [
+                    "Lakukan perkalian silang (cross-multiplication).",
+                    "\\( 3(2x - 3) = 5(x + 4) \\)",
+                    "Jabarkan (distribusi): \\( 6x - 9 = 5x + 20 \\)",
+                    "Kumpulkan variabel \\( x \\) di satu sisi dan konstanta di sisi lain.",
+                    "\\( 6x - 5x = 20 + 9 \\)",
+                    "**Jawaban Akhir: \\( x = 29 \\)**"
+                ]
+            },
+            {
+                category: "Aljabar - Persamaan Rasional",
+                question: "Cari nilai x: \\( \\frac{1}{x} + \\frac{1}{2x} = \\frac{3}{4} \\)",
+                steps: [
+                    "Samakan penyebut di ruas kiri menjadi \\( 2x \\).",
+                    "\\( \\frac{2}{2x} + \\frac{1}{2x} = \\frac{3}{4} \\)",
+                    "Gabungkan: \\( \\frac{3}{2x} = \\frac{3}{4} \\)",
+                    "Lakukan perkalian silang: \\( 3 \\times 4 = 3 \\times 2x \\)",
+                    "\\( 12 = 6x \\)",
+                    "\\( x = \\frac{12}{6} \\)",
+                    "**Jawaban Akhir: \\( x = 2 \\)**"
+                ]
+            },
+            {
+                category: "Aljabar - Persamaan Kuadrat",
+                question: "Cari nilai x: \\( 3x^2 = 75 \\)",
+                steps: [
+                    "Bagi kedua ruas dengan 3.",
+                    "\\( x^2 = \\frac{75}{3} \\)",
+                    "\\( x^2 = 25 \\)",
+                    "Akarkan kedua ruas. Ingat bahwa hasil akar bisa bernilai positif maupun negatif.",
+                    "\\( x = \\pm\\sqrt{25} \\)",
+                    "**Jawaban Akhir: \\( x = 5 \\) atau \\( x = -5 \\)**"
+                ]
+            }
+        ];
+
+        let currentIndex = 0;
+        let currentStepIndex = 0;
+
+        // Elemen DOM
+        const elCategory = document.getElementById('question-category');
+        const elCounter = document.getElementById('question-counter');
+        const elQuestion = document.getElementById('question-text');
+        const elStepsContainer = document.getElementById('steps-container');
+        const elProgressBar = document.getElementById('progress-bar');
+        
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const btnShowStep = document.getElementById('btn-show-step');
+
+        // Parse markdown ringan untuk bold (**)
+        function parseBold(text) {
+            return text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-emerald-800">$1</strong>');
+        }
+
+        // Render Soal ke Layar
+        async function loadQuestion(index) {
+            const data = mathData[index];
+            currentStepIndex = 0;
+            
+            // Update Header & Progress
+            elCategory.textContent = data.category;
+            elCounter.textContent = `Soal ${index + 1} dari ${mathData.length}`;
+            elProgressBar.style.width = `${((index + 1) / mathData.length) * 100}%`;
+            
+            // Set Pertanyaan
+            elQuestion.innerHTML = data.question;
+            
+            // Bersihkan Container Langkah
+            elStepsContainer.innerHTML = '';
+            
+            // Siapkan Elemen Langkah (Hidden)
+            data.steps.forEach((step, i) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'step-item bg-slate-50 border border-slate-100 p-4 rounded-xl flex gap-4';
+                
+                const stepNum = document.createElement('div');
+                stepNum.className = 'flex-shrink-0 w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm';
+                stepNum.textContent = i + 1;
+                
+                const stepText = document.createElement('div');
+                stepText.className = 'pt-1 text-slate-700';
+                stepText.innerHTML = parseBold(step);
+
+                stepDiv.appendChild(stepNum);
+                stepDiv.appendChild(stepText);
+                elStepsContainer.appendChild(stepDiv);
+            });
+
+            // Update Status Tombol
+            btnPrev.disabled = index === 0;
+            btnNext.disabled = index === mathData.length - 1;
+            updateStepButton();
+
+            // Render MathJax
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                await MathJax.typesetPromise();
+            }
+        }
+
+        // Tampilkan Langkah Satu per Satu
+        function showNextStep() {
+            const steps = document.querySelectorAll('.step-item');
+            if (currentStepIndex < steps.length) {
+                const currentElement = steps[currentStepIndex];
+                currentElement.style.display = 'flex';
+                currentElement.classList.add('fade-in');
+                currentStepIndex++;
+                updateStepButton();
+                
+                // Re-render MathJax untuk elemen baru
+                if (window.MathJax && window.MathJax.typesetPromise) {
+                    MathJax.typesetPromise([currentElement]);
+                }
+            }
+        }
+
+        // Update Label Tombol Langkah
+        function updateStepButton() {
+            const totalSteps = mathData[currentIndex].steps.length;
+            if (currentStepIndex >= totalSteps) {
+                btnShowStep.textContent = "Semua Langkah Terbuka";
+                btnShowStep.disabled = true;
+                btnShowStep.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                btnShowStep.textContent = "Tampilkan Langkah Selanjutnya";
+                btnShowStep.disabled = false;
+                btnShowStep.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // Event Listeners
+        btnShowStep.addEventListener('click', showNextStep);
+        
+        btnNext.addEventListener('click', () => {
+            if (currentIndex < mathData.length - 1) {
+                currentIndex++;
+                loadQuestion(currentIndex);
+            }
+        });
+
+        btnPrev.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadQuestion(currentIndex);
+            }
+        });
+
+        // Inisialisasi Pertama Kali
+        window.addEventListener('load', () => {
+            loadQuestion(currentIndex);
+        });
+
+    </script>
+</body>
+</html>
