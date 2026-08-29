@@ -352,7 +352,8 @@
     <div class="board-frame" id="board-frame">
       <canvas id="board-canvas"></canvas>
       <div class="combo-chip" id="combo-chip">COMBO ×2</div>
-      <div class="overlay" id="overlay">
+      <!-- Perbaikan 1: Menambahkan class 'show' di sini -->
+      <div class="overlay show" id="overlay">
         <h2 id="overlay-title">Siap main?</h2>
         <p id="overlay-text">Geser tombol di bawah untuk bergerak dan putar balok. Tekan mulai untuk main.</p>
         <button class="btn" id="overlay-btn">Mulai</button>
@@ -689,6 +690,7 @@
     player.level = 1;
     player.lines = 0;
     player.combo = 0;
+    dropCounter = 0; // Perbaikan 2: Reset drop counter agar balok tidak langsung jatuh
     dropInterval = 900;
     holdType = null;
     holdUsed = false;
