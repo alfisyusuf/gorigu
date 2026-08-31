@@ -8,24 +8,9 @@
     "durasi_menit": 110,
     "jumlah_soal": 40,
     "komposisi": [
-      {
-        "bentuk": "Pilihan Ganda (MCQ)",
-        "jumlah": 30,
-        "bobot_per_soal": 2,
-        "nomor": "1-30"
-      },
-      {
-        "bentuk": "Pilihan Ganda Kompleks (MCMA)",
-        "jumlah": 6,
-        "bobot_per_soal": 4,
-        "nomor": "31-36"
-      },
-      {
-        "bentuk": "Benar/Salah berstimulus (TF Table)",
-        "jumlah": 4,
-        "bobot_per_soal": "4 (1 per pernyataan)",
-        "nomor": "37-40"
-      }
+      { "bentuk": "Pilihan Ganda (MCQ)", "jumlah": 30, "bobot_per_soal": 2, "nomor": "1-30" },
+      { "bentuk": "Pilihan Ganda Kompleks (MCMA)", "jumlah": 6, "bobot_per_soal": 4, "nomor": "31-36" },
+      { "bentuk": "Benar/Salah berstimulus (TF Table)", "jumlah": 4, "bobot_per_soal": "4 (1 per pernyataan)", "nomor": "37-40" }
     ],
     "skor_maksimum": 100,
     "kalkulator": "Diperbolehkan (kalkulator dasar, non-programmable)",
@@ -49,12 +34,7 @@
       "tingkat_kesukaran": "Mudah",
       "bobot": 2,
       "pertanyaan": "Two point charges, \\( q_1 = +2\\ \\mu C \\) and \\( q_2 = +8\\ \\mu C \\), are separated by a distance of 0.3 m in vacuum. Determine the magnitude of the electrostatic force between them. (\\( k = 9\\times10^{9}\\ \\text{N·m}^2/\\text{C}^2 \\))",
-      "opsi": {
-        "A": "0.16 N",
-        "B": "1.6 N",
-        "C": "16 N",
-        "D": "160 N"
-      },
+      "opsi": { "A": "0.16 N", "B": "1.6 N", "C": "16 N", "D": "160 N", "E": "1600 N" },
       "kunci": "B"
     },
     {
@@ -66,12 +46,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "If both point charges in a Coulomb's Law setup are tripled while the distance between them is doubled, what happens to the magnitude of the electrostatic force?",
-      "opsi": {
-        "A": "It becomes 2.25 times larger.",
-        "B": "It becomes 4.5 times larger.",
-        "C": "It becomes 0.44 times the original value.",
-        "D": "It becomes 9 times larger."
-      },
+      "opsi": { "A": "It becomes 2.25 times larger.", "B": "It becomes 4.5 times larger.", "C": "It becomes 0.44 times the original value.", "D": "It becomes 9 times larger.", "E": "It becomes 1.5 times larger." },
       "kunci": "A"
     },
     {
@@ -82,13 +57,8 @@
       "level_kognitif": "C4",
       "tingkat_kesukaran": "Sulit",
       "bobot": 2,
-      "pertanyaan": "Two point charges, \\( +Q \\) and \\( +4Q \\), are fixed 0.6 m apart along a straight line. At what distance from the \\( +Q \\) charge (measured along the line, between the two charges) must a third charge be placed so that the net electrostatic force acting on it is zero?",
-      "opsi": {
-        "A": "0.1 m",
-        "B": "0.15 m",
-        "C": "0.2 m",
-        "D": "0.3 m"
-      },
+      "pertanyaan": "Two point charges, \\( +Q \\) and \\( +4Q \\), are fixed 0.6 m apart along a straight line.<br><br><div style='text-align:center;'><svg width='300' height='80' viewBox='0 0 300 80'><line x1='50' y1='40' x2='250' y2='40' stroke='#94A3B8' stroke-width='2' stroke-dasharray='4,4'/><circle cx='50' cy='40' r='16' fill='#EF4444'/><text x='50' y='45' fill='white' font-size='14' text-anchor='middle'>+Q</text><circle cx='250' cy='40' r='16' fill='#EF4444'/><text x='250' y='45' fill='white' font-size='14' text-anchor='middle'>+4Q</text><text x='150' y='30' fill='#475569' font-size='12' text-anchor='middle'>d = 0.6 m</text></svg></div><br>At what distance from the \\( +Q \\) charge (measured along the line, between the two charges) must a third charge be placed so that the net electrostatic force acting on it is zero?",
+      "opsi": { "A": "0.1 m", "B": "0.15 m", "C": "0.2 m", "D": "0.3 m", "E": "0.4 m" },
       "kunci": "C"
     },
     {
@@ -99,13 +69,8 @@
       "level_kognitif": "C3",
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
-      "pertanyaan": "Two equal electrostatic forces, each with a magnitude of 10 N, act on a charged particle. The angle between the two forces is \\( 60^{\\circ} \\). Determine the magnitude of the resultant force. (Use \\( \\cos 30^{\\circ} = \\tfrac{1}{2}\\sqrt{3} \\))",
-      "opsi": {
-        "A": "\\( 10\\sqrt{3} \\) N",
-        "B": "10 N",
-        "C": "20 N",
-        "D": "\\( 5\\sqrt{3} \\) N"
-      },
+      "pertanyaan": "Two equal electrostatic forces, each with a magnitude of 10 N, act on a charged particle. The angle between the two forces is \\( 60^{\\circ} \\). Determine the magnitude of the resultant force. (Use \\( \\cos 60^{\\circ} = 0.5 \\))",
+      "opsi": { "A": "\\( 10\\sqrt{3} \\) N", "B": "10 N", "C": "20 N", "D": "\\( 5\\sqrt{3} \\) N", "E": "\\( 20\\sqrt{3} \\) N" },
       "kunci": "A"
     },
     {
@@ -117,12 +82,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "A point charge experiences an electrostatic force of 20 N directed at \\( 37^{\\circ} \\) above the horizontal axis. Determine the magnitude of the horizontal (x) component of this force. (\\( \\sin 37^{\\circ}=0.6,\\ \\cos 37^{\\circ}=0.8 \\))",
-      "opsi": {
-        "A": "12 N",
-        "B": "16 N",
-        "C": "20 N",
-        "D": "24 N"
-      },
+      "opsi": { "A": "12 N", "B": "16 N", "C": "20 N", "D": "24 N", "E": "10 N" },
       "kunci": "B"
     },
     {
@@ -134,12 +94,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "A point charge \\( Q = +5\\ \\mu C \\) is located in vacuum. Determine the magnitude of the electric field at a point 0.5 m away from the charge. (\\( k = 9\\times10^{9}\\ \\text{N·m}^2/\\text{C}^2 \\))",
-      "opsi": {
-        "A": "\\( 1.8\\times10^{4} \\) N/C",
-        "B": "\\( 1.8\\times10^{5} \\) N/C",
-        "C": "\\( 9\\times10^{4} \\) N/C",
-        "D": "\\( 9\\times10^{5} \\) N/C"
-      },
+      "opsi": { "A": "\\( 1.8\\times10^{4} \\) N/C", "B": "\\( 1.8\\times10^{5} \\) N/C", "C": "\\( 9\\times10^{4} \\) N/C", "D": "\\( 9\\times10^{5} \\) N/C", "E": "\\( 3.6\\times10^{5} \\) N/C" },
       "kunci": "B"
     },
     {
@@ -151,12 +106,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "Two point charges of equal magnitude each produce an electric field of \\( 8\\times10^{4} \\) N/C at point P, with the two field vectors perpendicular to one another (angle of \\( 90^{\\circ} \\) between them). Determine the magnitude of the resultant electric field at point P.",
-      "opsi": {
-        "A": "\\( 8\\times10^{4}\\sqrt{2} \\) N/C",
-        "B": "\\( 16\\times10^{4} \\) N/C",
-        "C": "\\( 8\\times10^{4} \\) N/C",
-        "D": "0 N/C"
-      },
+      "opsi": { "A": "\\( 8\\times10^{4}\\sqrt{2} \\) N/C", "B": "\\( 16\\times10^{4} \\) N/C", "C": "\\( 8\\times10^{4} \\) N/C", "D": "0 N/C", "E": "\\( 64\\times10^{4} \\) N/C" },
       "kunci": "A"
     },
     {
@@ -168,12 +118,7 @@
       "tingkat_kesukaran": "Sulit",
       "bobot": 2,
       "pertanyaan": "A point charge \\( +Q \\) and a point charge \\( -4Q \\) are placed 0.9 m apart. At what distance from the \\( +Q \\) charge, measured outward along the line joining the two charges (on the side of \\( +Q \\), away from \\( -4Q \\)), is the total electric field equal to zero?",
-      "opsi": {
-        "A": "0.3 m",
-        "B": "0.45 m",
-        "C": "0.9 m",
-        "D": "1.8 m"
-      },
+      "opsi": { "A": "0.3 m", "B": "0.45 m", "C": "0.9 m", "D": "1.8 m", "E": "0.6 m" },
       "kunci": "C"
     },
     {
@@ -184,13 +129,8 @@
       "level_kognitif": "C2",
       "tingkat_kesukaran": "Mudah",
       "bobot": 2,
-      "pertanyaan": "A region of space contains electric field lines that are straight, parallel, and equally spaced throughout that region. What can be concluded about the electric field in that region?",
-      "opsi": {
-        "A": "The field is uniform in both magnitude and direction.",
-        "B": "The field magnitude increases along the direction of the lines.",
-        "C": "The field is zero everywhere in that region.",
-        "D": "The field lines indicate a radial (point-charge) field."
-      },
+      "pertanyaan": "A region of space contains electric field lines that are straight, parallel, and equally spaced throughout that region.<br><br><div style='text-align:center;'><svg width='200' height='100' viewBox='0 0 200 100'><g stroke='#3B82F6' stroke-width='2' fill='none'><path d='M20,20 L180,20'/><polygon points='180,20 170,15 170,25' fill='#3B82F6'/><path d='M20,50 L180,50'/><polygon points='180,50 170,45 170,55' fill='#3B82F6'/><path d='M20,80 L180,80'/><polygon points='180,80 170,75 170,85' fill='#3B82F6'/></g></svg></div><br>What can be concluded about the electric field in that region?",
+      "opsi": { "A": "The field is uniform in both magnitude and direction.", "B": "The field magnitude increases along the direction of the lines.", "C": "The field is zero everywhere in that region.", "D": "The field lines indicate a radial (point-charge) field.", "E": "The field magnitude varies inversely with distance." },
       "kunci": "A"
     },
     {
@@ -202,12 +142,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "A flat surface with an area of 0.02 m\\(^2\\) is placed in a uniform electric field of \\( 5\\times10^{3} \\) N/C. The normal to the surface makes an angle of \\( 60^{\\circ} \\) with the field direction. Determine the electric flux through the surface. (\\( \\cos 60^{\\circ}=0.5 \\))",
-      "opsi": {
-        "A": "25 N·m\\(^2\\)/C",
-        "B": "50 N·m\\(^2\\)/C",
-        "C": "86.6 N·m\\(^2\\)/C",
-        "D": "100 N·m\\(^2\\)/C"
-      },
+      "opsi": { "A": "25 N·m\\(^2\\)/C", "B": "50 N·m\\(^2\\)/C", "C": "86.6 N·m\\(^2\\)/C", "D": "100 N·m\\(^2\\)/C", "E": "0 N·m\\(^2\\)/C" },
       "kunci": "B"
     },
     {
@@ -219,12 +154,7 @@
       "tingkat_kesukaran": "Mudah",
       "bobot": 2,
       "pertanyaan": "According to Gauss's Law, the total electric flux through any closed surface depends only on which of the following?",
-      "opsi": {
-        "A": "The shape of the closed surface.",
-        "B": "The net electric charge enclosed by the surface.",
-        "C": "The total surface area of the closed surface.",
-        "D": "The distance between the surface and the nearest charge."
-      },
+      "opsi": { "A": "The shape of the closed surface.", "B": "The net electric charge enclosed by the surface.", "C": "The total surface area of the closed surface.", "D": "The distance between the surface and the nearest charge.", "E": "The volume of the closed surface." },
       "kunci": "B"
     },
     {
@@ -236,12 +166,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "A closed spherical surface encloses a net charge of \\( +4\\times10^{-9} \\) C. Given \\( \\varepsilon_0 = 8.85\\times10^{-12}\\ \\text{C}^2/\\text{N·m}^2 \\), determine the total electric flux through the surface.",
-      "opsi": {
-        "A": "45.2 N·m\\(^2\\)/C",
-        "B": "452 N·m\\(^2\\)/C",
-        "C": "4520 N·m\\(^2\\)/C",
-        "D": "0.452 N·m\\(^2\\)/C"
-      },
+      "opsi": { "A": "45.2 N·m\\(^2\\)/C", "B": "452 N·m\\(^2\\)/C", "C": "4520 N·m\\(^2\\)/C", "D": "0.452 N·m\\(^2\\)/C", "E": "4.52 N·m\\(^2\\)/C" },
       "kunci": "B"
     },
     {
@@ -253,12 +178,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "Determine the electric potential at a point located 0.2 m from a point charge of \\( +6\\ \\mu C \\). (\\( k = 9\\times10^{9}\\ \\text{N·m}^2/\\text{C}^2 \\))",
-      "opsi": {
-        "A": "\\( 2.7\\times10^{4} \\) V",
-        "B": "\\( 2.7\\times10^{5} \\) V",
-        "C": "\\( 5.4\\times10^{5} \\) V",
-        "D": "\\( 1.35\\times10^{5} \\) V"
-      },
+      "opsi": { "A": "\\( 2.7\\times10^{4} \\) V", "B": "\\( 2.7\\times10^{5} \\) V", "C": "\\( 5.4\\times10^{5} \\) V", "D": "\\( 1.35\\times10^{5} \\) V", "E": "\\( 2.7\\times10^{6} \\) V" },
       "kunci": "B"
     },
     {
@@ -270,12 +190,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "Two point charges, \\( +3\\ \\mu C \\) and \\( -2\\ \\mu C \\), are separated by 0.1 m. Calculate the electric potential energy of this two-charge system. (\\( k = 9\\times10^{9}\\ \\text{N·m}^2/\\text{C}^2 \\))",
-      "opsi": {
-        "A": "\\( -0.54 \\) J",
-        "B": "\\( +0.54 \\) J",
-        "C": "\\( -5.4 \\) J",
-        "D": "\\( -0.054 \\) J"
-      },
+      "opsi": { "A": "\\( -0.54 \\) J", "B": "\\( +0.54 \\) J", "C": "\\( -5.4 \\) J", "D": "\\( -0.054 \\) J", "E": "\\( -1.08 \\) J" },
       "kunci": "A"
     },
     {
@@ -287,12 +202,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "How much work is required to move a \\( +4 \\) C charge from a point where the electric potential is 15 V to a point where the potential is 40 V?",
-      "opsi": {
-        "A": "25 J",
-        "B": "55 J",
-        "C": "100 J",
-        "D": "220 J"
-      },
+      "opsi": { "A": "25 J", "B": "55 J", "C": "100 J", "D": "220 J", "E": "40 J" },
       "kunci": "C"
     },
     {
@@ -304,12 +214,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "Two identical point charges, each \\( +Q = +2\\ \\mu C \\), are placed 0.4 m apart. Determine the electric potential at the midpoint between them. (\\( k = 9\\times10^{9}\\ \\text{N·m}^2/\\text{C}^2 \\))",
-      "opsi": {
-        "A": "\\( 9\\times10^{4} \\) V",
-        "B": "\\( 1.8\\times10^{5} \\) V",
-        "C": "\\( 3.6\\times10^{5} \\) V",
-        "D": "0 V"
-      },
+      "opsi": { "A": "\\( 9\\times10^{4} \\) V", "B": "\\( 1.8\\times10^{5} \\) V", "C": "\\( 3.6\\times10^{5} \\) V", "D": "0 V", "E": "\\( 4.5\\times10^{4} \\) V" },
       "kunci": "B"
     },
     {
@@ -321,12 +226,7 @@
       "tingkat_kesukaran": "Mudah",
       "bobot": 2,
       "pertanyaan": "Which of the following statements about equipotential surfaces is correct?",
-      "opsi": {
-        "A": "Work done moving a charge along an equipotential surface is always positive.",
-        "B": "Two equipotential surfaces belonging to the same charge distribution can intersect each other.",
-        "C": "Electric field lines are always perpendicular to equipotential surfaces.",
-        "D": "The electric potential always increases as you move along an equipotential surface."
-      },
+      "opsi": { "A": "Work done moving a charge along an equipotential surface is always positive.", "B": "Two equipotential surfaces belonging to the same charge distribution can intersect each other.", "C": "Electric field lines are always perpendicular to equipotential surfaces.", "D": "The electric potential always increases as you move along an equipotential surface.", "E": "The electric field is always parallel to equipotential surfaces." },
       "kunci": "C"
     },
     {
@@ -338,12 +238,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "The electric potential difference between two parallel plates separated by 4 cm is 200 V. Assuming the field between the plates is uniform, determine the magnitude of the electric field between the plates.",
-      "opsi": {
-        "A": "50 N/C",
-        "B": "500 N/C",
-        "C": "5000 N/C",
-        "D": "50000 N/C"
-      },
+      "opsi": { "A": "50 N/C", "B": "500 N/C", "C": "5000 N/C", "D": "50000 N/C", "E": "800 N/C" },
       "kunci": "C"
     },
     {
@@ -355,12 +250,7 @@
       "tingkat_kesukaran": "Mudah",
       "bobot": 2,
       "pertanyaan": "A solid conducting sphere carries a net positive charge and is isolated in space, in electrostatic equilibrium. Which statement about its surface is correct?",
-      "opsi": {
-        "A": "The surface of the conductor is an equipotential surface.",
-        "B": "The potential varies from point to point on the surface.",
-        "C": "The electric field lines run tangent to (along) the surface.",
-        "D": "The potential at the surface is always zero."
-      },
+      "opsi": { "A": "The surface of the conductor is an equipotential surface.", "B": "The potential varies from point to point on the surface.", "C": "The electric field lines run tangent to (along) the surface.", "D": "The potential at the surface is always zero.", "E": "The electric field inside the conductor is maximum at the center." },
       "kunci": "A"
     },
     {
@@ -372,12 +262,7 @@
       "tingkat_kesukaran": "Mudah",
       "bobot": 2,
       "pertanyaan": "A charge of 5 C moves along an equipotential surface from point A to point B. How much work is done by the electric force during this displacement?",
-      "opsi": {
-        "A": "0 J",
-        "B": "5 J",
-        "C": "Equal to the product of the charge and the distance travelled.",
-        "D": "It depends on the path taken between A and B."
-      },
+      "opsi": { "A": "0 J", "B": "5 J", "C": "Equal to the product of the charge and the distance travelled.", "D": "It depends on the path taken between A and B.", "E": "25 J" },
       "kunci": "A"
     },
     {
@@ -389,12 +274,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "A parallel-plate capacitor has capacitance \\( C \\). If the plate separation is reduced to \\( \\tfrac{1}{4} \\) of its original value while the plate area is kept constant, what is the new capacitance, expressed in terms of \\( C \\)?",
-      "opsi": {
-        "A": "\\( C/4 \\)",
-        "B": "\\( 4C \\)",
-        "C": "\\( 2C \\)",
-        "D": "\\( C \\) (unchanged)"
-      },
+      "opsi": { "A": "\\( C/4 \\)", "B": "\\( 4C \\)", "C": "\\( 2C \\)", "D": "\\( C \\) (unchanged)", "E": "\\( C/16 \\)" },
       "kunci": "B"
     },
     {
@@ -406,12 +286,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "A parallel-plate capacitor with vacuum between its plates has a capacitance of 4 \\( \\mu \\)F. A dielectric material with relative permittivity \\( \\varepsilon_r = 5 \\) is then inserted, completely filling the gap between the plates. Determine the new capacitance.",
-      "opsi": {
-        "A": "0.8 \\(\\mu\\)F",
-        "B": "4 \\(\\mu\\)F",
-        "C": "9 \\(\\mu\\)F",
-        "D": "20 \\(\\mu\\)F"
-      },
+      "opsi": { "A": "0.8 \\(\\mu\\)F", "B": "4 \\(\\mu\\)F", "C": "9 \\(\\mu\\)F", "D": "20 \\(\\mu\\)F", "E": "1.25 \\(\\mu\\)F" },
       "kunci": "D"
     },
     {
@@ -423,12 +298,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "Two capacitors, 6 \\( \\mu \\)F and 3 \\( \\mu \\)F, are connected in series. Calculate the equivalent capacitance of this combination.",
-      "opsi": {
-        "A": "2 \\(\\mu\\)F",
-        "B": "4.5 \\(\\mu\\)F",
-        "C": "9 \\(\\mu\\)F",
-        "D": "18 \\(\\mu\\)F"
-      },
+      "opsi": { "A": "2 \\(\\mu\\)F", "B": "4.5 \\(\\mu\\)F", "C": "9 \\(\\mu\\)F", "D": "18 \\(\\mu\\)F", "E": "12 \\(\\mu\\)F" },
       "kunci": "A"
     },
     {
@@ -440,12 +310,7 @@
       "tingkat_kesukaran": "Mudah",
       "bobot": 2,
       "pertanyaan": "Two capacitors, 6 \\( \\mu \\)F and 3 \\( \\mu \\)F, are connected in parallel. Calculate the equivalent capacitance of this combination.",
-      "opsi": {
-        "A": "2 \\(\\mu\\)F",
-        "B": "4.5 \\(\\mu\\)F",
-        "C": "9 \\(\\mu\\)F",
-        "D": "18 \\(\\mu\\)F"
-      },
+      "opsi": { "A": "2 \\(\\mu\\)F", "B": "4.5 \\(\\mu\\)F", "C": "9 \\(\\mu\\)F", "D": "18 \\(\\mu\\)F", "E": "3 \\(\\mu\\)F" },
       "kunci": "C"
     },
     {
@@ -457,12 +322,7 @@
       "tingkat_kesukaran": "Sulit",
       "bobot": 2,
       "pertanyaan": "In a circuit, a 4 \\( \\mu \\)F capacitor is connected in parallel with a 2 \\( \\mu \\)F capacitor. This parallel combination is then connected in series with a 6 \\( \\mu \\)F capacitor. Determine the total equivalent capacitance of the whole circuit.",
-      "opsi": {
-        "A": "2 \\(\\mu\\)F",
-        "B": "3 \\(\\mu\\)F",
-        "C": "6 \\(\\mu\\)F",
-        "D": "12 \\(\\mu\\)F"
-      },
+      "opsi": { "A": "2 \\(\\mu\\)F", "B": "3 \\(\\mu\\)F", "C": "6 \\(\\mu\\)F", "D": "12 \\(\\mu\\)F", "E": "10 \\(\\mu\\)F" },
       "kunci": "B"
     },
     {
@@ -474,12 +334,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "A capacitor with a capacitance of 2 \\( \\mu \\)F is charged to a potential difference of 100 V. Determine the electric energy stored in the capacitor. (\\( W=\\tfrac{1}{2}CV^2 \\))",
-      "opsi": {
-        "A": "\\( 1\\times10^{-2} \\) J",
-        "B": "\\( 2\\times10^{-2} \\) J",
-        "C": "\\( 1\\times10^{-4} \\) J",
-        "D": "\\( 2\\times10^{4} \\) J"
-      },
+      "opsi": { "A": "\\( 1\\times10^{-2} \\) J", "B": "\\( 2\\times10^{-2} \\) J", "C": "\\( 1\\times10^{-4} \\) J", "D": "\\( 2\\times10^{4} \\) J", "E": "\\( 4\\times10^{-2} \\) J" },
       "kunci": "A"
     },
     {
@@ -491,12 +346,7 @@
       "tingkat_kesukaran": "Mudah",
       "bobot": 2,
       "pertanyaan": "A 5 \\( \\mu \\)F capacitor is connected to a 12 V battery. Determine the magnitude of the charge stored on each plate.",
-      "opsi": {
-        "A": "\\( 6\\times10^{-5} \\) C",
-        "B": "\\( 6\\times10^{-4} \\) C",
-        "C": "0.6 C",
-        "D": "60 C"
-      },
+      "opsi": { "A": "\\( 6\\times10^{-5} \\) C", "B": "\\( 6\\times10^{-4} \\) C", "C": "0.6 C", "D": "60 C", "E": "2.4 C" },
       "kunci": "A"
     },
     {
@@ -508,12 +358,7 @@
       "tingkat_kesukaran": "Sulit",
       "bobot": 2,
       "pertanyaan": "An isolated parallel-plate capacitor (disconnected from any battery) has an initial capacitance of 2 \\( \\mu \\)F and is charged to 50 V. A dielectric with \\( \\varepsilon_r = 4 \\) is then inserted, completely filling the space between the plates. Determine the new voltage across the capacitor.",
-      "opsi": {
-        "A": "200 V",
-        "B": "50 V",
-        "C": "12.5 V",
-        "D": "400 V"
-      },
+      "opsi": { "A": "200 V", "B": "50 V", "C": "12.5 V", "D": "400 V", "E": "6.25 V" },
       "kunci": "C"
     },
     {
@@ -525,12 +370,7 @@
       "tingkat_kesukaran": "Sedang",
       "bobot": 2,
       "pertanyaan": "A parallel-plate capacitor remains connected to a battery that maintains a constant voltage. If the plate area is doubled while the plate separation stays the same, what happens to the charge stored on the capacitor?",
-      "opsi": {
-        "A": "It becomes half of the original value.",
-        "B": "It remains the same.",
-        "C": "It becomes twice the original value.",
-        "D": "It becomes four times the original value."
-      },
+      "opsi": { "A": "It becomes half of the original value.", "B": "It remains the same.", "C": "It becomes twice the original value.", "D": "It becomes four times the original value.", "E": "It decreases by a quarter." },
       "kunci": "C"
     },
     {
@@ -542,12 +382,7 @@
       "tingkat_kesukaran": "Sulit",
       "bobot": 2,
       "pertanyaan": "Two identical 4 \\( \\mu \\)F capacitors are connected to a 10 V battery. Determine the ratio of the total energy stored when the two capacitors are connected in parallel (\\( W_{parallel} \\)) to when they are connected in series (\\( W_{series} \\)), i.e. \\( W_{parallel} : W_{series} \\).",
-      "opsi": {
-        "A": "1 : 1",
-        "B": "2 : 1",
-        "C": "4 : 1",
-        "D": "8 : 1"
-      },
+      "opsi": { "A": "1 : 1", "B": "2 : 1", "C": "4 : 1", "D": "8 : 1", "E": "1 : 4" },
       "kunci": "C"
     },
     {
@@ -674,29 +509,11 @@
       "bobot": "4 (1 poin/pernyataan)",
       "stimulus": "A hollow conducting spherical shell has an inner radius of 5 cm and an outer radius of 10 cm. A point charge of \\( +Q \\) is placed exactly at the center of the hollow cavity, without touching the shell. Before the point charge is introduced, the conducting shell itself is electrically neutral.<br><br>As a result of electrostatic induction, charge is redistributed on the inner and outer surfaces of the shell. Determine whether each of the following statements is True or False.",
       "pernyataan": [
-        {
-          "id": "q37a",
-          "text": "An induced charge of \\( -Q \\) appears on the inner surface of the shell (\\( r = 5\\) cm)."
-        },
-        {
-          "id": "q37b",
-          "text": "The electric field inside the conducting material of the shell itself (between \\( r=5 \\) cm and \\( r=10 \\) cm) is zero."
-        },
-        {
-          "id": "q37c",
-          "text": "An induced charge of \\( -Q \\) also appears on the outer surface of the shell."
-        },
-        {
-          "id": "q37d",
-          "text": "At a point outside the shell (\\( r > 10 \\) cm), the electric field is identical to the field that a point charge \\( +Q \\) alone, located at the center, would produce."
-        }
+        { "id": "q37a", "text": "An induced charge of \\( -Q \\) appears on the inner surface of the shell (\\( r = 5\\) cm)." },
+        { "id": "q37b", "text": "The electric field inside the conducting material of the shell itself (between \\( r=5 \\) cm and \\( r=10 \\) cm) is zero." },
+        { "id": "q37c", "text": "An induced charge of \\( -Q \\) also appears on the outer surface of the shell." }
       ],
-      "kunci": {
-        "q37a": "T",
-        "q37b": "T",
-        "q37c": "F",
-        "q37d": "T"
-      }
+      "kunci": { "q37a": "T", "q37b": "T", "q37c": "F" }
     },
     {
       "no": 38,
@@ -706,31 +523,13 @@
       "level_kognitif": "C4",
       "tingkat_kesukaran": "Sulit",
       "bobot": "4 (1 poin/pernyataan)",
-      "stimulus": "A parallel-plate capacitor is connected to a battery with an EMF of 20 V and becomes fully charged. While still connected to the battery, the separation between the plates is slowly doubled using an insulated mechanical device, while the plate area remains unchanged.<br><br>Based on the relations \\( C=\\varepsilon_0\\varepsilon_r A/d \\) and \\( Q=CV \\), determine whether each of the following statements is True or False.",
+      "stimulus": "A parallel-plate capacitor is connected to a battery with an EMF of 20 V and becomes fully charged. While still connected to the battery, the separation between the plates is slowly doubled using an insulated mechanical device, while the plate area remains unchanged.<br><br><div style='text-align:center;'><svg width='200' height='100' viewBox='0 0 200 100'><rect x='60' y='20' width='80' height='8' fill='#64748B'/><rect x='60' y='72' width='80' height='8' fill='#64748B'/><path d='M100,20 L100,0 M100,80 L100,100' stroke='#64748B' stroke-width='2'/><text x='150' y='55' fill='#475569' font-size='12'>d</text><line x1='145' y1='28' x2='145' y2='72' stroke='#94A3B8' stroke-width='1'/><path d='M142,33 L145,28 L148,33 M142,67 L145,72 L148,67' fill='#94A3B8'/></svg></div><br>Based on the relations \\( C=\\varepsilon_0\\varepsilon_r A/d \\) and \\( Q=CV \\), determine whether each of the following statements is True or False.",
       "pernyataan": [
-        {
-          "id": "q38a",
-          "text": "The capacitance of the capacitor decreases to half of its original value."
-        },
-        {
-          "id": "q38b",
-          "text": "The voltage across the capacitor decreases to half of its original value."
-        },
-        {
-          "id": "q38c",
-          "text": "The charge stored on the capacitor decreases to half of its original value."
-        },
-        {
-          "id": "q38d",
-          "text": "The electric field between the plates decreases to half of its original value."
-        }
+        { "id": "q38a", "text": "The capacitance of the capacitor decreases to half of its original value." },
+        { "id": "q38b", "text": "The voltage across the capacitor decreases to half of its original value." },
+        { "id": "q38c", "text": "The charge stored on the capacitor decreases to half of its original value." }
       ],
-      "kunci": {
-        "q38a": "T",
-        "q38b": "F",
-        "q38c": "T",
-        "q38d": "T"
-      }
+      "kunci": { "q38a": "T", "q38b": "F", "q38c": "T" }
     },
     {
       "no": 39,
@@ -740,31 +539,13 @@
       "level_kognitif": "C4",
       "tingkat_kesukaran": "Sulit",
       "bobot": "4 (1 poin/pernyataan)",
-      "stimulus": "Two identical point charges, each \\( +Q \\), are fixed at two vertices of an equilateral triangle with side length \\( a \\). Point P is located at the third vertex of the triangle, so P is a distance \\( a \\) from each of the two charges.<br><br>Consider the electric field and the electric potential at point P due to these two charges, and determine whether each of the following statements is True or False.",
+      "stimulus": "Two identical point charges, each \\( +Q \\), are fixed at two vertices of an equilateral triangle with side length \\( a \\). Point P is located at the third vertex of the triangle, so P is a distance \\( a \\) from each of the two charges.<br><br><div style='text-align:center;'><svg width='200' height='180' viewBox='0 0 200 180'><polygon points='100,30 40,150 160,150' stroke='#94A3B8' stroke-width='2' fill='none' stroke-dasharray='4,4'/><circle cx='40' cy='150' r='14' fill='#EF4444'/><text x='40' y='154' fill='white' font-size='12' text-anchor='middle'>+Q</text><circle cx='160' cy='150' r='14' fill='#EF4444'/><text x='160' y='154' fill='white' font-size='12' text-anchor='middle'>+Q</text><circle cx='100' cy='30' r='6' fill='#1E293B'/><text x='100' y='20' fill='#1E293B' font-size='14' text-anchor='middle'>P</text><text x='100' y='168' fill='#475569' font-size='12' text-anchor='middle'>a</text><text x='55' y='90' fill='#475569' font-size='12' text-anchor='middle'>a</text><text x='145' y='90' fill='#475569' font-size='12' text-anchor='middle'>a</text></svg></div><br>Consider the electric field and the electric potential at point P due to these two charges, and determine whether each of the following statements is True or False.",
       "pernyataan": [
-        {
-          "id": "q39a",
-          "text": "The electric potential at point P is equal to the algebraic (scalar) sum of the potentials due to each charge individually."
-        },
-        {
-          "id": "q39b",
-          "text": "The electric field at point P is simply the algebraic (scalar) sum of the magnitudes of the two individual fields, because both charges have the same sign."
-        },
-        {
-          "id": "q39c",
-          "text": "If the value of \\( Q \\) is doubled while the geometry (triangle size) stays the same, both the potential and the electric field at point P exactly double."
-        },
-        {
-          "id": "q39d",
-          "text": "Because the two source charges are identical in magnitude and sign, and point P is equidistant from both, the net electric field at point P cannot be zero."
-        }
+        { "id": "q39a", "text": "The electric potential at point P is equal to the algebraic (scalar) sum of the potentials due to each charge individually." },
+        { "id": "q39b", "text": "The electric field at point P is simply the algebraic (scalar) sum of the magnitudes of the two individual fields, because both charges have the same sign." },
+        { "id": "q39c", "text": "If the value of \\( Q \\) is doubled while the geometry (triangle size) stays the same, both the potential and the electric field at point P exactly double." }
       ],
-      "kunci": {
-        "q39a": "T",
-        "q39b": "F",
-        "q39c": "T",
-        "q39d": "T"
-      }
+      "kunci": { "q39a": "T", "q39b": "F", "q39c": "T" }
     },
     {
       "no": 40,
@@ -774,176 +555,34 @@
       "level_kognitif": "C4",
       "tingkat_kesukaran": "Sulit",
       "bobot": "4 (1 poin/pernyataan)",
-      "stimulus": "A point charge \\( q_1=+4\\ \\mu C \\) is placed at the origin. A second point charge \\( q_2=+9\\ \\mu C \\) is placed 1 m to the right of \\( q_1 \\) along the x-axis. Point P is located exactly at the midpoint between the two charges, 0.5 m from each.<br><br>Using \\( k=9\\times10^{9}\\ \\text{N·m}^2/\\text{C}^2 \\), determine whether each of the following statements about point P is True or False.",
+      "stimulus": "A point charge \\( q_1=+4\\ \\mu C \\) is placed at the origin. A second point charge \\( q_2=+9\\ \\mu C \\) is placed 1 m to the right of \\( q_1 \\) along the x-axis. Point P is located exactly at the midpoint between the two charges, 0.5 m from each.<br><br><div style='text-align:center;'><svg width='300' height='80' viewBox='0 0 300 80'><line x1='30' y1='40' x2='270' y2='40' stroke='#94A3B8' stroke-width='2'/><circle cx='50' cy='40' r='14' fill='#EF4444'/><text x='50' y='20' fill='#475569' font-size='12' text-anchor='middle'>q1</text><circle cx='250' cy='40' r='14' fill='#EF4444'/><text x='250' y='20' fill='#475569' font-size='12' text-anchor='middle'>q2</text><circle cx='150' cy='40' r='6' fill='#1E293B'/><text x='150' y='25' fill='#1E293B' font-size='14' text-anchor='middle'>P</text></svg></div><br>Using \\( k=9\\times10^{9}\\ \\text{N·m}^2/\\text{C}^2 \\), determine whether each of the following statements about point P is True or False.",
       "pernyataan": [
-        {
-          "id": "q40a",
-          "text": "The magnitude of the electric field at P due to \\( q_1 \\) alone is \\( 1.44\\times10^{5} \\) N/C."
-        },
-        {
-          "id": "q40b",
-          "text": "The magnitude of the electric field at P due to \\( q_2 \\) alone is also \\( 1.44\\times10^{5} \\) N/C."
-        },
-        {
-          "id": "q40c",
-          "text": "The two individual field vectors at point P point in opposite directions along the x-axis."
-        },
-        {
-          "id": "q40d",
-          "text": "The magnitude of the net (resultant) electric field at point P is \\( 1.8\\times10^{5} \\) N/C, directed toward \\( q_1 \\)."
-        }
+        { "id": "q40a", "text": "The magnitude of the electric field at P due to \\( q_1 \\) alone is \\( 1.44\\times10^{5} \\) N/C." },
+        { "id": "q40b", "text": "The magnitude of the electric field at P due to \\( q_2 \\) alone is also \\( 1.44\\times10^{5} \\) N/C." },
+        { "id": "q40c", "text": "The two individual field vectors at point P point in opposite directions along the x-axis." }
       ],
-      "kunci": {
-        "q40a": "T",
-        "q40b": "F",
-        "q40c": "T",
-        "q40d": "T"
-      }
+      "kunci": { "q40a": "T", "q40b": "F", "q40c": "T" }
     }
   ],
   "kunci_jawaban": {
-    "PG1": "B",
-    "PG2": "A",
-    "PG3": "C",
-    "PG4": "A",
-    "PG5": "B",
-    "PG6": "B",
-    "PG7": "A",
-    "PG8": "C",
-    "PG9": "A",
-    "PG10": "B",
-    "PG11": "B",
-    "PG12": "B",
-    "PG13": "B",
-    "PG14": "A",
-    "PG15": "C",
-    "PG16": "B",
-    "PG17": "C",
-    "PG18": "C",
-    "PG19": "A",
-    "PG20": "A",
-    "PG21": "B",
-    "PG22": "D",
-    "PG23": "A",
-    "PG24": "C",
-    "PG25": "B",
-    "PG26": "A",
-    "PG27": "A",
-    "PG28": "C",
-    "PG29": "C",
-    "PG30": "C",
-    "MCMA1": "1,3,4",
-    "MCMA2": "1,2,3",
-    "MCMA3": "1,2,3",
-    "MCMA4": "1,2,3,5",
-    "MCMA5": "1,3,5",
-    "MCMA6": "1,2,4",
-    "TF1": {
-      "q37a": "T",
-      "q37b": "T",
-      "q37c": "F",
-      "q37d": "T"
-    },
-    "TF2": {
-      "q38a": "T",
-      "q38b": "F",
-      "q38c": "T",
-      "q38d": "T"
-    },
-    "TF3": {
-      "q39a": "T",
-      "q39b": "F",
-      "q39c": "T",
-      "q39d": "T"
-    },
-    "TF4": {
-      "q40a": "T",
-      "q40b": "F",
-      "q40c": "T",
-      "q40d": "T"
-    }
+    "PG1": "B", "PG2": "A", "PG3": "C", "PG4": "A", "PG5": "B", "PG6": "B", "PG7": "A", "PG8": "C", "PG9": "A", "PG10": "B",
+    "PG11": "B", "PG12": "B", "PG13": "B", "PG14": "A", "PG15": "C", "PG16": "B", "PG17": "C", "PG18": "C", "PG19": "A", "PG20": "A",
+    "PG21": "B", "PG22": "D", "PG23": "A", "PG24": "C", "PG25": "B", "PG26": "A", "PG27": "A", "PG28": "C", "PG29": "C", "PG30": "C",
+    "MCMA1": "1,3,4", "MCMA2": "1,2,3", "MCMA3": "1,2,3", "MCMA4": "1,2,3,5", "MCMA5": "1,3,5", "MCMA6": "1,2,4",
+    "TF1": { "q37a": "T", "q37b": "T", "q37c": "F" },
+    "TF2": { "q38a": "T", "q38b": "F", "q38c": "T" },
+    "TF3": { "q39a": "T", "q39b": "F", "q39c": "T" },
+    "TF4": { "q40a": "T", "q40b": "F", "q40c": "T" }
   },
   "kisi_kisi": [
-    {
-      "no": 1,
-      "sub_materi": "Hukum Coulomb (gaya antar muatan, proporsi, titik setimbang, vektor sudut istimewa)",
-      "indikator": "Peserta didik dapat menghitung dan menganalisis gaya Coulomb antar muatan titik, termasuk penjumlahan vektor gaya pada sudut istimewa.",
-      "level_kognitif": "C2-C4",
-      "bentuk_soal": "MCQ, MCMA",
-      "nomor_soal": "1, 2, 3, 4, 5, 31",
-      "jumlah": 6
-    },
-    {
-      "no": 2,
-      "sub_materi": "Medan Listrik (medan titik, superposisi vektor, titik netral, garis medan)",
-      "indikator": "Peserta didik dapat menghitung kuat medan listrik akibat muatan titik dan superposisinya, serta menganalisis sifat garis medan.",
-      "level_kognitif": "C2-C4",
-      "bentuk_soal": "MCQ, MCMA",
-      "nomor_soal": "6, 7, 8, 9, 34",
-      "jumlah": 5
-    },
-    {
-      "no": 3,
-      "sub_materi": "Fluks Listrik & Hukum Gauss",
-      "indikator": "Peserta didik dapat menghitung fluks listrik melalui suatu permukaan dan menjelaskan hubungan fluks dengan muatan yang dilingkupi (Hukum Gauss).",
-      "level_kognitif": "C2-C3",
-      "bentuk_soal": "MCQ",
-      "nomor_soal": "10, 11, 12",
-      "jumlah": 3
-    },
-    {
-      "no": 4,
-      "sub_materi": "Potensial Listrik & Energi Potensial Listrik",
-      "indikator": "Peserta didik dapat menghitung potensial listrik, energi potensial, dan usaha oleh gaya listrik akibat muatan titik maupun superposisi beberapa muatan.",
-      "level_kognitif": "C2-C4",
-      "bentuk_soal": "MCQ, MCMA",
-      "nomor_soal": "13, 14, 15, 16, 35",
-      "jumlah": 5
-    },
-    {
-      "no": 5,
-      "sub_materi": "Permukaan Ekuipotensial & Hubungan Medan-Potensial",
-      "indikator": "Peserta didik dapat menjelaskan sifat permukaan ekuipotensial, hubungan antara medan listrik dan potensial (E = V/d), serta usaha pada lintasan ekuipotensial.",
-      "level_kognitif": "C2-C4",
-      "bentuk_soal": "MCQ, TF",
-      "nomor_soal": "17, 18, 19, 20, 39",
-      "jumlah": 5
-    },
-    {
-      "no": 6,
-      "sub_materi": "Konduktor dalam Kesetimbangan Elektrostatis",
-      "indikator": "Peserta didik dapat menganalisis sifat medan listrik, potensial, dan distribusi muatan pada konduktor (termasuk konduktor berongga) dalam keadaan setimbang elektrostatis.",
-      "level_kognitif": "C2-C4",
-      "bentuk_soal": "MCMA, TF",
-      "nomor_soal": "32, 37",
-      "jumlah": 2
-    },
-    {
-      "no": 7,
-      "sub_materi": "Kapasitor — Faktor Penentu Kapasitansi & Rangkaian Seri-Paralel",
-      "indikator": "Peserta didik dapat menganalisis pengaruh luas keping, jarak keping, dan dielektrik terhadap kapasitansi, serta menghitung kapasitansi pengganti rangkaian seri, paralel, dan campuran.",
-      "level_kognitif": "C2-C4",
-      "bentuk_soal": "MCQ, MCMA",
-      "nomor_soal": "21, 22, 23, 24, 25, 29, 36",
-      "jumlah": 7
-    },
-    {
-      "no": 8,
-      "sub_materi": "Kapasitor — Muatan, Energi, dan Kondisi Terisolasi/Terhubung Baterai",
-      "indikator": "Peserta didik dapat menghitung muatan dan energi tersimpan pada kapasitor, serta menganalisis perubahan besaran (Q, V, E, W) ketika kapasitor terisolasi atau tetap terhubung ke baterai.",
-      "level_kognitif": "C2-C4",
-      "bentuk_soal": "MCQ, MCMA, TF",
-      "nomor_soal": "26, 27, 28, 30, 33, 38",
-      "jumlah": 6
-    },
-    {
-      "no": 9,
-      "sub_materi": "Superposisi Vektor Medan/Potensial pada Konfigurasi Muatan Tak Simetris",
-      "indikator": "Peserta didik dapat menganalisis dan menghitung superposisi medan listrik dari dua muatan berbeda besar secara vektor pada satu garis lurus.",
-      "level_kognitif": "C4",
-      "bentuk_soal": "TF",
-      "nomor_soal": "40",
-      "jumlah": 1
-    }
+    { "no": 1, "sub_materi": "Hukum Coulomb (gaya antar muatan, proporsi, titik setimbang, vektor sudut istimewa)", "indikator": "Peserta didik dapat menghitung dan menganalisis gaya Coulomb antar muatan titik, termasuk penjumlahan vektor gaya pada sudut istimewa.", "level_kognitif": "C2-C4", "bentuk_soal": "MCQ, MCMA", "nomor_soal": "1, 2, 3, 4, 5, 31", "jumlah": 6 },
+    { "no": 2, "sub_materi": "Medan Listrik (medan titik, superposisi vektor, titik netral, garis medan)", "indikator": "Peserta didik dapat menghitung kuat medan listrik akibat muatan titik dan superposisinya, serta menganalisis sifat garis medan.", "level_kognitif": "C2-C4", "bentuk_soal": "MCQ, MCMA", "nomor_soal": "6, 7, 8, 9, 34", "jumlah": 5 },
+    { "no": 3, "sub_materi": "Fluks Listrik & Hukum Gauss", "indikator": "Peserta didik dapat menghitung fluks listrik melalui suatu permukaan dan menjelaskan hubungan fluks dengan muatan yang dilingkupi (Hukum Gauss).", "level_kognitif": "C2-C3", "bentuk_soal": "MCQ", "nomor_soal": "10, 11, 12", "jumlah": 3 },
+    { "no": 4, "sub_materi": "Potensial Listrik & Energi Potensial Listrik", "indikator": "Peserta didik dapat menghitung potensial listrik, energi potensial, dan usaha oleh gaya listrik akibat muatan titik maupun superposisi beberapa muatan.", "level_kognitif": "C2-C4", "bentuk_soal": "MCQ, MCMA", "nomor_soal": "13, 14, 15, 16, 35", "jumlah": 5 },
+    { "no": 5, "sub_materi": "Permukaan Ekuipotensial & Hubungan Medan-Potensial", "indikator": "Peserta didik dapat menjelaskan sifat permukaan ekuipotensial, hubungan antara medan listrik dan potensial (E = V/d), serta usaha pada lintasan ekuipotensial.", "level_kognitif": "C2-C4", "bentuk_soal": "MCQ, TF", "nomor_soal": "17, 18, 19, 20, 39", "jumlah": 5 },
+    { "no": 6, "sub_materi": "Konduktor dalam Kesetimbangan Elektrostatis", "indikator": "Peserta didik dapat menganalisis sifat medan listrik, potensial, dan distribusi muatan pada konduktor (termasuk konduktor berongga) dalam keadaan setimbang elektrostatis.", "level_kognitif": "C2-C4", "bentuk_soal": "MCMA, TF", "nomor_soal": "32, 37", "jumlah": 2 },
+    { "no": 7, "sub_materi": "Kapasitor — Faktor Penentu Kapasitansi & Rangkaian Seri-Paralel", "indikator": "Peserta didik dapat menganalisis pengaruh luas keping, jarak keping, dan dielektrik terhadap kapasitansi, serta menghitung kapasitansi pengganti rangkaian seri, paralel, dan campuran.", "level_kognitif": "C2-C4", "bentuk_soal": "MCQ, MCMA", "nomor_soal": "21, 22, 23, 24, 25, 29, 36", "jumlah": 7 },
+    { "no": 8, "sub_materi": "Kapasitor — Muatan, Energi, dan Kondisi Terisolasi/Terhubung Baterai", "indikator": "Peserta didik dapat menghitung muatan dan energi tersimpan pada kapasitor, serta menganalisis perubahan besaran (Q, V, E, W) ketika kapasitor terisolasi atau tetap terhubung ke baterai.", "level_kognitif": "C2-C4", "bentuk_soal": "MCQ, MCMA, TF", "nomor_soal": "26, 27, 28, 30, 33, 38", "jumlah": 6 },
+    { "no": 9, "sub_materi": "Superposisi Vektor Medan/Potensial pada Konfigurasi Muatan Tak Simetris", "indikator": "Peserta didik dapat menganalisis dan menghitung superposisi medan listrik dari dua muatan berbeda besar secara vektor pada satu garis lurus.", "level_kognitif": "C4", "bentuk_soal": "TF", "nomor_soal": "40", "jumlah": 1 }
   ]
 }
