@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendataan Akun Try Out - Kelas XII.4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4 font-sans text-gray-800">
+
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md border border-gray-100">
+        <div class="mb-6 text-center">
+            <h2 class="text-2xl font-bold text-blue-600 mb-1">Data Akun Try Out</h2>
+            <p class="text-sm text-gray-500">Khusus Kelas XII.4</p>
+        </div>
+
+        <form id="toForm" class="space-y-5">
+            <div>
+                <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                <select id="nama" name="nama" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                    <option value="" disabled selected>-- Pilih Nama Anda --</option>
+                    <option value="Abimanyu Fadhil Rachman">1. Abimanyu Fadhil Rachman</option>
+                    <option value="Darwinda Kertayuga">2. Darwinda Kertayuga</option>
+                    <option value="Deco Wibowo">3. Deco Wibowo</option>
+                    <option value="Devara Ardhana Pradita">4. Devara Ardhana Pradita</option>
+                    <option value="Fattah Bagus Aryaputra">5. Fattah Bagus Aryaputra</option>
+                    <option value="Firas Abdat">6. Firas Abdat</option>
+                    <option value="Frey Falenas Luthfie">7. Frey Falenas Luthfie</option>
+                    <option value="Gossan Awal Thariq">8. Gossan Awal Thariq</option>
+                    <option value="Haikhal Prayoga">9. Haikhal Prayoga</option>
+                    <option value="Hasan Abdurrahman">10. Hasan Abdurrahman</option>
+                    <option value="Ibanez Rafhael Ramadhan">11. Ibanez Rafhael Ramadhan</option>
+                    <option value="Ibrahim Yumna Rafif">12. Ibrahim Yumna Rafif</option>
+                    <option value="Ilham Nur Hasan">13. Ilham Nur Hasan</option>
+                    <option value="Kevin Ata Wibowo">14. Kevin Ata Wibowo</option>
+                    <option value="Maheswara Rahadhani Widiarso">15. Maheswara Rahadhani Widiarso</option>
+                    <option value="Mahir Dzaki Maulana Hebat">16. Mahir Dzaki Maulana Hebat</option>
+                    <option value="Muhammad Azka Athallah">17. Muhammad Azka Athallah</option>
+                    <option value="Muhammad Hafizh Anshari">18. Muhammad Hafizh Anshari</option>
+                    <option value="Muhammad Rafiq Laudza'i">19. Muhammad Rafiq Laudza'i</option>
+                    <option value="Muhammad Rangga Buna Aditya">20. Muhammad Rangga Buna Aditya</option>
+                    <option value="Naufal Athaullah Putradea">21. Naufal Athaullah Putradea</option>
+                    <option value="Nuke Abdullah Al-Fathu Zaki Fatih">22. Nuke Abdullah Al-Fathu Zaki Fatih</option>
+                    <option value="Nurujati Noviantara">23. Nurujati Noviantara</option>
+                    <option value="Panji Satya Satria Priyanto">24. Panji Satya Satria Priyanto</option>
+                    <option value="Prada Ali Yuda Winarno">25. Prada Ali Yuda Winarno</option>
+                    <option value="Pradipta Maulana Priyanto">26. Pradipta Maulana Priyanto</option>
+                    <option value="Rafi Hafizh Fadhila">27. Rafi Hafizh Fadhila</option>
+                    <option value="Ramadhan Rifa Arasyid">28. Ramadhan Rifa Arasyid</option>
+                    <option value="Sarfaraz Rafif Julianto">29. Sarfaraz Rafif Julianto</option>
+                    <option value="Sasangka Pramudita Huttama">30. Sasangka Pramudita Huttama</option>
+                    <option value="Tegar Bahtiar">31. Tegar Bahtiar</option>
+                    <option value="Yahya Ibrahimi">32. Yahya Ibrahimi</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Aktif</label>
+                <input type="email" id="email" name="email" placeholder="contoh@gmail.com" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password Akun TO</label>
+                <input type="text" id="password" name="password" placeholder="Masukkan password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                <p class="text-xs text-gray-500 mt-1">Data ini hanya akan disimpan dengan aman sebagai arsip jika sewaktu-waktu terlupa.</p>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors duration-200">
+                Simpan Data
+            </button>
+        </form>
+
+        <div id="message" class="hidden mt-4 p-3 rounded-lg text-sm text-center"></div>
+    </div>
+
+    <script>
+        // GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE SCRIPT ANDA
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyF-jJzRfGIoUD_7xgAPWKQV_UExLvkAvZPlWBmUDkpZ1b8QEOc6QGVi5GLHGgfYYcMng/exec'; 
+        
+        const form = document.getElementById('toForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const message = document.getElementById('message');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            // Ubah state tombol
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Menyimpan...';
+            submitBtn.classList.replace('bg-blue-600', 'bg-blue-400');
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => response.json()) // Parsing response sebagai JSON
+                .then(data => {
+                    if(data.result === "success") {
+                        message.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+                        message.classList.add('bg-green-100', 'text-green-700');
+                        message.textContent = 'Berhasil! Data akun Try Out Anda telah tersimpan.';
+                        form.reset(); // Kosongkan form jika sukses
+                    } else {
+                        // Lempar error jika script Apps Script mengembalikan result error
+                        throw new Error(data.message || "Gagal menyimpan data");
+                    }
+                })
+                .catch(error => {
+                    message.classList.remove('hidden', 'bg-green-100', 'text-green-700');
+                    message.classList.add('bg-red-100', 'text-red-700');
+                    message.textContent = 'Gagal menyimpan data. Pastikan nama sesuai.';
+                    console.error('Error!', error.message);
+                })
+                .finally(() => {
+                    // Kembalikan state tombol
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Simpan Data';
+                    submitBtn.classList.replace('bg-blue-400', 'bg-blue-600');
+                    
+                    // Sembunyikan pesan setelah 4 detik
+                    setTimeout(() => {
+                        message.classList.add('hidden');
+                    }, 4000);
+                });
+        });
+    </script>
+</body>
+</html>
