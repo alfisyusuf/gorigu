@@ -241,7 +241,7 @@ function el(tag, cls, html){
   return e;
 }
 
-fetch('soal.json')
+fetch('soal.json?t=' + new Date().getTime())
   .then(res => {
     if(!res.ok) throw new Error("Gagal memuat JSON");
     return res.json();
