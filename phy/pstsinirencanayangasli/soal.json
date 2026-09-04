@@ -392,17 +392,17 @@
       "sub_materi": "Hukum Coulomb (sifat)",
       "level_kognitif": "C2",
       "tingkat_kesukaran": "Sedang",
-      "jumlah_pilihan_benar": 3,
+      "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "Consider the Coulomb's Law equation \\( F = k\\dfrac{q_1 q_2}{r^2} \\). Which of the following statements are correct? (Select exactly 3 correct answers)",
+      "pertanyaan": "Consider the Coulomb's Law equation \\( F = k\\dfrac{q_1 q_2}{r^2} \\). Which of the following statements are correct? (Select exactly 2 correct answers)",
       "opsi": {
         "1": "The force is directly proportional to the product of the two charges.",
         "2": "The force is directly proportional to the square of the distance.",
         "3": "The force is inversely proportional to the square of the distance.",
-        "4": "If the distance between the charges is doubled, the force becomes four times smaller.",
+        "4": "If the distance between the charges is doubled, the force becomes half its original value.",
         "5": "The force does not depend at all on the medium between the charges."
       },
-      "kunci": "1,3,4"
+      "kunci": "1,3"
     },
     {
       "no": 32,
@@ -411,17 +411,17 @@
       "sub_materi": "Konduktor Ekuilibrium",
       "level_kognitif": "C2",
       "tingkat_kesukaran": "Sedang",
-      "jumlah_pilihan_benar": 3,
+      "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "Which of the following statements about a solid conductor in electrostatic equilibrium are correct? (Select exactly 3 correct answers)",
+      "pertanyaan": "Which of the following statements about a solid conductor in electrostatic equilibrium are correct? (Select exactly 2 correct answers)",
       "opsi": {
         "1": "The electric field inside the conducting material is zero.",
         "2": "Any excess charge resides entirely on the outer surface of the conductor.",
-        "3": "Electric field lines are perpendicular to the surface just outside the conductor.",
+        "3": "Electric field lines are parallel to the surface just outside the conductor.",
         "4": "The electric potential varies from the center to the surface of the conductor.",
         "5": "The surface of the conductor is not an equipotential surface."
       },
-      "kunci": "1,2,3"
+      "kunci": "1,2"
     },
     {
       "no": 33,
@@ -430,17 +430,17 @@
       "sub_materi": "Dielektrik pada Kapasitor Terisolasi",
       "level_kognitif": "C4",
       "tingkat_kesukaran": "Sulit",
-      "jumlah_pilihan_benar": 3,
+      "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "A dielectric material is inserted between the plates of an isolated, fully-charged parallel-plate capacitor (disconnected from the battery). Which of the following statements about the resulting changes are correct? (Select exactly 3 correct answers)",
+      "pertanyaan": "A dielectric material is inserted between the plates of an isolated, fully-charged parallel-plate capacitor (disconnected from the battery). Which of the following statements about the resulting changes are correct? (Select exactly 2 correct answers)",
       "opsi": {
         "1": "The capacitance of the capacitor increases.",
         "2": "The charge stored on the plates remains constant.",
-        "3": "The voltage across the capacitor decreases.",
+        "3": "The voltage across the capacitor increases.",
         "4": "The electric field between the plates increases.",
         "5": "The electric potential energy stored in the capacitor increases."
       },
-      "kunci": "1,2,3"
+      "kunci": "1,2"
     },
     {
       "no": 34,
@@ -449,17 +449,17 @@
       "sub_materi": "Garis Medan Listrik (sifat)",
       "level_kognitif": "C2",
       "tingkat_kesukaran": "Sedang",
-      "jumlah_pilihan_benar": 4,
+      "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "Which of the following statements about electric field lines are correct? (Select exactly 4 correct answers)",
+      "pertanyaan": "Which of the following statements about electric field lines are correct? (Select exactly 2 correct answers)",
       "opsi": {
         "1": "Electric field lines never cross one another.",
         "2": "Field lines originate from positive charges and terminate on negative charges (or extend to infinity).",
-        "3": "The density of field lines in a region indicates the relative strength of the electric field there.",
+        "3": "The density of field lines in a region indicates the electric potential there.",
         "4": "Electric field lines around an isolated point charge form closed loops.",
-        "5": "The tangent to a field line at any point gives the direction of the electric field at that point."
+        "5": "The tangent to a field line at any point gives the magnitude of the electric field at that point."
       },
-      "kunci": "1,2,3,5"
+      "kunci": "1,2"
     },
     {
       "no": 35,
@@ -468,17 +468,17 @@
       "sub_materi": "Potensial & Energi Potensial (sifat)",
       "level_kognitif": "C3",
       "tingkat_kesukaran": "Sedang",
-      "jumlah_pilihan_benar": 3,
+      "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "Which of the following statements regarding electric potential and electric potential energy are correct? (Select exactly 3 correct answers)",
+      "pertanyaan": "Which of the following statements regarding electric potential and electric potential energy are correct? (Select exactly 2 correct answers)",
       "opsi": {
         "1": "Electric potential is a scalar quantity, while the electric field is a vector quantity.",
         "2": "The potential energy of a system of two positive point charges is negative.",
         "3": "The work done by the electric force in moving a charge between two points depends only on the potential difference between those points, not on the path taken.",
         "4": "The electric potential due to a point charge is inversely proportional to the square of the distance from the charge.",
-        "5": "If a positive charge moves (under the electric force alone) from a region of higher potential to a region of lower potential, its electric potential energy decreases."
+        "5": "If a positive charge moves (under the electric force alone) from a region of higher potential to a region of lower potential, its electric potential energy increases."
       },
-      "kunci": "1,3,5"
+      "kunci": "1,3"
     },
     {
       "no": 36,
@@ -487,17 +487,17 @@
       "sub_materi": "Rangkaian Kapasitor (penalaran)",
       "level_kognitif": "C4",
       "tingkat_kesukaran": "Sulit",
-      "jumlah_pilihan_benar": 3,
+      "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "Three identical capacitors, each with capacitance \\( C \\), can be arranged in different configurations and connected to the same battery of voltage \\( V \\). Which of the following statements are correct? (Select exactly 3 correct answers)",
+      "pertanyaan": "Three identical capacitors, each with capacitance \\( C \\), can be arranged in different configurations and connected to the same battery of voltage \\( V \\). Which of the following statements are correct? (Select exactly 2 correct answers)",
       "opsi": {
         "1": "If all three are connected in series, the equivalent capacitance is \\( C/3 \\).",
         "2": "If all three are connected in parallel, the equivalent capacitance is \\( 3C \\).",
         "3": "The series configuration always stores more total energy than the parallel configuration, for the same battery voltage.",
-        "4": "In the parallel configuration, each capacitor has a voltage across it equal to the source voltage \\( V \\).",
+        "4": "In the parallel configuration, each capacitor has a voltage across it equal to \\( V/3 \\).",
         "5": "In the series configuration, the voltage across each capacitor is equal to the full source voltage \\( V \\)."
       },
-      "kunci": "1,2,4"
+      "kunci": "1,2"
     },
     {
       "no": 37,
@@ -568,7 +568,7 @@
     "PG1": "B", "PG2": "A", "PG3": "C", "PG4": "A", "PG5": "B", "PG6": "B", "PG7": "A", "PG8": "C", "PG9": "A", "PG10": "B",
     "PG11": "B", "PG12": "B", "PG13": "B", "PG14": "A", "PG15": "C", "PG16": "B", "PG17": "C", "PG18": "C", "PG19": "A", "PG20": "A",
     "PG21": "B", "PG22": "D", "PG23": "A", "PG24": "C", "PG25": "B", "PG26": "A", "PG27": "A", "PG28": "C", "PG29": "C", "PG30": "C",
-    "MCMA1": "1,3,4", "MCMA2": "1,2,3", "MCMA3": "1,2,3", "MCMA4": "1,2,3,5", "MCMA5": "1,3,5", "MCMA6": "1,2,4",
+    "MCMA1": "1,3", "MCMA2": "1,2", "MCMA3": "1,2", "MCMA4": "1,2", "MCMA5": "1,3", "MCMA6": "1,2",
     "TF1": { "q37a": "T", "q37b": "T", "q37c": "F" },
     "TF2": { "q38a": "T", "q38b": "F", "q38c": "T" },
     "TF3": { "q39a": "T", "q39b": "F", "q39c": "T" },
