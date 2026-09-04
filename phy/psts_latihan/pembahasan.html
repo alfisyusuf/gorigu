@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pembahasan — Latihan PSTS Elektrostatika</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" async></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    --ink:#1b2430;
+    --ink-soft:#4a5568;
+    --paper:#eef1f5;
+    --surface:#ffffff;
+    --rule:#cbd5e0;
+    --rule-soft:#e2e8f0;
+    --copper:#b5652f;
+    --copper-soft:#f6e6d8;
+    --wire-blue:#2d5f8a;
+    --wire-blue-soft:#e1eaf3;
+    --correct:#2f7d4f;
+    --correct-soft:#e1f0e6;
+    --wrong:#b23a3a;
+    --wrong-soft:#f6e2e2;
+    --r-card:10px;
+    --r-pill:999px;
+    --shadow:0 1px 3px rgba(27,36,48,0.08);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', Georgia, serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:var(--wire-blue);}
+
+  /* ===== Top bar ===== */
+  #topbar{
+    position:sticky; top:0; z-index:60;
+    background:var(--ink); color:#f2f4f7;
+    padding:14px 20px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.15);
+  }
+  #topbar .brand{display:flex; flex-direction:column; gap:2px; min-width:0;}
+  #topbar .brand b{font-size:15px; font-weight:600; letter-spacing:0.01em;}
+  #topbar .brand span{font-size:12px; color:#9aa7b8; font-family:'JetBrains Mono',monospace;}
+  #topbar .tb-actions{display:flex; gap:8px; flex-shrink:0;}
+  #topbar button{
+    font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500;
+    padding:8px 14px; border-radius:6px; cursor:pointer;
+    border:1px solid #3a4658; background:transparent; color:#e7ebf0;
+    transition:all .15s;
+  }
+  #topbar button:hover{background:#2a3548;}
+  #topbar button.active{background:var(--copper); border-color:var(--copper); color:#241206;}
+
+  /* ===== Nav strip (jump to number) ===== */
+  #navstrip{
+    position:sticky; top:53px; z-index:55;
+    background:var(--surface); border-bottom:1px solid var(--rule-soft);
+    padding:10px 20px; overflow-x:auto; white-space:nowrap;
+    display:flex; gap:6px; align-items:center;
+    box-shadow:var(--shadow);
+  }
+  #navstrip::-webkit-scrollbar{height:5px;}
+  #navstrip::-webkit-scrollbar-thumb{background:var(--rule); border-radius:4px;}
+  .navgrp-label{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--ink-soft);
+    padding:0 8px 0 2px; flex-shrink:0; text-transform:uppercase; letter-spacing:.04em;
+  }
+  .navpill{
+    flex-shrink:0; width:26px; height:26px; border-radius:6px;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600;
+    border:1px solid var(--rule); color:var(--ink-soft); text-decoration:none;
+    background:var(--surface);
+  }
+  .navpill.mcq{border-color:var(--rule);}
+  .navpill.mcma{border-color:var(--wire-blue); color:var(--wire-blue);}
+  .navpill.tf{border-color:var(--copper); color:var(--copper);}
+  .navdiv{width:1px; align-self:stretch; background:var(--rule-soft); flex-shrink:0; margin:0 4px;}
+
+  /* ===== Layout ===== */
+  #wrap{max-width:760px; margin:0 auto; padding:36px 18px 90px;}
+
+  .hero{
+    background:var(--ink); color:#eef1f5; border-radius:14px; padding:30px 26px;
+    margin-bottom:28px; position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; right:-40px; top:-40px; width:180px; height:180px;
+    border:1px solid #3a4658; border-radius:50%;
+  }
+  .hero::after{
+    content:""; position:absolute; right:20px; top:30px; width:90px; height:90px;
+    border:1px solid #3a4658; border-radius:50%;
+  }
+  .hero .kicker{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--copper); margin-bottom:10px;}
+  .hero h1{margin:0 0 10px; font-size:28px; font-weight:600; line-height:1.25; max-width:520px;}
+  .hero p{margin:0; color:#aeb9c8; font-size:15px; max-width:480px;}
+  .hero .stats{display:flex; gap:22px; margin-top:20px; flex-wrap:wrap;}
+  .hero .stat b{display:block; font-family:'JetBrains Mono',monospace; font-size:19px; color:#fff;}
+  .hero .stat span{font-size:11.5px; color:#8b97a8; font-family:'JetBrains Mono',monospace;}
+
+  .lead-note{
+    background:var(--surface); border:1px solid var(--rule-soft); border-radius:var(--r-card);
+    padding:16px 18px; margin-bottom:32px; font-size:14.5px; color:var(--ink-soft);
+    box-shadow:var(--shadow);
+  }
+  .lead-note b{color:var(--ink);}
+
+  h2.section-title{
+    font-size:13px; font-weight:600; margin:44px 0 16px; color:var(--ink-soft);
+    text-transform:uppercase; letter-spacing:.06em; font-family:'JetBrains Mono',monospace;
+    display:flex; align-items:center; gap:12px;
+  }
+  h2.section-title::after{content:""; flex:1; height:1px; background:var(--rule);}
+  h2.section-title:first-of-type{margin-top:0;}
+
+  /* ===== Question cards ===== */
+  .qcard{
+    background:var(--surface); border:1px solid var(--rule-soft); border-radius:var(--r-card);
+    margin-bottom:18px; box-shadow:var(--shadow); scroll-margin-top:110px; overflow:hidden;
+  }
+  .qcard-top{padding:20px 22px 6px;}
+  .qhead{display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap;}
+  .qnum{
+    font-family:'JetBrains Mono',monospace; font-weight:700; font-size:14px;
+    width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center;
+    background:var(--paper); color:var(--ink); flex-shrink:0;
+  }
+  .badge{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; font-weight:600; padding:4px 8px;
+    border-radius:5px; text-transform:uppercase; letter-spacing:.03em;
+  }
+  .badge.MCQ{background:var(--paper); color:var(--ink-soft);}
+  .badge.MCMA{background:var(--wire-blue-soft); color:var(--wire-blue);}
+  .badge.TF_TABLE{background:var(--copper-soft); color:var(--copper);}
+  .qmeta{margin-left:auto; font-size:11.5px; color:var(--ink-soft); font-family:'JetBrains Mono',monospace;}
+
+  .stem{font-size:15.5px; margin-bottom:16px; color:var(--ink);}
+  .stimulus{
+    background:var(--copper-soft); padding:14px 16px; border-radius:8px;
+    margin-bottom:16px; font-size:14.5px; color:#5a3418; border:1px solid #e6c8a6;
+  }
+  .stimulus p{margin:0 0 8px;} .stimulus p:last-child{margin:0;}
+
+  ol.opts{list-style:none; margin:0 0 4px; padding:0; display:flex; flex-direction:column; gap:8px;}
+  ol.opts li{
+    display:flex; gap:11px; padding:10px 14px; border:1px solid var(--rule-soft);
+    border-radius:7px; font-size:14.5px; align-items:flex-start; background:var(--surface);
+  }
+  ol.opts li .tag{
+    font-family:'JetBrains Mono',monospace; font-weight:600; font-size:12px;
+    color:var(--ink-soft); border:1px solid var(--rule); border-radius:50%;
+    width:22px; height:22px; display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; background:var(--paper);
+  }
+  ol.opts.MCMA li .tag{border-radius:4px;}
+  ol.opts li.correct{background:var(--correct-soft); border-color:var(--correct);}
+  ol.opts li.correct .tag{background:var(--correct); color:#fff; border-color:var(--correct);}
+
+  table.tf{width:100%; border-collapse:separate; border-spacing:0; border:1px solid var(--rule-soft); border-radius:8px; overflow:hidden; margin-bottom:4px; font-size:14px;}
+  table.tf th, table.tf td{padding:10px 14px; border-bottom:1px solid var(--rule-soft); border-right:1px solid var(--rule-soft);}
+  table.tf th:last-child, table.tf td:last-child{border-right:none;}
+  table.tf tr:last-child td{border-bottom:none;}
+  table.tf th{background:var(--paper); font-weight:600; font-size:11.5px; font-family:'JetBrains Mono',monospace;}
+  table.tf td.tfv{text-align:center; font-weight:700; width:56px; font-family:'JetBrains Mono',monospace;}
+  table.tf td.tfv.T{background:var(--correct-soft); color:var(--correct);}
+  table.tf td.tfv.F{background:var(--wrong-soft); color:var(--wrong);}
+
+  /* ===== Solution block ===== */
+  .solusi{
+    border-top:1px dashed var(--rule); margin-top:16px; padding:16px 22px 20px;
+    background:linear-gradient(180deg, #fbfcfd, var(--surface));
+  }
+  .solusi-label{
+    display:flex; align-items:center; gap:8px; margin-bottom:10px;
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:700;
+    color:var(--wire-blue); text-transform:uppercase; letter-spacing:.05em;
+  }
+  .solusi-label .dot{width:7px; height:7px; border-radius:50%; background:var(--wire-blue);}
+  .solusi-steps{font-size:14.5px; color:var(--ink); }
+  .solusi-steps .rumus{
+    display:block; background:var(--wire-blue-soft); border-left:3px solid var(--wire-blue);
+    padding:9px 12px; border-radius:0 6px 6px 0; margin:8px 0; font-size:14.5px;
+  }
+  .solusi-steps p{margin:6px 0;}
+  .solusi-final{
+    display:flex; align-items:center; gap:10px; margin-top:12px; padding:10px 14px;
+    background:var(--correct-soft); border-radius:7px; font-size:14.5px;
+  }
+  .solusi-final b{font-family:'JetBrains Mono',monospace; color:var(--correct); font-size:14.5px;}
+  body.ringkas .solusi-steps{display:none;}
+  body.ringkas .solusi{padding-top:12px; padding-bottom:14px;}
+  body.ringkas .solusi-label{margin-bottom:8px;}
+
+  footer{
+    max-width:760px; margin:40px auto 0; padding:20px 18px; text-align:center;
+    font-size:12.5px; color:var(--ink-soft); font-family:'JetBrains Mono',monospace;
+  }
+
+  @media (max-width:600px){
+    #topbar{padding:12px 14px;}
+    #topbar .brand b{font-size:13.5px;}
+    #navstrip{top:49px; padding:8px 14px;}
+    #wrap{padding:24px 12px 70px;}
+    .hero{padding:22px 18px;}
+    .hero h1{font-size:22px;}
+    .qcard-top{padding:16px 16px 4px;}
+    .solusi{padding:14px 16px 16px;}
+    .qmeta{width:100%; margin-left:0; order:5;}
+  }
+
+  @media print{
+    #topbar, #navstrip{display:none;}
+    body{background:#fff;}
+    #wrap{padding:0; max-width:100%;}
+    .qcard{break-inside:avoid; box-shadow:none; border:1px solid #999;}
+    .hero{background:#fff; color:#000; border:1px solid #000;}
+    .hero::before,.hero::after{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="brand">
+    <b>Pembahasan — Elektrostatika</b>
+    <span>LATIHAN PSTS · SMA KELAS XII</span>
+  </div>
+  <div class="tb-actions">
+    <button id="btn-mode">Jawaban Saja</button>
+    <button onclick="window.print()">Cetak / PDF</button>
+  </div>
+</div>
+
+<div id="navstrip">
+  <span class="navgrp-label">PG</span>
+  <div id="nav-mcq" style="display:contents;"></div>
+  <div class="navdiv"></div>
+  <span class="navgrp-label">PGK</span>
+  <div id="nav-mcma" style="display:contents;"></div>
+  <div class="navdiv"></div>
+  <span class="navgrp-label">B-S</span>
+  <div id="nav-tf" style="display:contents;"></div>
+</div>
+
+<div id="wrap">
+
+  <div class="hero">
+    <div class="kicker">PEMBAHASAN LENGKAP · LANGKAH DEMI LANGKAH</div>
+    <h1>Pembahasan Latihan PSTS Fisika — Elektrostatika</h1>
+    <p>Setiap soal disertai rumus, substitusi angka, dan alasan konsep, disusun agar mudah diikuti dari awal hingga jawaban akhir.</p>
+    <div class="stats">
+      <div class="stat"><b>40</b><span>SOAL</span></div>
+      <div class="stat"><b>30</b><span>PILIHAN GANDA</span></div>
+      <div class="stat"><b>6</b><span>PGK</span></div>
+      <div class="stat"><b>4</b><span>BENAR-SALAH</span></div>
+    </div>
+  </div>
+
+  <div class="lead-note">
+    <b>Cara pakai:</b> gunakan konstanta \( k = 9\times10^{9}\ \text{N·m}^2/\text{C}^2 \) kecuali disebutkan lain pada soal. Tombol <span class="mono">"Jawaban Saja"</span> di atas menyembunyikan langkah pengerjaan bila kamu hanya ingin mengecek kunci dengan cepat.
+  </div>
+
+  <div id="soal-list"></div>
+
+</div>
+
+<footer>Dibuat untuk latihan mandiri · konstanta &amp; rumus mengikuti kurikulum SMA Kelas XII</footer>
+
+<script>
+const DATA = {
+  soal: [
+{no:1,tipe:"MCQ",sub:"Hukum Coulomb",lvl:"C2",bobot:2,
+ pertanyaan:"Two point charges, \\( q_1 = +3\\ \\mu C \\) and \\( q_2 = +6\\ \\mu C \\), are separated by a distance of 0.3 m in vacuum. Determine the magnitude of the electrostatic force between them. (\\( k = 9\\times10^{9}\\ \\text{N·m}^2/\\text{C}^2 \\))",
+ opsi:{A:"0.18 N",B:"180 N",C:"1.8 N",D:"18 N",E:"1800 N"}, kunci:"C",
+ solusi:`<p>Gunakan hukum Coulomb:</p><span class="rumus">\\( F = \\dfrac{k\\,q_1 q_2}{r^2} \\)</span>
+ <p>Substitusi \\( q_1=3\\times10^{-6}\\,C,\\ q_2=6\\times10^{-6}\\,C,\\ r=0.3\\,m \\):</p>
+ <span class="rumus">\\( F = \\dfrac{(9\\times10^{9})(3\\times10^{-6})(6\\times10^{-6})}{(0.3)^2} = \\dfrac{0.162}{0.09} = 1.8\\ \\text{N} \\)</span>`},
+
+{no:2,tipe:"MCQ",sub:"Hukum Coulomb",lvl:"C3",bobot:2,
+ pertanyaan:"If both point charges in a Coulomb's Law setup are doubled while the distance between them is halved, what happens to the magnitude of the electrostatic force?",
+ opsi:{A:"It becomes 8 times larger.",B:"It becomes 4 times larger.",C:"It becomes 2 times larger.",D:"It becomes 16 times larger.",E:"It becomes 0.25 times the original value."}, kunci:"D",
+ solusi:`<p>\\( F \\propto \\dfrac{q_1 q_2}{r^2} \\). Jika \\( q_1,q_2 \\to 2q_1,2q_2 \\) dan \\( r \\to r/2 \\):</p>
+ <span class="rumus">\\( F' = \\dfrac{(2q_1)(2q_2)}{(r/2)^2} \\cdot \\dfrac{k}{1}= \\dfrac{4\\,q_1q_2}{\\frac14 r^2}\\,k = 16 \\times \\dfrac{k q_1 q_2}{r^2} = 16F \\)</span>
+ <p>Faktor muatan (×4) dan faktor jarak (÷¼ → ×4) saling mengalikan: \\(4\\times4=16\\).</p>`},
+
+{no:3,tipe:"MCQ",sub:"Hukum Coulomb — titik setimbang",lvl:"C4",bobot:2,
+ pertanyaan:"Two point charges, \\( +Q \\) and \\( +9Q \\), are fixed 0.8 m apart along a straight line. At what distance from the \\( +Q \\) charge (measured along the line, between the two charges) must a third charge be placed so that the net electrostatic force acting on it is zero?",
+ opsi:{A:"0.1 m",B:"0.2 m",C:"0.3 m",D:"0.4 m",E:"0.6 m"}, kunci:"B",
+ solusi:`<p>Karena kedua muatan sejenis (+), titik setimbang berada di antara keduanya, lebih dekat ke muatan yang lebih kecil (\\(Q\\)). Misalkan jaraknya \\(x\\) dari \\(+Q\\):</p>
+ <span class="rumus">\\( \\dfrac{kQq}{x^2} = \\dfrac{k(9Q)q}{(0.8-x)^2} \\ \\Rightarrow\\ \\left(\\dfrac{0.8-x}{x}\\right)^2 = 9 \\)</span>
+ <p>Akar kedua ruas: \\( \\dfrac{0.8-x}{x}=3 \\Rightarrow 0.8-x=3x \\Rightarrow x = 0.2\\ \\text{m} \\)</p>`},
+
+{no:4,tipe:"MCQ",sub:"Vektor Gaya (sudut istimewa)",lvl:"C3",bobot:2,
+ pertanyaan:"Two equal electrostatic forces, each with a magnitude of 20 N, act on a charged particle. The angle between the two forces is \\( 60^{\\circ} \\). Determine the magnitude of the resultant force. (Use \\( \\cos 60^{\\circ} = 0.5 \\))",
+ opsi:{A:"20 N",B:"\\( 20\\sqrt{2} \\) N",C:"40 N",D:"\\( 40\\sqrt{3} \\) N",E:"\\( 20\\sqrt{3} \\) N"}, kunci:"E",
+ solusi:`<p>Gunakan aturan penjumlahan vektor gaya (mirip aturan cosinus):</p>
+ <span class="rumus">\\( R = \\sqrt{F_1^2+F_2^2+2F_1F_2\\cos\\theta} \\)</span>
+ <p>Dengan \\( F_1=F_2=20\\,N,\\ \\theta=60^\\circ \\):</p>
+ <span class="rumus">\\( R = \\sqrt{400+400+2(400)(0.5)} = \\sqrt{1200} = 20\\sqrt{3}\\ \\text{N} \\)</span>`},
+
+{no:5,tipe:"MCQ",sub:"Vektor Gaya (sudut istimewa)",lvl:"C3",bobot:2,
+ pertanyaan:"A point charge experiences an electrostatic force of 50 N directed at \\( 53^{\\circ} \\) above the horizontal axis. Determine the magnitude of the horizontal (x) component of this force. (\\( \\sin 53^{\\circ}=0.8,\\ \\cos 53^{\\circ}=0.6 \\))",
+ opsi:{A:"30 N",B:"20 N",C:"40 N",D:"50 N",E:"60 N"}, kunci:"A",
+ solusi:`<p>Komponen horizontal adalah proyeksi terhadap sumbu-x:</p>
+ <span class="rumus">\\( F_x = F\\cos 53^\\circ = 50 \\times 0.6 = 30\\ \\text{N} \\)</span>`},
+
+{no:6,tipe:"MCQ",sub:"Medan Listrik",lvl:"C3",bobot:2,
+ pertanyaan:"A point charge \\( Q = +4\\ \\mu C \\) is located in vacuum. Determine the magnitude of the electric field at a point 0.2 m away from the charge.",
+ opsi:{A:"\\( 9\\times10^{4} \\) N/C",B:"\\( 3.6\\times10^{5} \\) N/C",C:"\\( 1.8\\times10^{5} \\) N/C",D:"\\( 9\\times10^{5} \\) N/C",E:"\\( 4.5\\times10^{5} \\) N/C"}, kunci:"D",
+ solusi:`<span class="rumus">\\( E = \\dfrac{kQ}{r^2} = \\dfrac{(9\\times10^{9})(4\\times10^{-6})}{(0.2)^2} = \\dfrac{36000}{0.04} = 9\\times10^{5}\\ \\text{N/C} \\)</span>`},
+
+{no:7,tipe:"MCQ",sub:"Medan Listrik / Vektor",lvl:"C3",bobot:2,
+ pertanyaan:"Two point charges produce electric fields of \\( 6\\times10^{4} \\) N/C and \\( 8\\times10^{4} \\) N/C respectively at point P. If the two field vectors are perpendicular to one another, determine the magnitude of the resultant electric field at point P.",
+ opsi:{A:"\\( 1.4\\times10^{5} \\) N/C",B:"\\( 10^{5} \\) N/C",C:"\\( 2\\times10^{4} \\) N/C",D:"\\( 4.8\\times10^{4} \\) N/C",E:"\\( 10^{4} \\) N/C"}, kunci:"B",
+ solusi:`<p>Karena kedua vektor saling tegak lurus, gunakan Pythagoras (bukan penjumlahan biasa):</p>
+ <span class="rumus">\\( E = \\sqrt{E_1^2+E_2^2} = \\sqrt{(6)^2+(8)^2}\\times10^4 = \\sqrt{100}\\times10^4 = 10\\times10^4 = 1\\times10^{5}\\ \\text{N/C} \\)</span>`},
+
+{no:8,tipe:"MCQ",sub:"Medan Listrik — titik netral",lvl:"C4",bobot:2,
+ pertanyaan:"A point charge \\( +Q \\) and a point charge \\( -9Q \\) are placed 0.4 m apart. At what distance from the \\( +Q \\) charge, measured outward along the line joining the two charges (on the side of \\( +Q \\), away from \\( -9Q \\)), is the total electric field equal to zero?",
+ opsi:{A:"0.2 m",B:"0.1 m",C:"0.3 m",D:"0.4 m",E:"0.6 m"}, kunci:"A",
+ solusi:`<p>Karena kedua muatan berbeda jenis, titik nol medan berada di luar segmen, di sisi muatan yang lebih kecil (\\(+Q\\)). Misalkan jarak dari \\(+Q\\) adalah \\(x\\), maka jarak ke \\(-9Q\\) adalah \\((0.4+x)\\):</p>
+ <span class="rumus">\\( \\dfrac{kQ}{x^2} = \\dfrac{k(9Q)}{(0.4+x)^2} \\ \\Rightarrow\\ \\dfrac{0.4+x}{x} = 3 \\)</span>
+ <p>\\( 0.4+x = 3x \\Rightarrow x = 0.2\\ \\text{m} \\)</p>`},
+
+{no:9,tipe:"MCQ",sub:"Garis Medan Listrik",lvl:"C2",bobot:2,
+ pertanyaan:"A uniform electric field is mathematically defined as having constant strength and constant direction across a region of space. Graphically, how is this type of field represented by electric field lines?",
+ opsi:{A:"By lines that radially diverge from a central point.",B:"By lines that are denser in the middle and sparse at the edges.",C:"By parallel, straight lines that are equally spaced from one another.",D:"By closed circular loops.",E:"By lines whose spacing gradually increases along the direction of the field."}, kunci:"C",
+ solusi:`<p>Kerapatan garis medan menunjukkan kuat medan. Karena medan seragam memiliki besar dan arah yang tetap di semua titik, garis-garisnya harus <b>sejajar dan berjarak sama</b> — bukan menyebar atau merapat seperti pada muatan titik.</p>`},
+
+{no:10,tipe:"MCQ",sub:"Fluks Listrik",lvl:"C3",bobot:2,
+ pertanyaan:"A flat surface with an area of 0.05 m\\(^2\\) is placed in a uniform electric field of \\( 4\\times10^{3} \\) N/C. The normal vector to the surface makes an angle of \\( 60^{\\circ} \\) with the field direction. Determine the electric flux through the surface.",
+ opsi:{A:"50 N·m\\(^2\\)/C",B:"86.6 N·m\\(^2\\)/C",C:"173.2 N·m\\(^2\\)/C",D:"200 N·m\\(^2\\)/C",E:"100 N·m\\(^2\\)/C"}, kunci:"E",
+ solusi:`<span class="rumus">\\( \\Phi = E\\,A\\cos\\theta = (4000)(0.05)(\\cos 60^\\circ) = (4000)(0.05)(0.5) = 100\\ \\text{N·m}^2/\\text{C} \\)</span>`},
+
+{no:11,tipe:"MCQ",sub:"Hukum Gauss (konseptual)",lvl:"C2",bobot:2,
+ pertanyaan:"When analyzing an electrostatic system using Gauss's Law, the total net electric flux escaping an arbitrary closed bounding surface is determined exclusively by what factor?",
+ opsi:{A:"The net amount of electric charge contained inside the bounding surface.",B:"The geometric shape and physical size of the bounding surface.",C:"The total volume enclosed by the surface.",D:"The location of external charges outside the bounding surface.",E:"The total surface area of the closed surface."}, kunci:"A",
+ solusi:`<p>Inti Hukum Gauss: \\( \\Phi = Q_{enc}/\\varepsilon_0 \\). Bentuk, ukuran, atau luas permukaan tertutup tidak memengaruhi fluks total — hanya <b>muatan neto di dalamnya</b> yang menentukan.</p>`},
+
+{no:12,tipe:"MCQ",sub:"Hukum Gauss",lvl:"C3",bobot:2,
+ pertanyaan:"A closed spherical surface encloses a net charge of \\( +2\\times10^{-9} \\) C. Given \\( \\varepsilon_0 = 8.85\\times10^{-12}\\ \\text{C}^2/\\text{N·m}^2 \\), determine the total electric flux passing outward through the surface.",
+ opsi:{A:"22.6 N·m\\(^2\\)/C",B:"2260 N·m\\(^2\\)/C",C:"226 N·m\\(^2\\)/C",D:"0.226 N·m\\(^2\\)/C",E:"2.26 N·m\\(^2\\)/C"}, kunci:"C",
+ solusi:`<span class="rumus">\\( \\Phi = \\dfrac{Q}{\\varepsilon_0} = \\dfrac{2\\times10^{-9}}{8.85\\times10^{-12}} \\approx 226\\ \\text{N·m}^2/\\text{C} \\)</span>`},
+
+{no:13,tipe:"MCQ",sub:"Potensial Listrik",lvl:"C3",bobot:2,
+ pertanyaan:"Determine the electric potential at a point located 0.3 m away from a point charge of \\( +8\\ \\mu C \\).",
+ opsi:{A:"\\( 2.4\\times10^{4} \\) V",B:"\\( 2.4\\times10^{6} \\) V",C:"\\( 4.8\\times10^{5} \\) V",D:"\\( 2.4\\times10^{5} \\) V",E:"\\( 7.2\\times10^{5} \\) V"}, kunci:"D",
+ solusi:`<span class="rumus">\\( V = \\dfrac{kQ}{r} = \\dfrac{(9\\times10^{9})(8\\times10^{-6})}{0.3} = \\dfrac{72000}{0.3} = 2.4\\times10^{5}\\ \\text{V} \\)</span>`},
+
+{no:14,tipe:"MCQ",sub:"Energi Potensial Listrik",lvl:"C3",bobot:2,
+ pertanyaan:"Two point charges, \\( +4\\ \\mu C \\) and \\( -3\\ \\mu C \\), are separated by 0.2 m. Calculate the electric potential energy of this two-charge system.",
+ opsi:{A:"\\( -0.27 \\) J",B:"\\( -0.54 \\) J",C:"\\( +0.54 \\) J",D:"\\( -1.08 \\) J",E:"\\( -5.4 \\) J"}, kunci:"B",
+ solusi:`<span class="rumus">\\( E_p = \\dfrac{k\\,q_1q_2}{r} = \\dfrac{(9\\times10^{9})(4\\times10^{-6})(-3\\times10^{-6})}{0.2} = \\dfrac{-0.108}{0.2} = -0.54\\ \\text{J} \\)</span>
+ <p>Tanda negatif wajar karena kedua muatan berlawanan jenis (saling tarik).</p>`},
+
+{no:15,tipe:"MCQ",sub:"Usaha oleh Gaya Listrik",lvl:"C3",bobot:2,
+ pertanyaan:"Calculate the work needed to move a \\( +3 \\) C charge from an initial point where the electric potential is 10 V to a final point where the potential is 50 V.",
+ opsi:{A:"120 J",B:"150 J",C:"30 J",D:"40 J",E:"60 J"}, kunci:"A",
+ solusi:`<span class="rumus">\\( W = q\\,\\Delta V = q(V_B-V_A) = 3\\,(50-10) = 120\\ \\text{J} \\)</span>`},
+
+{no:16,tipe:"MCQ",sub:"Superposisi Potensial",lvl:"C3",bobot:2,
+ pertanyaan:"Two identical point charges, each \\( +Q = +4\\ \\mu C \\), are placed 0.6 m apart. Determine the electric potential exactly at the midpoint between them.",
+ opsi:{A:"\\( 1.2\\times10^{5} \\) V",B:"0 V",C:"\\( 2.4\\times10^{5} \\) V",D:"\\( 4.8\\times10^{5} \\) V",E:"\\( 9\\times10^{4} \\) V"}, kunci:"C",
+ solusi:`<p>Potensial adalah skalar sehingga tinggal dijumlahkan langsung. Jarak tiap muatan ke titik tengah \\( r=0.3\\,m \\):</p>
+ <span class="rumus">\\( V = V_1+V_2 = 2\\left(\\dfrac{kQ}{r}\\right) = 2\\times\\dfrac{(9\\times10^{9})(4\\times10^{-6})}{0.3} = 2\\times1.2\\times10^5 = 2.4\\times10^{5}\\ \\text{V} \\)</span>
+ <p>Berbeda dengan medan listrik (vektor) yang bisa saling meniadakan, potensial di titik tengah dari dua muatan sejenis justru menjumlah, bukan nol.</p>`},
+
+{no:17,tipe:"MCQ",sub:"Permukaan Ekuipotensial",lvl:"C2",bobot:2,
+ pertanyaan:"Identify the true statement regarding the fundamental characteristics of equipotential surfaces in any electrostatic configuration.",
+ opsi:{A:"The electric potential value varies steadily along any given equipotential surface.",B:"Equipotential surfaces from the same charge configuration will frequently cross one another.",C:"The electric field vectors always run parallel to the surface of equipotential planes.",D:"Electric field lines always intersect equipotential surfaces perpendicularly (at a 90-degree angle).",E:"Moving a positive charge along an equipotential surface requires positive mechanical work."}, kunci:"D",
+ solusi:`<p>Karena tidak ada usaha yang dilakukan saat bergerak sepanjang permukaan ekuipotensial (\\(\\Delta V=0\\)), komponen medan sepanjang permukaan harus nol — sehingga medan listrik selalu <b>tegak lurus</b> terhadap permukaan ekuipotensial.</p>`},
+
+{no:18,tipe:"MCQ",sub:"Hubungan Medan & Potensial",lvl:"C3",bobot:2,
+ pertanyaan:"The electric potential difference across a gap between two parallel plates is 300 V, and the plates are separated by 5 cm. Assuming the field between them is uniform, what is the magnitude of the electric field?",
+ opsi:{A:"1500 N/C",B:"6000 N/C",C:"600 N/C",D:"15000 N/C",E:"60 N/C"}, kunci:"B",
+ solusi:`<p>Untuk medan seragam, \\( E = V/d \\). Ubah \\( d=5\\,cm=0.05\\,m \\):</p>
+ <span class="rumus">\\( E = \\dfrac{300}{0.05} = 6000\\ \\text{N/C} \\)</span>`},
+
+{no:19,tipe:"MCQ",sub:"Konduktor — Ekuipotensial",lvl:"C2",bobot:2,
+ pertanyaan:"For an isolated, solid metallic sphere carrying a net positive charge and existing in electrostatic equilibrium, which property accurately describes its outer boundary?",
+ opsi:{A:"The electric field is strongest directly inside the surface.",B:"The electric field lines run tangentially across its surface.",C:"The electric potential is exactly zero at all points on the surface.",D:"The electric potential differs widely depending on the measurement location on the surface.",E:"The entire outer boundary functions as a single equipotential surface."}, kunci:"E",
+ solusi:`<p>Dalam kesetimbangan elektrostatis, muatan berhenti berpindah — artinya tidak ada beda potensial di sepanjang permukaan konduktor. Seluruh permukaan konduktor merupakan satu <b>permukaan ekuipotensial tunggal</b>.</p>`},
+
+{no:20,tipe:"MCQ",sub:"Usaha pada Ekuipotensial",lvl:"C2",bobot:2,
+ pertanyaan:"A charge of 3 C is shifted slowly along an equipotential line from point A to point B. What is the total electrostatic work done on the charge during this displacement?",
+ opsi:{A:"3 J",B:"Depends on the distance between A and B.",C:"0 J",D:"9 J",E:"Depends heavily on the specific path chosen."}, kunci:"C",
+ solusi:`<span class="rumus">\\( W = q\\,\\Delta V = q(V_B-V_A) \\)</span>
+ <p>Karena A dan B berada pada garis/permukaan ekuipotensial yang sama, \\( V_A=V_B \\), sehingga \\( \\Delta V=0 \\) dan \\( W=0\\,\\text{J} \\), berapa pun jarak tempuhnya.</p>`},
+
+{no:21,tipe:"MCQ",sub:"Kapasitor Keping Sejajar",lvl:"C3",bobot:2,
+ pertanyaan:"A parallel-plate capacitor has an initial capacitance \\( C \\). If the plate separation distance is reduced to \\( \\tfrac{1}{3} \\) of its original value while maintaining the same plate area, what is the new capacitance, expressed in terms of \\( C \\)?",
+ opsi:{A:"\\( 3C \\)",B:"\\( C/3 \\)",C:"\\( C/9 \\)",D:"\\( 9C \\)",E:"\\( C \\) (unchanged)"}, kunci:"A",
+ solusi:`<span class="rumus">\\( C = \\dfrac{\\varepsilon_0 A}{d} \\)</span>
+ <p>\\(C\\) berbanding terbalik dengan \\(d\\). Jika \\( d \\to d/3 \\), maka \\( C' = \\varepsilon_0 A / (d/3) = 3\\times(\\varepsilon_0 A/d) = 3C \\).</p>`},
+
+{no:22,tipe:"MCQ",sub:"Dielektrik",lvl:"C3",bobot:2,
+ pertanyaan:"A parallel-plate capacitor with a vacuum gap has a capacitance of 3 \\( \\mu \\)F. A dielectric material with a relative permittivity \\( \\varepsilon_r = 6 \\) is then fully inserted between the plates. Determine the newly modified capacitance.",
+ opsi:{A:"0.5 \\(\\mu\\)F",B:"3 \\(\\mu\\)F",C:"9 \\(\\mu\\)F",D:"18 \\(\\mu\\)F",E:"2 \\(\\mu\\)F"}, kunci:"D",
+ solusi:`<span class="rumus">\\( C' = \\varepsilon_r\\,C = 6 \\times 3\\ \\mu F = 18\\ \\mu F \\)</span>`},
+
+{no:23,tipe:"MCQ",sub:"Rangkaian Kapasitor Seri",lvl:"C3",bobot:2,
+ pertanyaan:"Two capacitors, measuring 12 \\( \\mu \\)F and 4 \\( \\mu \\)F, are wired together in a series circuit. Calculate the total equivalent capacitance of this setup.",
+ opsi:{A:"16 \\(\\mu\\)F",B:"3 \\(\\mu\\)F",C:"8 \\(\\mu\\)F",D:"48 \\(\\mu\\)F",E:"4 \\(\\mu\\)F"}, kunci:"B",
+ solusi:`<span class="rumus">\\( \\dfrac{1}{C_s}=\\dfrac{1}{12}+\\dfrac{1}{4}=\\dfrac{1}{12}+\\dfrac{3}{12}=\\dfrac{4}{12}=\\dfrac{1}{3} \\ \\Rightarrow\\ C_s = 3\\ \\mu F \\)</span>
+ <p>Ingat: nilai kapasitansi total rangkaian seri selalu lebih kecil dari kapasitor terkecil dalam rangkaian.</p>`},
+
+{no:24,tipe:"MCQ",sub:"Rangkaian Kapasitor Paralel",lvl:"C2",bobot:2,
+ pertanyaan:"Two capacitors, measuring 12 \\( \\mu \\)F and 4 \\( \\mu \\)F, are connected in a parallel configuration. What is the total equivalent capacitance of this combination?",
+ opsi:{A:"3 \\(\\mu\\)F",B:"8 \\(\\mu\\)F",C:"48 \\(\\mu\\)F",D:"4 \\(\\mu\\)F",E:"16 \\(\\mu\\)F"}, kunci:"E",
+ solusi:`<span class="rumus">\\( C_p = C_1+C_2 = 12+4 = 16\\ \\mu F \\)</span>`},
+
+{no:25,tipe:"MCQ",sub:"Rangkaian Kapasitor Campuran",lvl:"C4",bobot:2,
+ pertanyaan:"In a specific circuit, a 5 \\( \\mu \\)F capacitor is connected in parallel with a 3 \\( \\mu \\)F capacitor. This parallel group is then connected in series with an 8 \\( \\mu \\)F capacitor. Determine the total equivalent capacitance of the entire circuit.",
+ opsi:{A:"16 \\(\\mu\\)F",B:"8 \\(\\mu\\)F",C:"4 \\(\\mu\\)F",D:"2 \\(\\mu\\)F",E:"6 \\(\\mu\\)F"}, kunci:"C",
+ solusi:`<p>Langkah 1 — gabungkan bagian paralel dulu:</p>
+ <span class="rumus">\\( C_{p} = 5+3 = 8\\ \\mu F \\)</span>
+ <p>Langkah 2 — hasil ini diseri dengan 8 μF:</p>
+ <span class="rumus">\\( \\dfrac{1}{C_{tot}} = \\dfrac{1}{8}+\\dfrac{1}{8} = \\dfrac{2}{8}\\ \\Rightarrow\\ C_{tot} = 4\\ \\mu F \\)</span>`},
+
+{no:26,tipe:"MCQ",sub:"Energi Kapasitor",lvl:"C3",bobot:2,
+ pertanyaan:"A capacitor possessing a capacitance of 4 \\( \\mu \\)F is charged until the potential difference across it reaches 50 V. Calculate the amount of electrical energy stored within the capacitor.",
+ opsi:{A:"\\( 1\\times10^{-2} \\) J",B:"\\( 2\\times10^{-3} \\) J",C:"\\( 1\\times10^{-3} \\) J",D:"\\( 5\\times10^{-3} \\) J",E:"\\( 2.5\\times10^{-2} \\) J"}, kunci:"D",
+ solusi:`<span class="rumus">\\( W = \\tfrac{1}{2}CV^2 = \\tfrac12 (4\\times10^{-6})(50)^2 = \\tfrac12 (4\\times10^{-6})(2500) = 5\\times10^{-3}\\ \\text{J} \\)</span>`},
+
+{no:27,tipe:"MCQ",sub:"Muatan pada Kapasitor",lvl:"C2",bobot:2,
+ pertanyaan:"An 8 \\( \\mu \\)F capacitor is hooked up to a steady 9 V power supply. Determine the magnitude of the charge accumulated on each plate.",
+ opsi:{A:"\\( 7.2\\times10^{-5} \\) C",B:"\\( 7.2\\times10^{-4} \\) C",C:"0.72 C",D:"72 C",E:"1.12 C"}, kunci:"A",
+ solusi:`<span class="rumus">\\( Q = CV = (8\\times10^{-6})(9) = 7.2\\times10^{-5}\\ \\text{C} \\)</span>`},
+
+{no:28,tipe:"MCQ",sub:"Kapasitor Terisolasi + Dielektrik",lvl:"C4",bobot:2,
+ pertanyaan:"An isolated parallel-plate capacitor (entirely disconnected from any power source) has an initial capacitance of 2 \\( \\mu \\)F and an initial voltage of 60 V. A dielectric slab with \\( \\varepsilon_r = 3 \\) is subsequently pushed in, completely filling the gap. Find the new voltage across the plates.",
+ opsi:{A:"60 V",B:"20 V",C:"180 V",D:"10 V",E:"120 V"}, kunci:"B",
+ solusi:`<p>Karena kapasitor <b>terisolasi</b> (tidak terhubung baterai), muatan \\(Q\\) tetap konstan. Mula-mula \\( Q = C V = 2\\,\\mu F \\times 60\\,V = 120\\ \\mu C \\).</p>
+ <p>Kapasitansi baru setelah dielektrik masuk:</p>
+ <span class="rumus">\\( C' = \\varepsilon_r C = 3\\times2 = 6\\ \\mu F \\)</span>
+ <p>Karena \\(Q\\) tetap, tegangan baru turun:</p>
+ <span class="rumus">\\( V' = \\dfrac{Q}{C'} = \\dfrac{120\\,\\mu C}{6\\,\\mu F} = 20\\ \\text{V} \\)</span>`},
+
+{no:29,tipe:"MCQ",sub:"Kapasitor pada Tegangan Tetap",lvl:"C3",bobot:2,
+ pertanyaan:"A parallel-plate capacitor remains permanently connected to a battery, ensuring its voltage stays constant. If the separation distance between the plates is suddenly halved while keeping the area unchanged, what happens to the amount of charge stored?",
+ opsi:{A:"It drops to half of its original value.",B:"It drops to one-quarter of its original value.",C:"It remains exactly the same.",D:"It doubles its original value.",E:"It quadruples its original value."}, kunci:"D",
+ solusi:`<p>Tetap terhubung baterai \\(\\Rightarrow V\\) konstan. Karena \\( C=\\varepsilon_0 A/d \\) dan \\( d\\to d/2 \\), maka \\( C'=2C \\).</p>
+ <span class="rumus">\\( Q' = C'V = 2CV = 2Q \\)</span>
+ <p>Muatan menjadi dua kali lipat dari semula.</p>`},
+
+{no:30,tipe:"MCQ",sub:"Energi: Seri vs Paralel",lvl:"C4",bobot:2,
+ pertanyaan:"Two identical 4 \\( \\mu \\)F capacitors are hooked up to a 10 V battery. Calculate the ratio of the total stored energy when the capacitors are connected in series (\\( W_{series} \\)) compared to when they are connected in parallel (\\( W_{parallel} \\)).",
+ opsi:{A:"1 : 4",B:"4 : 1",C:"1 : 2",D:"2 : 1",E:"1 : 1"}, kunci:"A",
+ solusi:`<p><b>Seri:</b> \\( C_s = \\dfrac{4\\times4}{4+4}=2\\,\\mu F \\), seluruh 10 V berada pada gabungan seri:</p>
+ <span class="rumus">\\( W_s = \\tfrac12 C_s V^2 = \\tfrac12(2\\times10^{-6})(100)=1\\times10^{-4}\\ \\text{J} \\)</span>
+ <p><b>Paralel:</b> \\( C_p = 4+4=8\\,\\mu F \\), tiap kapasitor tetap mendapat 10 V:</p>
+ <span class="rumus">\\( W_p = \\tfrac12 C_p V^2 = \\tfrac12(8\\times10^{-6})(100)=4\\times10^{-4}\\ \\text{J} \\)</span>
+ <p>Rasio: \\( W_s : W_p = 1\\times10^{-4} : 4\\times10^{-4} = 1:4 \\)</p>`},
+
+{no:31,tipe:"MCMA",jml:3,sub:"Hukum Coulomb (sifat)",lvl:"C2",bobot:4,
+ pertanyaan:"Evaluating the principles behind Coulomb's Law (\\( F = k\\frac{q_1 q_2}{r^2} \\)), which of the following assertions are accurate? (Select exactly 3 correct answers)",
+ opsi:{1:"The electrostatic force scales linearly with the product of the two charge magnitudes.",2:"The electrostatic force is completely independent of the medium separating the charges.",3:"The force exhibits an inverse-square relationship with the separation distance.",4:"Cutting the distance between the charges in half will cause the force to increase by a factor of four.",5:"The force is directly proportional to the square of the distance between the charges."}, kunci:"1,3,4",
+ solusi:`<p><b>1 — Benar:</b> \\(F\\propto q_1q_2\\), hubungan linear terhadap hasil kali muatan.</p>
+ <p><b>2 — Salah:</b> nilai \\(k\\) (atau permitivitas medium) memengaruhi besar gaya, jadi medium berpengaruh.</p>
+ <p><b>3 — Benar:</b> \\(F\\propto 1/r^2\\), sesuai definisi hukum kuadrat terbalik.</p>
+ <p><b>4 — Benar:</b> \\( r\\to r/2 \\Rightarrow F' = F/(1/2)^2 = 4F \\).</p>
+ <p><b>5 — Salah:</b> gaya berbanding terbalik terhadap \\(r^2\\), bukan berbanding lurus.</p>`},
+
+{no:32,tipe:"MCMA",jml:3,sub:"Konduktor Ekuilibrium",lvl:"C2",bobot:4,
+ pertanyaan:"Identify the correct physical characteristics of a solid metallic conductor that has achieved electrostatic equilibrium. (Select exactly 3 correct answers)",
+ opsi:{1:"Any net excess charge will distribute itself strictly along the outer boundary/surface.",2:"The electric potential drops significantly from the surface to the center.",3:"The electric field intensity everywhere inside the solid conducting material is exactly zero.",4:"The surface of the conductor fails to act as an equipotential surface.",5:"Electric field lines emerging from the surface do so at a perpendicular angle (90 degrees)."}, kunci:"1,3,5",
+ solusi:`<p><b>1 — Benar:</b> muatan lebih pada konduktor selalu terkumpul di permukaan luar.</p>
+ <p><b>2 — Salah:</b> karena \\(E=0\\) di dalam konduktor, potensial di seluruh bagian dalam sama dengan di permukaan (tidak turun).</p>
+ <p><b>3 — Benar:</b> ini ciri utama kesetimbangan elektrostatis pada konduktor.</p>
+ <p><b>4 — Salah:</b> permukaan konduktor justru selalu ekuipotensial.</p>
+ <p><b>5 — Benar:</b> garis medan selalu tegak lurus permukaan ekuipotensial (termasuk permukaan konduktor).</p>`},
+
+{no:33,tipe:"MCMA",jml:3,sub:"Dielektrik pada Kapasitor Terisolasi",lvl:"C4",bobot:4,
+ pertanyaan:"A fully charged parallel-plate capacitor is completely disconnected from its voltage source. If a dielectric slab is then inserted between its plates, which outcomes are true? (Select exactly 3 correct answers)",
+ opsi:{1:"The total charge trapped on the capacitor plates remains completely unchanged.",2:"The overall capacitance of the capacitor experiences a reduction.",3:"The electric potential difference (voltage) across the plates drops.",4:"The capacitor's total capacitance increases.",5:"The magnitude of the electric field within the gap becomes stronger."}, kunci:"1,3,4",
+ solusi:`<p><b>1 — Benar:</b> terisolasi (tidak terhubung sumber) → muatan \\(Q\\) tidak bisa berubah.</p>
+ <p><b>2 — Salah</b> dan <b>4 — Benar:</b> dielektrik selalu <i>menaikkan</i> kapasitansi, \\(C'=\\varepsilon_r C\\).</p>
+ <p><b>3 — Benar:</b> karena \\(Q\\) tetap dan \\(C\\) naik, \\(V=Q/C\\) harus turun.</p>
+ <p><b>5 — Salah:</b> \\(E=V/d\\); karena \\(V\\) turun sedangkan \\(d\\) tetap, medan justru melemah, bukan menguat.</p>`},
+
+{no:34,tipe:"MCMA",jml:4,sub:"Garis Medan Listrik (sifat)",lvl:"C2",bobot:4,
+ pertanyaan:"Review the following principles regarding electric field lines. Which statements are factually correct? (Select exactly 4 correct answers)",
+ opsi:{1:"The relative closeness (density) of the lines serves as an indicator of field strength.",2:"Lines naturally start at positive charges and end at negative charges (or extend infinitely).",3:"Drawing a tangent to any point on a field line reveals the local electric field vector's direction.",4:"It is physically impossible for two electric field lines to intersect each other.",5:"Electric field lines surrounding a single, isolated charge always form continuous closed loops."}, kunci:"1,2,3,4",
+ solusi:`<p><b>1, 2, 3, 4 — Benar:</b> keempatnya adalah sifat baku garis medan listrik: kerapatan = kekuatan medan, arah dari (+) ke (−) atau menuju tak hingga, arah medan = garis singgung, dan garis medan tidak pernah berpotongan (karena di satu titik medan hanya punya satu arah).</p>
+ <p><b>5 — Salah:</b> garis medan listrik statis (elektrostatik) tidak pernah membentuk loop tertutup pada muatan tunggal — garis-garisnya bersifat radial dan terbuka (berbeda dengan garis medan magnet).</p>`},
+
+{no:35,tipe:"MCMA",jml:3,sub:"Potensial & Energi Potensial (sifat)",lvl:"C3",bobot:4,
+ pertanyaan:"Which of the following propositions correctly describe the nature of electric potential and electric potential energy? (Select exactly 3 correct answers)",
+ opsi:{1:"The total electrostatic work done when moving a charge between two points is path-independent.",2:"Electric potential is defined as a scalar value, whereas electric field is a vector.",3:"The potential energy belonging to a pair of positive point charges is always a negative value.",4:"A positive charge naturally moving from a high to a low potential region loses electric potential energy.",5:"The electric potential created by a point charge drops off proportionally to the square of the distance."}, kunci:"1,2,4",
+ solusi:`<p><b>1 — Benar:</b> gaya listrik bersifat konservatif, usaha tidak bergantung lintasan.</p>
+ <p><b>2 — Benar:</b> \\(V\\) skalar, \\(\\vec E\\) vektor.</p>
+ <p><b>3 — Salah:</b> untuk dua muatan sejenis (misalnya keduanya positif), \\(E_p = kq_1q_2/r\\) justru <i>positif</i>, bukan negatif.</p>
+ <p><b>4 — Benar:</b> \\(E_p\\) berkurang seiring muatan positif bergerak dari potensial tinggi ke rendah (konsisten dengan gaya yang melakukan usaha positif).</p>
+ <p><b>5 — Salah:</b> \\(V\\propto 1/r\\) (berbanding terbalik pangkat satu), bukan \\(1/r^2\\) — itu ciri medan listrik \\(E\\).</p>`},
+
+{no:36,tipe:"MCMA",jml:3,sub:"Rangkaian Kapasitor (penalaran)",lvl:"C4",bobot:4,
+ pertanyaan:"Consider three completely identical capacitors, each with capacitance \\( C \\), that can be wired to a battery of voltage \\( V \\). Which statements regarding their configuration are valid? (Select exactly 3 correct answers)",
+ opsi:{1:"When all three are placed in parallel, the total system capacitance is \\( 3C \\).",2:"A series arrangement forces the voltage across each individual capacitor to be exactly \\( V \\).",3:"When all three are in series, the total system capacitance becomes \\( C/3 \\).",4:"In a parallel arrangement, the voltage measured across every capacitor is equal to \\( V \\).",5:"A series circuit will inevitably store more total energy than a parallel circuit given the same battery."}, kunci:"1,3,4",
+ solusi:`<p><b>1 — Benar:</b> paralel: \\(C_p=C+C+C=3C\\).</p>
+ <p><b>2 — Salah:</b> pada rangkaian seri, tegangan total \\(V\\) justru <i>terbagi</i> ke masing-masing kapasitor (untuk kapasitor identik, masing-masing mendapat \\(V/3\\)), bukan \\(V\\) penuh.</p>
+ <p><b>3 — Benar:</b> seri: \\(1/C_s=1/C+1/C+1/C=3/C \\Rightarrow C_s=C/3\\).</p>
+ <p><b>4 — Benar:</b> ciri khas rangkaian paralel: tegangan pada tiap cabang sama dengan tegangan sumber \\(V\\).</p>
+ <p><b>5 — Salah:</b> untuk baterai (V) yang sama, susunan paralel memiliki \\(C\\) lebih besar sehingga \\(W=\\tfrac12CV^2\\) paralel justru lebih besar dari seri, bukan sebaliknya.</p>`},
+
+{no:37,tipe:"TF",sub:"Konduktor Berongga & Induksi",lvl:"C4",bobot:"4 (1 poin/pernyataan)",
+ stimulus:"A hollow conducting spherical shell has an inner radius of 4 cm and an outer radius of 8 cm. A point charge of \\( +2Q \\) is suspended precisely at the center of the hollow cavity, never making contact with the shell itself. Initially, before the charge was inserted, the conducting shell was perfectly neutral.<br><br>Electrostatic induction forces charges to redistribute on the shell's surfaces. Evaluate the truth of the following statements based on this scenario.",
+ pernyataan:[
+   {id:"37a",text:"An induced charge of \\( -2Q \\) will distribute itself over the inner surface of the shell (at \\( r = 4\\) cm)."},
+   {id:"37b",text:"An induced charge of \\( -2Q \\) will also appear on the outer boundary of the shell."},
+   {id:"37c",text:"The electric field intensity anywhere inside the solid metallic wall of the shell (between 4 cm and 8 cm) remains zero."}
+ ], kunci:{"37a":"T","37b":"F","37c":"T"},
+ solusi:`<p><b>(a) Benar:</b> muatan \\(+2Q\\) di rongga menginduksi muatan \\(-2Q\\) yang terkumpul di permukaan dalam kulit konduktor (agar medan di dalam badan logam nol).</p>
+ <p><b>(b) Salah:</b> karena kulit mula-mula netral, hukum kekekalan muatan mengharuskan permukaan luar membawa muatan <b>\\(+2Q\\)</b> (bukan \\(-2Q\\)) agar total muatan pada kulit tetap nol (\\(-2Q\\) di dalam \\(+\\,+2Q\\) di luar \\(=0\\)).</p>
+ <p><b>(c) Benar:</b> ini sifat dasar konduktor dalam kesetimbangan elektrostatis — medan listrik di dalam badan logam (bukan rongga) selalu nol.</p>`},
+
+{no:38,tipe:"TF",sub:"Kapasitor: Tetap Terhubung ke Baterai",lvl:"C4",bobot:"4 (1 poin/pernyataan)",
+ stimulus:"A standard parallel-plate capacitor is hooked up to a 24 V battery and allowed to charge fully. While the capacitor remains firmly connected to the active battery, an insulated tool is used to pull the plates apart, tripling the separation distance (\\( d \\)) while keeping the plate area constant.<br><br>Relying on the formulas \\( C=\\varepsilon_0 A/d \\) and \\( Q=CV \\), determine if the following conclusions are True or False.",
+ pernyataan:[
+   {id:"38a",text:"The capacitance of the system is reduced to one-third of its initial value."},
+   {id:"38b",text:"The potential difference (voltage) across the capacitor plates drops to one-third of its initial value."},
+   {id:"38c",text:"The total charge held on the capacitor plates becomes one-third of what it originally was."}
+ ], kunci:{"38a":"T","38b":"F","38c":"T"},
+ solusi:`<p><b>(a) Benar:</b> \\(C=\\varepsilon_0A/d\\); \\(d\\to3d \\Rightarrow C'=C/3\\).</p>
+ <p><b>(b) Salah:</b> selama tetap terhubung baterai, tegangan <b>dipaksa tetap</b> sebesar 24 V oleh baterai — tidak ikut turun.</p>
+ <p><b>(c) Benar:</b> karena \\(Q=CV\\), \\(V\\) tetap tetapi \\(C\\) turun menjadi \\(C/3\\), sehingga \\(Q'=C'V=Q/3\\).</p>`},
+
+{no:39,tipe:"TF",sub:"Superposisi Potensial & Medan (Simetri)",lvl:"C4",bobot:"4 (1 poin/pernyataan)",
+ stimulus:"Two identical point charges, each carrying a charge of \\( -Q \\), are locked in place at the base corners of an equilateral triangle with a side dimension of \\( a \\). A designated observation point P is situated at the top peak of the triangle, placing it at a distance \\( a \\) from both charges.<br><br>Analyzing the combined electric field and electric potential at point P created by these two negative charges, judge the validity of the following statements.",
+ pernyataan:[
+   {id:"39a",text:"The total electric potential at P is found by simply adding the scalar potential values contributed by each charge."},
+   {id:"39b",text:"Because both charges are identical, the total electric field at P is equal to the simple scalar sum of the two individual field magnitudes."},
+   {id:"39c",text:"Doubling the magnitude of the charge (to \\( -2Q \\)) without changing the distance \\( a \\) will cause the potential at P to double in magnitude."}
+ ], kunci:{"39a":"T","39b":"F","39c":"T"},
+ solusi:`<p><b>(a) Benar:</b> potensial adalah besaran skalar, sehingga \\(V_{total}=V_1+V_2\\) berlaku langsung tanpa memperhitungkan sudut.</p>
+ <p><b>(b) Salah:</b> medan listrik adalah vektor. Kedua vektor \\(\\vec E_1,\\vec E_2\\) membentuk sudut \\(60^\\circ\\) satu sama lain (sudut segitiga sama sisi), sehingga harus dijumlah secara vektor: \\(E_{total}=2E\\cos30^\\circ \\approx 1.73E\\), <i>bukan</i> \\(2E\\) seperti penjumlahan skalar biasa.</p>
+ <p><b>(c) Benar:</b> \\(V\\propto Q\\) (linear), sehingga menggandakan muatan pada jarak tetap akan menggandakan potensial.</p>`},
+
+{no:40,tipe:"TF",sub:"Superposisi Medan Numerik",lvl:"C4",bobot:"4 (1 poin/pernyataan)",
+ stimulus:"A primary point charge \\( q_1=+16\\ \\mu C \\) is anchored at the origin. A secondary point charge \\( q_2=+25\\ \\mu C \\) is anchored 2 m to the right of \\( q_1 \\) along the horizontal axis. A test point P is located precisely in the middle between them, making it 1 m away from each charge.<br><br>Employing the constant \\( k=9\\times10^{9}\\ \\text{N·m}^2/\\text{C}^2 \\), assess whether the statements describing the conditions at point P are True or False.",
+ pernyataan:[
+   {id:"40a",text:"The isolated electric field vector at P originating only from \\( q_1 \\) has a magnitude of \\( 1.44\\times10^{5} \\) N/C."},
+   {id:"40b",text:"The isolated electric field vector at P originating only from \\( q_2 \\) has a magnitude of \\( 1.44\\times10^{5} \\) N/C."},
+   {id:"40c",text:"The two individual electric field vectors generated at P point in perfectly opposing directions."}
+ ], kunci:{"40a":"T","40b":"F","40c":"T"},
+ solusi:`<p><b>(a) Benar:</b> \\( E_1 = \\dfrac{kq_1}{r^2} = \\dfrac{(9\\times10^9)(16\\times10^{-6})}{1^2} = 1.44\\times10^{5}\\ \\text{N/C} \\)</p>
+ <p><b>(b) Salah:</b> \\( E_2 = \\dfrac{kq_2}{r^2} = \\dfrac{(9\\times10^9)(25\\times10^{-6})}{1^2} = 2.25\\times10^{5}\\ \\text{N/C} \\) — bukan \\(1.44\\times10^5\\) N/C (nilai itu adalah \\(E_1\\), tertukar).</p>
+ <p><b>(c) Benar:</b> karena \\(q_1\\) dan \\(q_2\\) sama-sama positif dan P berada di antara keduanya, \\(\\vec E_1\\) menjauhi \\(q_1\\) (ke kanan) sedangkan \\(\\vec E_2\\) menjauhi \\(q_2\\) (ke kiri) — kedua vektor saling berlawanan arah di titik P.</p>`}
+  ]
+};
+
+function el(tag, cls, html){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+function buildNav(){
+  const mcq = document.getElementById('nav-mcq');
+  const mcma = document.getElementById('nav-mcma');
+  const tf = document.getElementById('nav-tf');
+  DATA.soal.forEach(q=>{
+    const a = document.createElement('a');
+    a.href = '#q'+q.no;
+    a.textContent = q.no;
+    if(q.tipe==='MCQ'){ a.className='navpill mcq'; mcq.appendChild(a); }
+    else if(q.tipe==='MCMA'){ a.className='navpill mcma'; mcma.appendChild(a); }
+    else { a.className='navpill tf'; tf.appendChild(a); }
+  });
+}
+
+function solusiBlock(finalHtml, stepsHtml){
+  const wrap = el('div','solusi');
+  wrap.appendChild(el('div','solusi-label','<span class="dot"></span>Pembahasan'));
+  wrap.appendChild(el('div','solusi-steps', stepsHtml));
+  wrap.appendChild(el('div','solusi-final', finalHtml));
+  return wrap;
+}
+
+function renderMCQ(q){
+  const card = el('div','qcard'); card.id='q'+q.no;
+  const top = el('div','qcard-top');
+  const head = el('div','qhead');
+  head.appendChild(el('span','qnum',q.no));
+  head.appendChild(el('span','badge MCQ','MCQ'));
+  head.appendChild(el('span','qmeta',`${q.sub} · Level ${q.lvl} · ${q.bobot} poin`));
+  top.appendChild(head);
+  top.appendChild(el('div','stem',q.pertanyaan));
+  const ol = el('ol','opts');
+  Object.keys(q.opsi).forEach(k=>{
+    const li = el('li', k===q.kunci ? 'correct':'');
+    li.appendChild(el('span','tag',k));
+    li.appendChild(el('div',null,q.opsi[k]));
+    ol.appendChild(li);
+  });
+  top.appendChild(ol);
+  card.appendChild(top);
+  card.appendChild(solusiBlock(`Jawaban benar: <b>${q.kunci}</b> — ${q.opsi[q.kunci]}`, q.solusi));
+  return card;
+}
+
+function renderMCMA(q){
+  const card = el('div','qcard'); card.id='q'+q.no;
+  const top = el('div','qcard-top');
+  const head = el('div','qhead');
+  head.appendChild(el('span','qnum',q.no));
+  head.appendChild(el('span','badge MCMA','MCMA'));
+  head.appendChild(el('span','qmeta',`${q.sub} · Level ${q.lvl} · ${q.bobot} poin`));
+  top.appendChild(head);
+  top.appendChild(el('div','stem',q.pertanyaan));
+  const correctSet = q.kunci.split(',').map(s=>s.trim());
+  const ol = el('ol','opts MCMA');
+  Object.keys(q.opsi).forEach(k=>{
+    const isC = correctSet.includes(k);
+    const li = el('li', isC?'correct':'');
+    li.appendChild(el('span','tag',k));
+    li.appendChild(el('div',null,q.opsi[k]));
+    ol.appendChild(li);
+  });
+  top.appendChild(ol);
+  card.appendChild(top);
+  card.appendChild(solusiBlock(`Jawaban benar: <b>${q.kunci}</b>`, q.solusi));
+  return card;
+}
+
+function renderTF(q){
+  const card = el('div','qcard'); card.id='q'+q.no;
+  const top = el('div','qcard-top');
+  const head = el('div','qhead');
+  head.appendChild(el('span','qnum',q.no));
+  head.appendChild(el('span','badge TF_TABLE','Benar / Salah'));
+  head.appendChild(el('span','qmeta',`${q.sub} · Level ${q.lvl} · ${q.bobot}`));
+  top.appendChild(head);
+  top.appendChild(el('div','stimulus','<p>'+q.stimulus.replaceAll('<br><br>','</p><p>')+'</p>'));
+  const table = el('table','tf');
+  table.appendChild(el('thead',null,'<tr><th>Pernyataan</th><th style="text-align:center">Benar</th><th style="text-align:center">Salah</th></tr>'));
+  const tbody = el('tbody');
+  q.pernyataan.forEach(p=>{
+    const tr = el('tr');
+    tr.appendChild(el('td',null,p.text));
+    const ans = q.kunci[p.id];
+    tr.appendChild(el('td','tfv '+(ans==='T'?'T':''),'✓'));
+    tr.appendChild(el('td','tfv '+(ans==='F'?'F':''),'✗'));
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  top.appendChild(table);
+  card.appendChild(top);
+  const keyStr = q.pernyataan.map(p=>'('+p.id.slice(-1)+') '+q.kunci[p.id]).join(' &nbsp;·&nbsp; ');
+  card.appendChild(solusiBlock(`Kunci: <b>${keyStr}</b>`, q.solusi));
+  return card;
+}
+
+function renderApp(){
+  buildNav();
+  const list = document.getElementById('soal-list');
+  let lastGroup = null;
+  DATA.soal.forEach(q=>{
+    const group = q.tipe==='MCQ' ? 'Pilihan Ganda (No. 1–30)' : q.tipe==='MCMA' ? 'Pilihan Ganda Kompleks (No. 31–36)' : 'Benar / Salah Berstimulus (No. 37–40)';
+    if(group !== lastGroup){
+      list.appendChild(el('h2','section-title',group));
+      lastGroup = group;
+    }
+    if(q.tipe==='MCQ') list.appendChild(renderMCQ(q));
+    else if(q.tipe==='MCMA') list.appendChild(renderMCMA(q));
+    else list.appendChild(renderTF(q));
+  });
+  if(window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise();
+}
+renderApp();
+
+const btnMode = document.getElementById('btn-mode');
+btnMode.addEventListener('click', ()=>{
+  document.body.classList.toggle('ringkas');
+  const on = document.body.classList.contains('ringkas');
+  btnMode.textContent = on ? 'Tampilkan Langkah' : 'Jawaban Saja';
+  btnMode.classList.toggle('active', on);
+});
+</script>
+</body>
+</html>
