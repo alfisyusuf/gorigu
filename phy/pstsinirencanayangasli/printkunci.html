@@ -4,27 +4,104 @@
 <meta charset="utf-8">
 <title>Rubrik & Kunci Jawaban PSTS Physics XII</title>
 <style>
-    @page { size: A4; margin: 20mm; }
-    body { font-family: 'Cambria', serif; font-size: 11pt; line-height: 1.3; }
-    table { width: 100%; border-collapse: collapse; margin-top: 8px; margin-bottom: 15px; }
-    th, td { border: 1px solid black; padding: 6px; text-align: left; vertical-align: top; }
-    th { background-color: #f2f2f2; text-align: center; }
-    h2, h3, h4 { text-align: center; margin: 3px 0; }
-    .header-table { width: 100%; border-bottom: 3px solid black; margin-bottom: 10px; padding-bottom: 10px; }
-    .info-table { width: 100%; margin-bottom: 10px; font-size: 11pt; }
+    @page { size: A4; margin: 16mm 18mm; }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Cambria', Georgia, serif;
+        font-size: 10.5pt;
+        line-height: 1.35;
+        color: #111;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 6px;
+        margin-bottom: 14px;
+    }
+    th, td {
+        border: 1px solid #333;
+        padding: 5px 7px;
+        text-align: left;
+        vertical-align: middle;
+    }
+    th {
+        background-color: #eef1f5;
+        text-align: center;
+        font-size: 10pt;
+    }
+    /* Repeat table header on every printed page */
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+    tr, td, th { break-inside: avoid; page-break-inside: avoid; }
+
+    h2 { font-size: 14pt; text-align: center; margin: 4px 0 2px; }
+    h3 { font-size: 11.5pt; font-weight: normal; text-align: center; margin: 2px 0 10px; }
+    h4 {
+        font-size: 11.5pt;
+        margin: 16px 0 4px;
+        padding-bottom: 3px;
+        border-bottom: 2px solid #333;
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+    h5 {
+        font-size: 10.5pt;
+        margin: 4px 0 4px;
+        break-after: avoid;
+        page-break-after: avoid;
+    }
+
+    .header-table {
+        width: 100%;
+        border-bottom: 3px solid black;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    .info-table { width: 100%; margin-bottom: 10px; font-size: 10.5pt; }
     .info-table td { border: none; padding: 2px 0; }
-    .print-btn { position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background-color: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer; }
-    .col-2 { width: 48%; display: inline-block; vertical-align: top; }
+
+    .print-btn {
+        position: fixed; bottom: 20px; right: 20px;
+        padding: 10px 20px; background-color: #2563eb; color: white;
+        border: none; border-radius: 5px; cursor: pointer; font-size: 10pt;
+    }
     @media print { .print-btn { display: none !important; } }
+
+    /* --- Kunci jawaban: grid layout yang ringkas & rapi untuk dicetak --- */
+    .section-block {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        margin-bottom: 10px;
+    }
+    .key-grid td { text-align: center; }
+    .key-grid td.no { background-color: #f8f9fa; font-weight: bold; width: 12%; }
+    .key-grid td.ans { font-weight: bold; width: 12%; }
+
+    .tf-grid th, .tf-grid td { text-align: center; }
+    .tf-grid td.no { background-color: #f8f9fa; font-weight: bold; }
+
+    .note {
+        font-size: 9pt;
+        color: #444;
+        margin-top: -6px;
+        margin-bottom: 10px;
+    }
 </style>
 </head>
 <body>
     <button class="print-btn" onclick="window.print()">🖨️ Print Rubrik & Kunci</button>
-    
+
     <table class="header-table">
         <tr>
             <td style="width: 15%; text-align: left; vertical-align: middle; border: none;">
-                <img src="https://ku-link-siswa.pages.dev/logo.png" style="width: 80px;">
+                <img src="https://ku-link-siswa.pages.dev/logo.png" style="width: 75px;">
             </td>
             <td style="width: 85%; text-align: center; vertical-align: middle; line-height: 1.2; border: none;">
                 <div style="font-weight: bold; font-size: 12pt;">SEKOLAH MENENGAH ATAS<br>
@@ -40,7 +117,7 @@
 
     <h2>RUBRIK PENILAIAN & KUNCI JAWABAN</h2>
     <h3>PENILAIAN SUMATIF TENGAH SEMESTER (PSTS) GASAL TA 2026/2027</h3>
-    
+
     <table class="info-table">
         <tr>
             <td style="width: 18%;"><b>Mata Pelajaran</b></td>
@@ -55,9 +132,10 @@
             <td>: 100</td>
         </tr>
     </table>
-    
+
     <h4>A. Rubrik Penilaian</h4>
     <table>
+        <thead>
         <tr>
             <th>Bentuk Soal</th>
             <th>Jumlah</th>
@@ -65,6 +143,8 @@
             <th>Poin Max</th>
             <th>Keterangan Penilaian</th>
         </tr>
+        </thead>
+        <tbody>
         <tr>
             <td>Pilihan Ganda (MCQ)</td>
             <td style="text-align: center;">30</td>
@@ -86,78 +166,81 @@
             <td style="text-align: center;">16</td>
             <td>Setiap sub-pernyataan bernilai 1 poin jika benar.</td>
         </tr>
+        </tbody>
+        <tfoot>
         <tr>
             <th colspan="3" style="text-align: right;">TOTAL SKOR MAKSIMAL</th>
             <th style="text-align: center;">100</th>
             <th></th>
         </tr>
+        </tfoot>
     </table>
 
     <h4>B. Kunci Jawaban</h4>
-    <div class="col-2">
-        <b>1. Pilihan Ganda (MCQ)</b>
-        <table>
-            <tr><th>No</th><th>Kunci</th></tr>
-            <tr><td style='text-align:center;'>1</td><td style='text-align:center;'><b>B</b></td></tr>
-            <tr><td style='text-align:center;'>2</td><td style='text-align:center;'><b>A</b></td></tr>
-            <tr><td style='text-align:center;'>3</td><td style='text-align:center;'><b>C</b></td></tr>
-            <tr><td style='text-align:center;'>4</td><td style='text-align:center;'><b>A</b></td></tr>
-            <tr><td style='text-align:center;'>5</td><td style='text-align:center;'><b>B</b></td></tr>
-            <tr><td style='text-align:center;'>6</td><td style='text-align:center;'><b>B</b></td></tr>
-            <tr><td style='text-align:center;'>7</td><td style='text-align:center;'><b>A</b></td></tr>
-            <tr><td style='text-align:center;'>8</td><td style='text-align:center;'><b>C</b></td></tr>
-            <tr><td style='text-align:center;'>9</td><td style='text-align:center;'><b>A</b></td></tr>
-            <tr><td style='text-align:center;'>10</td><td style='text-align:center;'><b>B</b></td></tr>
-            <tr><td style='text-align:center;'>11</td><td style='text-align:center;'><b>B</b></td></tr>
-            <tr><td style='text-align:center;'>12</td><td style='text-align:center;'><b>B</b></td></tr>
-            <tr><td style='text-align:center;'>13</td><td style='text-align:center;'><b>B</b></td></tr>
-            <tr><td style='text-align:center;'>14</td><td style='text-align:center;'><b>A</b></td></tr>
-            <tr><td style='text-align:center;'>15</td><td style='text-align:center;'><b>C</b></td></tr>
-            <tr><td style='text-align:center;'>16</td><td style='text-align:center;'><b>B</b></td></tr>
-            <tr><td style='text-align:center;'>17</td><td style='text-align:center;'><b>C</b></td></tr>
-            <tr><td style='text-align:center;'>18</td><td style='text-align:center;'><b>C</b></td></tr>
-            <tr><td style='text-align:center;'>19</td><td style='text-align:center;'><b>A</b></td></tr>
-            <tr><td style='text-align:center;'>20</td><td style='text-align:center;'><b>A</b></td></tr>
-            <tr><td style='text-align:center;'>21</td><td style='text-align:center;'><b>B</b></td></tr>
-            <tr><td style='text-align:center;'>22</td><td style='text-align:center;'><b>D</b></td></tr>
-            <tr><td style='text-align:center;'>23</td><td style='text-align:center;'><b>A</b></td></tr>
-            <tr><td style='text-align:center;'>24</td><td style='text-align:center;'><b>C</b></td></tr>
-            <tr><td style='text-align:center;'>25</td><td style='text-align:center;'><b>B</b></td></tr>
-            <tr><td style='text-align:center;'>26</td><td style='text-align:center;'><b>A</b></td></tr>
-            <tr><td style='text-align:center;'>27</td><td style='text-align:center;'><b>A</b></td></tr>
-            <tr><td style='text-align:center;'>28</td><td style='text-align:center;'><b>C</b></td></tr>
-            <tr><td style='text-align:center;'>29</td><td style='text-align:center;'><b>C</b></td></tr>
-            <tr><td style='text-align:center;'>30</td><td style='text-align:center;'><b>C</b></td></tr>
+
+    <div class="section-block">
+        <h5>1. Pilihan Ganda (MCQ) — No. 1–30</h5>
+        <table class="key-grid">
+            <thead>
+            <tr>
+                <th style="width:12%;">No</th><th style="width:12%;">Kunci</th>
+                <th style="width:12%;">No</th><th style="width:12%;">Kunci</th>
+                <th style="width:12%;">No</th><th style="width:12%;">Kunci</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr><td class="no">1</td><td class="ans">B</td><td class="no">11</td><td class="ans">B</td><td class="no">21</td><td class="ans">B</td></tr>
+                <tr><td class="no">2</td><td class="ans">A</td><td class="no">12</td><td class="ans">B</td><td class="no">22</td><td class="ans">D</td></tr>
+                <tr><td class="no">3</td><td class="ans">C</td><td class="no">13</td><td class="ans">B</td><td class="no">23</td><td class="ans">A</td></tr>
+                <tr><td class="no">4</td><td class="ans">A</td><td class="no">14</td><td class="ans">A</td><td class="no">24</td><td class="ans">C</td></tr>
+                <tr><td class="no">5</td><td class="ans">B</td><td class="no">15</td><td class="ans">C</td><td class="no">25</td><td class="ans">B</td></tr>
+                <tr><td class="no">6</td><td class="ans">B</td><td class="no">16</td><td class="ans">B</td><td class="no">26</td><td class="ans">A</td></tr>
+                <tr><td class="no">7</td><td class="ans">A</td><td class="no">17</td><td class="ans">C</td><td class="no">27</td><td class="ans">A</td></tr>
+                <tr><td class="no">8</td><td class="ans">C</td><td class="no">18</td><td class="ans">C</td><td class="no">28</td><td class="ans">C</td></tr>
+                <tr><td class="no">9</td><td class="ans">A</td><td class="no">19</td><td class="ans">A</td><td class="no">29</td><td class="ans">C</td></tr>
+                <tr><td class="no">10</td><td class="ans">B</td><td class="no">20</td><td class="ans">A</td><td class="no">30</td><td class="ans">C</td></tr>
+            </tbody>
         </table>
     </div>
-    <div class="col-2" style="margin-left: 2%;">
-        <b>2. Pilihan Ganda Kompleks (MCMA)</b>
-        <table>
-            <tr><th>No</th><th>Kunci</th></tr>
-            <tr><td style='text-align:center;'>31</td><td style='text-align:center;'><b>A, C</b></td></tr>
-            <tr><td style='text-align:center;'>32</td><td style='text-align:center;'><b>A, B</b></td></tr>
-            <tr><td style='text-align:center;'>33</td><td style='text-align:center;'><b>A, B</b></td></tr>
-            <tr><td style='text-align:center;'>34</td><td style='text-align:center;'><b>A, B</b></td></tr>
-            <tr><td style='text-align:center;'>35</td><td style='text-align:center;'><b>A, C</b></td></tr>
-            <tr><td style='text-align:center;'>36</td><td style='text-align:center;'><b>A, B</b></td></tr>
-        </table><br>
-        
-        <b>3. Benar/Salah (TF - Kategori)</b>
-        <table>
-            <tr><th>No</th><th>Sub-soal</th><th>Kunci</th></tr>
-            <tr><td rowspan='3' style='text-align:center; vertical-align:middle;'>37</td><td>Pernyataan A</td><td style='text-align:center;'><b>T</b></td></tr>
-            <tr><td>Pernyataan B</td><td style='text-align:center;'><b>T</b></td></tr>
-            <tr><td>Pernyataan C</td><td style='text-align:center;'><b>F</b></td></tr>
-            <tr><td rowspan='3' style='text-align:center; vertical-align:middle;'>38</td><td>Pernyataan A</td><td style='text-align:center;'><b>T</b></td></tr>
-            <tr><td>Pernyataan B</td><td style='text-align:center;'><b>F</b></td></tr>
-            <tr><td>Pernyataan C</td><td style='text-align:center;'><b>T</b></td></tr>
-            <tr><td rowspan='3' style='text-align:center; vertical-align:middle;'>39</td><td>Pernyataan A</td><td style='text-align:center;'><b>T</b></td></tr>
-            <tr><td>Pernyataan B</td><td style='text-align:center;'><b>F</b></td></tr>
-            <tr><td>Pernyataan C</td><td style='text-align:center;'><b>T</b></td></tr>
-            <tr><td rowspan='3' style='text-align:center; vertical-align:middle;'>40</td><td>Pernyataan A</td><td style='text-align:center;'><b>T</b></td></tr>
-            <tr><td>Pernyataan B</td><td style='text-align:center;'><b>F</b></td></tr>
-            <tr><td>Pernyataan C</td><td style='text-align:center;'><b>T</b></td></tr>
+
+    <div class="section-block">
+        <h5>2. Pilihan Ganda Kompleks (MCMA) — No. 31–36</h5>
+        <p class="note">Jawaban benar harus tepat memilih 2 opsi yang tercantum.</p>
+        <table class="key-grid">
+            <thead>
+            <tr>
+                <th style="width:15%;">No</th><th style="width:18.3%;">Kunci</th>
+                <th style="width:15%;">No</th><th style="width:18.3%;">Kunci</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr><td class="no">31</td><td class="ans">A, C</td><td class="no">34</td><td class="ans">A, B</td></tr>
+                <tr><td class="no">32</td><td class="ans">A, B</td><td class="no">35</td><td class="ans">A, C</td></tr>
+                <tr><td class="no">33</td><td class="ans">A, B</td><td class="no">36</td><td class="ans">A, B</td></tr>
+            </tbody>
         </table>
     </div>
+
+    <div class="section-block">
+        <h5>3. Benar/Salah Berstimulus (TF) — No. 37–40</h5>
+        <p class="note">T = Benar (True), F = Salah (False). Setiap sub-pernyataan bernilai 1 poin.</p>
+        <table class="tf-grid">
+            <thead>
+            <tr>
+                <th style="width:15%;">No</th>
+                <th>Pernyataan A</th>
+                <th>Pernyataan B</th>
+                <th>Pernyataan C</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr><td class="no">37</td><td>T</td><td>T</td><td>F</td></tr>
+                <tr><td class="no">38</td><td>T</td><td>F</td><td>T</td></tr>
+                <tr><td class="no">39</td><td>T</td><td>F</td><td>T</td></tr>
+                <tr><td class="no">40</td><td>T</td><td>F</td><td>T</td></tr>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>
