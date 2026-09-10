@@ -394,7 +394,7 @@
       "tingkat_kesukaran": "Sedang",
       "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "Consider the Coulomb's Law equation \\( F = k\\dfrac{q_1 q_2}{r^2} \\). Which of the following statements are correct? (Select exactly 2 correct answers)",
+      "pertanyaan": "Consider the Coulomb's Law equation \\( F = k\\dfrac{q_1 q_2}{r^2} \\). Which of the following statements are correct?",
       "opsi": {
         "1": "The force is directly proportional to the product of the two charges.",
         "2": "The force is directly proportional to the square of the distance.",
@@ -413,7 +413,7 @@
       "tingkat_kesukaran": "Sedang",
       "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "Which of the following statements about a solid conductor in electrostatic equilibrium are correct? (Select exactly 2 correct answers)",
+      "pertanyaan": "Which of the following statements about a solid conductor in electrostatic equilibrium are correct?",
       "opsi": {
         "1": "The electric field inside the conducting material is zero.",
         "2": "Any excess charge resides entirely on the outer surface of the conductor.",
@@ -432,7 +432,7 @@
       "tingkat_kesukaran": "Sulit",
       "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "A dielectric material is inserted between the plates of an isolated, fully-charged parallel-plate capacitor (disconnected from the battery). Which of the following statements about the resulting changes are correct? (Select exactly 2 correct answers)",
+      "pertanyaan": "A dielectric material is inserted between the plates of an isolated, fully-charged parallel-plate capacitor (disconnected from the battery). Which of the following statements about the resulting changes are correct?",
       "opsi": {
         "1": "The capacitance of the capacitor increases.",
         "2": "The charge stored on the plates remains constant.",
@@ -451,7 +451,7 @@
       "tingkat_kesukaran": "Sedang",
       "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "Which of the following statements about electric field lines are correct? (Select exactly 2 correct answers)",
+      "pertanyaan": "Which of the following statements about electric field lines are correct?",
       "opsi": {
         "1": "Electric field lines never cross one another.",
         "2": "Field lines originate from positive charges and terminate on negative charges (or extend to infinity).",
@@ -470,7 +470,7 @@
       "tingkat_kesukaran": "Sedang",
       "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "Which of the following statements regarding electric potential and electric potential energy are correct? (Select exactly 2 correct answers)",
+      "pertanyaan": "Which of the following statements regarding electric potential and electric potential energy are correct?",
       "opsi": {
         "1": "Electric potential is a scalar quantity, while the electric field is a vector quantity.",
         "2": "The potential energy of a system of two positive point charges is negative.",
@@ -489,7 +489,7 @@
       "tingkat_kesukaran": "Sulit",
       "jumlah_pilihan_benar": 2,
       "bobot": 4,
-      "pertanyaan": "Three identical capacitors, each with capacitance \\( C \\), can be arranged in different configurations and connected to the same battery of voltage \\( V \\). Which of the following statements are correct? (Select exactly 2 correct answers)",
+      "pertanyaan": "Three identical capacitors, each with capacitance \\( C \\), can be arranged in different configurations and connected to the same battery of voltage \\( V \\). Which of the following statements are correct?",
       "opsi": {
         "1": "If all three are connected in series, the equivalent capacitance is \\( C/3 \\).",
         "2": "If all three are connected in parallel, the equivalent capacitance is \\( 3C \\).",
