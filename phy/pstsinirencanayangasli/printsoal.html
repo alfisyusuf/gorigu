@@ -29,10 +29,23 @@
     .info-table { width: 100%; border-bottom: 3px solid black; margin-bottom: 15px; padding-bottom: 10px; }
     .info-table td { padding: 3px 0; }
     
-    .question-table { width: 100%; margin-bottom: 15px; page-break-inside: avoid; }
-    .question-table-flowing { width: 100%; margin-bottom: 15px; }
+    /* Mencegah soal terpotong antar halaman */
+    .question-table, .question-table-flowing { 
+        width: 100%; 
+        margin-bottom: 15px; 
+        page-break-inside: avoid; 
+        break-inside: avoid; 
+    }
     
-    .tf-table { width: 95%; margin-left: 5%; border-collapse: collapse; margin-top: 10px; margin-bottom: 15px; page-break-inside: avoid; }
+    .tf-table { 
+        width: 95%; 
+        margin-left: 5%; 
+        border-collapse: collapse; 
+        margin-top: 10px; 
+        margin-bottom: 15px; 
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
     .tf-table th, .tf-table td { border: 1px solid black; padding: 6px; }
     
     /* Tombol Print untuk tampilan layar */
@@ -617,7 +630,7 @@
             <tr>
                 <td style="vertical-align: top; width: 25px;">31.</td>
                 <td style="vertical-align: top;">
-                    <b>(PGK-MCMA)</b><br>Consider the Coulomb's Law equation \( F = k\dfrac{q_1 q_2}{r^2} \). Which of the following statements are correct? (Select exactly 2 correct answers)<br>
+                    <b>(PGK-MCMA)</b><br>Consider the Coulomb's Law equation \( F = k\dfrac{q_1 q_2}{r^2} \). Which of the following statements are correct?<br>
                     <b>(choose more than one answer)</b>
                     <table style="width: 100%; margin-top: 5px;">
         <tr><td style="width: 25px; vertical-align: top;">A.</td><td>The force is directly proportional to the product of the two charges.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>The force is directly proportional to the square of the distance.</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>The force is inversely proportional to the square of the distance.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>If the distance between the charges is doubled, the force becomes half its original value.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>The force does not depend at all on the medium between the charges.</td></tr>
@@ -630,7 +643,7 @@
             <tr>
                 <td style="vertical-align: top; width: 25px;">32.</td>
                 <td style="vertical-align: top;">
-                    <b>(PGK-MCMA)</b><br>Which of the following statements about a solid conductor in electrostatic equilibrium are correct? (Select exactly 2 correct answers)<br>
+                    <b>(PGK-MCMA)</b><br>Which of the following statements about a solid conductor in electrostatic equilibrium are correct?<br>
                     <b>(choose more than one answer)</b>
                     <table style="width: 100%; margin-top: 5px;">
         <tr><td style="width: 25px; vertical-align: top;">A.</td><td>The electric field inside the conducting material is zero.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>Any excess charge resides entirely on the outer surface of the conductor.</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>Electric field lines are parallel to the surface just outside the conductor.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>The electric potential varies from the center to the surface of the conductor.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>The surface of the conductor is not an equipotential surface.</td></tr>
@@ -643,7 +656,7 @@
             <tr>
                 <td style="vertical-align: top; width: 25px;">33.</td>
                 <td style="vertical-align: top;">
-                    <b>(PGK-MCMA)</b><br>A dielectric material is inserted between the plates of an isolated, fully-charged parallel-plate capacitor (disconnected from the battery). Which of the following statements about the resulting changes are correct? (Select exactly 2 correct answers)<br>
+                    <b>(PGK-MCMA)</b><br>A dielectric material is inserted between the plates of an isolated, fully-charged parallel-plate capacitor (disconnected from the battery). Which of the following statements about the resulting changes are correct?<br>
                     <b>(choose more than one answer)</b>
                     <table style="width: 100%; margin-top: 5px;">
         <tr><td style="width: 25px; vertical-align: top;">A.</td><td>The capacitance of the capacitor increases.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>The charge stored on the plates remains constant.</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>The voltage across the capacitor increases.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>The electric field between the plates increases.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>The electric potential energy stored in the capacitor increases.</td></tr>
@@ -656,7 +669,7 @@
             <tr>
                 <td style="vertical-align: top; width: 25px;">34.</td>
                 <td style="vertical-align: top;">
-                    <b>(PGK-MCMA)</b><br>Which of the following statements about electric field lines are correct? (Select exactly 2 correct answers)<br>
+                    <b>(PGK-MCMA)</b><br>Which of the following statements about electric field lines are correct?<br>
                     <b>(choose more than one answer)</b>
                     <table style="width: 100%; margin-top: 5px;">
         <tr><td style="width: 25px; vertical-align: top;">A.</td><td>Electric field lines never cross one another.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>Field lines originate from positive charges and terminate on negative charges (or extend to infinity).</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>The density of field lines in a region indicates the electric potential there.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>Electric field lines around an isolated point charge form closed loops.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>The tangent to a field line at any point gives the magnitude of the electric field at that point.</td></tr>
@@ -669,7 +682,7 @@
             <tr>
                 <td style="vertical-align: top; width: 25px;">35.</td>
                 <td style="vertical-align: top;">
-                    <b>(PGK-MCMA)</b><br>Which of the following statements regarding electric potential and electric potential energy are correct? (Select exactly 2 correct answers)<br>
+                    <b>(PGK-MCMA)</b><br>Which of the following statements regarding electric potential and electric potential energy are correct?<br>
                     <b>(choose more than one answer)</b>
                     <table style="width: 100%; margin-top: 5px;">
         <tr><td style="width: 25px; vertical-align: top;">A.</td><td>Electric potential is a scalar quantity, while the electric field is a vector quantity.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>The potential energy of a system of two positive point charges is negative.</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>The work done by the electric force in moving a charge between two points depends only on the potential difference between those points, not on the path taken.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>The electric potential due to a point charge is inversely proportional to the square of the distance from the charge.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>If a positive charge moves (under the electric force alone) from a region of higher potential to a region of lower potential, its electric potential energy increases.</td></tr>
@@ -682,7 +695,7 @@
             <tr>
                 <td style="vertical-align: top; width: 25px;">36.</td>
                 <td style="vertical-align: top;">
-                    <b>(PGK-MCMA)</b><br>Three identical capacitors, each with capacitance \( C \), can be arranged in different configurations and connected to the same battery of voltage \( V \). Which of the following statements are correct? (Select exactly 2 correct answers)<br>
+                    <b>(PGK-MCMA)</b><br>Three identical capacitors, each with capacitance \( C \), can be arranged in different configurations and connected to the same battery of voltage \( V \). Which of the following statements are correct?<br>
                     <b>(choose more than one answer)</b>
                     <table style="width: 100%; margin-top: 5px;">
         <tr><td style="width: 25px; vertical-align: top;">A.</td><td>If all three are connected in series, the equivalent capacitance is \( C/3 \).</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>If all three are connected in parallel, the equivalent capacitance is \( 3C \).</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>The series configuration always stores more total energy than the parallel configuration, for the same battery voltage.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>In the parallel configuration, each capacitor has a voltage across it equal to \( V/3 \).</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>In the series configuration, the voltage across each capacitor is equal to the full source voltage \( V \).</td></tr>
