@@ -9,24 +9,60 @@
     table { width: 100%; border-collapse: collapse; margin-top: 15px; }
     th, td { border: 1px solid black; padding: 8px; text-align: left; vertical-align: top; }
     th { background-color: #f2f2f2; text-align: center; }
-    h2, h3 { text-align: center; margin: 5px 0; }
+    h2, h3 { text-align: center; margin: 3px 0; }
+    .header-table { width: 100%; border-bottom: 3px solid black; margin-bottom: 10px; padding-bottom: 10px; }
+    .info-table { width: 100%; margin-bottom: 15px; font-size: 11pt; }
+    .info-table td { border: none; padding: 2px 0; }
     .print-btn { position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background-color: #2563eb; color: white; border: none; border-radius: 5px; cursor: pointer; }
     @media print { .print-btn { display: none !important; } }
 </style>
 </head>
 <body>
     <button class="print-btn" onclick="window.print()">🖨️ Print Kisi-kisi</button>
+    
+    <table class="header-table">
+        <tr>
+            <td style="width: 12%; text-align: left; vertical-align: middle; border: none;">
+                <img src="https://ku-link-siswa.pages.dev/logo.png" style="width: 80px;">
+            </td>
+            <td style="width: 88%; text-align: center; vertical-align: middle; line-height: 1.2; border: none;">
+                <div style="font-weight: bold; font-size: 12pt;">SEKOLAH MENENGAH ATAS<br>
+                AL ABIDIN BILINGUAL BOARDING SCHOOL (ABBS) SURAKARTA<br>
+                TERAKREDITASI : A (Amat Baik)</div>
+                <div style="font-size: 9pt; margin-top: 4px;">
+                    Jalan Tarumanegara III, Banyuanyar, Banjarsari, Surakarta, 57137<br>
+                    Telepon: 0271 – 7882145 Laman: www.abbs.alabidin.sch.id Surat elektronik: abbs@alabidin.sch.id
+                </div>
+            </td>
+        </tr>
+    </table>
+
     <h2>KISI-KISI PENULISAN SOAL</h2>
-    <h3>PENILAIAN SUMATIF TENGAH SEMESTER GASAL 2026/2027</h3>
-    <p><b>Mata Pelajaran:</b> Fisika &nbsp;&nbsp;&nbsp; <b>Kelas:</b> XII MIPA &nbsp;&nbsp;&nbsp; <b>Jumlah Soal:</b> 40</p>
+    <h3>PENILAIAN SUMATIF TENGAH SEMESTER (PSTS) GASAL TA 2026/2027</h3>
+    
+    <table class="info-table">
+        <tr>
+            <td style="width: 15%;"><b>Mata Pelajaran</b></td>
+            <td>: Physics</td>
+            <td style="width: 15%;"><b>Penyusun</b></td>
+            <td>: Alfi Suryani Yusuf, S.Pd.</td>
+        </tr>
+        <tr>
+            <td><b>Kelas / Program</b></td>
+            <td>: XII MIPA</td>
+            <td><b>Jumlah Soal</b></td>
+            <td>: 40 Soal</td>
+        </tr>
+    </table>
+
     <table>
         <tr>
-            <th style="width: 5%;">No</th>
-            <th style="width: 20%;">Materi / Sub Materi</th>
-            <th style="width: 40%;">Indikator Soal</th>
+            <th style="width: 4%;">No</th>
+            <th style="width: 22%;">Materi / Sub Materi</th>
+            <th style="width: 42%;">Indikator Soal</th>
             <th style="width: 10%;">Level Kognitif</th>
             <th style="width: 10%;">Bentuk Soal</th>
-            <th style="width: 15%;">Nomor Soal</th>
+            <th style="width: 12%;">Nomor Soal</th>
         </tr>
         <tr>
             <td style="text-align: center;">1</td>
