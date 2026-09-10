@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>PSTS Physics XII 2026 - Cetak</title>
+<style>
+    /* Styling dasar untuk cetak (Print) */
+    @page {
+        size: A4;
+        margin: 20mm;
+    }
+    body {
+        font-family: 'Cambria', 'Times New Roman', serif;
+        font-size: 11pt;
+        line-height: 1.3;
+        color: black;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    
+    .math {
+        font-family: 'Times New Roman', serif;
+        font-style: italic;
+    }
+    table { border-collapse: collapse; }
+    
+    .header-table { width: 100%; border-bottom: 3px solid black; margin-bottom: 10px; padding-bottom: 10px; }
+    .info-table { width: 100%; border-bottom: 3px solid black; margin-bottom: 15px; padding-bottom: 10px; }
+    .info-table td { padding: 3px 0; }
+    
+    .question-table { width: 100%; margin-bottom: 15px; page-break-inside: avoid; }
+    .question-table-flowing { width: 100%; margin-bottom: 15px; }
+    
+    .tf-table { width: 95%; margin-left: 5%; border-collapse: collapse; margin-top: 10px; margin-bottom: 15px; page-break-inside: avoid; }
+    .tf-table th, .tf-table td { border: 1px solid black; padding: 6px; }
+    
+    /* Tombol Print untuk tampilan layar */
+    .print-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 14pt;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    .print-btn:hover { background-color: #1d4ed8; }
+
+    /* Pengaturan tampilan layar (agar terlihat seperti kertas A4 di browser) */
+    @media screen {
+        body {
+            background-color: #f3f4f6;
+            padding: 20px;
+        }
+        .page-container {
+            background-color: white;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20mm;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+    }
+
+    /* Sembunyikan elemen tertentu saat dicetak */
+    @media print {
+        .print-btn { display: none !important; }
+        @page { margin: 25mm 20mm 20mm 25mm; }
+        body { background-color: white; padding: 0; }
+        .page-container {
+            box-shadow: none;
+            padding: 0;
+            max-width: none;
+            margin: 0;
+        }
+    }
+</style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">🖨️ Print Soal</button>
+    <div class="page-container">
+        <table class="header-table">
+            <tr>
+                <td style="width: 15%; text-align: left; vertical-align: middle;">
+                    <img src="https://ku-link-siswa.pages.dev/logo.png" style="width: 90px;">
+                </td>
+                <td style="width: 85%; text-align: center; vertical-align: middle; line-height: 1.2;">
+                    <div style="font-weight: bold; font-size: 13pt;">SEKOLAH MENENGAH ATAS<br>
+                    AL ABIDIN BILINGUAL BOARDING SCHOOL (ABBS) SURAKARTA<br>
+                    TERAKREDITASI : A (Amat Baik)</div>
+                    <div style="font-size: 9.5pt; margin-top: 6px;">
+                        Jalan Tarumanegara III, Banyuanyar, Banjarsari, Surakarta, 57137<br>
+                        Telepon: 0271 – 7882145 Laman: www.abbs.alabidin.sch.id Surat elektronik: abbs@alabidin.sch.id
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: center; font-weight: bold; font-size: 12pt; margin-bottom: 15px; line-height: 1.2;">
+            MIDTERM ASSESSMENT OF 1<sup>ST</sup> SEMESTER<br>
+            ACADEMIC YEAR OF 2026/2027
+        </div>
+
+        <table class="info-table">
+            <tr>
+                <td style="width: 15%;">Subject</td>
+                <td style="width: 85%;">: Physics</td>
+            </tr>
+            <tr>
+                <td>Day, date</td>
+                <td>: Friday, 18th September 2026</td>
+            </tr>
+            <tr>
+                <td>Time</td>
+                <td>: 07.15 - 09.05 WIB</td>
+            </tr>
+            <tr>
+                <td>Grade</td>
+                <td>: XII.MIPA</td>
+            </tr>
+            <tr>
+                <td>Duration</td>
+                <td>: 110 minutes</td>
+            </tr>
+        </table>
+
+        <div style="font-weight: bold; margin-bottom: 20px;">
+            Mark (X) on A, B, C, D, or E for the correct answer.
+        </div>
+
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">1.</td>
+                <td style="vertical-align: top;">
+                    Two point charges, <span class="math">q₁ = +2\ μ C</span> and <span class="math">q₂ = +8\ μ C</span>, are separated by a distance of 0.3 m in vacuum. Determine the magnitude of the electrostatic force between them. (<span class="math">k = 9×10⁹\ \text{N·m}²/\text{C}²</span>)
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>0.16 N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>1.6 N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>16 N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>160 N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>1600 N</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">2.</td>
+                <td style="vertical-align: top;">
+                    If both point charges in a Coulomb's Law setup are tripled while the distance between them is doubled, what happens to the magnitude of the electrostatic force?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>It becomes 2.25 times larger.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>It becomes 4.5 times larger.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>It becomes 0.44 times the original value.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>It becomes 9 times larger.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>It becomes 1.5 times larger.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">3.</td>
+                <td style="vertical-align: top;">
+                    Two point charges, <span class="math">+Q</span> and <span class="math">+4Q</span>, are fixed 0.6 m apart along a straight line.<br><br><div style='text-align:center;'><svg width='300' height='80' viewBox='0 0 300 80'><line x1='50' y1='40' x2='250' y2='40' stroke='#94A3B8' stroke-width='2' stroke-dasharray='4,4'/><circle cx='50' cy='40' r='16' fill='#EF4444'/><text x='50' y='45' fill='white' font-size='14' text-anchor='middle'>+Q</text><circle cx='250' cy='40' r='16' fill='#EF4444'/><text x='250' y='45' fill='white' font-size='14' text-anchor='middle'>+4Q</text><text x='150' y='30' fill='#475569' font-size='12' text-anchor='middle'>d = 0.6 m</text></svg></div><br>At what distance from the <span class="math">+Q</span> charge (measured along the line, between the two charges) must a third charge be placed so that the net electrostatic force acting on it is zero?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>0.1 m</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>0.15 m</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>0.2 m</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>0.3 m</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>0.4 m</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">4.</td>
+                <td style="vertical-align: top;">
+                    Two equal electrostatic forces, each with a magnitude of 10 N, act on a charged particle. The angle between the two forces is <span class="math">60°</span>. Determine the magnitude of the resultant force. (Use <span class="math">\cos 60° = 0.5</span>)
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td><span class="math">10√3</span> N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>10 N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>20 N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td><span class="math">5√3</span> N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td><span class="math">20√3</span> N</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">5.</td>
+                <td style="vertical-align: top;">
+                    A point charge experiences an electrostatic force of 20 N directed at <span class="math">37°</span> above the horizontal axis. Determine the magnitude of the horizontal (x) component of this force. (<span class="math">\sin 37°=0.6,\ \cos 37°=0.8</span>)
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>12 N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>16 N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>20 N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>24 N</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>10 N</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">6.</td>
+                <td style="vertical-align: top;">
+                    A point charge <span class="math">Q = +5\ μ C</span> is located in vacuum. Determine the magnitude of the electric field at a point 0.5 m away from the charge. (<span class="math">k = 9×10⁹\ \text{N·m}²/\text{C}²</span>)
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td><span class="math">1.8×10⁴</span> N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td><span class="math">1.8×10⁵</span> N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td><span class="math">9×10⁴</span> N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td><span class="math">9×10⁵</span> N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td><span class="math">3.6×10⁵</span> N/C</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">7.</td>
+                <td style="vertical-align: top;">
+                    Two point charges of equal magnitude each produce an electric field of <span class="math">8×10⁴</span> N/C at point P, with the two field vectors perpendicular to one another (angle of <span class="math">90°</span> between them). Determine the magnitude of the resultant electric field at point P.
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td><span class="math">8×10⁴√2</span> N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td><span class="math">16×10⁴</span> N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td><span class="math">8×10⁴</span> N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>0 N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td><span class="math">64×10⁴</span> N/C</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">8.</td>
+                <td style="vertical-align: top;">
+                    A point charge <span class="math">+Q</span> and a point charge <span class="math">-4Q</span> are placed 0.9 m apart. At what distance from the <span class="math">+Q</span> charge, measured outward along the line joining the two charges (on the side of <span class="math">+Q</span>, away from <span class="math">-4Q</span>), is the total electric field equal to zero?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>0.3 m</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>0.45 m</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>0.9 m</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>1.8 m</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>0.6 m</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">9.</td>
+                <td style="vertical-align: top;">
+                    A region of space contains electric field lines that are straight, parallel, and equally spaced throughout that region.<br><br><div style='text-align:center;'><svg width='200' height='100' viewBox='0 0 200 100'><g stroke='#3B82F6' stroke-width='2' fill='none'><path d='M20,20 L180,20'/><polygon points='180,20 170,15 170,25' fill='#3B82F6'/><path d='M20,50 L180,50'/><polygon points='180,50 170,45 170,55' fill='#3B82F6'/><path d='M20,80 L180,80'/><polygon points='180,80 170,75 170,85' fill='#3B82F6'/></g></svg></div><br>What can be concluded about the electric field in that region?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>The field is uniform in both magnitude and direction.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>The field magnitude increases along the direction of the lines.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>The field is zero everywhere in that region.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>The field lines indicate a radial (point-charge) field.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>The field magnitude varies inversely with distance.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">10.</td>
+                <td style="vertical-align: top;">
+                    A flat surface with an area of 0.02 m<span class="math">²</span> is placed in a uniform electric field of <span class="math">5×10³</span> N/C. The normal to the surface makes an angle of <span class="math">60°</span> with the field direction. Determine the electric flux through the surface. (<span class="math">\cos 60°=0.5</span>)
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>25 N·m<span class="math">²</span>/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>50 N·m<span class="math">²</span>/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>86.6 N·m<span class="math">²</span>/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>100 N·m<span class="math">²</span>/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>0 N·m<span class="math">²</span>/C</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">11.</td>
+                <td style="vertical-align: top;">
+                    According to Gauss's Law, the total electric flux through any closed surface depends only on which of the following?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>The shape of the closed surface.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>The net electric charge enclosed by the surface.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>The total surface area of the closed surface.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>The distance between the surface and the nearest charge.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>The volume of the closed surface.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">12.</td>
+                <td style="vertical-align: top;">
+                    A closed spherical surface encloses a net charge of <span class="math">+4×10⁻⁹</span> C. Given <span class="math">ε₀ = 8.85×10⁻¹²\ \text{C}²/\text{N·m}²</span>, determine the total electric flux through the surface.
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>45.2 N·m<span class="math">²</span>/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>452 N·m<span class="math">²</span>/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>4520 N·m<span class="math">²</span>/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>0.452 N·m<span class="math">²</span>/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>4.52 N·m<span class="math">²</span>/C</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">13.</td>
+                <td style="vertical-align: top;">
+                    Determine the electric potential at a point located 0.2 m from a point charge of <span class="math">+6\ μ C</span>. (<span class="math">k = 9×10⁹\ \text{N·m}²/\text{C}²</span>)
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td><span class="math">2.7×10⁴</span> V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td><span class="math">2.7×10⁵</span> V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td><span class="math">5.4×10⁵</span> V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td><span class="math">1.35×10⁵</span> V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td><span class="math">2.7×10⁶</span> V</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">14.</td>
+                <td style="vertical-align: top;">
+                    Two point charges, <span class="math">+3\ μ C</span> and <span class="math">-2\ μ C</span>, are separated by 0.1 m. Calculate the electric potential energy of this two-charge system. (<span class="math">k = 9×10⁹\ \text{N·m}²/\text{C}²</span>)
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td><span class="math">-0.54</span> J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td><span class="math">+0.54</span> J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td><span class="math">-5.4</span> J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td><span class="math">-0.054</span> J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td><span class="math">-1.08</span> J</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">15.</td>
+                <td style="vertical-align: top;">
+                    How much work is required to move a <span class="math">+4</span> C charge from a point where the electric potential is 15 V to a point where the potential is 40 V?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>25 J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>55 J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>100 J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>220 J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>40 J</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">16.</td>
+                <td style="vertical-align: top;">
+                    Two identical point charges, each <span class="math">+Q = +2\ μ C</span>, are placed 0.4 m apart. Determine the electric potential at the midpoint between them. (<span class="math">k = 9×10⁹\ \text{N·m}²/\text{C}²</span>)
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td><span class="math">9×10⁴</span> V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td><span class="math">1.8×10⁵</span> V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td><span class="math">3.6×10⁵</span> V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>0 V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td><span class="math">4.5×10⁴</span> V</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">17.</td>
+                <td style="vertical-align: top;">
+                    Which of the following statements about equipotential surfaces is correct?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>Work done moving a charge along an equipotential surface is always positive.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>Two equipotential surfaces belonging to the same charge distribution can intersect each other.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>Electric field lines are always perpendicular to equipotential surfaces.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>The electric potential always increases as you move along an equipotential surface.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>The electric field is always parallel to equipotential surfaces.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">18.</td>
+                <td style="vertical-align: top;">
+                    The electric potential difference between two parallel plates separated by 4 cm is 200 V. Assuming the field between the plates is uniform, determine the magnitude of the electric field between the plates.
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>50 N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>500 N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>5000 N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>50000 N/C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>800 N/C</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">19.</td>
+                <td style="vertical-align: top;">
+                    A solid conducting sphere carries a net positive charge and is isolated in space, in electrostatic equilibrium. Which statement about its surface is correct?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>The surface of the conductor is an equipotential surface.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>The potential varies from point to point on the surface.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>The electric field lines run tangent to (along) the surface.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>The potential at the surface is always zero.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>The electric field inside the conductor is maximum at the center.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">20.</td>
+                <td style="vertical-align: top;">
+                    A charge of 5 C moves along an equipotential surface from point A to point B. How much work is done by the electric force during this displacement?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>0 J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>5 J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>Equal to the product of the charge and the distance travelled.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>It depends on the path taken between A and B.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>25 J</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">21.</td>
+                <td style="vertical-align: top;">
+                    A parallel-plate capacitor has capacitance <span class="math">C</span>. If the plate separation is reduced to <span class="math">1/4</span> of its original value while the plate area is kept constant, what is the new capacitance, expressed in terms of <span class="math">C</span>?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td><span class="math">C/4</span></td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td><span class="math">4C</span></td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td><span class="math">2C</span></td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td><span class="math">C</span> (unchanged)</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td><span class="math">C/16</span></td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">22.</td>
+                <td style="vertical-align: top;">
+                    A parallel-plate capacitor with vacuum between its plates has a capacitance of 4 <span class="math">μ</span>F. A dielectric material with relative permittivity <span class="math">εr = 5</span> is then inserted, completely filling the gap between the plates. Determine the new capacitance.
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>0.8 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>4 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>9 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>20 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>1.25 <span class="math">μ</span>F</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">23.</td>
+                <td style="vertical-align: top;">
+                    Two capacitors, 6 <span class="math">μ</span>F and 3 <span class="math">μ</span>F, are connected in series. Calculate the equivalent capacitance of this combination.
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>2 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>4.5 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>9 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>18 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>12 <span class="math">μ</span>F</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">24.</td>
+                <td style="vertical-align: top;">
+                    Two capacitors, 6 <span class="math">μ</span>F and 3 <span class="math">μ</span>F, are connected in parallel. Calculate the equivalent capacitance of this combination.
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>2 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>4.5 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>9 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>18 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>3 <span class="math">μ</span>F</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">25.</td>
+                <td style="vertical-align: top;">
+                    In a circuit, a 4 <span class="math">μ</span>F capacitor is connected in parallel with a 2 <span class="math">μ</span>F capacitor. This parallel combination is then connected in series with a 6 <span class="math">μ</span>F capacitor. Determine the total equivalent capacitance of the whole circuit.
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>2 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>3 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>6 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>12 <span class="math">μ</span>F</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>10 <span class="math">μ</span>F</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">26.</td>
+                <td style="vertical-align: top;">
+                    A capacitor with a capacitance of 2 <span class="math">μ</span>F is charged to a potential difference of 100 V. Determine the electric energy stored in the capacitor. (<span class="math">W=\tfrac{1}{2}CV²</span>)
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td><span class="math">1×10⁻²</span> J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td><span class="math">2×10⁻²</span> J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td><span class="math">1×10⁻⁴</span> J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td><span class="math">2×10⁴</span> J</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td><span class="math">4×10⁻²</span> J</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">27.</td>
+                <td style="vertical-align: top;">
+                    A 5 <span class="math">μ</span>F capacitor is connected to a 12 V battery. Determine the magnitude of the charge stored on each plate.
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td><span class="math">6×10⁻⁵</span> C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td><span class="math">6×10⁻⁴</span> C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>0.6 C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>60 C</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>2.4 C</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">28.</td>
+                <td style="vertical-align: top;">
+                    An isolated parallel-plate capacitor (disconnected from any battery) has an initial capacitance of 2 <span class="math">μ</span>F and is charged to 50 V. A dielectric with <span class="math">εr = 4</span> is then inserted, completely filling the space between the plates. Determine the new voltage across the capacitor.
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>200 V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>50 V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>12.5 V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>400 V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>6.25 V</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">29.</td>
+                <td style="vertical-align: top;">
+                    A parallel-plate capacitor remains connected to a battery that maintains a constant voltage. If the plate area is doubled while the plate separation stays the same, what happens to the charge stored on the capacitor?
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>It becomes half of the original value.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>It remains the same.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>It becomes twice the original value.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>It becomes four times the original value.</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>It decreases by a quarter.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">30.</td>
+                <td style="vertical-align: top;">
+                    Two identical 4 <span class="math">μ</span>F capacitors are connected to a 10 V battery. Determine the ratio of the total energy stored when the two capacitors are connected in parallel (<span class="math">Wparallel</span>) to when they are connected in series (<span class="math">Wseries</span>), i.e. <span class="math">Wparallel : Wseries</span>.
+                    <table style="width: 100%; margin-top: 5px;">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>1 : 1</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>2 : 1</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>4 : 1</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>8 : 1</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>1 : 4</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">31.</td>
+                <td style="vertical-align: top;">
+                    <b>(PGK-MCMA) - (choose more than one answer)</b><br>Consider the Coulomb's Law equation <span class="math">F = kq₁q₂/r²</span>. Which of the following statements are correct? (Select exactly 2 correct answers)
+                    <table style="width: 100%; margin-top: 5px;">
+        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>The force is directly proportional to the product of the two charges.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>The force is directly proportional to the square of the distance.</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>The force is inversely proportional to the square of the distance.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>If the distance between the charges is doubled, the force becomes half its original value.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>The force does not depend at all on the medium between the charges.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">32.</td>
+                <td style="vertical-align: top;">
+                    <b>(PGK-MCMA) - (choose more than one answer)</b><br>Which of the following statements about a solid conductor in electrostatic equilibrium are correct? (Select exactly 2 correct answers)
+                    <table style="width: 100%; margin-top: 5px;">
+        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>The electric field inside the conducting material is zero.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>Any excess charge resides entirely on the outer surface of the conductor.</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>Electric field lines are parallel to the surface just outside the conductor.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>The electric potential varies from the center to the surface of the conductor.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>The surface of the conductor is not an equipotential surface.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">33.</td>
+                <td style="vertical-align: top;">
+                    <b>(PGK-MCMA) - (choose more than one answer)</b><br>A dielectric material is inserted between the plates of an isolated, fully-charged parallel-plate capacitor (disconnected from the battery). Which of the following statements about the resulting changes are correct? (Select exactly 2 correct answers)
+                    <table style="width: 100%; margin-top: 5px;">
+        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>The capacitance of the capacitor increases.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>The charge stored on the plates remains constant.</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>The voltage across the capacitor increases.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>The electric field between the plates increases.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>The electric potential energy stored in the capacitor increases.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">34.</td>
+                <td style="vertical-align: top;">
+                    <b>(PGK-MCMA) - (choose more than one answer)</b><br>Which of the following statements about electric field lines are correct? (Select exactly 2 correct answers)
+                    <table style="width: 100%; margin-top: 5px;">
+        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>Electric field lines never cross one another.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>Field lines originate from positive charges and terminate on negative charges (or extend to infinity).</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>The density of field lines in a region indicates the electric potential there.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>Electric field lines around an isolated point charge form closed loops.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>The tangent to a field line at any point gives the magnitude of the electric field at that point.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">35.</td>
+                <td style="vertical-align: top;">
+                    <b>(PGK-MCMA) - (choose more than one answer)</b><br>Which of the following statements regarding electric potential and electric potential energy are correct? (Select exactly 2 correct answers)
+                    <table style="width: 100%; margin-top: 5px;">
+        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>Electric potential is a scalar quantity, while the electric field is a vector quantity.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>The potential energy of a system of two positive point charges is negative.</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>The work done by the electric force in moving a charge between two points depends only on the potential difference between those points, not on the path taken.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>The electric potential due to a point charge is inversely proportional to the square of the distance from the charge.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>If a positive charge moves (under the electric force alone) from a region of higher potential to a region of lower potential, its electric potential energy increases.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">36.</td>
+                <td style="vertical-align: top;">
+                    <b>(PGK-MCMA) - (choose more than one answer)</b><br>Three identical capacitors, each with capacitance <span class="math">C</span>, can be arranged in different configurations and connected to the same battery of voltage <span class="math">V</span>. Which of the following statements are correct? (Select exactly 2 correct answers)
+                    <table style="width: 100%; margin-top: 5px;">
+        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>If all three are connected in series, the equivalent capacitance is <span class="math">C/3</span>.</td></tr><tr><td style="width: 25px; vertical-align: top;">B.</td><td>If all three are connected in parallel, the equivalent capacitance is <span class="math">3C</span>.</td></tr><tr><td style="width: 25px; vertical-align: top;">C.</td><td>The series configuration always stores more total energy than the parallel configuration, for the same battery voltage.</td></tr><tr><td style="width: 25px; vertical-align: top;">D.</td><td>In the parallel configuration, each capacitor has a voltage across it equal to <span class="math">V/3</span>.</td></tr><tr><td style="width: 25px; vertical-align: top;">E.</td><td>In the series configuration, the voltage across each capacitor is equal to the full source voltage <span class="math">V</span>.</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table-flowing">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">37.</td>
+                <td style="vertical-align: top;">
+                    <b>(PGK - Kategori)</b><br>A hollow conducting spherical shell has an inner radius of 5 cm and an outer radius of 10 cm. A point charge of <span class="math">+Q</span> is placed exactly at the center of the hollow cavity, without touching the shell. Before the point charge is introduced, the conducting shell itself is electrically neutral.<br><br>As a result of electrostatic induction, charge is redistributed on the inner and outer surfaces of the shell. Determine whether each of the following statements is True or False.
+                    
+                    <table class="tf-table">
+                        <tr>
+                            <th style="text-align: center;">Statement</th>
+                            <th style="width: 70px; text-align: center;">True</th>
+                            <th style="width: 70px; text-align: center;">False</th>
+                        </tr>
+        
+                        <tr>
+                            <td>An induced charge of <span class="math">-Q</span> appears on the inner surface of the shell (<span class="math">r = 5</span> cm).</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                        <tr>
+                            <td>The electric field inside the conducting material of the shell itself (between <span class="math">r=5</span> cm and <span class="math">r=10</span> cm) is zero.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                        <tr>
+                            <td>An induced charge of <span class="math">-Q</span> also appears on the outer surface of the shell.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table-flowing">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">38.</td>
+                <td style="vertical-align: top;">
+                    <b>(PGK - Kategori)</b><br>A parallel-plate capacitor is connected to a battery with an EMF of 20 V and becomes fully charged. While still connected to the battery, the separation between the plates is slowly doubled using an insulated mechanical device, while the plate area remains unchanged.<br><br><div style='text-align:center;'><svg width='200' height='100' viewBox='0 0 200 100'><rect x='60' y='20' width='80' height='8' fill='#64748B'/><rect x='60' y='72' width='80' height='8' fill='#64748B'/><path d='M100,20 L100,0 M100,80 L100,100' stroke='#64748B' stroke-width='2'/><text x='150' y='55' fill='#475569' font-size='12'>d</text><line x1='145' y1='28' x2='145' y2='72' stroke='#94A3B8' stroke-width='1'/><path d='M142,33 L145,28 L148,33 M142,67 L145,72 L148,67' fill='#94A3B8'/></svg></div><br>Based on the relations <span class="math">C=ε₀εr A/d</span> and <span class="math">Q=CV</span>, determine whether each of the following statements is True or False.
+                    
+                    <table class="tf-table">
+                        <tr>
+                            <th style="text-align: center;">Statement</th>
+                            <th style="width: 70px; text-align: center;">True</th>
+                            <th style="width: 70px; text-align: center;">False</th>
+                        </tr>
+        
+                        <tr>
+                            <td>The capacitance of the capacitor decreases to half of its original value.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                        <tr>
+                            <td>The voltage across the capacitor decreases to half of its original value.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                        <tr>
+                            <td>The charge stored on the capacitor decreases to half of its original value.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table-flowing">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">39.</td>
+                <td style="vertical-align: top;">
+                    <b>(PGK - Kategori)</b><br>Two identical point charges, each <span class="math">+Q</span>, are fixed at two vertices of an equilateral triangle with side length <span class="math">a</span>. Point P is located at the third vertex of the triangle, so P is a distance <span class="math">a</span> from each of the two charges.<br><br><div style='text-align:center;'><svg width='200' height='180' viewBox='0 0 200 180'><polygon points='100,30 40,150 160,150' stroke='#94A3B8' stroke-width='2' fill='none' stroke-dasharray='4,4'/><circle cx='40' cy='150' r='14' fill='#EF4444'/><text x='40' y='154' fill='white' font-size='12' text-anchor='middle'>+Q</text><circle cx='160' cy='150' r='14' fill='#EF4444'/><text x='160' y='154' fill='white' font-size='12' text-anchor='middle'>+Q</text><circle cx='100' cy='30' r='6' fill='#1E293B'/><text x='100' y='20' fill='#1E293B' font-size='14' text-anchor='middle'>P</text><text x='100' y='168' fill='#475569' font-size='12' text-anchor='middle'>a</text><text x='55' y='90' fill='#475569' font-size='12' text-anchor='middle'>a</text><text x='145' y='90' fill='#475569' font-size='12' text-anchor='middle'>a</text></svg></div><br>Consider the electric field and the electric potential at point P due to these two charges, and determine whether each of the following statements is True or False.
+                    
+                    <table class="tf-table">
+                        <tr>
+                            <th style="text-align: center;">Statement</th>
+                            <th style="width: 70px; text-align: center;">True</th>
+                            <th style="width: 70px; text-align: center;">False</th>
+                        </tr>
+        
+                        <tr>
+                            <td>The electric potential at point P is equal to the algebraic (scalar) sum of the potentials due to each charge individually.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                        <tr>
+                            <td>The electric field at point P is simply the algebraic (scalar) sum of the magnitudes of the two individual fields, because both charges have the same sign.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                        <tr>
+                            <td>If the value of <span class="math">Q</span> is doubled while the geometry (triangle size) stays the same, both the potential and the electric field at point P exactly double.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="question-table-flowing">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">40.</td>
+                <td style="vertical-align: top;">
+                    <b>(PGK - Kategori)</b><br>A point charge <span class="math">q₁=+4\ μ C</span> is placed at the origin. A second point charge <span class="math">q₂=+9\ μ C</span> is placed 1 m to the right of <span class="math">q₁</span> along the x-axis. Point P is located exactly at the midpoint between the two charges, 0.5 m from each.<br><br><div style='text-align:center;'><svg width='300' height='80' viewBox='0 0 300 80'><line x1='30' y1='40' x2='270' y2='40' stroke='#94A3B8' stroke-width='2'/><circle cx='50' cy='40' r='14' fill='#EF4444'/><text x='50' y='20' fill='#475569' font-size='12' text-anchor='middle'>q1</text><circle cx='250' cy='40' r='14' fill='#EF4444'/><text x='250' y='20' fill='#475569' font-size='12' text-anchor='middle'>q2</text><circle cx='150' cy='40' r='6' fill='#1E293B'/><text x='150' y='25' fill='#1E293B' font-size='14' text-anchor='middle'>P</text></svg></div><br>Using <span class="math">k=9×10⁹\ \text{N·m}²/\text{C}²</span>, determine whether each of the following statements about point P is True or False.
+                    
+                    <table class="tf-table">
+                        <tr>
+                            <th style="text-align: center;">Statement</th>
+                            <th style="width: 70px; text-align: center;">True</th>
+                            <th style="width: 70px; text-align: center;">False</th>
+                        </tr>
+        
+                        <tr>
+                            <td>The magnitude of the electric field at P due to <span class="math">q₁</span> alone is <span class="math">1.44×10⁵</span> N/C.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                        <tr>
+                            <td>The magnitude of the electric field at P due to <span class="math">q₂</span> alone is also <span class="math">1.44×10⁵</span> N/C.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                        <tr>
+                            <td>The two individual field vectors at point P point in opposite directions along the x-axis.</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                            <td style="text-align: center; vertical-align: middle; font-size: 16pt;">○</td>
+                        </tr>
+            
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+</body>
+</html>
