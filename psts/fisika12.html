@@ -165,7 +165,7 @@
 </div>
 
 <script>
-  const API_URL = 'https://script.google.com/macros/s/AKfycbxtfjC54y7vTLbtWIiEiSCIVjp9ckKoj8jnWqQgFkIoGfxcQiNwXXBfRdHTndycOtE/exec';
+  const API_URL = 'https://script.google.com/macros/s/AKfycbxAh1n_KCu1SEnVnqfsy0k_ceKxx59fQrNDmh0AO9KxU5W1BPucITGxOmEGW4vaNhly/exec';
   const DEFAULT_DURASI_MENIT = 110;
 
   let state = null;
@@ -215,13 +215,28 @@
       try {
         const parsed = JSON.parse(saved);
         if (!parsed.submitted) {
-          state = parsed; state.soal = data.soal; state.user = data.user;
+          state = parsed; 
+          state.soal = data.soal; 
+          state.user = data.user;
           state.durationMinutes = data.durasi || DEFAULT_DURASI_MENIT;
-          saveState(); return;
+          saveState(); 
+          return;
         }
       } catch (e) {}
     }
-    state = { user: data.user, soal: data.soal, indexAktif: 0, jawaban: {}, flagged: {}, startTime: Date.now(), durationMinutes: data.durasi, tabSwitchCount: 0, submitted: false };
+    
+    // Perbaikan: Tambahkan fallback (|| DEFAULT_DURASI_MENIT) untuk sesi baru
+    state = { 
+      user: data.user, 
+      soal: data.soal, 
+      indexAktif: 0, 
+      jawaban: {}, 
+      flagged: {}, 
+      startTime: Date.now(), 
+      durationMinutes: data.durasi || DEFAULT_DURASI_MENIT, 
+      tabSwitchCount: 0, 
+      submitted: false 
+    };
     saveState();
   }
 
@@ -290,9 +305,22 @@
   function renderTFTable(soal) {
     const jwb = state.jawaban[soal.id] || {};
     let html = '<div class="space-y-2.5">';
-    (soal.pernyataan || []).forEach((t, i) => {
-      html += `<div class="flex justify-between gap-4 border border-line rounded-xl p-3.5"><div class="math-tex flex-1">${t}</div><div class="flex gap-2"><button onclick="pilihTF('${soal.id}',${i},true)" class="px-3.5 py-1.5 rounded-lg text-sm border ${jwb[i]===true?'bg-success text-white':'border-line'}">Benar</button><button onclick="pilihTF('${soal.id}',${i},false)" class="px-3.5 py-1.5 rounded-lg text-sm border ${jwb[i]===false?'bg-danger text-white':'border-line'}">Salah</button></div></div>`;
-    }); return html + '</div>';
+    
+    (soal.pernyataan || []).forEach((item, i) => {
+      // Mendukung pola Fisika (objek ber-ID) sekaligus pola PAI (string biasa) sebagai fallback
+      const itemId = item.id || i.toString(); 
+      const text = item.text || item;
+      
+      html += `
+        <div class="flex justify-between items-center gap-4 border border-line rounded-xl p-3.5">
+          <div class="math-tex flex-1 text-[15px]">${text}</div>
+          <div class="flex gap-2 shrink-0">
+            <button onclick="pilihTF('${soal.id}', '${itemId}', 'T')" class="px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${jwb[itemId]==='T'?'bg-success text-white border-success':'border-line text-inksoft hover:border-success/50'}">Benar</button>
+            <button onclick="pilihTF('${soal.id}', '${itemId}', 'F')" class="px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${jwb[itemId]==='F'?'bg-danger text-white border-danger':'border-line text-inksoft hover:border-danger/50'}">Salah</button>
+          </div>
+        </div>`;
+    }); 
+    return html + '</div>';
   }
 
   function pilihMCQ(id, o) { state.jawaban[id] = o; saveState(); tampilkanSoal(state.indexAktif); }
@@ -324,14 +352,28 @@
   function nextSoal() { if(state.indexAktif < state.soal.length-1) tampilkanSoal(state.indexAktif+1); }
   function prevSoal() { if(state.indexAktif > 0) tampilkanSoal(state.indexAktif-1); }
 
-  function startTimer() { timerInterval = setInterval(() => {
-    const rem = Math.max(0, state.startTime + (state.durationMinutes * 60000) - Date.now());
-    const s = Math.floor(rem/1000)%60, m = Math.floor(rem/60000)%60, h = Math.floor(rem/3600000);
-    const txt = `${h>0?h+':':''}${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    document.getElementById('timer').innerText = txt;
-    document.getElementById('timerMobile').innerText = txt;
-    if(rem <= 0) { clearInterval(timerInterval); performSubmit(true); }
-  }, 1000); }
+  function startTimer() { 
+    // Hapus sisa timer lama jika ada, mencegah interval bertumpuk
+    if (timerInterval) clearInterval(timerInterval); 
+    
+    // Pisahkan logika hitung waktu agar bisa dipanggil langsung (tanpa nunggu 1 detik)
+    const tick = () => {
+      const rem = Math.max(0, state.startTime + (state.durationMinutes * 60000) - Date.now());
+      const s = Math.floor(rem/1000)%60, m = Math.floor(rem/60000)%60, h = Math.floor(rem/3600000);
+      const txt = `${h>0 ? h+':' : ''}${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      
+      document.getElementById('timer').innerText = txt;
+      document.getElementById('timerMobile').innerText = txt;
+      
+      if(rem <= 0) { 
+        clearInterval(timerInterval); 
+        performSubmit(true); 
+      }
+    };
+
+    tick(); // Jalankan render angka pertama kali seketika
+    timerInterval = setInterval(tick, 1000); // Lanjutkan mundur setiap 1 detik
+  }
 
   document.addEventListener('visibilitychange', () => { if(document.hidden && state && !state.submitted) { state.tabSwitchCount++; saveState(); document.getElementById('tabSwitchBadge').innerText = `Tab ditinggalkan: ${state.tabSwitchCount}×`; document.getElementById('tabSwitchBadge').classList.remove('hidden'); } });
 
