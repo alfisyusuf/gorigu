@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title id="pageTitle">PSTS — Portal Ujian</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          bg: '#F5F7FA', surface: '#FFFFFF', surfacealt: '#EEF2F7', ink: '#16202B', inksoft: '#5C6B7A', line: '#DDE3EA',
+          primary: { DEFAULT: '#123C6B', dark: '#0D2E52', soft: '#E7F0FA' },
+          amber: { DEFAULT: '#C4780B', soft: '#FFF4E0' },
+          success: { DEFAULT: '#157A4D', soft: '#E6F5EC' },
+          danger: { DEFAULT: '#B4232F', soft: '#FCEAEA' },
+        },
+        fontFamily: { serif: ['Lora', 'serif'], sans: ['Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'monospace'], }
+      }
+    }
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" async></script>
+<style>
+  * { -webkit-tap-highlight-color: transparent; }
+  body { background: #F5F7FA; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #C7D1DC; border-radius: 8px; }
+  .math-tex { line-height: 1.75; }
+  .wave-path { stroke-dasharray: 900; stroke-dashoffset: 900; animation: draw 1.6s ease-out forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .fade-in { animation: fadeIn .35s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .modal-pop { animation: pop .18s cubic-bezier(.2,.9,.3,1.2); }
+  @keyframes pop { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+  .toast-in { animation: toastIn .25s ease-out; }
+  @keyframes toastIn { from { opacity: 0; transform: translateY(8px) translateX(-50%); } to { opacity: 1; transform: translateY(0) translateX(-50%); } }
+  .timer-pulse { animation: pulseRed 1s ease-in-out infinite; }
+  @keyframes pulseRed { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+  .nav-cell { transition: transform .12s ease, box-shadow .12s ease; }
+  .nav-cell:hover { transform: translateY(-1px); }
+  input:focus, button:focus-visible, .nav-cell:focus-visible { outline: 2px solid #123C6B; outline-offset: 2px; }
+  .scroll-thin::-webkit-scrollbar { width: 6px; }
+  @media (max-width: 1023px) { #sidebar { transition: transform .25s ease; } }
+</style>
+</head>
+<body class="min-h-screen text-ink font-sans antialiased">
+
+<div id="toastRoot" class="fixed bottom-6 left-1/2 z-[100] flex flex-col gap-2 items-center pointer-events-none"></div>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="min-h-screen flex flex-col lg:flex-row">
+  <div class="hidden lg:flex lg:w-1/2 bg-primary relative overflow-hidden flex-col justify-between p-12">
+    <div>
+      <p class="text-white/60 text-sm font-medium">Penilaian Sumatif Tengah Semester</p>
+      <h1 id="heroTitle" class="font-serif text-white text-4xl mt-3 leading-tight">Ujian,<br>diselesaikan<br>satu gelombang<br>pada satu waktu.</h1>
+    </div>
+    <svg viewBox="0 0 600 200" class="absolute bottom-0 left-0 w-full opacity-90" preserveAspectRatio="none">
+      <path class="wave-path" d="M0,140 C60,60 120,220 180,140 C240,60 300,220 360,140 C420,60 480,220 540,140 C570,100 585,120 600,140" fill="none" stroke="#7FA8D9" stroke-width="2.5"/>
+      <path d="M0,160 C60,100 120,220 180,160 C240,100 300,220 360,160 C420,100 480,220 540,160 C570,140 585,150 600,160" fill="none" stroke="#4C74A8" stroke-width="1.5" opacity="0.6"/>
+    </svg>
+    <p class="relative text-white/50 text-xs">Kerjakan dengan tenang. Sesi akan otomatis dikunci setelah waktu habis.</p>
+  </div>
+  <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-10">
+    <div class="w-full max-w-sm">
+      <div class="lg:hidden mb-8">
+        <p class="text-inksoft text-sm font-medium">Penilaian Sumatif Tengah Semester</p>
+        <h1 id="mobileTitle" class="font-serif text-2xl text-ink mt-1">Portal Ujian</h1>
+      </div>
+      <h2 class="font-serif text-2xl text-ink mb-1 hidden lg:block">Masuk ke ujian</h2>
+      <p class="text-inksoft text-sm mb-7">Masukkan Nomor Induk Siswa dan PIN ujian.</p>
+      <label class="block text-xs font-semibold text-inksoft mb-1.5" for="nis">Nomor Induk Siswa</label>
+      <input type="text" inputmode="numeric" id="nis" placeholder="mis. 26141007" class="w-full bg-surface border border-line text-ink px-4 py-3 rounded-xl mb-4 focus:border-primary transition text-[15px]">
+      <label class="block text-xs font-semibold text-inksoft mb-1.5" for="pin">PIN Ujian</label>
+      <div class="relative mb-2">
+        <input type="password" id="pin" placeholder="••••••" class="w-full bg-surface border border-line text-ink px-4 py-3 rounded-xl pr-12 focus:border-primary transition text-[15px]">
+        <button type="button" onclick="togglePin()" id="togglePinBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-inksoft hover:text-ink text-xs font-semibold px-2 py-1">Lihat</button>
+      </div>
+      <div id="loginMsg" class="hidden text-danger bg-danger-soft border border-danger/20 text-sm rounded-lg px-3 py-2.5 mb-4"></div>
+      <button onclick="login()" id="btnLogin" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3.5 rounded-xl transition duration-150 flex items-center justify-center gap-2">
+        <span id="btnLoginText">Mulai Ujian</span>
+        <svg id="btnLoginSpinner" class="hidden animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- EXAM SCREEN -->
+<div id="examScreen" class="hidden min-h-screen lg:flex">
+  <div class="lg:hidden sticky top-0 z-30 bg-surface border-b border-line px-4 py-3 flex items-center justify-between">
+    <button onclick="toggleSidebar()" class="flex items-center gap-2 text-ink font-semibold text-sm">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg> Navigasi
+    </button>
+    <div id="timerMobile" class="font-mono font-bold text-primary text-lg">--:--</div>
+  </div>
+  <div id="sidebarOverlay" onclick="toggleSidebar()" class="hidden fixed inset-0 bg-black/30 z-30 lg:hidden"></div>
+
+  <!-- Sidebar Navigasi -->
+  <aside id="sidebar" class="fixed lg:sticky top-0 -translate-x-full lg:translate-x-0 z-40 lg:z-0 h-screen w-[300px] bg-surface border-r border-line flex flex-col">
+    <div class="p-5 border-b border-line">
+      <div class="flex items-center justify-between mb-4">
+        <div class="min-w-0">
+          <h2 class="font-serif font-semibold text-ink text-lg truncate" id="namaSiswa">Nama</h2>
+          <p class="text-xs text-inksoft" id="kelasSiswa">Kelas</p>
+        </div>
+        <button onclick="toggleSidebar()" class="lg:hidden text-inksoft hover:text-ink p-1">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="bg-surfacealt rounded-xl p-4 mb-3">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-semibold text-inksoft uppercase tracking-wide">Sisa Waktu</span>
+          <span id="tabSwitchBadge" class="hidden text-[10px] font-semibold text-amber bg-amber-soft px-2 py-0.5 rounded-full"></span>
+        </div>
+        <div id="timer" class="font-mono text-3xl font-bold text-primary tabular-nums">--:--:--</div>
+      </div>
+      <div>
+        <div class="flex items-center justify-between text-xs text-inksoft mb-1.5">
+          <span>Progres</span><span id="progresText">0 / 0 terjawab</span>
+        </div>
+        <div class="w-full h-2 bg-surfacealt rounded-full overflow-hidden"><div id="progresBar" class="h-full bg-primary transition-all duration-300" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="flex-1 overflow-y-auto p-5 scroll-thin">
+      <div id="navGrid" class="grid grid-cols-5 gap-2"></div>
+    </div>
+    <div class="p-5 border-t border-line">
+      <button onclick="openSubmitModal()" class="w-full bg-success hover:bg-success/90 text-white font-semibold py-3 rounded-xl transition text-sm">Kumpulkan Ujian</button>
+    </div>
+  </aside>
+
+  <!-- Soal Utama -->
+  <main class="flex-1 min-w-0">
+    <div class="max-w-3xl mx-auto px-5 sm:px-8 py-8">
+      <div id="soalContainer" class="bg-surface p-6 sm:p-9 rounded-2xl border border-line mb-6 fade-in"></div>
+      <div class="flex items-center justify-between gap-3">
+        <button id="btnPrev" onclick="prevSoal()" class="px-5 py-2.5 bg-surface hover:bg-surfacealt border border-line rounded-xl transition text-sm font-medium text-ink disabled:opacity-40 disabled:cursor-not-allowed">← Sebelumnya</button>
+        <button onclick="toggleFlag()" id="btnFlag" class="px-5 py-2.5 rounded-xl transition text-sm font-medium border">Tandai</button>
+        <button id="btnNext" onclick="nextSoal()" class="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-xl transition text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed">Selanjutnya →</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL SUBMIT & SUCCESS SCREEN -->
+<div id="submitModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+  <div class="modal-pop bg-surface rounded-2xl max-w-md w-full p-6 shadow-2xl">
+    <h3 class="font-serif text-xl text-ink mb-1">Kumpulkan ujian?</h3>
+    <p class="text-sm text-inksoft mb-5">Anda tidak dapat mengubah jawaban setelah mengumpulkan.</p>
+    <div class="flex gap-3">
+      <button onclick="closeSubmitModal()" class="flex-1 px-4 py-2.5 border border-line rounded-xl text-sm font-medium hover:bg-surfacealt transition">Kembali</button>
+      <button onclick="performSubmit(false)" id="btnConfirmSubmit" class="flex-1 px-4 py-2.5 bg-success text-white rounded-xl text-sm font-semibold transition">Ya, Kumpulkan</button>
+    </div>
+  </div>
+</div>
+<div id="successScreen" class="hidden fixed inset-0 z-50 bg-bg flex items-center justify-center p-6">
+  <div class="max-w-sm w-full text-center fade-in">
+    <h2 class="font-serif text-2xl text-ink mb-2">Ujian berhasil dikumpulkan</h2>
+    <p class="text-inksoft text-sm mb-6" id="successDetail">Jawaban Anda telah terekam di sistem.</p>
+  </div>
+</div>
+
+<script>
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyIQUww55v6MBJ3Wz9pxX_49cw3hqIN8y4gJ7aWENtIOP8VaAHzpn8BCwtUhcp2y8Qn/exec';
+  const DEFAULT_DURASI_MENIT = 110;
+
+  let state = null;
+  let timerInterval = null;
+
+  function showToast(msg, type = 'info') {
+    const root = document.getElementById('toastRoot');
+    const el = document.createElement('div');
+    el.className = `toast-in px-4 py-2.5 rounded-xl text-sm font-medium shadow-lg text-center text-white ${type==='error'?'bg-danger':'bg-ink'}`;
+    el.innerText = msg;
+    root.appendChild(el);
+    setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 3200);
+  }
+
+  function togglePin() {
+    const pin = document.getElementById('pin');
+    pin.type = pin.type === 'password' ? 'text' : 'password';
+  }
+
+  async function login() {
+    const nis = document.getElementById('nis').value.trim();
+    const pin = document.getElementById('pin').value.trim();
+    const msg = document.getElementById('loginMsg');
+    
+    if (!nis || !pin) return showToast('NIS dan PIN wajib diisi', 'error');
+
+    document.getElementById('btnLoginText').innerText = 'Memeriksa...';
+    try {
+      const res = await fetch(`${API_URL}?nis=${encodeURIComponent(nis)}&pin=${encodeURIComponent(pin)}`);
+      const data = await res.json();
+      if (data.status === 'success') { initState(data); renderExam(); } 
+      else { msg.innerText = data.message; msg.classList.remove('hidden'); document.getElementById('btnLoginText').innerText = 'Mulai Ujian'; }
+    } catch (err) { msg.innerText = 'Koneksi gagal.'; msg.classList.remove('hidden'); document.getElementById('btnLoginText').innerText = 'Mulai Ujian'; }
+  }
+
+  function storageKey(nis) { return `psts_state_${nis}`; }
+
+  function initState(data) {
+    // DOM injection dinamis
+    const mapel = data.materi || "Ujian";
+    document.getElementById('pageTitle').innerText = `PSTS ${mapel} — Portal Ujian`;
+    document.getElementById('heroTitle').innerHTML = `${mapel},<br>diselesaikan<br>satu persatu.`;
+    document.getElementById('mobileTitle').innerText = `Portal Ujian ${mapel}`;
+
+    const saved = localStorage.getItem(storageKey(data.user.nis));
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (!parsed.submitted) {
+          state = parsed; state.soal = data.soal; state.user = data.user;
+          state.durationMinutes = data.durasi || DEFAULT_DURASI_MENIT;
+          saveState(); return;
+        }
+      } catch (e) {}
+    }
+    state = { user: data.user, soal: data.soal, indexAktif: 0, jawaban: {}, flagged: {}, startTime: Date.now(), durationMinutes: data.durasi, tabSwitchCount: 0, submitted: false };
+    saveState();
+  }
+
+  function saveState() { localStorage.setItem(storageKey(state.user.nis), JSON.stringify(state)); }
+
+  function renderExam() {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('examScreen').classList.remove('hidden');
+    document.getElementById('namaSiswa').innerText = state.user.nama;
+    document.getElementById('kelasSiswa').innerText = state.user.kelas;
+    buildNavGrid(); tampilkanSoal(state.indexAktif); startTimer();
+  }
+
+  function tampilkanSoal(idx) {
+    state.indexAktif = idx;
+    const soal = state.soal[idx];
+    const kontainer = document.getElementById('soalContainer');
+    let body = soal.tipe === 'MCQ' ? renderMCQ(soal) : (soal.tipe === 'MCMA' ? renderMCMA(soal) : renderTFTable(soal));
+    
+    kontainer.innerHTML = `
+      <div class="mb-5 flex justify-between"><span class="bg-surfacealt px-3 py-1 rounded-lg text-sm font-semibold">Soal ${idx + 1}</span><span class="text-xs text-primary bg-primary-soft px-2.5 py-1 rounded-lg">${soal.tipe}</span></div>
+      <div class="text-[17px] leading-relaxed mb-7 math-tex">${soal.pertanyaan}</div>${body}`;
+      
+    document.getElementById('btnPrev').disabled = idx === 0;
+    document.getElementById('btnNext').disabled = idx === state.soal.length - 1;
+    updateFlagButton(); updateNavGrid();
+    
+    if (window.MathJax) window.MathJax.typesetPromise([kontainer]).catch(()=>{});
+  }
+
+  function renderMCQ(soal) {
+    let html = '<div class="space-y-3">';
+    ['A','B','C','D','E'].forEach(opt => {
+      if(soal.opsi && soal.opsi[opt]) {
+        const active = state.jawaban[soal.id] === opt;
+        html += `<div onclick="pilihMCQ('${soal.id}','${opt}')" class="p-4 border rounded-xl cursor-pointer flex gap-4 items-center ${active ? 'bg-primary-soft border-primary' : 'border-line'}"><div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm ${active ? 'bg-primary text-white' : 'text-inksoft'}">${opt}</div><div class="math-tex">${soal.opsi[opt]}</div></div>`;
+      }
+    }); return html + '</div>';
+  }
+
+  function renderMCMA(soal) {
+    const selected = Array.isArray(state.jawaban[soal.id]) ? state.jawaban[soal.id] : [];
+    let html = '<div class="space-y-3">';
+    ['A','B','C','D','E'].forEach(opt => {
+      if(soal.opsi && soal.opsi[opt]) {
+        const active = selected.includes(opt);
+        html += `<div onclick="pilihMCMA('${soal.id}','${opt}')" class="p-4 border rounded-xl cursor-pointer flex gap-4 items-center ${active ? 'bg-primary-soft border-primary' : 'border-line'}"><div class="w-8 h-8 rounded-md border-2 flex items-center justify-center text-sm ${active ? 'bg-primary text-white' : 'text-inksoft'}">${opt}</div><div class="math-tex">${soal.opsi[opt]}</div></div>`;
+      }
+    }); return html + '</div>';
+  }
+
+  function renderTFTable(soal) {
+    const jwb = state.jawaban[soal.id] || {};
+    let html = '<div class="space-y-2.5">';
+    (soal.pernyataan || []).forEach((t, i) => {
+      html += `<div class="flex justify-between gap-4 border border-line rounded-xl p-3.5"><div class="math-tex flex-1">${t}</div><div class="flex gap-2"><button onclick="pilihTF('${soal.id}',${i},true)" class="px-3.5 py-1.5 rounded-lg text-sm border ${jwb[i]===true?'bg-success text-white':'border-line'}">Benar</button><button onclick="pilihTF('${soal.id}',${i},false)" class="px-3.5 py-1.5 rounded-lg text-sm border ${jwb[i]===false?'bg-danger text-white':'border-line'}">Salah</button></div></div>`;
+    }); return html + '</div>';
+  }
+
+  function pilihMCQ(id, o) { state.jawaban[id] = o; saveState(); tampilkanSoal(state.indexAktif); }
+  function pilihMCMA(id, o) { const a = Array.isArray(state.jawaban[id])?[...state.jawaban[id]]:[]; const i = a.indexOf(o); if(i>=0)a.splice(i,1); else a.push(o); state.jawaban[id] = a; saveState(); tampilkanSoal(state.indexAktif); }
+  function pilihTF(id, i, v) { const o = state.jawaban[id] ? {...state.jawaban[id]} : {}; o[i] = v; state.jawaban[id] = o; saveState(); tampilkanSoal(state.indexAktif); }
+
+  function toggleFlag() { state.flagged[state.soal[state.indexAktif].id] = !state.flagged[state.soal[state.indexAktif].id]; saveState(); updateFlagButton(); updateNavGrid(); }
+  function updateFlagButton() { const f = state.flagged[state.soal[state.indexAktif].id]; document.getElementById('btnFlag').className = `px-5 py-2.5 rounded-xl text-sm border ${f ? 'bg-amber-soft border-amber text-amber' : 'border-line'}`; }
+
+  function buildNavGrid() { document.getElementById('navGrid').innerHTML = state.soal.map((s,i) => `<button id="navcell-${i}" onclick="tampilkanSoal(${i})" class="w-full aspect-square rounded-lg text-xs font-semibold flex items-center justify-center border"></button>`).join(''); }
+  function updateNavGrid() {
+    let ansCount = 0;
+    state.soal.forEach((s,i) => {
+      const el = document.getElementById(`navcell-${i}`);
+      const ans = state.jawaban[s.id] && (typeof state.jawaban[s.id]==='string' || Object.keys(state.jawaban[s.id]).length>0);
+      const flag = state.flagged[s.id];
+      if(ans) ansCount++;
+      let cls = `w-full aspect-square rounded-lg text-xs font-semibold flex items-center justify-center border ${i===state.indexAktif?'ring-2 ring-primary ':''}`;
+      if(ans && flag) cls += 'bg-primary text-white border-amber ring-2 ring-amber/60';
+      else if(ans) cls += 'bg-primary text-white border-primary';
+      else if(flag) cls += 'bg-amber-soft text-amber border-amber';
+      else cls += 'bg-surface text-inksoft border-line';
+      el.className = cls; el.innerText = i + 1;
+    });
+    document.getElementById('progresText').innerText = `${ansCount} / ${state.soal.length} terjawab`;
+    document.getElementById('progresBar').style.width = `${(ansCount/state.soal.length)*100}%`;
+  }
+
+  function nextSoal() { if(state.indexAktif < state.soal.length-1) tampilkanSoal(state.indexAktif+1); }
+  function prevSoal() { if(state.indexAktif > 0) tampilkanSoal(state.indexAktif-1); }
+
+  function startTimer() { timerInterval = setInterval(() => {
+    const rem = Math.max(0, state.startTime + (state.durationMinutes * 60000) - Date.now());
+    const s = Math.floor(rem/1000)%60, m = Math.floor(rem/60000)%60, h = Math.floor(rem/3600000);
+    const txt = `${h>0?h+':':''}${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    document.getElementById('timer').innerText = txt;
+    document.getElementById('timerMobile').innerText = txt;
+    if(rem <= 0) { clearInterval(timerInterval); performSubmit(true); }
+  }, 1000); }
+
+  document.addEventListener('visibilitychange', () => { if(document.hidden && state && !state.submitted) { state.tabSwitchCount++; saveState(); document.getElementById('tabSwitchBadge').innerText = `Tab ditinggalkan: ${state.tabSwitchCount}×`; document.getElementById('tabSwitchBadge').classList.remove('hidden'); } });
+
+  function openSubmitModal() { document.getElementById('submitModal').classList.remove('hidden'); }
+  function closeSubmitModal() { document.getElementById('submitModal').classList.add('hidden'); }
+
+  async function performSubmit(auto) {
+    document.getElementById('btnConfirmSubmit').innerText = 'Mengirim...';
+    try {
+      await fetch(API_URL, { method: 'POST', body: JSON.stringify({ nis: state.user.nis, nama: state.user.nama, kelas: state.user.kelas, jawaban: state.jawaban, meta: { tabSwitchCount: state.tabSwitchCount } }) });
+      state.submitted = true; localStorage.removeItem(storageKey(state.user.nis));
+      closeSubmitModal(); document.getElementById('examScreen').classList.add('hidden'); document.getElementById('successScreen').classList.remove('hidden');
+    } catch(err) { showToast('Gagal mengirim', 'error'); document.getElementById('btnConfirmSubmit').innerText = 'Ya, Kumpulkan'; }
+  }
+  function toggleSidebar() { document.getElementById('sidebar').classList.toggle('-translate-x-full'); document.getElementById('sidebarOverlay').classList.toggle('hidden'); }
+</script>
+</body>
+</html>
