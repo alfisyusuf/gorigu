@@ -264,13 +264,27 @@
 
   function renderMCMA(soal) {
     const selected = Array.isArray(state.jawaban[soal.id]) ? state.jawaban[soal.id] : [];
-    let html = '<div class="space-y-3">';
-    ['A','B','C','D','E'].forEach(opt => {
-      if(soal.opsi && soal.opsi[opt]) {
+    let html = '<div class="space-y-3"><p class="text-xs text-inksoft mb-3 -mt-3">Pilih semua pernyataan yang benar:</p>';
+    
+    // Deteksi cerdas: jika ada opsi di Data_Ekstra_JSON (soal.pernyataan), gunakan itu. 
+    // Jika tidak, fallback ke soal.opsi biasa (A, B, C, D, E)
+    const sumberOpsi = (soal.pernyataan && typeof soal.pernyataan === 'object' && !Array.isArray(soal.pernyataan)) 
+                       ? soal.pernyataan 
+                       : soal.opsi;
+
+    // Looping berdasarkan kunci yang tersedia (bisa A, B, C atau 1, 2, 3)
+    Object.keys(sumberOpsi).forEach(opt => {
+      if(sumberOpsi[opt] && sumberOpsi[opt].toString().trim() !== '') {
         const active = selected.includes(opt);
-        html += `<div onclick="pilihMCMA('${soal.id}','${opt}')" class="p-4 border rounded-xl cursor-pointer flex gap-4 items-center ${active ? 'bg-primary-soft border-primary' : 'border-line'}"><div class="w-8 h-8 rounded-md border-2 flex items-center justify-center text-sm ${active ? 'bg-primary text-white' : 'text-inksoft'}">${opt}</div><div class="math-tex">${soal.opsi[opt]}</div></div>`;
+        html += `
+          <div onclick="pilihMCMA('${soal.id}','${opt}')" class="p-4 border rounded-xl cursor-pointer flex gap-4 items-center transition-all ${active ? 'bg-primary-soft border-primary' : 'border-line hover:border-inksoft/50'}">
+            <div class="w-8 h-8 shrink-0 rounded-md border-2 flex items-center justify-center text-sm font-bold ${active ? 'bg-primary text-white border-primary' : 'text-inksoft border-line'}">${opt}</div>
+            <div class="math-tex flex-1 text-[15px]">${sumberOpsi[opt]}</div>
+          </div>`;
       }
-    }); return html + '</div>';
+    }); 
+    
+    return html + '</div>';
   }
 
   function renderTFTable(soal) {
