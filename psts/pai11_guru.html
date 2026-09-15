@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id" class="bg-slate-50">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Rekap PSTS</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Library SheetJS untuk Export ke Excel -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+<style>
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #f1f5f9; }
+  ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+</style>
+</head>
+<body class="text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+<!-- SCREEN LOGIN ADMIN -->
+<div id="loginScreen" class="flex-1 flex items-center justify-center p-6">
+  <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 max-w-sm w-full">
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">Login Admin</h2>
+    <p class="text-sm text-slate-500 mb-6">Masukkan PIN Admin untuk mengakses rekapitulasi ujian.</p>
+    <input type="password" id="adminPin" placeholder="PIN Admin" class="w-full px-4 py-3 rounded-xl border border-slate-300 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <button onclick="loginAdmin()" id="btnLogin" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition">Akses Data</button>
+    <p id="loginMsg" class="text-red-500 text-sm mt-3 hidden"></p>
+  </div>
+</div>
+
+<!-- SCREEN DASHBOARD ADMIN -->
+<div id="dashboardScreen" class="hidden flex-1 flex flex-col h-screen">
+  
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-20">
+    <div>
+      <h1 class="text-xl font-bold text-slate-900">Rekapitulasi Hasil PSTS</h1>
+      <p class="text-xs text-slate-500" id="infoStat">Memuat data...</p>
+    </div>
+    <div class="flex gap-3">
+      <button onclick="bukaModalBobot()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-lg border border-slate-300 transition">⚙️ Revisi Bobot</button>
+      <button onclick="downloadExcel()" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg shadow-sm transition">📥 Download Excel</button>
+    </div>
+  </header>
+
+  <!-- Toolbar Filter & Sort -->
+  <div class="bg-slate-50 px-6 py-3 border-b border-slate-200 flex gap-4 items-center z-10 shadow-sm">
+    <select id="filterKelas" onchange="terapkanFilter()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
+      <option value="ALL">Semua Kelas</option>
+    </select>
+    <select id="sortData" onchange="terapkanFilter()" class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
+      <option value="NAMA_ASC">Urutkan: Nama (A-Z)</option>
+      <option value="SKOR_DESC">Urutkan: Skor Tertinggi</option>
+      <option value="SKOR_ASC">Urutkan: Skor Terendah</option>
+      <option value="TAB_DESC">Urutkan: Pindah Tab Terbanyak</option>
+    </select>
+    <input type="text" id="searchNama" oninput="terapkanFilter()" placeholder="Cari Nama/NIS..." class="px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none w-64">
+  </div>
+
+  <!-- Table Container -->
+  <div class="flex-1 overflow-auto bg-slate-50 p-6 relative">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+      <table class="w-full text-sm text-left whitespace-nowrap">
+        <thead class="bg-slate-100 text-slate-600 uppercase text-xs font-bold border-b border-slate-200 sticky top-0 z-10" id="tableHead">
+          <!-- Diisi via JS -->
+        </thead>
+        <tbody class="divide-y divide-slate-100" id="tableBody">
+          <!-- Diisi via JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL REVISI BOBOT -->
+<div id="modalBobot" class="hidden fixed inset-0 z-50 bg-slate-900/50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] flex flex-col shadow-2xl">
+    <div class="px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+      <h3 class="font-bold text-lg text-slate-800">Revisi Pembobotan Soal</h3>
+      <button onclick="tutupModalBobot()" class="text-slate-400 hover:text-slate-600">✖</button>
+    </div>
+    <div class="p-6 overflow-y-auto flex-1 bg-slate-50" id="listBobotContainer">
+      <!-- Diisi list input bobot via JS -->
+    </div>
+    <div class="px-6 py-4 border-t border-slate-200 bg-white flex justify-end gap-3 rounded-b-2xl">
+      <button onclick="tutupModalBobot()" class="px-4 py-2 border border-slate-300 rounded-lg font-semibold text-slate-600 hover:bg-slate-50">Batal</button>
+      <button onclick="simpanBobot()" class="px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 shadow-sm">Simpan & Hitung Ulang</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyoMhikIHRwh9a5rIB3uayQKK133KJ18EvSjU11EeDCvaRZjBtXvAKsVQ-noTc1L1wR/exec';
+  
+  let rawData = { soal: [], peserta: [] };
+  let currentBobot = {}; 
+  let filteredData = [];
+
+  async function loginAdmin() {
+    const pin = document.getElementById('adminPin').value.trim();
+    const btn = document.getElementById('btnLogin');
+    const msg = document.getElementById('loginMsg');
+    
+    if(!pin) return;
+    btn.innerText = 'Mengambil data...'; btn.disabled = true; msg.classList.add('hidden');
+
+    try {
+      const res = await fetch(`${API_URL}?action=admin&pin=${encodeURIComponent(pin)}`);
+      const data = await res.json();
+      
+      if(data.status === 'success') {
+        rawData = data;
+        // Inisialisasi bobot saat ini
+        rawData.soal.forEach(s => currentBobot[s.id] = s.bobot);
+        siapkanFilter();
+        kalkulasiSemua();
+        
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('dashboardScreen').classList.remove('hidden');
+      } else {
+        msg.innerText = data.message; msg.classList.remove('hidden');
+      }
+    } catch(err) {
+      msg.innerText = 'Gagal terhubung ke server.'; msg.classList.remove('hidden');
+    }
+    btn.innerText = 'Akses Data'; btn.disabled = false;
+  }
+
+  // ==== LOGIKA SKORING OTOMATIS (Sama dengan Backend) ====
+  function hitungSkorSiswa(jawabanSiswa) {
+    let skor = 0;
+    let detail = {}; // Menyimpan status per soal: benar penuh, salah, atau nilai desimal (TF)
+
+    rawData.soal.forEach(s => {
+      const jwb = jawabanSiswa[s.id];
+      const kunci = s.kunci;
+      const bobot = currentBobot[s.id];
+      let perolehan = 0;
+
+      if(jwb && kunci) {
+        if(s.tipe === 'MCQ' && jwb === kunci) {
+          perolehan = bobot;
+        } 
+        else if(s.tipe === 'MCMA') {
+          const kunciArr = kunci.split(',').map(x=>x.trim()).sort().join(',');
+          const jawabArr = Array.isArray(jwb) ? jwb.slice().sort().join(',') : '';
+          if(kunciArr === jawabArr) perolehan = bobot;
+        } 
+        else if(s.tipe === 'TF_TABLE') {
+          try {
+            const kunciObj = JSON.parse(kunci);
+            const keys = Object.keys(kunciObj);
+            const bobotPerItem = bobot / keys.length;
+            keys.forEach(k => { if(jwb[k] === kunciObj[k]) perolehan += bobotPerItem; });
+          } catch(e) {}
+        }
+      }
+      
+      skor += perolehan;
+      // Tentukan status tampilan (Benar = hijau, Salah = merah, Sebagian = kuning)
+      if(perolehan === bobot && bobot > 0) detail[s.id] = { val: perolehan, status: 'FULL' };
+      else if(perolehan > 0) detail[s.id] = { val: perolehan, status: 'PARTIAL' };
+      else detail[s.id] = { val: 0, status: 'ZERO' };
+    });
+
+    return { total: skor, detail: detail };
+  }
+
+  function kalkulasiSemua() {
+    rawData.peserta.forEach(p => {
+      const hasil = hitungSkorSiswa(p.jawaban);
+      p.skor_final = hasil.total;
+      p.detail = hasil.detail;
+    });
+    terapkanFilter();
+  }
+
+  // ==== FILTER & SORTING ====
+  function siapkanFilter() {
+    const kelasSet = new Set(rawData.peserta.map(p => p.kelas));
+    const select = document.getElementById('filterKelas');
+    Array.from(kelasSet).sort().forEach(k => {
+      const opt = document.createElement('option');
+      opt.value = k; opt.innerText = k;
+      select.appendChild(opt);
+    });
+  }
+
+  function terapkanFilter() {
+    const fKelas = document.getElementById('filterKelas').value;
+    const fSort = document.getElementById('sortData').value;
+    const fSearch = document.getElementById('searchNama').value.toLowerCase();
+
+    filteredData = rawData.peserta.filter(p => {
+      const matchKelas = fKelas === 'ALL' || p.kelas === fKelas;
+      const matchSearch = p.nama.toLowerCase().includes(fSearch) || p.nis.includes(fSearch);
+      return matchKelas && matchSearch;
+    });
+
+    filteredData.sort((a, b) => {
+      if(fSort === 'NAMA_ASC') return a.nama.localeCompare(b.nama);
+      if(fSort === 'SKOR_DESC') return b.skor_final - a.skor_final;
+      if(fSort === 'SKOR_ASC') return a.skor_final - b.skor_final;
+      if(fSort === 'TAB_DESC') return b.tab_switch - a.tab_switch;
+    });
+
+    document.getElementById('infoStat').innerText = `Menampilkan ${filteredData.length} dari total ${rawData.peserta.length} peserta`;
+    renderTable();
+  }
+
+  // ==== RENDER TABEL UTAMA ====
+  function renderTable() {
+    const thead = document.getElementById('tableHead');
+    const tbody = document.getElementById('tableBody');
+    
+    // Render Header Dinamis
+    let headHtml = '<tr><th class="px-4 py-3">NIS</th><th class="px-4 py-3">Nama</th><th class="px-4 py-3">Kelas</th><th class="px-4 py-3 text-center">Skor</th><th class="px-4 py-3 text-center" title="Tab Switch (Indikasi Kecurangan)">⚠️ Tab</th>';
+    rawData.soal.forEach((s, idx) => {
+      headHtml += `<th class="px-2 py-3 text-center border-l border-slate-200"><div class="text-[10px] text-slate-400 font-normal">No.${idx+1}</div>${s.id}</th>`;
+    });
+    headHtml += '</tr>';
+    thead.innerHTML = headHtml;
+
+    // Render Body
+    let bodyHtml = '';
+    filteredData.forEach(p => {
+      // Warna skor akhir berdasarkan KKM (misal KKM 70)
+      const colorSkor = p.skor_final >= 70 ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50';
+      const colorTab = p.tab_switch > 0 ? 'text-amber-600 font-bold bg-amber-50' : 'text-slate-400';
+
+      bodyHtml += `<tr class="hover:bg-blue-50 transition">
+        <td class="px-4 py-3 font-mono text-slate-500">${p.nis}</td>
+        <td class="px-4 py-3 font-semibold text-slate-800 max-w-[200px] truncate" title="${p.nama}">${p.nama}</td>
+        <td class="px-4 py-3 text-slate-600">${p.kelas}</td>
+        <td class="px-4 py-3 text-center font-bold ${colorSkor} rounded-lg m-1 inline-block w-full">${Number(p.skor_final.toFixed(2))}</td>
+        <td class="px-4 py-3 text-center ${colorTab}">${p.tab_switch}</td>`;
+
+      // Render cell per soal
+      rawData.soal.forEach(s => {
+        const d = p.detail[s.id] || { val:0, status:'ZERO' };
+        let icon = `<span class="text-red-400">✗</span>`; // Salah
+        if(d.status === 'FULL') icon = `<span class="text-green-500 font-bold">✓</span>`; // Benar full
+        else if(d.status === 'PARTIAL') icon = `<span class="text-amber-500 font-bold text-[10px]">${Number(d.val.toFixed(2))}</span>`; // Benar sebagian (TF Table)
+        
+        // Tooltip berisi jawaban siswa vs kunci jika di-hover
+        let jwbTeks = p.jawaban[s.id] ? JSON.stringify(p.jawaban[s.id]) : 'Kosong';
+        let tooltip = `Jwb: ${jwbTeks} | Kunci: ${s.kunci}`;
+
+        bodyHtml += `<td class="px-2 py-3 text-center border-l border-slate-100" title='${tooltip}'>${icon}</td>`;
+      });
+      bodyHtml += '</tr>';
+    });
+    tbody.innerHTML = bodyHtml;
+  }
+
+  // ==== FITUR REVISI BOBOT ====
+  function bukaModalBobot() {
+    const c = document.getElementById('listBobotContainer');
+    let html = '<div class="space-y-3">';
+    rawData.soal.forEach((s, idx) => {
+      html += `
+        <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-200">
+          <div><span class="font-bold text-slate-700">${s.id}</span> <span class="text-xs text-slate-400 ml-2">(No. ${idx+1})</span><div class="text-[10px] text-slate-500 font-mono mt-1">Tipe: ${s.tipe}</div></div>
+          <div class="flex items-center gap-2">
+            <label class="text-xs text-slate-500">Bobot:</label>
+            <input type="number" id="inpBobot_${s.id}" value="${currentBobot[s.id]}" class="w-20 px-2 py-1 border border-slate-300 rounded focus:border-blue-500 focus:outline-none text-center">
+          </div>
+        </div>
+      `;
+    });
+    html += '</div>';
+    c.innerHTML = html;
+    document.getElementById('modalBobot').classList.remove('hidden');
+  }
+
+  function tutupModalBobot() { document.getElementById('modalBobot').classList.add('hidden'); }
+
+  function simpanBobot() {
+    rawData.soal.forEach(s => {
+      const val = parseFloat(document.getElementById(`inpBobot_${s.id}`).value);
+      currentBobot[s.id] = isNaN(val) ? 0 : val;
+    });
+    tutupModalBobot();
+    kalkulasiSemua(); // Menghitung ulang nilai seluruh siswa
+    alert("Bobot berhasil direvisi dan skor telah dihitung ulang. (Catatan: Ini tidak mengubah data asli di Google Sheets, hanya di tampilan ini untuk di-download).");
+  }
+
+  // ==== EXPORT EXCEL DENGAN SHEETJS ====
+  function downloadExcel() {
+    if(filteredData.length === 0) return alert('Tidak ada data untuk diunduh.');
+
+    // Buat array of objects untuk format Excel
+    const dataExport = filteredData.map(p => {
+      let row = {
+        "Waktu Submit": new Date(p.waktu).toLocaleString('id-ID'),
+        "NIS": p.nis,
+        "Nama Lengkap": p.nama,
+        "Kelas": p.kelas,
+        "Pindah Tab (Anti-Cheat)": p.tab_switch,
+        "SKOR AKHIR": Number(p.skor_final.toFixed(2))
+      };
+      // Tambahkan rincian nilai per soal ke kolom sampingnya
+      rawData.soal.forEach((s, idx) => {
+        row[`No.${idx+1} (${s.id})`] = Number(p.detail[s.id].val.toFixed(2));
+      });
+      return row;
+    });
+
+    const ws = XLSX.utils.json_to_sheet(dataExport);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Rekap_Nilai");
+    XLSX.writeFile(wb, `Rekap_Ujian_${document.getElementById('filterKelas').value}.xlsx`);
+  }
+</script>
+</body>
+</html>
