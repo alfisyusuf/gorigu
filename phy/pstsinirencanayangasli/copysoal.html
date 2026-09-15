@@ -2,12 +2,14 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<title>LMS Copy Helper - Plain HTML</title>
+<title>LMS Copy Helper - Full 40 Soal</title>
 <style>
     :root {
-        --primary: #2563eb;
-        --primary-hover: #1d4ed8;
-        --success: #16a34a;
+        --normal-btn: #2563eb;       
+        --normal-hover: #1d4ed8;
+        --html-btn: #d97706;         
+        --html-hover: #b45309;
+        --success: #16a34a;          
         --bg-color: #f8fafc;
         --border-color: #e2e8f0;
         --text-color: #334155;
@@ -17,112 +19,320 @@
     .header { background: #fff; padding: 25px; border-radius: 10px; margin-bottom: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
     h2 { margin-top: 0; color: #0f172a; }
     .instructions { font-size: 0.95em; line-height: 1.5; color: #475569; }
+    .badge-normal { display: inline-block; background: var(--normal-btn); color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;}
+    .badge-html { display: inline-block; background: var(--html-btn); color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold;}
     
     .q-card { background: #fff; padding: 25px; border-radius: 10px; margin-bottom: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
-    .q-title { font-weight: 600; font-size: 18px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); color: #0f172a; }
+    .q-title { font-weight: 600; font-size: 18px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid var(--border-color); color: #0f172a; display: flex; justify-content: space-between; align-items: center;}
     
     .opt-row { display: flex; align-items: stretch; margin-bottom: 15px; gap: 12px; }
     .opt-label { font-weight: 600; width: 65px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: #f1f5f9; border-radius: 6px; text-align:center; padding: 10px; border: 1px solid var(--border-color); color: #475569;}
     .opt-content { flex-grow: 1; padding: 15px; background: #fff; border: 1px solid var(--border-color); border-radius: 6px; overflow-x: auto; line-height: 1.5; }
     
-    .btn { background: var(--primary); color: #fff; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; min-width: 110px; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
-    .btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
-    .btn:active { transform: translateY(1px); }
+    .btn { color: #fff; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; min-width: 170px; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+    .btn-normal { background: var(--normal-btn); }
+    .btn-normal:hover { background: var(--normal-hover); }
+    .btn-html { background: var(--html-btn); }
+    .btn-html:hover { background: var(--html-hover); }
     .btn-success { background: var(--success) !important; }
     
-    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 12px 24px; border-radius: 8px; opacity: 0; transition: opacity 0.3s, transform 0.3s; z-index: 1000; font-weight: 500; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); pointer-events: none; }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 12px 24px; border-radius: 8px; opacity: 0; transition: opacity 0.3s, transform 0.3s; z-index: 1000; font-weight: 500; }
     .toast.show { opacity: 1; transform: translate(-50%, -10px); }
 </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h2>🚀 LMS Copy Helper (Versi HTML Murni)</h2>
+        <h2>⚡ LMS Copy Helper (Full 40 Soal)</h2>
         <div class="instructions">
-            <p>Alat ini dirancang khusus untuk <b>menghindari masalah MathJax</b> di LMS. Semua rumus fisika telah dikonversi menggunakan tag HTML standar seperti <code>&lt;sub&gt;</code>, <code>&lt;sup&gt;</code>, dan simbol khusus (misal: &amp;mu; &amp;times; &amp;radic;).</p>
-            <p><b>Cara Penggunaan:</b> Klik tombol Copy di sebelah teks yang ingin disalin, lalu Paste ke editor soal/jawaban di LMS Anda (mode Source/HTML).</p>
+            <p>Seluruh 40 soal telah dikonversi ke format tag HTML murni. Sistem cerdas membedakan tombol Copy berdasarkan kontennya:</p>
+            <ul>
+                <li><span class="badge-normal">Copy (Normal Text)</span> : <b>Langsung Paste (CTRL+V)</b>. Hemat waktu, tidak perlu buka mode Source.</li>
+                <li><span class="badge-html">Copy (Mode Source)</span> : <b>Wajib klik &lt; &gt; (Source/HTML)</b> di LMS sebelum paste (mengandung sub, sup, &mu;, atau SVG).</li>
+            </ul>
         </div>
     </div>
     <div id="app"></div>
 </div>
-<div id="toast" class="toast">✅ Berhasil disalin ke clipboard!</div>
+<div id="toast" class="toast">✅ Berhasil disalin!</div>
 
 <script>
-    // Data JSON dengan HTML Murni (Tanpa LaTeX/MathJax)
-    // Silakan tambahkan soal lainnya dengan gaya penulisan HTML murni di bawah ini
     const quizData = [
         {
             num: "1",
-            q: "Two point charges, q<sub>1</sub> = +2 &mu;C and q<sub>2</sub> = +8 &mu;C, are separated by a distance of 0.3 m in vacuum. Determine the magnitude of the electrostatic force between them. (k = 9 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>)",
-            opts: [
-                { l: "A", c: "0.16 N" },
-                { l: "B", c: "1.6 N" },
-                { l: "C", c: "16 N" },
-                { l: "D", c: "160 N" },
-                { l: "E", c: "1600 N" }
-            ]
+            q: { val: "Two point charges, q<sub>1</sub> = +2 &mu;C and q<sub>2</sub> = +8 &mu;C, are separated by a distance of 0.3 m in vacuum. Determine the magnitude of the electrostatic force between them. (k = 9 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>)", isHtml: true },
+            opts: [{l: "A", val: "0.16 N", isHtml: false}, {l: "B", val: "1.6 N", isHtml: false}, {l: "C", val: "16 N", isHtml: false}, {l: "D", val: "160 N", isHtml: false}, {l: "E", val: "1600 N", isHtml: false}]
         },
         {
             num: "2",
-            q: "If both point charges in a Coulomb's law setup are tripled while the distance between them is doubled, what happens to the magnitude of the electrostatic force?",
-            opts: [
-                { l: "A", c: "It becomes 2.25 times larger." },
-                { l: "B", c: "It becomes 4.5 times larger." },
-                { l: "C", c: "It becomes 0.44 times the original value." },
-                { l: "D", c: "It becomes 9 times larger." },
-                { l: "E", c: "It becomes 1.5 times larger." }
-            ]
+            q: { val: "If both point charges in a Coulomb's law setup are tripled while the distance between them is doubled, what happens to the magnitude of the electrostatic force?", isHtml: false },
+            opts: [{l: "A", val: "It becomes 2.25 times larger.", isHtml: false}, {l: "B", val: "It becomes 4.5 times larger.", isHtml: false}, {l: "C", val: "It becomes 0.44 times the original value.", isHtml: false}, {l: "D", val: "It becomes 9 times larger.", isHtml: false}, {l: "E", val: "It becomes 1.5 times larger.", isHtml: false}]
         },
         {
             num: "3",
-            q: "Two point charges, +Q and +4Q, are fixed 0.6 m apart along a straight line.<br><br><div style='text-align:center;'><svg width='300' height='80' viewBox='0 0 300 80'><line x1='50' y1='40' x2='250' y2='40' stroke='#94A3B8' stroke-width='2' stroke-dasharray='4,4'/><circle cx='50' cy='40' r='16' fill='#EF4444'/><text x='50' y='45' fill='white' font-size='14' text-anchor='middle'>+Q</text><circle cx='250' cy='40' r='16' fill='#EF4444'/><text x='250' y='45' fill='white' font-size='14' text-anchor='middle'>+4Q</text><text x='150' y='30' fill='#475569' font-size='12' text-anchor='middle'>d = 0.6 m</text></svg></div><br>At what distance from the +Q charge, measured along the line between the two charges, must a third charge be placed so that the net electrostatic force acting on it is zero?",
-            opts: [
-                { l: "A", c: "0.1 m" },
-                { l: "B", c: "0.15 m" },
-                { l: "C", c: "0.2 m" },
-                { l: "D", c: "0.3 m" },
-                { l: "E", c: "0.4 m" }
-            ]
+            q: { val: "Two point charges, +Q and +4Q, are fixed 0.6 m apart along a straight line.<br><br><div style='text-align:center;'><svg width='300' height='80' viewBox='0 0 300 80'><line x1='50' y1='40' x2='250' y2='40' stroke='#94A3B8' stroke-width='2' stroke-dasharray='4,4'/><circle cx='50' cy='40' r='16' fill='#EF4444'/><text x='50' y='45' fill='white' font-size='14' text-anchor='middle'>+Q</text><circle cx='250' cy='40' r='16' fill='#EF4444'/><text x='250' y='45' fill='white' font-size='14' text-anchor='middle'>+4Q</text><text x='150' y='30' fill='#475569' font-size='12' text-anchor='middle'>d = 0.6 m</text></svg></div><br>At what distance from the +Q charge, measured along the line between the two charges, must a third charge be placed so that the net electrostatic force acting on it is zero?", isHtml: true },
+            opts: [{l: "A", val: "0.1 m", isHtml: false}, {l: "B", val: "0.15 m", isHtml: false}, {l: "C", val: "0.2 m", isHtml: false}, {l: "D", val: "0.3 m", isHtml: false}, {l: "E", val: "0.4 m", isHtml: false}]
         },
         {
             num: "4",
-            q: "Two equal electrostatic forces, each with a magnitude of 10 N, act on a charged particle. The angle between the two forces is 60&deg;. Determine the magnitude of the resultant force. (Use cos 60&deg; = 0.5)",
-            opts: [
-                { l: "A", c: "10&radic;3 N" },
-                { l: "B", c: "10 N" },
-                { l: "C", c: "20 N" },
-                { l: "D", c: "5&radic;3 N" },
-                { l: "E", c: "20&radic;3 N" }
-            ]
+            q: { val: "Two equal electrostatic forces, each with a magnitude of 10 N, act on a charged particle. The angle between the two forces is 60&deg;. Determine the magnitude of the resultant force. (Use cos 60&deg; = 0.5)", isHtml: true },
+            opts: [{l: "A", val: "10&radic;3 N", isHtml: true}, {l: "B", val: "10 N", isHtml: false}, {l: "C", val: "20 N", isHtml: false}, {l: "D", val: "5&radic;3 N", isHtml: true}, {l: "E", val: "20&radic;3 N", isHtml: true}]
         },
         {
             num: "5",
-            q: "A point charge experiences an electrostatic force of 20 N directed at 37&deg; above the horizontal axis. Determine the magnitude of the horizontal (x) component of this force. (sin 37&deg; = 0.6, cos 37&deg; = 0.8)",
+            q: { val: "A point charge experiences an electrostatic force of 20 N directed at 37&deg; above the horizontal axis. Determine the magnitude of the horizontal (x) component of this force. (sin 37&deg; = 0.6, cos 37&deg; = 0.8)", isHtml: true },
+            opts: [{l: "A", val: "12 N", isHtml: false}, {l: "B", val: "16 N", isHtml: false}, {l: "C", val: "20 N", isHtml: false}, {l: "D", val: "24 N", isHtml: false}, {l: "E", val: "10 N", isHtml: false}]
+        },
+        {
+            num: "6",
+            q: { val: "A point charge Q = +5 &mu;C is located in vacuum. Determine the magnitude of the electric field at a point 0.5 m away from the charge. (k = 9 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>)", isHtml: true },
+            opts: [{l: "A", val: "1.8 &times; 10<sup>4</sup> N/C", isHtml: true}, {l: "B", val: "1.8 &times; 10<sup>5</sup> N/C", isHtml: true}, {l: "C", val: "9 &times; 10<sup>4</sup> N/C", isHtml: true}, {l: "D", val: "9 &times; 10<sup>5</sup> N/C", isHtml: true}, {l: "E", val: "3.6 &times; 10<sup>5</sup> N/C", isHtml: true}]
+        },
+        {
+            num: "7",
+            q: { val: "Two point charges of equal magnitude each produce an electric field of 8 &times; 10<sup>4</sup> N/C at point P, with the two field vectors perpendicular to one another (angle of 90&deg; between them). Determine the magnitude of the resultant electric field at point P.", isHtml: true },
+            opts: [{l: "A", val: "8 &times; 10<sup>4</sup>&radic;2 N/C", isHtml: true}, {l: "B", val: "16 &times; 10<sup>4</sup> N/C", isHtml: true}, {l: "C", val: "8 &times; 10<sup>4</sup> N/C", isHtml: true}, {l: "D", val: "0 N/C", isHtml: false}, {l: "E", val: "64 &times; 10<sup>4</sup> N/C", isHtml: true}]
+        },
+        {
+            num: "8",
+            q: { val: "A point charge +Q and a point charge -4Q are placed 0.9 m apart. At what distance from the +Q charge, measured outward along the line joining the two charges (on the side of +Q, away from -4Q), is the total electric field equal to zero?", isHtml: false },
+            opts: [{l: "A", val: "0.3 m", isHtml: false}, {l: "B", val: "0.45 m", isHtml: false}, {l: "C", val: "0.9 m", isHtml: false}, {l: "D", val: "1.8 m", isHtml: false}, {l: "E", val: "0.6 m", isHtml: false}]
+        },
+        {
+            num: "9",
+            q: { val: "A region of space contains straight, parallel, and equally spaced electric field lines throughout the region.<br><br><div style='text-align:center;'><svg width='200' height='100' viewBox='0 0 200 100'><g stroke='#3B82F6' stroke-width='2' fill='none'><path d='M20,20 L180,20'/><polygon points='180,20 170,15 170,25' fill='#3B82F6'/><path d='M20,50 L180,50'/><polygon points='180,50 170,45 170,55' fill='#3B82F6'/><path d='M20,80 L180,80'/><polygon points='180,80 170,75 170,85' fill='#3B82F6'/></g></svg></div><br>What can be concluded about the electric field in that region?", isHtml: true },
+            opts: [{l: "A", val: "The field is uniform in both magnitude and direction.", isHtml: false}, {l: "B", val: "The field magnitude increases along the direction of the lines.", isHtml: false}, {l: "C", val: "The field is zero everywhere in that region.", isHtml: false}, {l: "D", val: "The field lines indicate a radial (point-charge) field.", isHtml: false}, {l: "E", val: "The field magnitude varies inversely with distance.", isHtml: false}]
+        },
+        {
+            num: "10",
+            q: { val: "A flat surface with an area of 0.02 m<sup>2</sup> is placed in a uniform electric field of 5 &times; 10<sup>3</sup> N/C. The normal to the surface makes an angle of 60&deg; with the field direction. Determine the electric flux through the surface. (cos 60&deg; = 0.5)", isHtml: true },
+            opts: [{l: "A", val: "25 N&middot;m<sup>2</sup>/C", isHtml: true}, {l: "B", val: "50 N&middot;m<sup>2</sup>/C", isHtml: true}, {l: "C", val: "86.6 N&middot;m<sup>2</sup>/C", isHtml: true}, {l: "D", val: "100 N&middot;m<sup>2</sup>/C", isHtml: true}, {l: "E", val: "0 N&middot;m<sup>2</sup>/C", isHtml: true}]
+        },
+        {
+            num: "11",
+            q: { val: "According to Gauss's law, the total electric flux through any closed surface depends only on which of the following?", isHtml: false },
+            opts: [{l: "A", val: "The shape of the closed surface.", isHtml: false}, {l: "B", val: "The net electric charge enclosed by the surface.", isHtml: false}, {l: "C", val: "The total surface area of the closed surface.", isHtml: false}, {l: "D", val: "The distance between the surface and the nearest charge.", isHtml: false}, {l: "E", val: "The volume of the closed surface.", isHtml: false}]
+        },
+        {
+            num: "12",
+            q: { val: "A closed spherical surface encloses a net charge of +4 &times; 10<sup>-9</sup> C. Given &epsilon;<sub>0</sub> = 8.85 &times; 10<sup>-12</sup> C<sup>2</sup>/N&middot;m<sup>2</sup>, determine the total electric flux through the surface.", isHtml: true },
+            opts: [{l: "A", val: "45.2 N&middot;m<sup>2</sup>/C", isHtml: true}, {l: "B", val: "452 N&middot;m<sup>2</sup>/C", isHtml: true}, {l: "C", val: "4520 N&middot;m<sup>2</sup>/C", isHtml: true}, {l: "D", val: "0.452 N&middot;m<sup>2</sup>/C", isHtml: true}, {l: "E", val: "4.52 N&middot;m<sup>2</sup>/C", isHtml: true}]
+        },
+        {
+            num: "13",
+            q: { val: "Determine the electric potential at a point 0.2 m from a point charge of +6 &mu;C. (k = 9 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>)", isHtml: true },
+            opts: [{l: "A", val: "2.7 &times; 10<sup>4</sup> V", isHtml: true}, {l: "B", val: "2.7 &times; 10<sup>5</sup> V", isHtml: true}, {l: "C", val: "5.4 &times; 10<sup>5</sup> V", isHtml: true}, {l: "D", val: "1.35 &times; 10<sup>5</sup> V", isHtml: true}, {l: "E", val: "2.7 &times; 10<sup>6</sup> V", isHtml: true}]
+        },
+        {
+            num: "14",
+            q: { val: "Two point charges, +3 &mu;C and -2 &mu;C, are separated by 0.1 m. Calculate the electric potential energy of the two-charge system. (k = 9 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>)", isHtml: true },
+            opts: [{l: "A", val: "-0.54 J", isHtml: false}, {l: "B", val: "+0.54 J", isHtml: false}, {l: "C", val: "-5.4 J", isHtml: false}, {l: "D", val: "-0.054 J", isHtml: false}, {l: "E", val: "-1.08 J", isHtml: false}]
+        },
+        {
+            num: "15",
+            q: { val: "How much work is required to move a +4 C charge from a point where the electric potential is 15 V to a point where the electric potential is 40 V?", isHtml: false },
+            opts: [{l: "A", val: "25 J", isHtml: false}, {l: "B", val: "55 J", isHtml: false}, {l: "C", val: "100 J", isHtml: false}, {l: "D", val: "220 J", isHtml: false}, {l: "E", val: "40 J", isHtml: false}]
+        },
+        {
+            num: "16",
+            q: { val: "Two identical point charges, each with a charge of +2 &mu;C, are placed 0.4 m apart. Determine the electric potential at the midpoint between them. (k = 9 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>)", isHtml: true },
+            opts: [{l: "A", val: "9 &times; 10<sup>4</sup> V", isHtml: true}, {l: "B", val: "1.8 &times; 10<sup>5</sup> V", isHtml: true}, {l: "C", val: "3.6 &times; 10<sup>5</sup> V", isHtml: true}, {l: "D", val: "0 V", isHtml: false}, {l: "E", val: "4.5 &times; 10<sup>4</sup> V", isHtml: true}]
+        },
+        {
+            num: "17",
+            q: { val: "Which of the following statements about equipotential surfaces is correct?", isHtml: false },
+            opts: [{l: "A", val: "Work done moving a charge along an equipotential surface is always positive.", isHtml: false}, {l: "B", val: "Two equipotential surfaces belonging to the same charge distribution can intersect each other.", isHtml: false}, {l: "C", val: "Electric field lines are always perpendicular to equipotential surfaces.", isHtml: false}, {l: "D", val: "The electric potential always increases as you move along an equipotential surface.", isHtml: false}, {l: "E", val: "The electric field is always parallel to equipotential surfaces.", isHtml: false}]
+        },
+        {
+            num: "18",
+            q: { val: "The electric potential difference between two parallel plates separated by 4 cm is 200 V. Assuming that the electric field between the plates is uniform, determine its magnitude.", isHtml: false },
+            opts: [{l: "A", val: "50 N/C", isHtml: false}, {l: "B", val: "500 N/C", isHtml: false}, {l: "C", val: "5000 N/C", isHtml: false}, {l: "D", val: "50000 N/C", isHtml: false}, {l: "E", val: "800 N/C", isHtml: false}]
+        },
+        {
+            num: "19",
+            q: { val: "A solid conducting sphere carries a net positive charge and is isolated in space in electrostatic equilibrium. Which statement about its surface is correct?", isHtml: false },
+            opts: [{l: "A", val: "The surface of the conductor is an equipotential surface.", isHtml: false}, {l: "B", val: "The potential varies from point to point on the surface.", isHtml: false}, {l: "C", val: "The electric field lines run tangent to (along) the surface.", isHtml: false}, {l: "D", val: "The potential at the surface is always zero.", isHtml: false}, {l: "E", val: "The electric field inside the conductor is maximum at the center.", isHtml: false}]
+        },
+        {
+            num: "20",
+            q: { val: "A charge of 5 C moves along an equipotential surface from point A to point B. How much work is done by the electric force during this displacement?", isHtml: false },
+            opts: [{l: "A", val: "0 J", isHtml: false}, {l: "B", val: "5 J", isHtml: false}, {l: "C", val: "Equal to the product of the charge and the distance travelled.", isHtml: false}, {l: "D", val: "It depends on the path taken between A and B.", isHtml: false}, {l: "E", val: "25 J", isHtml: false}]
+        },
+        {
+            num: "21",
+            q: { val: "A parallel-plate capacitor has a capacitance of C. If the plate separation is reduced to 1/4 of its original value while the plate area remains constant, what is the new capacitance in terms of C?", isHtml: false },
+            opts: [{l: "A", val: "C/4", isHtml: false}, {l: "B", val: "4C", isHtml: false}, {l: "C", val: "2C", isHtml: false}, {l: "D", val: "C (unchanged)", isHtml: false}, {l: "E", val: "C/16", isHtml: false}]
+        },
+        {
+            num: "22",
+            q: { val: "A parallel-plate capacitor with a vacuum between its plates has a capacitance of 4 &mu;F. A dielectric material with a relative permittivity &epsilon;<sub>r</sub> = 5 is then inserted, completely filling the gap between the plates. Determine the new capacitance.", isHtml: true },
+            opts: [{l: "A", val: "0.8 &mu;F", isHtml: true}, {l: "B", val: "4 &mu;F", isHtml: true}, {l: "C", val: "9 &mu;F", isHtml: true}, {l: "D", val: "20 &mu;F", isHtml: true}, {l: "E", val: "1.25 &mu;F", isHtml: true}]
+        },
+        {
+            num: "23",
+            q: { val: "Two capacitors, 6 &mu;F and 3 &mu;F, are connected in series. Calculate the equivalent capacitance of the combination.", isHtml: true },
+            opts: [{l: "A", val: "2 &mu;F", isHtml: true}, {l: "B", val: "4.5 &mu;F", isHtml: true}, {l: "C", val: "9 &mu;F", isHtml: true}, {l: "D", val: "18 &mu;F", isHtml: true}, {l: "E", val: "12 &mu;F", isHtml: true}]
+        },
+        {
+            num: "24",
+            q: { val: "Two capacitors, 6 &mu;F and 3 &mu;F, are connected in parallel. Calculate the equivalent capacitance of the combination.", isHtml: true },
+            opts: [{l: "A", val: "2 &mu;F", isHtml: true}, {l: "B", val: "4.5 &mu;F", isHtml: true}, {l: "C", val: "9 &mu;F", isHtml: true}, {l: "D", val: "18 &mu;F", isHtml: true}, {l: "E", val: "3 &mu;F", isHtml: true}]
+        },
+        {
+            num: "25",
+            q: { val: "In a circuit, a 4 &mu;F capacitor is connected in parallel with a 2 &mu;F capacitor. This parallel combination is then connected in series with a 6 &mu;F capacitor. Determine the total equivalent capacitance of the circuit.", isHtml: true },
+            opts: [{l: "A", val: "2 &mu;F", isHtml: true}, {l: "B", val: "3 &mu;F", isHtml: true}, {l: "C", val: "6 &mu;F", isHtml: true}, {l: "D", val: "12 &mu;F", isHtml: true}, {l: "E", val: "10 &mu;F", isHtml: true}]
+        },
+        {
+            num: "26",
+            q: { val: "A capacitor with a capacitance of 2 &mu;F is charged to a potential difference of 100 V. Determine the electric energy stored in the capacitor. (W = 1/2 CV<sup>2</sup>)", isHtml: true },
+            opts: [{l: "A", val: "1 &times; 10<sup>-2</sup> J", isHtml: true}, {l: "B", val: "2 &times; 10<sup>-2</sup> J", isHtml: true}, {l: "C", val: "1 &times; 10<sup>-4</sup> J", isHtml: true}, {l: "D", val: "2 &times; 10<sup>4</sup> J", isHtml: true}, {l: "E", val: "4 &times; 10<sup>-2</sup> J", isHtml: true}]
+        },
+        {
+            num: "27",
+            q: { val: "A 5 &mu;F capacitor is connected to a 12 V battery. Determine the magnitude of the charge stored on each plate.", isHtml: true },
+            opts: [{l: "A", val: "6 &times; 10<sup>-5</sup> C", isHtml: true}, {l: "B", val: "6 &times; 10<sup>-4</sup> C", isHtml: true}, {l: "C", val: "0.6 C", isHtml: false}, {l: "D", val: "60 C", isHtml: false}, {l: "E", val: "2.4 C", isHtml: false}]
+        },
+        {
+            num: "28",
+            q: { val: "An isolated parallel-plate capacitor, disconnected from any battery, has an initial capacitance of 2 &mu;F and is charged to 50 V. A dielectric with &epsilon;<sub>r</sub> = 4 is then inserted, completely filling the space between the plates. Determine the new voltage across the capacitor.", isHtml: true },
+            opts: [{l: "A", val: "200 V", isHtml: false}, {l: "B", val: "50 V", isHtml: false}, {l: "C", val: "12.5 V", isHtml: false}, {l: "D", val: "400 V", isHtml: false}, {l: "E", val: "6.25 V", isHtml: false}]
+        },
+        {
+            num: "29",
+            q: { val: "A parallel-plate capacitor remains connected to a battery that maintains a constant voltage. If the plate area is doubled while the plate separation remains unchanged, what happens to the charge stored on the capacitor?", isHtml: false },
+            opts: [{l: "A", val: "It becomes half of the original value.", isHtml: false}, {l: "B", val: "It remains the same.", isHtml: false}, {l: "C", val: "It becomes twice the original value.", isHtml: false}, {l: "D", val: "It becomes four times the original value.", isHtml: false}, {l: "E", val: "It decreases by a quarter.", isHtml: false}]
+        },
+        {
+            num: "30",
+            q: { val: "Two identical 4 &mu;F capacitors are connected to a 10 V battery. Determine the ratio of the total energy stored when the two capacitors are connected in parallel (W<sub>parallel</sub>) to that stored when they are connected in series (W<sub>series</sub>), i.e. W<sub>parallel</sub> : W<sub>series</sub>.", isHtml: true },
+            opts: [{l: "A", val: "1 : 1", isHtml: false}, {l: "B", val: "2 : 1", isHtml: false}, {l: "C", val: "4 : 1", isHtml: false}, {l: "D", val: "8 : 1", isHtml: false}, {l: "E", val: "1 : 4", isHtml: false}]
+        },
+        {
+            num: "31",
+            q: { val: "<b>(PGK-MCMA)</b><br>Consider the Coulomb's law equation F = k(q<sub>1</sub>q<sub>2</sub>)/r<sup>2</sup>. Which of the following statements are correct?<br><i>There is more than one correct answer. Select all the correct answers.</i>", isHtml: true },
             opts: [
-                { l: "A", c: "12 N" },
-                { l: "B", c: "16 N" },
-                { l: "C", c: "20 N" },
-                { l: "D", c: "24 N" },
-                { l: "E", c: "10 N" }
+                {l: "A", val: "The force is directly proportional to the product of the two charges.", isHtml: false}, 
+                {l: "B", val: "The force is directly proportional to the square of the distance.", isHtml: false}, 
+                {l: "C", val: "The force is inversely proportional to the square of the distance.", isHtml: false}, 
+                {l: "D", val: "If the distance between the charges is doubled, the force becomes half its original value.", isHtml: false}, 
+                {l: "E", val: "The force does not depend at all on the medium between the charges.", isHtml: false}
+            ]
+        },
+        {
+            num: "32",
+            q: { val: "<b>(PGK-MCMA)</b><br>Which of the following statements about a solid conductor in electrostatic equilibrium are correct?<br><i>There is more than one correct answer. Select all the correct answers.</i>", isHtml: true },
+            opts: [
+                {l: "A", val: "The electric field inside the conducting material is zero.", isHtml: false}, 
+                {l: "B", val: "Any excess charge resides entirely on the outer surface of the conductor.", isHtml: false}, 
+                {l: "C", val: "Electric field lines are parallel to the surface just outside the conductor.", isHtml: false}, 
+                {l: "D", val: "The electric potential varies from the center to the surface of the conductor.", isHtml: false}, 
+                {l: "E", val: "The surface of the conductor is not an equipotential surface.", isHtml: false}
+            ]
+        },
+        {
+            num: "33",
+            q: { val: "<b>(PGK-MCMA)</b><br>A dielectric material is inserted between the plates of an isolated, fully charged parallel-plate capacitor (disconnected from the battery). Which of the following statements about the resulting changes are correct?<br><i>There is more than one correct answer. Select all the correct answers.</i>", isHtml: true },
+            opts: [
+                {l: "A", val: "The capacitance of the capacitor increases.", isHtml: false}, 
+                {l: "B", val: "The charge stored on the plates remains constant.", isHtml: false}, 
+                {l: "C", val: "The voltage across the capacitor increases.", isHtml: false}, 
+                {l: "D", val: "The electric field between the plates increases.", isHtml: false}, 
+                {l: "E", val: "The electric potential energy stored in the capacitor increases.", isHtml: false}
+            ]
+        },
+        {
+            num: "34",
+            q: { val: "<b>(PGK-MCMA)</b><br>Which of the following statements about electric field lines are correct?<br><i>There is more than one correct answer. Select all the correct answers.</i>", isHtml: true },
+            opts: [
+                {l: "A", val: "Electric field lines never cross one another.", isHtml: false}, 
+                {l: "B", val: "Field lines originate from positive charges and terminate on negative charges (or extend to infinity).", isHtml: false}, 
+                {l: "C", val: "The density of field lines in a region indicates the electric potential there.", isHtml: false}, 
+                {l: "D", val: "Electric field lines around an isolated point charge form closed loops.", isHtml: false}, 
+                {l: "E", val: "The tangent to a field line at any point gives the magnitude of the electric field at that point.", isHtml: false}
+            ]
+        },
+        {
+            num: "35",
+            q: { val: "<b>(PGK-MCMA)</b><br>Which of the following statements about electric potential and electric potential energy are correct?<br><i>There is more than one correct answer. Select all the correct answers.</i>", isHtml: true },
+            opts: [
+                {l: "A", val: "Electric potential is a scalar quantity, while the electric field is a vector quantity.", isHtml: false}, 
+                {l: "B", val: "The potential energy of a system of two positive point charges is negative.", isHtml: false}, 
+                {l: "C", val: "The work done by the electric force in moving a charge between two points depends only on the potential difference between those points, not on the path taken.", isHtml: false}, 
+                {l: "D", val: "The electric potential due to a point charge is inversely proportional to the square of the distance from the charge.", isHtml: false}, 
+                {l: "E", val: "If a positive charge moves (under the electric force alone) from a region of higher potential to a region of lower potential, its electric potential energy increases.", isHtml: false}
+            ]
+        },
+        {
+            num: "36",
+            q: { val: "<b>(PGK-MCMA)</b><br>Three identical capacitors, each with capacitance C, can be arranged in different configurations and connected to the same battery with a voltage of V. Which of the following statements are correct?<br><i>There is more than one correct answer. Select all the correct answers.</i>", isHtml: true },
+            opts: [
+                {l: "A", val: "If all three are connected in series, the equivalent capacitance is C/3.", isHtml: false}, 
+                {l: "B", val: "If all three are connected in parallel, the equivalent capacitance is 3C.", isHtml: false}, 
+                {l: "C", val: "The series configuration always stores more total energy than the parallel configuration, for the same battery voltage.", isHtml: false}, 
+                {l: "D", val: "In the parallel configuration, each capacitor has a voltage across it equal to V/3.", isHtml: false}, 
+                {l: "E", val: "In the series configuration, the voltage across each capacitor is equal to the full source voltage V.", isHtml: false}
+            ]
+        },
+        {
+            num: "37",
+            q: { val: "<b>(PGK - Kategori)</b><br>A hollow conducting spherical shell has an inner radius of 5 cm and an outer radius of 10 cm. A point charge of +Q is placed exactly at the center of the hollow cavity, without touching the shell. Before the point charge is introduced, the conducting shell itself is electrically neutral.<br><br>As a result of electrostatic induction, charge is redistributed on the inner and outer surfaces of the shell. Determine whether each of the following statements is True or False.", isHtml: true },
+            opts: [
+                {l: "S1", val: "An induced charge of -Q appears on the inner surface of the shell (r = 5 cm).", isHtml: false}, 
+                {l: "S2", val: "The electric field inside the conducting material of the shell itself (between r=5 cm and r=10 cm) is zero.", isHtml: false}, 
+                {l: "S3", val: "An induced charge of -Q also appears on the outer surface of the shell.", isHtml: false}
+            ]
+        },
+        {
+            num: "38",
+            q: { val: "<b>(PGK - Kategori)</b><br>A parallel-plate capacitor is connected to a battery with an EMF of 20 V and becomes fully charged. While the capacitor still connected to the battery, the separation between the plates is slowly doubled using an insulated mechanical device, while the plate area remains unchanged.<br><br><div style='text-align:center;'><svg width='200' height='100' viewBox='0 0 200 100'><rect x='60' y='20' width='80' height='8' fill='#64748B'/><rect x='60' y='72' width='80' height='8' fill='#64748B'/><path d='M100,20 L100,0 M100,80 L100,100' stroke='#64748B' stroke-width='2'/><text x='150' y='55' fill='#475569' font-size='12'>d</text><line x1='145' y1='28' x2='145' y2='72' stroke='#94A3B8' stroke-width='1'/><path d='M142,33 L145,28 L148,33 M142,67 L145,72 L148,67' fill='#94A3B8'/></svg></div><br>Based on the relations C = &epsilon;<sub>0</sub>&epsilon;<sub>r</sub>A/d and Q = CV, determine whether each of the following statements is True or False.", isHtml: true },
+            opts: [
+                {l: "S1", val: "The capacitance of the capacitor decreases to half of its original value.", isHtml: false}, 
+                {l: "S2", val: "The voltage across the capacitor decreases to half of its original value.", isHtml: false}, 
+                {l: "S3", val: "The charge stored on the capacitor decreases to half of its original value.", isHtml: false}
+            ]
+        },
+        {
+            num: "39",
+            q: { val: "<b>(PGK - Kategori)</b><br>Two identical point charges, each with a charge of +Q, are fixed at two vertices of an equilateral triangle with side length a. Point P is located at the third vertex of the triangle, so P is a distance a from each of the two charges.<br><br><div style='text-align:center;'><svg width='200' height='180' viewBox='0 0 200 180'><polygon points='100,30 40,150 160,150' stroke='#94A3B8' stroke-width='2' fill='none' stroke-dasharray='4,4'/><circle cx='40' cy='150' r='14' fill='#EF4444'/><text x='40' y='154' fill='white' font-size='12' text-anchor='middle'>+Q</text><circle cx='160' cy='150' r='14' fill='#EF4444'/><text x='160' y='154' fill='white' font-size='12' text-anchor='middle'>+Q</text><circle cx='100' cy='30' r='6' fill='#1E293B'/><text x='100' y='20' fill='#1E293B' font-size='14' text-anchor='middle'>P</text><text x='100' y='168' fill='#475569' font-size='12' text-anchor='middle'>a</text><text x='55' y='90' fill='#475569' font-size='12' text-anchor='middle'>a</text><text x='145' y='90' fill='#475569' font-size='12' text-anchor='middle'>a</text></svg></div><br>Consider the electric field and the electric potential at point P due to these two charges, and determine whether each of the following statements is True or False.", isHtml: true },
+            opts: [
+                {l: "S1", val: "The electric potential at point P is equal to the algebraic (scalar) sum of the potentials due to each charge individually.", isHtml: false}, 
+                {l: "S2", val: "The electric field at point P is simply the algebraic (scalar) sum of the magnitudes of the two individual fields, because both charges have the same sign.", isHtml: false}, 
+                {l: "S3", val: "If the value of Q is doubled while the geometry (triangle size) stays the same, both the potential and the electric field at point P exactly double.", isHtml: false}
+            ]
+        },
+        {
+            num: "40",
+            q: { val: "<b>(PGK - Kategori)</b><br>A point charge q<sub>1</sub> = +4 &mu;C is placed at the origin. A second point charge q<sub>2</sub> = +9 &mu;C is placed 1 m to the right of q<sub>1</sub> along the x-axis. Point P is located exactly at the midpoint between the two charges, 0.5 m from each.<br><br><div style='text-align:center;'><svg width='300' height='80' viewBox='0 0 300 80'><line x1='30' y1='40' x2='270' y2='40' stroke='#94A3B8' stroke-width='2'/><circle cx='50' cy='40' r='14' fill='#EF4444'/><text x='50' y='20' fill='#475569' font-size='12' text-anchor='middle'>q1</text><circle cx='250' cy='40' r='14' fill='#EF4444'/><text x='250' y='20' fill='#475569' font-size='12' text-anchor='middle'>q2</text><circle cx='150' cy='40' r='6' fill='#1E293B'/><text x='150' y='25' fill='#1E293B' font-size='14' text-anchor='middle'>P</text></svg></div><br>Using k = 9 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>, determine whether each of the following statements about point P is True or False.", isHtml: true },
+            opts: [
+                {l: "S1", val: "The magnitude of the electric field at P due to q<sub>1</sub> alone is 1.44 &times; 10<sup>5</sup> N/C.", isHtml: true}, 
+                {l: "S2", val: "The magnitude of the electric field at P due to q<sub>2</sub> alone is also 1.44 &times; 10<sup>5</sup> N/C.", isHtml: true}, 
+                {l: "S3", val: "The two individual field vectors at point P point in opposite directions along the x-axis.", isHtml: false}
             ]
         }
     ];
 
-    function showToast() {
+    function showToast(msg) {
         const toast = document.getElementById('toast');
+        toast.innerText = msg;
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
-    function copyCode(btn, rawHTML) {
-        // Hanya menyalin HTML murni tanpa tambahan script apapun
-        navigator.clipboard.writeText(rawHTML.trim()).then(() => {
-            const oldText = btn.innerText;
-            btn.innerText = '✅ Copied!';
+    function copyCode(btn, textToCopy, isHtml) {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            const oldText = btn.innerHTML;
+            btn.innerHTML = '✅ Copied!';
             btn.classList.add('btn-success');
-            showToast();
+            
+            if(isHtml) {
+                showToast("✅ Paste di Mode Source (< >) LMS!");
+            } else {
+                showToast("✅ Langsung Paste (Normal) di LMS!");
+            }
+
             setTimeout(() => { 
-                btn.innerText = oldText; 
+                btn.innerHTML = oldText; 
                 btn.classList.remove('btn-success'); 
             }, 2000);
         });
@@ -137,30 +347,41 @@
             
             const title = document.createElement('div');
             title.className = 'q-title';
-            title.innerText = 'Soal ' + item.num;
+            title.innerHTML = `<span>Soal ${item.num}</span>`;
             card.appendChild(title);
 
-            // Row Soal
+            // Render Soal
             const qRow = document.createElement('div');
             qRow.className = 'opt-row';
+            let btnClassQ = item.q.isHtml ? "btn btn-html" : "btn btn-normal";
+            let btnTextQ = item.q.isHtml ? "📋 Copy (Mode Source)" : "📋 Copy (Normal Text)";
+            
             qRow.innerHTML = `
                 <div class="opt-label">Soal</div>
-                <div class="opt-content">${item.q}</div>
-                <button class="btn">📋 Copy Soal</button>
+                <div class="opt-content">${item.q.val}</div>
+                <button class="${btnClassQ}">${btnTextQ}</button>
             `;
-            qRow.querySelector('.btn').addEventListener('click', function() { copyCode(this, item.q); });
+            qRow.querySelector('.btn').addEventListener('click', function() { 
+                copyCode(this, item.q.val, item.q.isHtml); 
+            });
             card.appendChild(qRow);
 
-            // Row Options
+            // Render Options
             item.opts.forEach(opt => {
                 const optRow = document.createElement('div');
                 optRow.className = 'opt-row';
+                
+                let btnClassOpt = opt.isHtml ? "btn btn-html" : "btn btn-normal";
+                let btnTextOpt = opt.isHtml ? `📋 Copy ${opt.l} (Source)` : `📋 Copy ${opt.l} (Normal)`;
+
                 optRow.innerHTML = `
                     <div class="opt-label">${opt.l}</div>
-                    <div class="opt-content">${opt.c}</div>
-                    <button class="btn">📋 Copy ${opt.l}</button>
+                    <div class="opt-content">${opt.val}</div>
+                    <button class="${btnClassOpt}">${btnTextOpt}</button>
                 `;
-                optRow.querySelector('.btn').addEventListener('click', function() { copyCode(this, opt.c); });
+                optRow.querySelector('.btn').addEventListener('click', function() { 
+                    copyCode(this, opt.val, opt.isHtml); 
+                });
                 card.appendChild(optRow);
             });
 
