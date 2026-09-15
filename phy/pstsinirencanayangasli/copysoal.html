@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<title>LMS Copy Helper Pro - Gorigu Studio</title>
+<title>LMS Copy Helper - Plain HTML</title>
 <style>
     :root {
         --primary: #2563eb;
@@ -32,19 +32,15 @@
     
     .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; color: white; padding: 12px 24px; border-radius: 8px; opacity: 0; transition: opacity 0.3s, transform 0.3s; z-index: 1000; font-weight: 500; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); pointer-events: none; }
     .toast.show { opacity: 1; transform: translate(-50%, -10px); }
-
-    /* Fix table display in preview */
-    .opt-content table { border-collapse: collapse; margin-top: 5px; }
-    .opt-content th, .opt-content td { border: 1px solid #cbd5e1; padding: 6px; }
 </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h2>🚀 LMS Copy Helper Pro</h2>
+        <h2>🚀 LMS Copy Helper (Versi HTML Murni)</h2>
         <div class="instructions">
-            <p>Berbeda dengan versi sebelumnya, alat ini <b>TIDAK</b> merender LaTeX menjadi MathJax elemen panjang di <i>browser</i> Anda, karena hal tersebutlah yang menyebabkan HTML hancur saat Anda menempelkannya di mode Source LMS (tag &lt;mjx-container&gt; tercopy ke LMS).</p>
-            <p><b>Cara Kerja:</b> Alat ini membaca murni kode HTML (termasuk kode $ LaTeX dan tag &lt;svg&gt;), lalu saat diklik <b>Copy</b>, alat ini akan menambahkan CDN script dan membungkus soal/jawaban Anda agar LMS Anda yang akan merendernya nanti.</p>
+            <p>Alat ini dirancang khusus untuk <b>menghindari masalah MathJax</b> di LMS. Semua rumus fisika telah dikonversi menggunakan tag HTML standar seperti <code>&lt;sub&gt;</code>, <code>&lt;sup&gt;</code>, dan simbol khusus (misal: &amp;mu; &amp;times; &amp;radic;).</p>
+            <p><b>Cara Penggunaan:</b> Klik tombol Copy di sebelah teks yang ingin disalin, lalu Paste ke editor soal/jawaban di LMS Anda (mode Source/HTML).</p>
         </div>
     </div>
     <div id="app"></div>
@@ -52,12 +48,12 @@
 <div id="toast" class="toast">✅ Berhasil disalin ke clipboard!</div>
 
 <script>
-    // Data JSON murni tanpa MathJax pre-rendering
-    // Tambahkan soal lainnya dengan format yang sama di bawah ini
+    // Data JSON dengan HTML Murni (Tanpa LaTeX/MathJax)
+    // Silakan tambahkan soal lainnya dengan gaya penulisan HTML murni di bawah ini
     const quizData = [
         {
             num: "1",
-            q: "Two point charges, \\( q_1 = +2\\ \\mu C \\) and \\( q_2 = +8\\ \\mu C \\), are separated by a distance of 0.3 m in vacuum. Determine the magnitude of the electrostatic force between them. (\\( k = 9\\times10^{9}\\ \\text{N·m}^2/\\text{C}^2 \\))",
+            q: "Two point charges, q<sub>1</sub> = +2 &mu;C and q<sub>2</sub> = +8 &mu;C, are separated by a distance of 0.3 m in vacuum. Determine the magnitude of the electrostatic force between them. (k = 9 &times; 10<sup>9</sup> N&middot;m<sup>2</sup>/C<sup>2</sup>)",
             opts: [
                 { l: "A", c: "0.16 N" },
                 { l: "B", c: "1.6 N" },
@@ -79,7 +75,7 @@
         },
         {
             num: "3",
-            q: "Two point charges, \\( +Q \\) and \\( +4Q \\), are fixed 0.6 m apart along a straight line.<br><br><div style='text-align:center;'><svg width='300' height='80' viewBox='0 0 300 80'><line x1='50' y1='40' x2='250' y2='40' stroke='#94A3B8' stroke-width='2' stroke-dasharray='4,4'/><circle cx='50' cy='40' r='16' fill='#EF4444'/><text x='50' y='45' fill='white' font-size='14' text-anchor='middle'>+Q</text><circle cx='250' cy='40' r='16' fill='#EF4444'/><text x='250' y='45' fill='white' font-size='14' text-anchor='middle'>+4Q</text><text x='150' y='30' fill='#475569' font-size='12' text-anchor='middle'>d = 0.6 m</text></svg></div><br>At what distance from the \\( +Q \\) charge, measured along the line between the two charges, must a third charge be placed so that the net electrostatic force acting on it is zero?",
+            q: "Two point charges, +Q and +4Q, are fixed 0.6 m apart along a straight line.<br><br><div style='text-align:center;'><svg width='300' height='80' viewBox='0 0 300 80'><line x1='50' y1='40' x2='250' y2='40' stroke='#94A3B8' stroke-width='2' stroke-dasharray='4,4'/><circle cx='50' cy='40' r='16' fill='#EF4444'/><text x='50' y='45' fill='white' font-size='14' text-anchor='middle'>+Q</text><circle cx='250' cy='40' r='16' fill='#EF4444'/><text x='250' y='45' fill='white' font-size='14' text-anchor='middle'>+4Q</text><text x='150' y='30' fill='#475569' font-size='12' text-anchor='middle'>d = 0.6 m</text></svg></div><br>At what distance from the +Q charge, measured along the line between the two charges, must a third charge be placed so that the net electrostatic force acting on it is zero?",
             opts: [
                 { l: "A", c: "0.1 m" },
                 { l: "B", c: "0.15 m" },
@@ -89,18 +85,29 @@
             ]
         },
         {
-            num: "37",
-            q: "<b>(PGK - Kategori)</b><br>A hollow conducting spherical shell has an inner radius of 5 cm and an outer radius of 10 cm. A point charge of \\( +Q \\) is placed exactly at the center of the hollow cavity, without touching the shell. Before the point charge is introduced, the conducting shell itself is electrically neutral.<br><br>As a result of electrostatic induction, charge is redistributed on the inner and outer surfaces of the shell. Determine whether each of the following statements is True or False.",
+            num: "4",
+            q: "Two equal electrostatic forces, each with a magnitude of 10 N, act on a charged particle. The angle between the two forces is 60&deg;. Determine the magnitude of the resultant force. (Use cos 60&deg; = 0.5)",
             opts: [
-                { l: "S 1", c: "An induced charge of \\( -Q \\) appears on the inner surface of the shell (\\( r = 5\\) cm)." },
-                { l: "S 2", c: "The electric field inside the conducting material of the shell itself (between \\( r=5 \\) cm and \\( r=10 \\) cm) is zero." },
-                { l: "S 3", c: "An induced charge of \\( -Q \\) also appears on the outer surface of the shell." }
+                { l: "A", c: "10&radic;3 N" },
+                { l: "B", c: "10 N" },
+                { l: "C", c: "20 N" },
+                { l: "D", c: "5&radic;3 N" },
+                { l: "E", c: "20&radic;3 N" }
+            ]
+        },
+        {
+            num: "5",
+            q: "A point charge experiences an electrostatic force of 20 N directed at 37&deg; above the horizontal axis. Determine the magnitude of the horizontal (x) component of this force. (sin 37&deg; = 0.6, cos 37&deg; = 0.8)",
+            opts: [
+                { l: "A", c: "12 N" },
+                { l: "B", c: "16 N" },
+                { l: "C", c: "20 N" },
+                { l: "D", c: "24 N" },
+                { l: "E", c: "10 N" }
             ]
         }
     ];
 
-    const cdnScript = '<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"><\\/script>\\n<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"><\\/script>\\n\\n';
-    
     function showToast() {
         const toast = document.getElementById('toast');
         toast.classList.add('show');
@@ -108,10 +115,8 @@
     }
 
     function copyCode(btn, rawHTML) {
-        // Gabungkan CDN MathJax dengan HTML aslinya tanpa di-render oleh DOM
-        const finalHtml = cdnScript + '<div>\n' + rawHTML.trim() + '\n</div>';
-        
-        navigator.clipboard.writeText(finalHtml).then(() => {
+        // Hanya menyalin HTML murni tanpa tambahan script apapun
+        navigator.clipboard.writeText(rawHTML.trim()).then(() => {
             const oldText = btn.innerText;
             btn.innerText = '✅ Copied!';
             btn.classList.add('btn-success');
@@ -143,7 +148,6 @@
                 <div class="opt-content">${item.q}</div>
                 <button class="btn">📋 Copy Soal</button>
             `;
-            // Listener harus attach ke pure text, bukan DOM innerHTML
             qRow.querySelector('.btn').addEventListener('click', function() { copyCode(this, item.q); });
             card.appendChild(qRow);
 
@@ -162,9 +166,6 @@
 
             app.appendChild(card);
         });
-        
-        // Sengaja TIDAK memanggil MathJax.typeset() di sini 
-        // agar browser tidak merender elemen menjadi tag mjx-container
     };
 </script>
 </body>
