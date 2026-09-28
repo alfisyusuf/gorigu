@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drilling TKA Fisika #1</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  @page { size: A4; margin: 20mm; }
+  body { font-family: "Times New Roman", Georgia, serif; color: #000; background: #fff; }
+  .sheet { max-width: 170mm; margin: 0 auto; }
+  table, th, td { border: 1px solid #000; border-collapse: collapse; }
+  th, td { padding: 4px 8px; }
+  .box { width: 14px; height: 14px; border: 1.5px solid #000; display: inline-block; flex-shrink: 0; margin-top: 4px; }
+  .scratch { border: 1px dashed #000; }
+  .page-break { break-before: page; page-break-before: always; }
+  .avoid-break { break-inside: avoid; page-break-inside: avoid; }
+  @media screen { body { background: #e5e5e5; } .sheet { background: #fff; padding: 20mm; margin: 10mm auto; box-shadow: 0 0 6px rgba(0,0,0,.2); max-width: 210mm; } }
+  @media print { .no-print { display: none; } }
+</style>
+</head>
+<body class="text-[11.5pt] leading-relaxed">
+
+<div class="no-print text-center py-3 font-sans">
+  <button onclick="window.print()" class="px-4 py-2 bg-black text-white rounded">Cetak Worksheet (A4)</button>
+</div>
+
+<!-- HALAMAN 1 -->
+<article class="sheet">
+  <header class="border-b-2 border-black pb-3 mb-5">
+    <h1 class="text-center text-[15pt] font-bold uppercase tracking-wide">Drilling TKA Fisika #1 – Pusmendik Standard</h1>
+    <p class="text-center italic mb-3">Pengukuran &amp; Gerak Lurus · Kognitif Level 3 (Analisis &amp; Evaluasi)</p>
+    <div class="grid grid-cols-2 gap-x-8 gap-y-2">
+      <p>Nama &nbsp;: ....................................................</p>
+      <p>Kelas &nbsp;: ...............................</p>
+      <p>No. Absen : .............................................</p>
+      <p>Tanggal : ...............................</p>
+    </div>
+  </header>
+
+  <section class="avoid-break">
+    <h2 class="font-bold mb-1">Soal 1 &nbsp;<span class="font-normal italic">(Pengukuran – Pilihan Ganda Kompleks)</span></h2>
+    <p class="mb-2 text-justify">Empat kelompok siswa menentukan massa jenis sebuah kubus besi. Massa diukur dengan <b>neraca Ohaus tiga lengan (ketelitian 0,1 g)</b> dan panjang rusuk diukur dengan <b>jangka sorong (ketelitian 0,01 cm)</b>. Setiap kelompok melaporkan hasilnya sebagai berikut.</p>
+
+    <table class="w-full text-center mb-3">
+      <thead>
+        <tr><th>Kelompok</th><th>Massa (g)</th><th>Rusuk (cm)</th><th>Volume dilaporkan (cm³)</th><th>Massa jenis dilaporkan (g/cm³)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>122,6</td><td>2,50</td><td>15,625</td><td>7,8464</td></tr>
+        <tr><td>2</td><td>122,6</td><td>2,50</td><td>15,6</td><td>7,85</td></tr>
+        <tr><td>3</td><td>123</td><td>2,5</td><td>16</td><td>7,9</td></tr>
+        <tr><td>4</td><td>122,60</td><td>2,500</td><td>15,63</td><td>7,846</td></tr>
+      </tbody>
+    </table>
+
+    <p class="mb-2">Berdasarkan data tabel, pelaporan hasil perhitungan massa jenis manakah yang paling akurat dan mematuhi kaidah angka penting? <b>Beri tanda centang (✓) pada SETIAP pernyataan yang benar.</b></p>
+
+    <ol class="space-y-2">
+      <li class="flex gap-3"><span class="box"></span><span>Laporan Kelompok 2 paling tepat karena hasil bagi ditulis dalam 3 angka penting, mengikuti besaran dengan angka penting paling sedikit (rusuk 2,50 cm).</span></li>
+      <li class="flex gap-3"><span class="box"></span><span>Laporan Kelompok 1 paling teliti karena memuat digit desimal paling banyak sesuai tampilan kalkulator.</span></li>
+      <li class="flex gap-3"><span class="box"></span><span>Data Kelompok 4 tidak valid karena penulisan 122,60 g dan 2,500 cm menyiratkan ketelitian yang melebihi kemampuan alat ukur yang digunakan.</span></li>
+      <li class="flex gap-3"><span class="box"></span><span>Kelompok 3 konsisten menerapkan aturan angka penting, sehingga hasilnya sama akuratnya dengan Kelompok 2.</span></li>
+      <li class="flex gap-3"><span class="box"></span><span>Hasil bagi massa (4 angka penting) dengan volume harus ditulis dalam 4 angka penting karena massa merupakan besaran yang paling teliti.</span></li>
+    </ol>
+
+    <p class="mt-4 mb-1 font-bold">Ruang Analisis &amp; Hitungan:</p>
+    <div class="scratch h-[88mm]"></div>
+  </section>
+</article>
+
+<!-- HALAMAN 2 -->
+<article class="sheet page-break">
+  <section class="avoid-break">
+    <h2 class="font-bold mb-1">Soal 2 &nbsp;<span class="font-normal italic">(Gerak Lurus – Matriks Benar/Salah)</span></h2>
+    <p class="mb-3 text-justify">Sistem <i>Autonomous Emergency Braking</i> (AEB) memanfaatkan sensor radar dan kamera untuk mendeteksi rintangan di depan mobil, lalu mengaktifkan rem secara otomatis. Mobil X berkecepatan <b>72 km/jam</b> mendeteksi rintangan sejauh <b>40 meter</b> dan mengerem dengan perlambatan konstan <b>5 m/s²</b> setelah jeda waktu respon sensor <b>0,5 detik</b>.</p>
+
+    <figure class="mb-4">
+      <svg viewBox="0 0 640 150" class="w-full" role="img" aria-label="Skema mobil dan rintangan berjarak 40 meter">
+        <line x1="20" y1="100" x2="620" y2="100" stroke="#000" stroke-width="2"/>
+        <rect x="30" y="70" width="70" height="26" fill="#fff" stroke="#000" stroke-width="2"/>
+        <rect x="45" y="55" width="40" height="18" fill="#fff" stroke="#000" stroke-width="2"/>
+        <circle cx="48" cy="98" r="7" fill="#fff" stroke="#000" stroke-width="2"/>
+        <circle cx="84" cy="98" r="7" fill="#fff" stroke="#000" stroke-width="2"/>
+        <text x="65" y="46" text-anchor="middle" font-size="14" font-family="serif">Mobil X</text>
+        <path d="M100 76 q12 7 0 14 M108 70 q20 13 0 26" fill="none" stroke="#000" stroke-width="1.5"/>
+        <rect x="560" y="50" width="22" height="50" fill="url(#hatch)" stroke="#000" stroke-width="2"/>
+        <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#000" stroke-width="1.5"/></pattern></defs>
+        <text x="571" y="40" text-anchor="middle" font-size="14" font-family="serif">Rintangan</text>
+        <line x1="100" y1="125" x2="560" y2="125" stroke="#000" stroke-width="1.5"/>
+        <line x1="100" y1="117" x2="100" y2="133" stroke="#000" stroke-width="1.5"/>
+        <line x1="560" y1="117" x2="560" y2="133" stroke="#000" stroke-width="1.5"/>
+        <text x="330" y="145" text-anchor="middle" font-size="14" font-family="serif">40 m (saat rintangan terdeteksi)</text>
+        <text x="330" y="80" text-anchor="middle" font-size="13" font-family="serif" font-style="italic">v₀ = 72 km/jam · jeda 0,5 s · a = −5 m/s²</text>
+      </svg>
+    </figure>
+
+    <p class="mb-2">Evaluasilah setiap kondisi berikut. Beri tanda centang (✓) pada kolom <b>Benar</b> atau <b>Salah</b>.</p>
+    <table class="w-full mb-3">
+      <thead>
+        <tr><th class="w-10">No</th><th class="text-left">Kondisi / Pernyataan</th><th class="w-20">Benar</th><th class="w-20">Salah</th></tr>
+      </thead>
+      <tbody>
+        <tr class="h-14"><td class="text-center">A</td><td>Mobil berhenti tepat sebelum menabrak rintangan.</td><td></td><td></td></tr>
+        <tr class="h-14"><td class="text-center">B</td><td>Jarak pengereman total mobil (termasuk saat jeda waktu respon) lebih dari 45 meter.</td><td></td><td></td></tr>
+        <tr class="h-14"><td class="text-center">C</td><td>Jika kecepatan awal dilipatgandakan, jarak pengereman juga akan tepat berlipat ganda.</td><td></td><td></td></tr>
+      </tbody>
+    </table>
+
+    <p class="mt-4 mb-1 font-bold">Ruang Analisis &amp; Hitungan:</p>
+    <div class="scratch h-[95mm]"></div>
+  </section>
+
+  <footer class="mt-4 pt-2 border-t border-black text-[9.5pt] italic text-center">
+    Petunjuk: tuliskan besaran yang diketahui, konversi satuan, dan tahapan gerak (GLB → GLBB) sebelum menyimpulkan.
+  </footer>
+</article>
+
+</body>
+</html>

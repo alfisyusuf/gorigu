@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TKA Fisika – Pengukuran & Kinematika</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .slide { display: none; }
+  .slide.active { display: flex; }
+  .opt.correct { border-color: #16a34a; background: #f0fdf4; }
+  .opt.wrong { border-color: #dc2626; background: #fef2f2; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+<main class="min-h-screen flex flex-col">
+  <header class="flex items-center justify-between px-10 py-4 border-b border-slate-200 bg-white">
+    <p class="text-lg font-semibold tracking-wide text-slate-600">TKA Fisika · Standar Pusmendik</p>
+    <p class="text-lg font-mono text-slate-500"><span id="nowNum">1</span> / <span id="totalNum">4</span></p>
+  </header>
+
+  <div class="flex-1 relative">
+
+    <!-- SLIDE 1 -->
+    <section class="slide active h-full min-h-[80vh] flex-col items-center justify-center text-center px-10" data-slide>
+      <span class="inline-block mb-6 px-4 py-1 rounded-full bg-blue-100 text-blue-800 text-xl font-semibold">Kognitif Level 3 · Analisis & Evaluasi</span>
+      <h1 class="text-6xl md:text-7xl font-extrabold leading-tight max-w-5xl">TKA Fisika – Pengukuran &amp; Kinematika Level Analisis</h1>
+      <div class="mt-10 flex flex-wrap gap-4 justify-center text-2xl">
+        <span class="px-5 py-2 rounded-xl bg-white border-2 border-slate-300">📏 Angka Penting &amp; Alat Ukur</span>
+        <span class="px-5 py-2 rounded-xl bg-white border-2 border-slate-300">🚗 Grafik v–t: GLB vs GLBB</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide h-full min-h-[80vh] flex-col px-10 py-8" data-slide>
+      <h2 class="text-4xl font-bold mb-2">Pemantik 1 · Angka Penting</h2>
+      <p class="text-2xl text-slate-700 mb-6">Sebuah pelat logam diukur <b>tebalnya dengan mikrometer</b> dan <b>panjangnya dengan jangka sorong</b>; lebarnya diukur dengan mistar.</p>
+
+      <div class="grid md:grid-cols-2 gap-8 flex-1">
+        <figure class="bg-white rounded-2xl border-2 border-slate-200 p-4 flex items-center justify-center">
+          <svg viewBox="0 0 520 320" class="w-full max-w-xl" role="img" aria-label="Ilustrasi pelat logam dengan ukuran">
+            <!-- pelat 3D -->
+            <polygon points="80,200 380,200 450,140 150,140" fill="#cbd5e1" stroke="#334155" stroke-width="3"/>
+            <polygon points="80,200 380,200 380,222 80,222" fill="#94a3b8" stroke="#334155" stroke-width="3"/>
+            <polygon points="380,200 450,140 450,162 380,222" fill="#64748b" stroke="#334155" stroke-width="3"/>
+            <!-- panjang -->
+            <line x1="80" y1="250" x2="380" y2="250" stroke="#1d4ed8" stroke-width="3"/>
+            <line x1="80" y1="240" x2="80" y2="260" stroke="#1d4ed8" stroke-width="3"/>
+            <line x1="380" y1="240" x2="380" y2="260" stroke="#1d4ed8" stroke-width="3"/>
+            <text x="230" y="282" text-anchor="middle" font-size="22" font-weight="700" fill="#1d4ed8">p = 8,35 cm (jangka sorong)</text>
+            <!-- lebar -->
+            <line x1="400" y1="222" x2="470" y2="162" stroke="#b45309" stroke-width="3"/>
+            <text x="470" y="210" font-size="20" font-weight="700" fill="#b45309">ℓ = 4,2 cm</text>
+            <text x="470" y="232" font-size="16" fill="#b45309">(mistar)</text>
+            <!-- tebal -->
+            <line x1="60" y1="200" x2="60" y2="222" stroke="#15803d" stroke-width="3"/>
+            <text x="20" y="120" font-size="20" font-weight="700" fill="#15803d">t = 1,52 mm</text>
+            <text x="20" y="142" font-size="16" fill="#15803d">(mikrometer)</text>
+            <line x1="60" y1="148" x2="60" y2="196" stroke="#15803d" stroke-width="2" stroke-dasharray="4 4"/>
+          </svg>
+        </figure>
+
+        <div class="flex flex-col gap-4">
+          <div class="border-2 border-dashed border-slate-400 rounded-2xl p-5 bg-slate-100 text-slate-700 text-lg">
+            <p class="font-bold mb-1">🖼️ Placeholder gambar alat ukur</p>
+            <p><i>Prompt AI Image Generator:</i> "Clean educational illustration, white background, side by side: a steel vernier caliper measuring the length of a thin metal plate and an outside micrometer screw gauge measuring its thickness, scales clearly visible, flat vector style, labeled 'Jangka Sorong' and 'Mikrometer Sekrup'."</p>
+          </div>
+          <div class="rounded-2xl bg-white border-2 border-slate-200 p-5">
+            <p class="text-xl text-slate-500 mb-1">Layar kalkulator siswa:</p>
+            <p class="font-mono text-4xl">8,35 × 4,2 = <b>35,07</b></p>
+          </div>
+          <div class="rounded-2xl bg-amber-50 border-l-8 border-amber-500 p-5">
+            <p class="text-2xl font-bold leading-snug">❓ Mengapa perkalian luasnya tidak boleh sekadar mengalikan angka yang tertera di kalkulator?</p>
+            <p class="text-xl mt-2 text-slate-700">Alat mana yang "membatasi" kepastian hasil? Berapa digit yang layak dilaporkan?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide h-full min-h-[80vh] flex-col px-10 py-8" data-slide>
+      <h2 class="text-4xl font-bold mb-2">Pemantik 2 · Grafik v–t Dua Kendaraan</h2>
+      <p class="text-2xl text-slate-700 mb-4">Pada t = 0, kendaraan A dan B berada di garis start yang sama. A melaju tetap (GLB), B mulai dari diam lalu dipercepat (GLBB) untuk menyusul A.</p>
+      <figure class="flex-1 bg-white rounded-2xl border-2 border-slate-200 p-4 flex items-center justify-center">
+        <svg viewBox="0 0 620 400" class="w-full max-w-4xl" role="img" aria-label="Grafik kecepatan terhadap waktu kendaraan A dan B">
+          <g stroke="#e2e8f0" stroke-width="1">
+            <line x1="140" y1="40" x2="140" y2="340"/><line x1="220" y1="40" x2="220" y2="340"/>
+            <line x1="300" y1="40" x2="300" y2="340"/><line x1="380" y1="40" x2="380" y2="340"/>
+            <line x1="460" y1="40" x2="460" y2="340"/><line x1="540" y1="40" x2="540" y2="340"/>
+            <line x1="60" y1="290" x2="560" y2="290"/><line x1="60" y1="240" x2="560" y2="240"/>
+            <line x1="60" y1="190" x2="560" y2="190"/><line x1="60" y1="140" x2="560" y2="140"/>
+            <line x1="60" y1="90" x2="560" y2="90"/><line x1="60" y1="40" x2="560" y2="40"/>
+          </g>
+          <line x1="60" y1="340" x2="570" y2="340" stroke="#0f172a" stroke-width="3"/>
+          <line x1="60" y1="340" x2="60" y2="25" stroke="#0f172a" stroke-width="3"/>
+          <g font-size="16" fill="#334155" text-anchor="middle">
+            <text x="60" y="362">0</text><text x="140" y="362">2</text><text x="220" y="362">4</text>
+            <text x="300" y="362">6</text><text x="380" y="362">8</text><text x="460" y="362">10</text><text x="540" y="362">12</text>
+          </g>
+          <g font-size="16" fill="#334155" text-anchor="end">
+            <text x="52" y="295">4</text><text x="52" y="245">8</text><text x="52" y="195">12</text>
+            <text x="52" y="145">16</text><text x="52" y="95">20</text><text x="52" y="45">24</text>
+          </g>
+          <text x="590" y="345" font-size="18" font-weight="700">t (s)</text>
+          <text x="20" y="22" font-size="18" font-weight="700">v (m/s)</text>
+          <!-- A: v = 10 m/s -->
+          <line x1="60" y1="215" x2="540" y2="215" stroke="#1d4ed8" stroke-width="5"/>
+          <text x="548" y="210" font-size="20" font-weight="800" fill="#1d4ed8">A</text>
+          <!-- B: v = 2t -->
+          <line x1="60" y1="340" x2="540" y2="40" stroke="#dc2626" stroke-width="5"/>
+          <text x="548" y="48" font-size="20" font-weight="800" fill="#dc2626">B</text>
+          <text x="52" y="220" font-size="16" fill="#1d4ed8" text-anchor="end" font-weight="700">10</text>
+          <circle cx="260" cy="215" r="7" fill="#0f172a"/>
+          <line x1="260" y1="215" x2="260" y2="340" stroke="#0f172a" stroke-width="2" stroke-dasharray="6 5"/>
+          <text x="260" y="380" font-size="16" text-anchor="middle" font-weight="700">5</text>
+        </svg>
+      </figure>
+      <p class="text-2xl mt-4 text-center"><b>Diskusikan:</b> Apakah titik potong grafik pada t = 5 s berarti B sudah menyusul A?</p>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="slide h-full min-h-[80vh] flex-col px-10 py-8" data-slide>
+      <div class="flex items-center gap-3 mb-2">
+        <span class="px-3 py-1 rounded-full bg-violet-100 text-violet-800 font-semibold text-lg">PGK</span>
+        <h2 class="text-4xl font-bold">Soal Interaktif TKA</h2>
+      </div>
+      <p class="text-2xl text-slate-700 mb-6">Berdasarkan grafik v–t pada slide sebelumnya, <b>pilih SETIAP pernyataan yang tepat</b> mengenai kondisi kedua kendaraan tersebut.</p>
+
+      <div class="grid gap-4" id="pgk">
+        <label class="opt flex gap-4 items-start p-5 rounded-2xl border-4 border-slate-200 bg-white cursor-pointer text-2xl" data-correct="false">
+          <input type="checkbox" class="mt-2 w-7 h-7 shrink-0"><span><b>(1)</b> Pada t = 5 s, kendaraan B tepat menyusul kendaraan A karena grafik keduanya berpotongan.</span>
+        </label>
+        <label class="opt flex gap-4 items-start p-5 rounded-2xl border-4 border-slate-200 bg-white cursor-pointer text-2xl" data-correct="true">
+          <input type="checkbox" class="mt-2 w-7 h-7 shrink-0"><span><b>(2)</b> Jarak pisah A dan B paling besar terjadi pada t = 5 s, yaitu 25 m.</span>
+        </label>
+        <label class="opt flex gap-4 items-start p-5 rounded-2xl border-4 border-slate-200 bg-white cursor-pointer text-2xl" data-correct="true">
+          <input type="checkbox" class="mt-2 w-7 h-7 shrink-0"><span><b>(3)</b> Kendaraan B menyusul A pada t = 10 s, setelah keduanya menempuh 100 m dari garis start.</span>
+        </label>
+        <label class="opt flex gap-4 items-start p-5 rounded-2xl border-4 border-slate-200 bg-white cursor-pointer text-2xl" data-correct="false">
+          <input type="checkbox" class="mt-2 w-7 h-7 shrink-0"><span><b>(4)</b> Saat B menyusul A, kelajuan kedua kendaraan sama besar sehingga keduanya tetap berdampingan setelahnya.</span>
+        </label>
+      </div>
+
+      <div class="mt-6 flex gap-4">
+        <button id="btnAnalisis" class="px-6 py-3 rounded-xl bg-slate-900 text-white text-2xl font-semibold hover:bg-slate-700">Tampilkan Analisis</button>
+        <button id="btnReset" class="px-6 py-3 rounded-xl border-2 border-slate-400 text-2xl font-semibold hover:bg-slate-100">Ulangi</button>
+      </div>
+
+      <div id="analisis" class="hidden mt-6 rounded-2xl bg-emerald-50 border-l-8 border-emerald-600 p-6 text-xl leading-relaxed">
+        <p class="text-2xl font-bold mb-2">✅ Jawaban benar: (2) dan (3)</p>
+        <p>• a<sub>B</sub> = kemiringan = 10/5 = <b>2 m/s²</b>; v<sub>A</sub> = 10 m/s.</p>
+        <p>• (1) Salah: titik potong grafik v–t = <b>kecepatan sama</b>, bukan posisi sama. Pada t = 5 s: s<sub>A</sub> = 50 m, s<sub>B</sub> = ½·2·5² = 25 m.</p>
+        <p>• (2) Benar: sebelum t = 5 s, v<sub>A</sub> &gt; v<sub>B</sub> sehingga jarak pisah terus bertambah; setelahnya menyusut. Selisih maksimum = 50 − 25 = <b>25 m</b>.</p>
+        <p>• (3) Benar: 10t = t² → t = 10 s; s = 10 × 10 = <b>100 m</b> (= luas di bawah grafik yang sama besar).</p>
+        <p>• (4) Salah: pada t = 10 s, v<sub>B</sub> = 20 m/s = 2 × v<sub>A</sub>, sehingga B langsung mendahului A.</p>
+      </div>
+    </section>
+  </div>
+
+  <nav class="flex items-center justify-between px-10 py-4 border-t border-slate-200 bg-white">
+    <button id="prev" class="px-6 py-3 rounded-xl border-2 border-slate-400 text-xl font-semibold hover:bg-slate-100 disabled:opacity-30">◀ Sebelumnya</button>
+    <p class="text-slate-500 text-lg hidden md:block">Gunakan tombol ← → pada keyboard</p>
+    <button id="next" class="px-6 py-3 rounded-xl bg-blue-700 text-white text-xl font-semibold hover:bg-blue-800 disabled:opacity-30">Berikutnya ▶</button>
+  </nav>
+</main>
+
+<script>
+  const slides = document.querySelectorAll('[data-slide]');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  let i = 0;
+  document.getElementById('totalNum').textContent = slides.length;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    document.getElementById('nowNum').textContent = i + 1;
+    prev.disabled = i === 0;
+    next.disabled = i === slides.length - 1;
+  }
+  prev.onclick = () => show(i - 1);
+  next.onclick = () => show(i + 1);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') show(i + 1);
+    if (e.key === 'ArrowLeft') show(i - 1);
+  });
+  show(0);
+
+  const opts = document.querySelectorAll('#pgk .opt');
+  document.getElementById('btnAnalisis').onclick = () => {
+    opts.forEach(o => {
+      o.classList.remove('correct', 'wrong');
+      o.classList.add(o.dataset.correct === 'true' ? 'correct' : 'wrong');
+    });
+    document.getElementById('analisis').classList.remove('hidden');
+  };
+  document.getElementById('btnReset').onclick = () => {
+    opts.forEach(o => { o.classList.remove('correct', 'wrong'); o.querySelector('input').checked = false; });
+    document.getElementById('analisis').classList.add('hidden');
+  };
+</script>
+</body>
+</html>
