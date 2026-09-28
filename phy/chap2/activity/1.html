@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Hukum Ohm / Ohm's Law Practice</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          washi:  '#FFFCF7', 
+          sand:   '#F2EAE0', 
+          ink:    '#2C1A1A', 
+          maroon: { DEFAULT: '#8B1515', light: '#FCECEC', dark: '#5e0a0a' }, 
+          gold:   { DEFAULT: '#F5A623', light: '#FFF6E5', dark: '#C48215' }, 
+          green:  { DEFAULT: '#4CAF50', light: '#E8F5E9', dark: '#2E7D32' }
+        },
+        fontFamily: { sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'] },
+        boxShadow: { soft: '0 4px 20px -2px rgba(139,21,21,.08)' }
+      }
+    }
+  }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- MathJax -->
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: { typeset: true }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+  body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; }
+
+  .answer-input { transition: all .25s; }
+  .answer-input:focus { outline: none; border-color: #8B1515; box-shadow: 0 0 0 4px rgba(139,21,21,.15); }
+  .answer-input.is-correct { background: #E8F5E9 !important; border-color: #4CAF50 !important; color: #2E7D32; }
+  .answer-input.is-wrong   { background: #FCECEC !important; border-color: #8B1515 !important; color: #8B1515; }
+
+  .level-card { transition: opacity .4s, transform .4s, box-shadow .4s; }
+  .level-card.is-locked { opacity: .55; pointer-events: none; filter: grayscale(30%); }
+  .level-card.is-active { box-shadow: 0 0 0 2px #8B1515, 0 12px 32px -16px rgba(139,21,21,.25); }
+
+  .reveal { animation: reveal .55s ease both; }
+  @keyframes reveal { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: none; } }
+  .shake { animation: shake .4s; }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+
+  .diagram svg { width: 100%; height: auto; max-width: 440px; margin: 0 auto; display: block; }
+  mjx-container[jax="SVG"][display="true"] { margin: 0.5em 0 !important; }
+</style>
+</head>
+
+<body class="bg-washi text-ink min-h-screen antialiased">
+
+  <!-- ================= HEADER ================= -->
+  <header class="sticky top-0 z-20 bg-washi/90 backdrop-blur border-b border-sand">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-maroon text-white grid place-items-center font-bold shrink-0 shadow-sm">⚡</div>
+        <div class="min-w-0">
+          <p class="text-sm font-bold leading-tight truncate text-maroon" data-i18n="headTitle">Fisika Asyik!</p>
+          <p class="text-xs text-ink/60 leading-tight" data-i18n="headSub">Hukum Ohm & Rangkaian</p>
+        </div>
+      </div>
+      <div id="hud" class="hidden items-center gap-2 sm:gap-3 shrink-0">
+        <div class="hidden sm:flex items-center gap-2 text-xs text-ink/60 font-medium">
+          <span data-i18n="progress">Progres</span>
+          <div class="w-24 h-2.5 rounded-full bg-sand overflow-hidden">
+            <div id="progress-bar" class="h-full bg-gold rounded-full transition-all duration-500" style="width:0%"></div>
+          </div>
+          <span id="progress-text" class="tabular-nums">0/4</span>
+        </div>
+        <div class="flex items-center gap-1.5 rounded-full bg-white border border-sand px-3 py-1.5 text-sm shadow-sm">
+          <span class="text-maroon">✕</span><span id="wrong-count" class="tabular-nums font-semibold">0</span>
+        </div>
+        <div id="timer-pill" class="flex items-center gap-1.5 rounded-full bg-maroon text-white px-3 py-1.5 text-sm font-semibold tabular-nums shadow-sm">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>
+          <span id="timer">00:00</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-4 py-8 sm:py-10">
+
+    <!-- ================= START SCREEN ================= -->
+    <section id="start-screen" class="reveal">
+      <div class="bg-white rounded-[2rem] shadow-soft border border-sand p-6 sm:p-10 relative overflow-hidden">
+        
+        <!-- Language Selector -->
+        <div class="flex justify-center gap-2 mb-8 relative z-10">
+          <button id="btn-id" class="px-5 py-2 rounded-xl bg-maroon text-white font-bold transition-all shadow-md">🇮🇩 Indonesia</button>
+          <button id="btn-en" class="px-5 py-2 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80">🇬🇧 English</button>
+        </div>
+
+        <p class="text-xs uppercase tracking-[.2em] text-maroon font-bold text-center" data-i18n="startGreeting">Halo! Selamat Datang 👋</p>
+        <h1 class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-ink text-center" data-i18n="startTitle">Latihan Rangkaian Listrik</h1>
+        <p class="mt-3 text-ink/70 leading-relaxed font-medium text-center max-w-xl mx-auto" data-i18n="startDesc">
+          Ada 4 level tantangan yang harus kamu taklukkan. Level berikutnya akan terbuka otomatis jika jawabanmu benar. Semua jawaban berupa <strong>bilangan bulat</strong> (tanpa koma). Semangat! 🚀
+        </p>
+
+        <div class="mt-8 grid sm:grid-cols-2 gap-4 relative z-10">
+          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center">
+            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formOhm">Hukum Ohm</p>
+            <div class="text-lg text-maroon font-semibold">\[V = I \times R\]</div>
+          </div>
+          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center">
+            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formSeries">Rangkaian Seri</p>
+            <div class="text-lg text-maroon font-semibold">\[R_s = R_1 + R_2\]</div>
+          </div>
+        </div>
+
+        <button id="start-btn"
+          class="mt-10 mx-auto flex items-center justify-center gap-2 rounded-2xl bg-maroon hover:bg-maroon-dark text-white font-bold px-8 py-4 text-lg transition-transform hover:scale-[1.02] active:scale-95 shadow-md relative z-10">
+          <span data-i18n="startBtn">Mulai Misi Sekarang!</span>
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= LEVELS ================= -->
+    <section id="levels" class="hidden space-y-6"></section>
+
+    <!-- ================= SUMMARY ================= -->
+    <section id="summary" class="hidden">
+      <div class="bg-white rounded-[2rem] shadow-soft border border-sand p-6 sm:p-10 text-center reveal relative overflow-hidden">
+        <div class="mx-auto w-20 h-20 rounded-full bg-gold-light text-gold grid place-items-center text-4xl mb-4 shadow-sm">🏆</div>
+        <p class="text-xs uppercase tracking-[.2em] text-maroon font-bold" data-i18n="sumLabel">Misi Selesai!</p>
+        <h2 id="summary-title" class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">Luar Biasa!</h2>
+        <p id="summary-msg" class="mt-3 text-ink/70 font-medium text-lg"></p>
+
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+          <div class="rounded-2xl bg-washi border-2 border-sand p-5 relative overflow-hidden">
+            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider" data-i18n="sumTime">Total Waktu</p>
+            <p id="sum-time" class="mt-2 text-4xl font-black tabular-nums text-ink">00:00</p>
+          </div>
+          <div class="rounded-2xl bg-maroon-light border-2 border-maroon/20 p-5 relative overflow-hidden">
+            <p class="text-xs text-maroon-dark font-bold uppercase tracking-wider" data-i18n="sumScore">Skor Akhir</p>
+            <p class="mt-2 text-4xl font-black tabular-nums text-maroon"><span id="sum-score">100</span><span class="text-lg font-bold text-maroon/60">/100</span></p>
+          </div>
+          <div class="rounded-2xl bg-gold-light border-2 border-gold/30 p-5 relative overflow-hidden">
+            <p class="text-xs text-gold-dark font-bold uppercase tracking-wider" data-i18n="sumWrong">Kesalahan</p>
+            <p id="sum-wrong" class="mt-2 text-4xl font-black tabular-nums text-gold-dark">0</p>
+          </div>
+        </div>
+
+        <button onclick="location.reload()"
+          class="mt-10 mx-auto flex items-center justify-center gap-2 rounded-2xl bg-ink hover:bg-black text-white font-bold px-8 py-4 text-lg transition-transform hover:scale-[1.02] active:scale-95 shadow-md">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>
+          <span data-i18n="sumBtn">Mainkan Lagi</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+<script>
+/* =========================================================
+   I18N (DICTIONARY)
+   ========================================================= */
+let LANG = 'id'; // Default language
+
+const DICT = {
+  headTitle: { id: "Fisika Asyik!", en: "Physics Fun!" },
+  headSub: { id: "Hukum Ohm & Rangkaian", en: "Ohm's Law & Circuits" },
+  progress: { id: "Progres", en: "Progress" },
+  startGreeting: { id: "Halo! Selamat Datang 👋", en: "Hello! Welcome 👋" },
+  startTitle: { id: "Latihan Rangkaian Listrik", en: "Electric Circuits Practice" },
+  startDesc: { 
+    id: "Ada 4 level tantangan yang harus kamu taklukkan. Level berikutnya terbuka otomatis jika jawabanmu benar. Semua jawaban berupa <strong>bilangan bulat</strong>. Semangat! 🚀", 
+    en: "There are 4 levels to conquer. The next level unlocks automatically when your answer is correct. All answers are <strong>whole numbers</strong>. Good luck! 🚀" 
+  },
+  formOhm: { id: "Hukum Ohm", en: "Ohm's Law" },
+  formSeries: { id: "Rangkaian Seri", en: "Series Circuit" },
+  startBtn: { id: "Mulai Misi Sekarang!", en: "Start Mission Now!" },
+  sumLabel: { id: "Misi Selesai!", en: "Mission Complete!" },
+  sumTime: { id: "Total Waktu", en: "Total Time" },
+  sumScore: { id: "Skor Akhir", en: "Final Score" },
+  sumWrong: { id: "Kesalahan", en: "Mistakes" },
+  sumBtn: { id: "Mainkan Lagi", en: "Play Again" }
+};
+
+/* Language Toggle Logic */
+$('btn-id').addEventListener('click', () => setLang('id'));$('btn-en').addEventListener('click', () => setLang('en'));
+
+function setLang(l) {
+  LANG = l;
+  
+  // Update toggle buttons styling
+  if(l === 'id') {
+    $('btn-id').className = "px-5 py-2 rounded-xl bg-maroon text-white font-bold transition-all shadow-md";
+    $('btn-en').className = "px-5 py-2 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80";
+  } else {
+    $('btn-en').className = "px-5 py-2 rounded-xl bg-maroon text-white font-bold transition-all shadow-md";
+    $('btn-id').className = "px-5 py-2 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80";
+  }
+
+  // Update all static UI elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (DICT[key]) el.innerHTML = DICT[key][LANG];
+  });
+}
+
+/* =========================================================
+   UTILITIES & MATH
+   ========================================================= */
+const T = String.raw;
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const $ = id => document.getElementById(id);
+const fmt = s => String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+
+function typeset(el) {
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise(el ? [el] : undefined).catch(() => {});
+}
+
+const NICE_PAIRS = [[3,6], [6,6], [4,12], [10,10], [5,20], [2,2], [4,4], [6,3], [12,4], [8,8], [6,12], [10,15], [12,12], [20,20], [12,6]]
+  .map(([r1, r2]) => ({ r1, r2, rp: (r1 * r2) / (r1 + r2) })).filter(p => Number.isInteger(p.rp));
+
+/* =========================================================
+   SVG DRAWING (Agnostic to Language)
+   ========================================================= */
+const WIRE = '#2C1A1A';
+const sub = (base, s) => `${base}<tspan font-size="10" dy="4">${s}</tspan>`;
+
+function resistorH(cx, y, name, value) {
+  return `<rect x="${cx - 28}" y="${y - 11}" width="56" height="22" rx="6" fill="#FFF" stroke="${WIRE}" stroke-width="2.5"/>
+          <text x="${cx}" y="${y - 19}" text-anchor="middle" font-size="14" font-weight="700" fill="#8B1515">${name}</text>
+          <text x="${cx}" y="${y + 29}" text-anchor="middle" font-size="13" font-weight="600" fill="#2C1A1A">${value}</text>`;
+}
+function batteryV(x, yc, label) {
+  return `<line x1="${x - 18}" y1="${yc - 6}" x2="${x + 18}" y2="${yc - 6}" stroke="${WIRE}" stroke-width="3"/>
+          <line x1="${x - 10}" y1="${yc + 6}" x2="${x + 10}" y2="${yc + 6}" stroke="${WIRE}" stroke-width="6"/>
+          <text x="${x - 28}" y="${yc - 10}" text-anchor="middle" font-size="14" fill="#8B1515" font-weight="800">+</text>
+          <text x="${x + 14}" y="${yc + 32}" font-size="14" font-weight="700" fill="#8B1515">${label}</text>`;
+}
+const arrowLeft = (x, y) => `<polygon points="${x - 7},${y} ${x + 6},${y - 6} ${x + 6},${y + 6}" fill="#F5A623"/>`;
+const arrowDown = (x, y) => `<polygon points="${x},${y + 7} ${x - 6},${y - 6} ${x + 6},${y - 6}" fill="#F5A623"/>`;
+const dot = (x, y) => `<circle cx="${x}" cy="${y}" r="4" fill="${WIRE}"/>`;
+
+function svgBasic({ R, I, V, type }) {
+  const valR = type === 'R' ? '? Ω' : `${R} Ω`;
+  const valV = type === 'V' ? 'V = ?' : `V = ${V} V`;
+  const valI = type === 'I' ? '? A' : `${I} A`;
+  return `<svg viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg" role="img">
+    <path d="M120,90 L120,40 L300,40 L300,140 L120,140 L120,110" fill="none" stroke="${WIRE}" stroke-width="2.5" stroke-linejoin="round"/>
+    ${resistorH(210, 40, 'R', valR)} ${batteryV(120, 100, valV)} ${arrowLeft(210, 140)}
+    <text x="210" y="162" text-anchor="middle" font-size="14" font-weight="700" fill="#2C1A1A">I = ${valI}</text>
+  </svg>`;
+}
+
+function svgMixed({ r1, r2, r3, V }) {
+  return `<svg viewBox="0 0 420 245" xmlns="http://www.w3.org/2000/svg" role="img">
+    <path d="M60,114 L60,45 L197,45 M253,45 L370,45 L370,205 L253,205 M197,205 L60,205 L60,126 M150,45 L150,125 L197,125 M253,125 L300,125 L300,45" fill="none" stroke="${WIRE}" stroke-width="2.5" stroke-linejoin="round"/>
+    ${resistorH(225, 45, sub('R', 1), `${r1} Ω`)} ${resistorH(225, 125, sub('R', 2), `${r2} Ω`)} ${resistorH(225, 205, sub('R', 3), `${r3} Ω`)}
+    ${dot(150, 45)}${dot(300, 45)} ${batteryV(60, 120, `V = ${V} V`)} ${arrowDown(370, 125)}
+    <text x="385" y="132" font-size="14" font-weight="700" fill="#2C1A1A">I = ?</text>
+  </svg>`;
+}
+
+/* =========================================================
+   DYNAMIC QUESTION GENERATOR (Bilingual)
+   ========================================================= */
+let levels = [];
+const state = { wrong: 0, startTime: 0, timerId: null, solvedCount: 0 };
+
+function generateQuestions(l) {
+  // L1
+  const I1 = rand(1, 10), R1 = rand(2, 20), V1 = I1 * R1;
+  const type1 = pick(['V', 'I', 'R']);
+  const map1 = {
+    V: {
+      q: l==='id' ? `Sebuah komponen listrik memiliki hambatan \\(${R1}\\,\\Omega\\) dan dialiri arus sebesar \\(${I1}\\,\\text{A}\\). Berapa tegangan pada komponen tersebut?` : `An electrical component has a resistance of \\(${R1}\\,\\Omega\\) and a current of \\(${I1}\\,\\text{A}\\) flows through it. What is the voltage?`,
+      label: l==='id'?'Tegangan \\(V\\)':'Voltage \\(V\\)', unit: 'V', answer: V1,
+      hint: l==='id'?'Kalikan arus dengan hambatan: \\(V = I \\times R\\).':'Multiply current by resistance: \\(V = I \\times R\\).'
+    },
+    I: {
+      q: l==='id' ? `Sebuah alat memiliki hambatan \\(${R1}\\,\\Omega\\) dan dihubungkan ke sumber tegangan \\(${V1}\\,\\text{V}\\). Berapa kuat arus yang mengalir?` : `A device has a resistance of \\(${R1}\\,\\Omega\\) connected to a \\(${V1}\\,\\text{V}\\) source. What is the current?`,
+      label: l==='id'?'Kuat arus \\(I\\)':'Current \\(I\\)', unit: 'A', answer: I1,
+      hint: l==='id'?'Bagi tegangan dengan hambatan: \\(I = \\dfrac{V}{R}\\).':'Divide voltage by resistance: \\(I = \\dfrac{V}{R}\\).'
+    },
+    R: {
+      q: l==='id' ? `Sebuah lampu dihubungkan ke tegangan \\(${V1}\\,\\text{V}\\) sehingga mengalir arus sebesar \\(${I1}\\,\\text{A}\\). Berapa hambatan lampu tersebut?` : `A lamp is connected to \\(${V1}\\,\\text{V}\\) causing a current of \\(${I1}\\,\\text{A}\\) to flow. What is its resistance?`,
+      label: l==='id'?'Hambatan \\(R\\)':'Resistance \\(R\\)', unit: 'Ω', answer: R1,
+      hint: l==='id'?'Bagi tegangan dengan arus: \\(R = \\dfrac{V}{I}\\).':'Divide voltage by current: \\(R = \\dfrac{V}{I}\\).'
+    }
+  }[type1];
+
+  // L4 (Boss)
+  const p = pick(NICE_PAIRS), r3 = rand(1, 10), Rt = p.rp + r3, I4 = rand(1, 5), V4 = I4 * Rt;
+
+  return [
+    {
+      n: 1, title: l==='id' ? 'Hukum Ohm Dasar' : 'Basic Ohm\'s Law', formula: T`\[V = I \times R\]`,
+      question: map1.q, svg: svgBasic({ R: R1, I: I1, V: V1, type: type1 }),
+      fields: [{ id: 'l1-a', label: map1.label, unit: map1.unit, answer: map1.answer, hint: map1.hint }]
+    },
+    {
+      n: 2, title: l==='id' ? 'Tantangan Campuran' : 'Mixed Circuit Challenge', boss: true, formula: T`\[R_{total} = R_p + R_3\]`,
+      question: l==='id' ? `Perhatikan gambar! \\(R_1 = ${p.r1}\\,\\Omega\\) dan \\(R_2 = ${p.r2}\\,\\Omega\\) dirangkai <strong>paralel</strong>, lalu diserikan dengan \\(R_3 = ${r3}\\,\\Omega\\). Baterai memiliki tegangan \\(V = ${V4}\\,\\text{V}\\). Hitung hambatan total dan arus total.`
+                         : `Look at the diagram! \\(R_1 = ${p.r1}\\,\\Omega\\) and \\(R_2 = ${p.r2}\\,\\Omega\\) are in <strong>parallel</strong>, then connected in <strong>series</strong> with \\(R_3 = ${r3}\\,\\Omega\\). The battery is \\(V = ${V4}\\,\\text{V}\\). Find total resistance and total current.`,
+      svg: svgMixed({ r1: p.r1, r2: p.r2, r3, V: V4 }),
+      fields: [
+        { id: 'l4-rt', label: l==='id'?'Hambatan total \\(R_{total}\\)':'Total Resistance \\(R_{total}\\)', unit: 'Ω', answer: Rt,
+          hint: l==='id'?'Cari \\(R_p\\) dari \\(R_1\\) & \\(R_2\\), lalu tambahkan \\(R_3\\).':'Find \\(R_p\\) for \\(R_1\\) & \\(R_2\\), then add \\(R_3\\).' },
+        { id: 'l4-it', label: l==='id'?'Arus total \\(I_{total}\\)':'Total Current \\(I_{total}\\)', unit: 'A', answer: I4,
+          hint: l==='id'?'Gunakan: \\(I_{total} = \\dfrac{V}{R_{total}}\\).':'Use: \\(I_{total} = \\dfrac{V}{R_{total}}\\).' }
+      ]
+    }
+  ].map(lvl => ({ ...lvl, solved: false, wrong: 0 }));
+}
+
+/* =========================================================
+   RENDERING & FLOW
+   ========================================================= */
+function fieldHTML(f) {
+  return `
+    <label class="block group">
+      <span class="text-sm font-semibold text-ink/80 ml-1">${f.label}</span>
+      <div class="relative mt-2">
+        <input type="number" inputmode="numeric" step="1" id="${f.id}" autocomplete="off" class="answer-input w-full rounded-xl border-2 border-sand bg-white pl-5 pr-12 py-3.5 text-xl font-bold tabular-nums text-ink shadow-sm" placeholder="0">
+        <span class="absolute right-5 top-1/2 -translate-y-1/2 text-ink/40 font-bold text-lg pointer-events-none">${f.unit}</span>
+      </div>
+      <div id="${f.id}-hint" class="hidden mt-3 text-sm font-medium text-maroon-dark bg-maroon-light rounded-xl px-4 py-3 border border-maroon/20"></div>
+    </label>`;
+}
+
+function levelHTML(l) {
+  return `
+    <article id="level-${l.n}" class="level-card is-locked bg-white rounded-[2rem] border-2 border-sand shadow-sm p-6 sm:p-8 relative overflow-hidden">
+      <div class="flex items-start justify-between gap-3 relative z-10">
+        <div class="flex items-center gap-4">
+          <span class="w-12 h-12 rounded-[1rem] ${l.boss ? 'bg-gold' : 'bg-maroon'} text-white grid place-items-center font-black text-xl shadow-lg">${l.n}</span>
+          <div>
+            <p class="text-xs uppercase tracking-[.2em] ${l.boss ? 'text-gold-dark' : 'text-maroon'} font-extrabold">Level ${l.n}${l.boss ? (LANG==='id'?' · Boss Stage 🔥':' · Final Boss 🔥') : ''}</p>
+            <h2 class="text-2xl font-black tracking-tight text-ink mt-0.5">${l.title}</h2>
+          </div>
+        </div>
+        <span id="status-${l.n}" class="shrink-0 text-xs font-bold rounded-full px-4 py-1.5 bg-sand text-ink/50 border border-sand">🔒 ${LANG==='id'?'Terkunci':'Locked'}</span>
+      </div>
+
+      <p class="locked-note mt-6 text-sm font-medium text-ink/50 bg-washi p-4 rounded-xl text-center border border-dashed border-sand">
+        ${LANG==='id' ? `Selesaikan Level ${l.n - 1} untuk membuka tantangan ini.` : `Clear Level ${l.n - 1} to unlock this challenge.`}
+      </p>
+
+      <div class="level-body hidden mt-8 relative z-10">
+        <div class="rounded-2xl bg-washi border-2 border-sand p-3 mb-6 text-center">
+          <p class="text-xs font-bold uppercase tracking-widest text-ink/40 mb-1">${LANG==='id'?'Rumus Kunci':'Key Formula'}</p>
+          <div class="text-maroon font-semibold overflow-x-auto">${l.formula}</div>
+        </div>
+        ${l.svg ? `<div class="diagram rounded-2xl bg-washi border-2 border-sand p-6 mb-6 shadow-sm">${l.svg}</div>` : ''}
+        <p class="text-[1.1rem] leading-relaxed font-medium text-ink/90 bg-white">${l.question}</p>
+        <div class="mt-6 grid ${l.fields.length > 1 ? 'sm:grid-cols-2' : ''} gap-5">${l.fields.map(fieldHTML).join('')}</div>
+        <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4 pt-6 border-t border-sand">
+          <button id="check-${l.n}" class="check-btn inline-flex items-center justify-center gap-2 rounded-xl ${l.boss ? 'bg-gold text-ink' : 'bg-maroon text-white'} font-bold px-8 py-3.5 text-lg shadow-md disabled:opacity-50">
+            ${LANG==='id'?'Cek Jawaban':'Check Answer'}
+          </button>
+          <p id="feedback-${l.n}" class="text-sm font-bold" aria-live="polite"></p>
+        </div>
+      </div>
+    </article>`;
+}
+
+function unlock(n) {
+  const card = $('level-' + n);
+  card.classList.remove('is-locked'); card.classList.add('is-active', 'reveal');
+  card.querySelector('.locked-note').classList.add('hidden'); card.querySelector('.level-body').classList.remove('hidden');
+  const st = $('status-' + n);
+  st.textContent = LANG==='id'?'Mengerjakan ✍️':'In Progress ✍️';
+  st.className = 'shrink-0 text-xs font-bold rounded-full px-4 py-1.5 bg-gold-light text-gold-dark border border-gold/30';
+  typeset(card);
+  setTimeout(() => { card.scrollIntoView({ behavior: 'smooth', block: 'start' }); card.querySelector('input')?.focus(); }, 150);
+}
+
+function checkLevel(n) {
+  const l = levels[n - 1], fb = $('feedback-' + n);
+  if (l.solved) return;
+  let empty = false, allCorrect = true;
+
+  l.fields.forEach(f => {
+    const inp = $(f.id), hint =$(f.id + '-hint'), raw = inp.value.trim();
+    inp.classList.remove('is-correct', 'is-wrong');
+    if (raw === '') { empty = true; allCorrect = false; return; }
+    if (Number(raw) === f.answer) { inp.classList.add('is-correct'); hint.classList.add('hidden'); } 
+    else { allCorrect = false; inp.classList.add('is-wrong'); hint.innerHTML = '💡 ' + f.hint; hint.classList.remove('hidden'); typeset(hint); }
+  });
+
+  const anyWrong = l.fields.some(f => $(f.id).classList.contains('is-wrong'));
+  if (!anyWrong && empty) { fb.textContent = LANG==='id'?'Isi semua kotak dulu ya!':'Please fill all boxes!'; fb.className = 'text-sm font-bold text-ink/50'; return; }
+  if (!allCorrect) {
+    state.wrong++; l.wrong++; $('wrong-count').textContent = state.wrong;
+    fb.textContent = LANG==='id'?'Belum tepat. Cek petunjuk di atas! (−5 poin) 🙈':'Not quite. Check the hint! (−5 points) 🙈';
+    fb.className = 'text-sm font-bold text-maroon';
+    $('level-' + n).classList.remove('shake'); void $('level-' + n).offsetWidth; $('level-' + n).classList.add('shake');
+    return;
+  }
+
+  l.solved = true; state.solvedCount++;
+  l.fields.forEach(f => $(f.id).disabled = true);$('check-' + n).disabled = true;
+  fb.innerHTML = n < levels.length ? (LANG==='id'?'🎉 <strong>Mantap!</strong> Lanjut.':'🎉 <strong>Correct!</strong> Next.') : (LANG==='id'?'🏆 <strong>Luar biasa!</strong> Tamat.':'🏆 <strong>Amazing!</strong> Finished.');
+  fb.className = 'text-sm font-bold text-green-dark';
+  
+  $('level-' + n).classList.remove('is-active');
+  const st = $('status-' + n); st.textContent = '✓ ' + (LANG==='id'?'Tuntas':'Done'); st.className = 'shrink-0 text-xs font-bold rounded-full px-4 py-1.5 bg-green text-white shadow-sm';
+  $('progress-bar').style.width = (state.solvedCount / levels.length * 100) + '\%';$('progress-text').textContent = state.solvedCount + '/' + levels.length;
+
+  if (n < levels.length) setTimeout(() => unlock(n + 1), 800); else setTimeout(finish, 1200);
+}
+
+function start() {
+  levels = generateQuestions(LANG);
+  $('levels').innerHTML = levels.map(levelHTML).join('');
+  levels.forEach(l => {
+    $('check-' + l.n).addEventListener('click', () => checkLevel(l.n));
+    l.fields.forEach(f => {
+      $(f.id).addEventListener('keydown', e => { if (e.key === 'Enter') checkLevel(l.n); });$(f.id).addEventListener('input', e => e.target.classList.remove('is-correct', 'is-wrong'));
+    });
+  });
+
+  $('start-screen').classList.add('hidden'); $('levels').classList.remove('hidden');$('hud').classList.remove('hidden'); $('hud').classList.add('flex');$('progress-text').textContent = '0/' + levels.length;
+  state.startTime = Date.now(); state.timerId = setInterval(() => {
+    const s = Math.floor((Date.now() - state.startTime) / 1000);
+    $('timer').textContent = fmt(s); if (s >= 45 * 60)$('timer-pill').classList.replace('bg-maroon', 'bg-ink');
+  }, 1000);
+  unlock(1);
+}
+
+function finish() {
+  clearInterval(state.timerId);
+  const secs = Math.floor((Date.now() - state.startTime) / 1000), score = Math.max(0, 100 - state.wrong * 5);
+  $('levels').classList.add('hidden');$('summary').classList.remove('hidden');
+  $('sum-time').textContent = fmt(secs);$('timer').textContent = fmt(secs);
+  $('sum-score').textContent = score; $('sum-wrong').textContent = state.wrong;
+
+  let title, msg;
+  if (score >= 90)      { title = LANG==='id'?'Jenius! 🌟':'Genius! 🌟'; msg = LANG==='id'?'Pemahamanmu sangat luar biasa.':'Your understanding is excellent.'; }
+  else if (score >= 70) { title = LANG==='id'?'Bagus! 👍':'Good Job! 👍'; msg = LANG==='id'?'Sedikit lebih teliti lagi pasti sempurna.':'A bit more practice and you will be perfect.'; }
+  else                  { title = LANG==='id'?'Semangat! 💪':'Keep It Up! 💪'; msg = LANG==='id'?'Terus berlatih ya.':'Keep practicing.'; }
+  $('summary-title').textContent = title; $('summary-msg').textContent = msg;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+$('start-btn').addEventListener('click', start);
+</script>
+</body>
+</html>
