@@ -62,10 +62,12 @@
         </figure>
 
         <div class="flex flex-col gap-4">
-          <div class="border-2 border-dashed border-slate-400 rounded-2xl p-5 bg-slate-100 text-slate-700 text-lg">
-            <p class="font-bold mb-1">🖼️ Placeholder gambar alat ukur</p>
-            <p><i>Prompt AI Image Generator:</i> "Clean educational illustration, white background, side by side: a steel vernier caliper measuring the length of a thin metal plate and an outside micrometer screw gauge measuring its thickness, scales clearly visible, flat vector style, labeled 'Jangka Sorong' and 'Mikrometer Sekrup'."</p>
-          </div>
+          <figure class="rounded-2xl bg-white border-2 border-slate-200 p-3">
+            <img src="img/alatukur.png" alt="Jangka sorong dan mikrometer sekrup untuk mengukur pelat logam"
+                 class="w-full max-h-64 object-contain mx-auto"
+                 onerror="this.replaceWith(Object.assign(document.createElement('p'),{className:'text-lg text-red-600 p-4 border-2 border-dashed border-red-300 rounded-xl',textContent:'Gambar img/alatukur.png tidak ditemukan. Pastikan folder img berada di samping file presentasi ini.'}))">
+            <figcaption class="text-center text-lg text-slate-500 mt-2">Jangka sorong (panjang) · Mikrometer sekrup (tebal)</figcaption>
+          </figure>
           <div class="rounded-2xl bg-white border-2 border-slate-200 p-5">
             <p class="text-xl text-slate-500 mb-1">Layar kalkulator siswa:</p>
             <p class="font-mono text-4xl">8,35 × 4,2 = <b>35,07</b></p>
