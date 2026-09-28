@@ -39,9 +39,24 @@
 
 <style>
   body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
-  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-  input[type=number] { -moz-appearance: textfield; }
+  
+  /* Perbaikan Linter VS Code */
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    appearance: none; 
+    margin: 0; 
+  }
+  input[type=number] { 
+    -moz-appearance: textfield; 
+    appearance: textfield; 
+  }
 
+  /* KUNCI PERBAIKAN MATHJAX PATAH: Melawan efek reset svg bawaan Tailwind */
+  mjx-container svg { display: inline !important; }
+  mjx-container[display="true"] svg { display: block !important; margin: 0 auto; }
+
+  /* Animasi dan Efek Input */
   .answer-input { transition: all .25s; }
   .answer-input:focus { outline: none; border-color: #8B1515; box-shadow: 0 0 0 4px rgba(139,21,21,.15); }
   .answer-input.is-correct { background: #E8F5E9 !important; border-color: #4CAF50 !important; color: #2E7D32; }
@@ -56,8 +71,7 @@
   .shake { animation: shake .4s; }
   @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
 
-  .diagram svg { width: 100%; height: auto; max-width: 440px; margin: 0 auto; display: block; }
-  mjx-container[jax="SVG"][display="true"] { margin: 0.5em 0 !important; }
+  .diagram svg { width: 100%; height: auto; max-width: 440px; margin: 0 auto; display: block !important; }
 </style>
 </head>
 
@@ -110,7 +124,8 @@
           Ada 4 level tantangan yang harus kamu taklukkan. Level berikutnya akan terbuka otomatis jika jawabanmu benar. Semua jawaban berupa <strong>bilangan bulat</strong> (tanpa koma). Semangat! 🚀
         </p>
 
-        <div class="mt-8 grid sm:grid-cols-2 gap-4 relative z-10">
+        <!-- Kumpulan Rumus -->
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
           <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center hover:border-maroon/30 transition-colors">
             <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formOhm">Hukum Ohm</p>
             <div class="text-lg text-maroon font-semibold">\[V = I \times R\]</div>
@@ -119,9 +134,13 @@
             <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formSeries">Rangkaian Seri</p>
             <div class="text-lg text-maroon font-semibold">\[R_s = R_1 + R_2\]</div>
           </div>
-          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center hover:border-maroon/30 transition-colors sm:col-span-2">
-            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formParallel">Paralel 2 Resistor</p>
-            <div class="text-lg text-maroon font-semibold">\[R_p = \dfrac{R_1 \times R_2}{R_1 + R_2}\]</div>
+          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center hover:border-maroon/30 transition-colors">
+            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formPar1">Rangkaian Paralel</p>
+            <div class="text-lg text-maroon font-semibold">\[\frac{1}{R_p} = \frac{1}{R_1} + \frac{1}{R_2}\]</div>
+          </div>
+          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center hover:border-maroon/30 transition-colors">
+            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formPar2">Paralel 2 Resistor</p>
+            <div class="text-lg text-maroon font-semibold">\[R_p = \frac{R_1 \times R_2}{R_1 + R_2}\]</div>
           </div>
         </div>
 
@@ -196,7 +215,8 @@ const DICT = {
   },
   formOhm: { id: "Hukum Ohm", en: "Ohm's Law" },
   formSeries: { id: "Rangkaian Seri", en: "Series Circuit" },
-  formParallel: { id: "Paralel 2 Resistor", en: "2 Parallel Resistors" },
+  formPar1: { id: "Rangkaian Paralel", en: "Parallel Circuit" },
+  formPar2: { id: "Paralel 2 Resistor", en: "2 Parallel Resistors" },
   startBtn: { id: "Mulai Misi Sekarang!", en: "Start Mission Now!" },
   sumLabel: { id: "Misi Selesai!", en: "Mission Complete!" },
   sumTime: { id: "Total Waktu", en: "Total Time" },
