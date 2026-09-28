@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Latihan Hukum Ohm / Ohm's Law Practice</title>
+<title>Latihan Rangkaian Listrik / Circuit Practice</title>
 
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -81,7 +81,7 @@
           </div>
           <span id="progress-text" class="tabular-nums">0/4</span>
         </div>
-        <div class="flex items-center gap-1.5 rounded-full bg-white border border-sand px-3 py-1.5 text-sm shadow-sm">
+        <div class="flex items-center gap-1.5 rounded-full bg-white border border-sand px-3 py-1.5 text-sm shadow-sm" title="Wrong Attempts">
           <span class="text-maroon">✕</span><span id="wrong-count" class="tabular-nums font-semibold">0</span>
         </div>
         <div id="timer-pill" class="flex items-center gap-1.5 rounded-full bg-maroon text-white px-3 py-1.5 text-sm font-semibold tabular-nums shadow-sm">
@@ -95,13 +95,13 @@
   <main class="max-w-3xl mx-auto px-4 py-8 sm:py-10">
 
     <!-- ================= START SCREEN ================= -->
-    <section id="start-screen" class="reveal">
+    <section id="start-screen" class="reveal relative z-10">
       <div class="bg-white rounded-[2rem] shadow-soft border border-sand p-6 sm:p-10 relative overflow-hidden">
         
         <!-- Language Selector -->
-        <div class="flex justify-center gap-2 mb-8 relative z-10">
-          <button id="btn-id" class="px-5 py-2 rounded-xl bg-maroon text-white font-bold transition-all shadow-md">🇮🇩 Indonesia</button>
-          <button id="btn-en" class="px-5 py-2 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80">🇬🇧 English</button>
+        <div class="flex justify-center gap-3 mb-8 relative z-20">
+          <button id="btn-id" onclick="setLang('id')" class="px-5 py-2.5 rounded-xl bg-maroon text-white font-bold transition-all shadow-md active:scale-95">🇮🇩 Indonesia</button>
+          <button id="btn-en" onclick="setLang('en')" class="px-5 py-2.5 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80 active:scale-95">🇬🇧 English</button>
         </div>
 
         <p class="text-xs uppercase tracking-[.2em] text-maroon font-bold text-center" data-i18n="startGreeting">Halo! Selamat Datang 👋</p>
@@ -111,18 +111,21 @@
         </p>
 
         <div class="mt-8 grid sm:grid-cols-2 gap-4 relative z-10">
-          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center">
+          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center hover:border-maroon/30 transition-colors">
             <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formOhm">Hukum Ohm</p>
             <div class="text-lg text-maroon font-semibold">\[V = I \times R\]</div>
           </div>
-          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center">
+          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center hover:border-maroon/30 transition-colors">
             <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formSeries">Rangkaian Seri</p>
             <div class="text-lg text-maroon font-semibold">\[R_s = R_1 + R_2\]</div>
           </div>
+          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center hover:border-maroon/30 transition-colors sm:col-span-2">
+            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formParallel">Paralel 2 Resistor</p>
+            <div class="text-lg text-maroon font-semibold">\[R_p = \dfrac{R_1 \times R_2}{R_1 + R_2}\]</div>
+          </div>
         </div>
 
-        <button id="start-btn"
-          class="mt-10 mx-auto flex items-center justify-center gap-2 rounded-2xl bg-maroon hover:bg-maroon-dark text-white font-bold px-8 py-4 text-lg transition-transform hover:scale-[1.02] active:scale-95 shadow-md relative z-10">
+        <button onclick="start()" class="mt-10 mx-auto flex items-center justify-center gap-2 rounded-2xl bg-maroon hover:bg-maroon-dark text-white font-bold px-8 py-4 text-lg transition-transform hover:scale-[1.02] active:scale-95 shadow-md relative z-20 cursor-pointer">
           <span data-i18n="startBtn">Mulai Misi Sekarang!</span>
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </button>
@@ -130,10 +133,10 @@
     </section>
 
     <!-- ================= LEVELS ================= -->
-    <section id="levels" class="hidden space-y-6"></section>
+    <section id="levels" class="hidden space-y-6 relative z-10"></section>
 
     <!-- ================= SUMMARY ================= -->
-    <section id="summary" class="hidden">
+    <section id="summary" class="hidden relative z-10">
       <div class="bg-white rounded-[2rem] shadow-soft border border-sand p-6 sm:p-10 text-center reveal relative overflow-hidden">
         <div class="mx-auto w-20 h-20 rounded-full bg-gold-light text-gold grid place-items-center text-4xl mb-4 shadow-sm">🏆</div>
         <p class="text-xs uppercase tracking-[.2em] text-maroon font-bold" data-i18n="sumLabel">Misi Selesai!</p>
@@ -141,22 +144,33 @@
         <p id="summary-msg" class="mt-3 text-ink/70 font-medium text-lg"></p>
 
         <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
-          <div class="rounded-2xl bg-washi border-2 border-sand p-5 relative overflow-hidden">
+          <div class="rounded-2xl bg-washi border-2 border-sand p-5">
             <p class="text-xs text-ink/50 font-bold uppercase tracking-wider" data-i18n="sumTime">Total Waktu</p>
             <p id="sum-time" class="mt-2 text-4xl font-black tabular-nums text-ink">00:00</p>
           </div>
-          <div class="rounded-2xl bg-maroon-light border-2 border-maroon/20 p-5 relative overflow-hidden">
+          <div class="rounded-2xl bg-maroon-light border-2 border-maroon/20 p-5">
             <p class="text-xs text-maroon-dark font-bold uppercase tracking-wider" data-i18n="sumScore">Skor Akhir</p>
             <p class="mt-2 text-4xl font-black tabular-nums text-maroon"><span id="sum-score">100</span><span class="text-lg font-bold text-maroon/60">/100</span></p>
           </div>
-          <div class="rounded-2xl bg-gold-light border-2 border-gold/30 p-5 relative overflow-hidden">
+          <div class="rounded-2xl bg-gold-light border-2 border-gold/30 p-5">
             <p class="text-xs text-gold-dark font-bold uppercase tracking-wider" data-i18n="sumWrong">Kesalahan</p>
             <p id="sum-wrong" class="mt-2 text-4xl font-black tabular-nums text-gold-dark">0</p>
           </div>
         </div>
 
-        <button onclick="location.reload()"
-          class="mt-10 mx-auto flex items-center justify-center gap-2 rounded-2xl bg-ink hover:bg-black text-white font-bold px-8 py-4 text-lg transition-transform hover:scale-[1.02] active:scale-95 shadow-md">
+        <div class="mt-8 rounded-2xl border-2 border-sand overflow-hidden text-left bg-white">
+          <table class="w-full text-sm font-medium">
+            <thead class="bg-washi text-ink/50 border-b-2 border-sand">
+              <tr>
+                <th class="px-5 py-3 text-left" data-i18n="sumTblLvl">Level</th>
+                <th class="px-5 py-3 text-right" data-i18n="sumTblErr">Percobaan Salah</th>
+              </tr>
+            </thead>
+            <tbody id="sum-table" class="divide-y-2 divide-sand"></tbody>
+          </table>
+        </div>
+
+        <button onclick="location.reload()" class="mt-10 mx-auto flex items-center justify-center gap-2 rounded-2xl bg-ink hover:bg-black text-white font-bold px-8 py-4 text-lg transition-transform hover:scale-[1.02] active:scale-95 shadow-md cursor-pointer">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>
           <span data-i18n="sumBtn">Mainkan Lagi</span>
         </button>
@@ -166,9 +180,9 @@
 
 <script>
 /* =========================================================
-   I18N (DICTIONARY)
+   I18N (DICTIONARY & TOGGLE LOGIC)
    ========================================================= */
-let LANG = 'id'; // Default language
+let LANG = 'id'; // Default Language
 
 const DICT = {
   headTitle: { id: "Fisika Asyik!", en: "Physics Fun!" },
@@ -177,35 +191,31 @@ const DICT = {
   startGreeting: { id: "Halo! Selamat Datang 👋", en: "Hello! Welcome 👋" },
   startTitle: { id: "Latihan Rangkaian Listrik", en: "Electric Circuits Practice" },
   startDesc: { 
-    id: "Ada 4 level tantangan yang harus kamu taklukkan. Level berikutnya terbuka otomatis jika jawabanmu benar. Semua jawaban berupa <strong>bilangan bulat</strong>. Semangat! 🚀", 
-    en: "There are 4 levels to conquer. The next level unlocks automatically when your answer is correct. All answers are <strong>whole numbers</strong>. Good luck! 🚀" 
+    id: "Ada 4 level tantangan yang harus kamu taklukkan. Level berikutnya terbuka otomatis jika jawabanmu benar. Semua jawaban berupa <strong>bilangan bulat</strong> (tanpa koma). Semangat! 🚀", 
+    en: "There are 4 challenge levels to conquer. The next level unlocks automatically when your answer is correct. All answers are <strong>whole numbers</strong> (no decimals). Good luck! 🚀" 
   },
   formOhm: { id: "Hukum Ohm", en: "Ohm's Law" },
   formSeries: { id: "Rangkaian Seri", en: "Series Circuit" },
+  formParallel: { id: "Paralel 2 Resistor", en: "2 Parallel Resistors" },
   startBtn: { id: "Mulai Misi Sekarang!", en: "Start Mission Now!" },
   sumLabel: { id: "Misi Selesai!", en: "Mission Complete!" },
   sumTime: { id: "Total Waktu", en: "Total Time" },
   sumScore: { id: "Skor Akhir", en: "Final Score" },
-  sumWrong: { id: "Kesalahan", en: "Mistakes" },
+  sumWrong: { id: "Kesalahan", en: "Total Mistakes" },
+  sumTblLvl: { id: "Level", en: "Level" },
+  sumTblErr: { id: "Percobaan Salah", en: "Wrong Attempts" },
   sumBtn: { id: "Mainkan Lagi", en: "Play Again" }
 };
 
-/* Language Toggle Logic */
-$('btn-id').addEventListener('click', () => setLang('id'));$('btn-en').addEventListener('click', () => setLang('en'));
-
 function setLang(l) {
   LANG = l;
-  
-  // Update toggle buttons styling
   if(l === 'id') {
-    $('btn-id').className = "px-5 py-2 rounded-xl bg-maroon text-white font-bold transition-all shadow-md";
-    $('btn-en').className = "px-5 py-2 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80";
+    document.getElementById('btn-id').className = "px-5 py-2.5 rounded-xl bg-maroon text-white font-bold transition-all shadow-md active:scale-95 cursor-pointer";
+    document.getElementById('btn-en').className = "px-5 py-2.5 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80 active:scale-95 cursor-pointer";
   } else {
-    $('btn-en').className = "px-5 py-2 rounded-xl bg-maroon text-white font-bold transition-all shadow-md";
-    $('btn-id').className = "px-5 py-2 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80";
+    document.getElementById('btn-en').className = "px-5 py-2.5 rounded-xl bg-maroon text-white font-bold transition-all shadow-md active:scale-95 cursor-pointer";
+    document.getElementById('btn-id').className = "px-5 py-2.5 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80 active:scale-95 cursor-pointer";
   }
-
-  // Update all static UI elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (DICT[key]) el.innerHTML = DICT[key][LANG];
@@ -218,18 +228,18 @@ function setLang(l) {
 const T = String.raw;
 const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
 const pick = arr => arr[Math.floor(Math.random() * arr.length)];
-const $ = id => document.getElementById(id);
 const fmt = s => String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
 
 function typeset(el) {
   if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise(el ? [el] : undefined).catch(() => {});
 }
 
+/* Array of nice pairs that always result in an integer parallel equivalent */
 const NICE_PAIRS = [[3,6], [6,6], [4,12], [10,10], [5,20], [2,2], [4,4], [6,3], [12,4], [8,8], [6,12], [10,15], [12,12], [20,20], [12,6]]
   .map(([r1, r2]) => ({ r1, r2, rp: (r1 * r2) / (r1 + r2) })).filter(p => Number.isInteger(p.rp));
 
 /* =========================================================
-   SVG DRAWING (Agnostic to Language)
+   SVG DRAWING SYSTEM
    ========================================================= */
 const WIRE = '#2C1A1A';
 const sub = (base, s) => `${base}<tspan font-size="10" dy="4">${s}</tspan>`;
@@ -259,7 +269,22 @@ function svgBasic({ R, I, V, type }) {
     <text x="210" y="162" text-anchor="middle" font-size="14" font-weight="700" fill="#2C1A1A">I = ${valI}</text>
   </svg>`;
 }
-
+function svgSeries({ r1, r2, I }) {
+  return `<svg viewBox="0 0 420 215" xmlns="http://www.w3.org/2000/svg" role="img">
+    <path d="M60,104 L60,50 L102,50 M158,50 L217,50 M273,50 L370,50 L370,170 L60,170 L60,116" fill="none" stroke="${WIRE}" stroke-width="2.5" stroke-linejoin="round"/>
+    ${resistorH(130, 50, sub('R', 1), `${r1} Ω`)} ${resistorH(245, 50, sub('R', 2), `${r2} Ω`)}
+    ${batteryV(60, 110, 'V = ?')} ${arrowLeft(215, 170)}
+    <text x="215" y="194" text-anchor="middle" font-size="14" font-weight="700" fill="#2C1A1A">I = ${I} A</text>
+  </svg>`;
+}
+function svgParallel({ r1, r2, V }) {
+  return `<svg viewBox="0 0 420 230" xmlns="http://www.w3.org/2000/svg" role="img">
+    <path d="M60,124 L60,45 L197,45 M253,45 L370,45 L370,200 L60,200 L60,136 M150,45 L150,125 L197,125 M253,125 L300,125 L300,45" fill="none" stroke="${WIRE}" stroke-width="2.5" stroke-linejoin="round"/>
+    ${resistorH(225, 45, sub('R', 1), `${r1} Ω`)} ${resistorH(225, 125, sub('R', 2), `${r2} Ω`)}
+    ${dot(150, 45)}${dot(300, 45)} ${batteryV(60, 130, `V = ${V} V`)} ${arrowLeft(215, 200)}
+    <text x="215" y="222" text-anchor="middle" font-size="14" font-weight="700" fill="#2C1A1A">I = ?</text>
+  </svg>`;
+}
 function svgMixed({ r1, r2, r3, V }) {
   return `<svg viewBox="0 0 420 245" xmlns="http://www.w3.org/2000/svg" role="img">
     <path d="M60,114 L60,45 L197,45 M253,45 L370,45 L370,205 L253,205 M197,205 L60,205 L60,126 M150,45 L150,125 L197,125 M253,125 L300,125 L300,45" fill="none" stroke="${WIRE}" stroke-width="2.5" stroke-linejoin="round"/>
@@ -270,50 +295,80 @@ function svgMixed({ r1, r2, r3, V }) {
 }
 
 /* =========================================================
-   DYNAMIC QUESTION GENERATOR (Bilingual)
+   DYNAMIC QUESTION GENERATOR (All 4 Levels & Bilingual)
    ========================================================= */
 let levels = [];
 const state = { wrong: 0, startTime: 0, timerId: null, solvedCount: 0 };
 
 function generateQuestions(l) {
-  // L1
+  // LEVEL 1
   const I1 = rand(1, 10), R1 = rand(2, 20), V1 = I1 * R1;
   const type1 = pick(['V', 'I', 'R']);
   const map1 = {
     V: {
       q: l==='id' ? `Sebuah komponen listrik memiliki hambatan \\(${R1}\\,\\Omega\\) dan dialiri arus sebesar \\(${I1}\\,\\text{A}\\). Berapa tegangan pada komponen tersebut?` : `An electrical component has a resistance of \\(${R1}\\,\\Omega\\) and a current of \\(${I1}\\,\\text{A}\\) flows through it. What is the voltage?`,
       label: l==='id'?'Tegangan \\(V\\)':'Voltage \\(V\\)', unit: 'V', answer: V1,
-      hint: l==='id'?'Kalikan arus dengan hambatan: \\(V = I \\times R\\).':'Multiply current by resistance: \\(V = I \\times R\\).'
+      hint: l==='id'?'Kalikan arus dengan hambatan: \\(V = I \\times R\\).':'Multiply the current by the resistance: \\(V = I \\times R\\).'
     },
     I: {
-      q: l==='id' ? `Sebuah alat memiliki hambatan \\(${R1}\\,\\Omega\\) dan dihubungkan ke sumber tegangan \\(${V1}\\,\\text{V}\\). Berapa kuat arus yang mengalir?` : `A device has a resistance of \\(${R1}\\,\\Omega\\) connected to a \\(${V1}\\,\\text{V}\\) source. What is the current?`,
+      q: l==='id' ? `Sebuah alat dengan hambatan \\(${R1}\\,\\Omega\\) dihubungkan ke sumber daya \\(${V1}\\,\\text{V}\\). Berapa kuat arus yang mengalir?` : `A device with a resistance of \\(${R1}\\,\\Omega\\) is connected to a \\(${V1}\\,\\text{V}\\) power source. What is the current?`,
       label: l==='id'?'Kuat arus \\(I\\)':'Current \\(I\\)', unit: 'A', answer: I1,
-      hint: l==='id'?'Bagi tegangan dengan hambatan: \\(I = \\dfrac{V}{R}\\).':'Divide voltage by resistance: \\(I = \\dfrac{V}{R}\\).'
+      hint: l==='id'?'Bagi tegangan dengan hambatan: \\(I = \\dfrac{V}{R}\\).':'Divide the voltage by the resistance: \\(I = \\dfrac{V}{R}\\).'
     },
     R: {
-      q: l==='id' ? `Sebuah lampu dihubungkan ke tegangan \\(${V1}\\,\\text{V}\\) sehingga mengalir arus sebesar \\(${I1}\\,\\text{A}\\). Berapa hambatan lampu tersebut?` : `A lamp is connected to \\(${V1}\\,\\text{V}\\) causing a current of \\(${I1}\\,\\text{A}\\) to flow. What is its resistance?`,
+      q: l==='id' ? `Sebuah lampu yang dihubungkan ke tegangan \\(${V1}\\,\\text{V}\\) menarik arus sebesar \\(${I1}\\,\\text{A}\\). Berapa hambatan lampu tersebut?` : `A lamp is connected to a \\(${V1}\\,\\text{V}\\) power source, drawing a current of \\(${I1}\\,\\text{A}\\). What is its resistance?`,
       label: l==='id'?'Hambatan \\(R\\)':'Resistance \\(R\\)', unit: 'Ω', answer: R1,
-      hint: l==='id'?'Bagi tegangan dengan arus: \\(R = \\dfrac{V}{I}\\).':'Divide voltage by current: \\(R = \\dfrac{V}{I}\\).'
+      hint: l==='id'?'Bagi tegangan dengan arus: \\(R = \\dfrac{V}{I}\\).':'Divide the voltage by the current: \\(R = \\dfrac{V}{I}\\).'
     }
   }[type1];
 
-  // L4 (Boss)
-  const p = pick(NICE_PAIRS), r3 = rand(1, 10), Rt = p.rp + r3, I4 = rand(1, 5), V4 = I4 * Rt;
+  // LEVEL 2
+  const r2_1 = rand(1, 10), r2_2 = rand(1, 10), I2 = rand(1, 10), Rs2 = r2_1 + r2_2, V2 = I2 * Rs2;
+  
+  // LEVEL 3
+  const p3 = pick(NICE_PAIRS), I3 = rand(1, 10), V3 = I3 * p3.rp;
+  
+  // LEVEL 4 (Boss)
+  const p4 = pick(NICE_PAIRS), r4_3 = rand(1, 10), Rt4 = p4.rp + r4_3, I4 = rand(1, 5), V4 = I4 * Rt4;
 
   return [
     {
-      n: 1, title: l==='id' ? 'Hukum Ohm Dasar' : 'Basic Ohm\'s Law', formula: T`\[V = I \times R\]`,
+      n: 1, title: l==='id' ? 'Hukum Ohm Dasar' : "Basic Ohm's Law", formula: T`\[V = I \times R\]`,
       question: map1.q, svg: svgBasic({ R: R1, I: I1, V: V1, type: type1 }),
       fields: [{ id: 'l1-a', label: map1.label, unit: map1.unit, answer: map1.answer, hint: map1.hint }]
     },
     {
-      n: 2, title: l==='id' ? 'Tantangan Campuran' : 'Mixed Circuit Challenge', boss: true, formula: T`\[R_{total} = R_p + R_3\]`,
-      question: l==='id' ? `Perhatikan gambar! \\(R_1 = ${p.r1}\\,\\Omega\\) dan \\(R_2 = ${p.r2}\\,\\Omega\\) dirangkai <strong>paralel</strong>, lalu diserikan dengan \\(R_3 = ${r3}\\,\\Omega\\). Baterai memiliki tegangan \\(V = ${V4}\\,\\text{V}\\). Hitung hambatan total dan arus total.`
-                         : `Look at the diagram! \\(R_1 = ${p.r1}\\,\\Omega\\) and \\(R_2 = ${p.r2}\\,\\Omega\\) are in <strong>parallel</strong>, then connected in <strong>series</strong> with \\(R_3 = ${r3}\\,\\Omega\\). The battery is \\(V = ${V4}\\,\\text{V}\\). Find total resistance and total current.`,
-      svg: svgMixed({ r1: p.r1, r2: p.r2, r3, V: V4 }),
+      n: 2, title: l==='id' ? 'Rangkaian Seri' : 'Series Circuit', formula: T`\[R_s = R_1 + R_2\]`,
+      question: l==='id' ? `Dua resistor \\(R_1 = ${r2_1}\\,\\Omega\\) dan \\(R_2 = ${r2_2}\\,\\Omega\\) dirangkai secara <strong>seri</strong>. Arus yang mengalir pada rangkaian adalah \\(I = ${I2}\\,\\text{A}\\). Tentukan hambatan total dan tegangan baterainya.`
+                         : `Two resistors \\(R_1 = ${r2_1}\\,\\Omega\\) and \\(R_2 = ${r2_2}\\,\\Omega\\) are connected in <strong>series</strong>. The current flowing through the circuit is \\(I = ${I2}\\,\\text{A}\\). Find the total resistance and the battery voltage.`,
+      svg: svgSeries({ r1: r2_1, r2: r2_2, I: I2 }),
       fields: [
-        { id: 'l4-rt', label: l==='id'?'Hambatan total \\(R_{total}\\)':'Total Resistance \\(R_{total}\\)', unit: 'Ω', answer: Rt,
-          hint: l==='id'?'Cari \\(R_p\\) dari \\(R_1\\) & \\(R_2\\), lalu tambahkan \\(R_3\\).':'Find \\(R_p\\) for \\(R_1\\) & \\(R_2\\), then add \\(R_3\\).' },
+        { id: 'l2-rs', label: l==='id'?'Hambatan total \\(R_s\\)':'Total Resistance \\(R_s\\)', unit: 'Ω', answer: Rs2,
+          hint: l==='id'?'Pada rangkaian seri, hambatan dijumlahkan: \\(R_s = R_1 + R_2\\).':'In a series circuit, you add the resistances: \\(R_s = R_1 + R_2\\).' },
+        { id: 'l2-v', label: l==='id'?'Tegangan baterai \\(V\\)':'Battery Voltage \\(V\\)', unit: 'V', answer: V2,
+          hint: l==='id'?'Hitung dulu \\(R_s\\), lalu gunakan: \\(V = I \\times R_s\\).':'Find \\(R_s\\) first, then use: \\(V = I \\times R_s\\).' }
+      ]
+    },
+    {
+      n: 3, title: l==='id' ? 'Rangkaian Paralel' : 'Parallel Circuit', formula: T`\[R_p = \dfrac{R_1 \times R_2}{R_1 + R_2}\]`,
+      question: l==='id' ? `Dua resistor \\(R_1 = ${p3.r1}\\,\\Omega\\) dan \\(R_2 = ${p3.r2}\\,\\Omega\\) dirangkai <strong>paralel</strong> dan dihubungkan ke sumber tegangan \\(V = ${V3}\\,\\text{V}\\). Tentukan hambatan pengganti dan arus totalnya.`
+                         : `Two resistors \\(R_1 = ${p3.r1}\\,\\Omega\\) and \\(R_2 = ${p3.r2}\\,\\Omega\\) are connected in <strong>parallel</strong> to a \\(V = ${V3}\\,\\text{V}\\) power source. Find the equivalent resistance and the total current.`,
+      svg: svgParallel({ r1: p3.r1, r2: p3.r2, V: V3 }),
+      fields: [
+        { id: 'l3-rp', label: l==='id'?'Hambatan pengganti \\(R_p\\)':'Equivalent Resistance \\(R_p\\)', unit: 'Ω', answer: p3.rp,
+          hint: l==='id'?'Gunakan rumus cepat paralel: \\(R_p = (R_1 \\times R_2) / (R_1 + R_2)\\).':'Use the parallel formula: \\(R_p = (R_1 \\times R_2) / (R_1 + R_2)\\).' },
+        { id: 'l3-i', label: l==='id'?'Arus total \\(I\\)':'Total Current \\(I\\)', unit: 'A', answer: I3,
+          hint: l==='id'?'Gunakan hambatan pengganti: \\(I = \\dfrac{V}{R_p}\\).':'Use the equivalent resistance: \\(I = \\dfrac{V}{R_p}\\).' }
+      ]
+    },
+    {
+      n: 4, title: l==='id' ? 'Tantangan Campuran' : 'Mixed Circuit Challenge', boss: true, formula: T`\[R_{total} = R_p + R_3\]`,
+      question: l==='id' ? `Perhatikan gambar rangkaian. \\(R_1 = ${p4.r1}\\,\\Omega\\) dan \\(R_2 = ${p4.r2}\\,\\Omega\\) dirangkai <strong>paralel</strong>, lalu diserikan dengan \\(R_3 = ${r4_3}\\,\\Omega\\). Baterai memiliki tegangan \\(V = ${V4}\\,\\text{V}\\). Hitung hambatan total dan arus total.`
+                         : `Look at the circuit diagram. \\(R_1 = ${p4.r1}\\,\\Omega\\) and \\(R_2 = ${p4.r2}\\,\\Omega\\) are connected in <strong>parallel</strong>, and this combination is in <strong>series</strong> with \\(R_3 = ${r4_3}\\,\\Omega\\). The battery provides a voltage of \\(V = ${V4}\\,\\text{V}\\). Find the total resistance and the total current.`,
+      svg: svgMixed({ r1: p4.r1, r2: p4.r2, r3: r4_3, V: V4 }),
+      fields: [
+        { id: 'l4-rt', label: l==='id'?'Hambatan total \\(R_{total}\\)':'Total Resistance \\(R_{total}\\)', unit: 'Ω', answer: Rt4,
+          hint: l==='id'?'Cari \\(R_p\\) dari bagian paralel dulu, lalu tambahkan dengan \\(R_3\\).':'Find \\(R_p\\) for the parallel part first, then add \\(R_3\\).' },
         { id: 'l4-it', label: l==='id'?'Arus total \\(I_{total}\\)':'Total Current \\(I_{total}\\)', unit: 'A', answer: I4,
           hint: l==='id'?'Gunakan: \\(I_{total} = \\dfrac{V}{R_{total}}\\).':'Use: \\(I_{total} = \\dfrac{V}{R_{total}}\\).' }
       ]
@@ -322,7 +377,7 @@ function generateQuestions(l) {
 }
 
 /* =========================================================
-   RENDERING & FLOW
+   UI RENDERING & FLOW LOGIC
    ========================================================= */
 function fieldHTML(f) {
   return `
@@ -343,7 +398,7 @@ function levelHTML(l) {
         <div class="flex items-center gap-4">
           <span class="w-12 h-12 rounded-[1rem] ${l.boss ? 'bg-gold' : 'bg-maroon'} text-white grid place-items-center font-black text-xl shadow-lg">${l.n}</span>
           <div>
-            <p class="text-xs uppercase tracking-[.2em] ${l.boss ? 'text-gold-dark' : 'text-maroon'} font-extrabold">Level ${l.n}${l.boss ? (LANG==='id'?' · Boss Stage 🔥':' · Final Boss 🔥') : ''}</p>
+            <p class="text-xs uppercase tracking-[.2em] ${l.boss ? 'text-gold-dark' : 'text-maroon'} font-extrabold">Level ${l.n}${l.boss ? (LANG==='id'?' · Boss Terakhir 🔥':' · Final Boss 🔥') : ''}</p>
             <h2 class="text-2xl font-black tracking-tight text-ink mt-0.5">${l.title}</h2>
           </div>
         </div>
@@ -363,7 +418,7 @@ function levelHTML(l) {
         <p class="text-[1.1rem] leading-relaxed font-medium text-ink/90 bg-white">${l.question}</p>
         <div class="mt-6 grid ${l.fields.length > 1 ? 'sm:grid-cols-2' : ''} gap-5">${l.fields.map(fieldHTML).join('')}</div>
         <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4 pt-6 border-t border-sand">
-          <button id="check-${l.n}" class="check-btn inline-flex items-center justify-center gap-2 rounded-xl ${l.boss ? 'bg-gold text-ink' : 'bg-maroon text-white'} font-bold px-8 py-3.5 text-lg shadow-md disabled:opacity-50">
+          <button id="check-${l.n}" onclick="checkLevel(${l.n})" class="check-btn inline-flex items-center justify-center gap-2 rounded-xl ${l.boss ? 'bg-gold text-ink' : 'bg-maroon text-white'} font-bold px-8 py-3.5 text-lg shadow-md hover:scale-[1.02] active:scale-95 transition-transform disabled:opacity-50 cursor-pointer">
             ${LANG==='id'?'Cek Jawaban':'Check Answer'}
           </button>
           <p id="feedback-${l.n}" class="text-sm font-bold" aria-live="polite"></p>
@@ -373,10 +428,10 @@ function levelHTML(l) {
 }
 
 function unlock(n) {
-  const card = $('level-' + n);
+  const card = document.getElementById('level-' + n);
   card.classList.remove('is-locked'); card.classList.add('is-active', 'reveal');
   card.querySelector('.locked-note').classList.add('hidden'); card.querySelector('.level-body').classList.remove('hidden');
-  const st = $('status-' + n);
+  const st = document.getElementById('status-' + n);
   st.textContent = LANG==='id'?'Mengerjakan ✍️':'In Progress ✍️';
   st.className = 'shrink-0 text-xs font-bold rounded-full px-4 py-1.5 bg-gold-light text-gold-dark border border-gold/30';
   typeset(card);
@@ -384,74 +439,99 @@ function unlock(n) {
 }
 
 function checkLevel(n) {
-  const l = levels[n - 1], fb = $('feedback-' + n);
+  const l = levels[n - 1], fb = document.getElementById('feedback-' + n);
   if (l.solved) return;
   let empty = false, allCorrect = true;
 
   l.fields.forEach(f => {
-    const inp = $(f.id), hint =$(f.id + '-hint'), raw = inp.value.trim();
+    const inp = document.getElementById(f.id), hint = document.getElementById(f.id + '-hint'), raw = inp.value.trim();
     inp.classList.remove('is-correct', 'is-wrong');
     if (raw === '') { empty = true; allCorrect = false; return; }
     if (Number(raw) === f.answer) { inp.classList.add('is-correct'); hint.classList.add('hidden'); } 
     else { allCorrect = false; inp.classList.add('is-wrong'); hint.innerHTML = '💡 ' + f.hint; hint.classList.remove('hidden'); typeset(hint); }
   });
 
-  const anyWrong = l.fields.some(f => $(f.id).classList.contains('is-wrong'));
-  if (!anyWrong && empty) { fb.textContent = LANG==='id'?'Isi semua kotak dulu ya!':'Please fill all boxes!'; fb.className = 'text-sm font-bold text-ink/50'; return; }
+  const anyWrong = l.fields.some(f => document.getElementById(f.id).classList.contains('is-wrong'));
+  if (!anyWrong && empty) { fb.textContent = LANG==='id'?'Isi semua kotak dulu ya!':'Please fill all boxes first!'; fb.className = 'text-sm font-bold text-ink/50'; return; }
+  
   if (!allCorrect) {
-    state.wrong++; l.wrong++; $('wrong-count').textContent = state.wrong;
-    fb.textContent = LANG==='id'?'Belum tepat. Cek petunjuk di atas! (−5 poin) 🙈':'Not quite. Check the hint! (−5 points) 🙈';
+    state.wrong++; l.wrong++; document.getElementById('wrong-count').textContent = state.wrong;
+    fb.textContent = LANG==='id'?'Belum tepat. Cek petunjuk di atas! (−5 poin) 🙈':'Not quite. Check the hint above! (−5 points) 🙈';
     fb.className = 'text-sm font-bold text-maroon';
-    $('level-' + n).classList.remove('shake'); void $('level-' + n).offsetWidth; $('level-' + n).classList.add('shake');
+    const card = document.getElementById('level-' + n);
+    card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
     return;
   }
 
+  // Jika Benar
   l.solved = true; state.solvedCount++;
-  l.fields.forEach(f => $(f.id).disabled = true);$('check-' + n).disabled = true;
-  fb.innerHTML = n < levels.length ? (LANG==='id'?'🎉 <strong>Mantap!</strong> Lanjut.':'🎉 <strong>Correct!</strong> Next.') : (LANG==='id'?'🏆 <strong>Luar biasa!</strong> Tamat.':'🏆 <strong>Amazing!</strong> Finished.');
+  l.fields.forEach(f => document.getElementById(f.id).disabled = true); document.getElementById('check-' + n).disabled = true;
+  fb.innerHTML = n < levels.length ? (LANG==='id'?'🎉 <strong>Mantap!</strong> Lanjut.':'🎉 <strong>Correct!</strong> Next level unlocked.') : (LANG==='id'?'🏆 <strong>Luar biasa!</strong> Tamat.':'🏆 <strong>Amazing!</strong> You beat the Final Boss.');
   fb.className = 'text-sm font-bold text-green-dark';
   
-  $('level-' + n).classList.remove('is-active');
-  const st = $('status-' + n); st.textContent = '✓ ' + (LANG==='id'?'Tuntas':'Done'); st.className = 'shrink-0 text-xs font-bold rounded-full px-4 py-1.5 bg-green text-white shadow-sm';
-  $('progress-bar').style.width = (state.solvedCount / levels.length * 100) + '\%';$('progress-text').textContent = state.solvedCount + '/' + levels.length;
+  document.getElementById('level-' + n).classList.remove('is-active');
+  const st = document.getElementById('status-' + n); st.textContent = '✓ ' + (LANG==='id'?'Tuntas':'Done'); st.className = 'shrink-0 text-xs font-bold rounded-full px-4 py-1.5 bg-green text-white shadow-sm';
+  document.getElementById('progress-bar').style.width = (state.solvedCount / levels.length * 100) + '%';
+  document.getElementById('progress-text').textContent = state.solvedCount + '/' + levels.length;
 
   if (n < levels.length) setTimeout(() => unlock(n + 1), 800); else setTimeout(finish, 1200);
 }
 
 function start() {
   levels = generateQuestions(LANG);
-  $('levels').innerHTML = levels.map(levelHTML).join('');
+  document.getElementById('levels').innerHTML = levels.map(levelHTML).join('');
+  
+  // Attach Enter Key listeners
   levels.forEach(l => {
-    $('check-' + l.n).addEventListener('click', () => checkLevel(l.n));
     l.fields.forEach(f => {
-      $(f.id).addEventListener('keydown', e => { if (e.key === 'Enter') checkLevel(l.n); });$(f.id).addEventListener('input', e => e.target.classList.remove('is-correct', 'is-wrong'));
+      document.getElementById(f.id).addEventListener('keydown', e => { if (e.key === 'Enter') checkLevel(l.n); });
+      document.getElementById(f.id).addEventListener('input', e => e.target.classList.remove('is-correct', 'is-wrong'));
     });
   });
 
-  $('start-screen').classList.add('hidden'); $('levels').classList.remove('hidden');$('hud').classList.remove('hidden'); $('hud').classList.add('flex');$('progress-text').textContent = '0/' + levels.length;
-  state.startTime = Date.now(); state.timerId = setInterval(() => {
+  document.getElementById('start-screen').classList.add('hidden'); 
+  document.getElementById('levels').classList.remove('hidden');
+  document.getElementById('hud').classList.remove('hidden'); 
+  document.getElementById('hud').classList.add('flex');
+  document.getElementById('progress-text').textContent = '0/' + levels.length;
+  
+  state.startTime = Date.now(); 
+  state.timerId = setInterval(() => {
     const s = Math.floor((Date.now() - state.startTime) / 1000);
-    $('timer').textContent = fmt(s); if (s >= 45 * 60)$('timer-pill').classList.replace('bg-maroon', 'bg-ink');
+    document.getElementById('timer').textContent = fmt(s); 
+    if (s >= 45 * 60) document.getElementById('timer-pill').classList.replace('bg-maroon', 'bg-ink');
   }, 1000);
+  
   unlock(1);
 }
 
 function finish() {
   clearInterval(state.timerId);
   const secs = Math.floor((Date.now() - state.startTime) / 1000), score = Math.max(0, 100 - state.wrong * 5);
-  $('levels').classList.add('hidden');$('summary').classList.remove('hidden');
-  $('sum-time').textContent = fmt(secs);$('timer').textContent = fmt(secs);
-  $('sum-score').textContent = score; $('sum-wrong').textContent = state.wrong;
+  
+  document.getElementById('levels').classList.add('hidden'); 
+  document.getElementById('summary').classList.remove('hidden');
+  document.getElementById('sum-time').textContent = fmt(secs); 
+  document.getElementById('timer').textContent = fmt(secs);
+  document.getElementById('sum-score').textContent = score; 
+  document.getElementById('sum-wrong').textContent = state.wrong;
 
   let title, msg;
-  if (score >= 90)      { title = LANG==='id'?'Jenius! 🌟':'Genius! 🌟'; msg = LANG==='id'?'Pemahamanmu sangat luar biasa.':'Your understanding is excellent.'; }
-  else if (score >= 70) { title = LANG==='id'?'Bagus! 👍':'Good Job! 👍'; msg = LANG==='id'?'Sedikit lebih teliti lagi pasti sempurna.':'A bit more practice and you will be perfect.'; }
-  else                  { title = LANG==='id'?'Semangat! 💪':'Keep It Up! 💪'; msg = LANG==='id'?'Terus berlatih ya.':'Keep practicing.'; }
-  $('summary-title').textContent = title; $('summary-msg').textContent = msg;
+  if (score >= 90)      { title = LANG==='id'?'Jenius! 🌟':'Genius! 🌟'; msg = LANG==='id'?'Pemahamanmu sangat luar biasa.':'Your understanding of the concepts is excellent.'; }
+  else if (score >= 70) { title = LANG==='id'?'Bagus! 👍':'Good Job! 👍'; msg = LANG==='id'?'Sedikit lebih teliti lagi pasti sempurna.':'You understand the main ideas. A bit more practice and you will be perfect.'; }
+  else                  { title = LANG==='id'?'Semangat! 💪':'Keep It Up! 💪'; msg = LANG==='id'?'Terus berlatih untuk menguatkan insting fisikamu.':'Keep practicing to strengthen your physics intuition.'; }
+  document.getElementById('summary-title').textContent = title; 
+  document.getElementById('summary-msg').textContent = msg;
+
+  // Restore Summary Table Breakdown
+  document.getElementById('sum-table').innerHTML = levels.map(l => `
+    <tr>
+      <td class="px-5 py-3 text-ink/80">Level ${l.n} · ${l.title}</td>
+      <td class="px-5 py-3 text-right tabular-nums ${l.wrong > 0 ? 'text-maroon font-bold' : 'text-green-dark'}">${l.wrong}</td>
+    </tr>`).join('');
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
-$('start-btn').addEventListener('click', start);
 </script>
 </body>
 </html>
