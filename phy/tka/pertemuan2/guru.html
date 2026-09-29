@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Guru – Pertemuan 2</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] .chev { transform: rotate(90deg); }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+<!-- NAV -->
+<nav class="sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-5xl mx-auto px-4 py-3 flex items-center gap-2 overflow-x-auto text-sm whitespace-nowrap">
+    <span class="font-bold text-slate-900 mr-2">Panduan P2</span>
+    <a href="#alur" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200">Alur Waktu</a>
+    <a href="#slide" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200">Kunci Slide</a>
+    <a href="#ws1" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200">Worksheet 1</a>
+    <a href="#ws2" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200">Worksheet 2</a>
+    <a href="#rubrik" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200">Penskoran</a>
+    <a href="#miskonsepsi" class="px-3 py-1 rounded-full bg-red-100 text-red-700 hover:bg-red-200">Miskonsepsi</a>
+  </div>
+</nav>
+
+<main class="max-w-5xl mx-auto px-4 py-6 space-y-8">
+
+  <!-- HEADER -->
+  <header class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6">
+    <p class="text-xs uppercase tracking-widest text-blue-600 font-semibold">Panduan Guru · Cheat Sheet</p>
+    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mt-1">TKA Fisika – Pertemuan 2: Gerak Parabola &amp; Gerak Melingkar Beraturan</h1>
+    <div class="flex flex-wrap gap-2 mt-4 text-xs font-semibold">
+      <span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">⏱ 90 menit</span>
+      <span class="px-2.5 py-1 rounded-full bg-blue-100 text-blue-800">Level Kognitif 3</span>
+      <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">PGK</span>
+      <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800">Matriks B/S</span>
+    </div>
+    <div class="grid sm:grid-cols-3 gap-3 mt-5 text-sm">
+      <div class="rounded-xl bg-slate-50 border border-slate-200 p-3"><p class="font-semibold">Bahan</p><p class="text-slate-600">presentasi_siswa, worksheet_drilling (cetak 1/siswa), panduan ini</p></div>
+      <div class="rounded-xl bg-slate-50 border border-slate-200 p-3"><p class="font-semibold">Target analisis</p><p class="text-slate-600">Menelaah hubungan \(\theta\)–\(R\)–\(T\) dan \(r\)–\(\omega\)–\(\mu_s\)</p></div>
+      <div class="rounded-xl bg-slate-50 border border-slate-200 p-3"><p class="font-semibold">Target evaluasi</p><p class="text-slate-600">Menilai kondisi aman/tidak aman & kebenaran pernyataan</p></div>
+    </div>
+  </header>
+
+  <!-- ALUR WAKTU -->
+  <section id="alur" class="scroll-mt-20">
+    <h2 class="text-xl font-bold text-slate-900 mb-3">Alur Waktu</h2>
+    <div class="overflow-x-auto bg-white rounded-2xl border border-slate-200">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-left text-slate-600">
+          <tr><th class="p-3 w-24">Menit</th><th class="p-3">Fase</th><th class="p-3">Aktivitas Guru</th><th class="p-3">Aktivitas Siswa</th></tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 align-top">
+          <tr>
+            <td class="p-3 font-mono font-semibold">0–15</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-violet-100 text-violet-800 font-semibold text-xs">Pemantik</span><p class="text-xs text-slate-500 mt-1">Slide 1–3</p></td>
+            <td class="p-3">Tampilkan dua lintasan (30° vs 60°), tekan <i>Simulasikan</i> <b>setelah</b> siswa memprediksi. Lanjut meja putar: minta voting koin A/B sebelum membuka kunci.</td>
+            <td class="p-3">Prediksi, voting, beri alasan berbasis besaran (bukan intuisi saja).</td>
+          </tr>
+          <tr>
+            <td class="p-3 font-mono font-semibold">15–45</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-semibold text-xs">Analisis Interaktif</span><p class="text-xs text-slate-500 mt-1">Slide 4</p></td>
+            <td class="p-3">Pandu penurunan \(\omega_{maks}\). Tegaskan: tanya dulu "gaya apa yang menjadi gaya sentripetal?". Konversi rpm → rad/s. Buka <i>Tampilkan Analisis</i>.</td>
+            <td class="p-3">Diskusi berpasangan, pilih semua opsi yang benar, bandingkan dengan hasil analisis.</td>
+          </tr>
+          <tr>
+            <td class="p-3 font-mono font-semibold">45–75</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold text-xs">Drilling Mandiri</span><p class="text-xs text-slate-500 mt-1">Worksheet</p></td>
+            <td class="p-3">Berkeliling; cek apakah siswa mengonversi satuan sebelum membandingkan dan memisahkan sumbu X/Y.</td>
+            <td class="p-3">Mengerjakan Soal 1 (PGK) dan Soal 2 (Matriks B/S) secara individu.</td>
+          </tr>
+          <tr>
+            <td class="p-3 font-mono font-semibold">75–90</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-semibold text-xs">Review Matriks</span><p class="text-xs text-slate-500 mt-1">Worksheet Soal 2</p></td>
+            <td class="p-3">Bahas per pernyataan; fokus pada Pernyataan 2 (jebakan) dan 3 (miskonsepsi arah kecepatan).</td>
+            <td class="p-3">Koreksi silang, tulis alasan untuk setiap pernyataan Salah.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- KUNCI SLIDE -->
+  <section id="slide" class="scroll-mt-20 space-y-4">
+    <h2 class="text-xl font-bold text-slate-900">Kunci &amp; Penyelesaian – Presentasi</h2>
+
+    <details class="bg-white rounded-2xl border border-slate-200 p-5" open>
+      <summary class="flex items-center justify-between"><span class="font-semibold">Slide 2 · Pemantik Parabola (30° vs 60°)</span><span class="chev transition text-slate-400">▶</span></summary>
+      <div class="mt-3 text-sm leading-relaxed space-y-2">
+        <p>Dengan kelajuan awal \(v_0\) sama dan titik awal-jatuh sejajar:</p>
+        $$R = \frac{v_0^2 \sin 2\theta}{g}, \qquad \sin(2\cdot 30^\circ) = \sin 60^\circ = \sin 120^\circ = \sin(2\cdot 60^\circ)$$
+        <p>→ Jangkauan sama untuk pasangan sudut komplementer \(\theta\) dan \(90^\circ - \theta\).</p>
+        $$T = \frac{2 v_0 \sin\theta}{g} \;\Rightarrow\; \frac{T_{60}}{T_{30}} = \frac{\sin 60^\circ}{\sin 30^\circ} = \sqrt{3} \approx 1{,}73$$
+        $$H = \frac{v_0^2 \sin^2\theta}{2g} \;\Rightarrow\; \frac{H_{60}}{H_{30}} = \frac{3/4}{1/4} = 3$$
+        <p><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Jawaban</span> Lintasan 60° lebih lama di udara (≈1,73×) dan 3× lebih tinggi. Komponen \(v_x\) lintasan 60° lebih kecil, tetapi waktunya lebih lama — kedua efek saling mengimbangi.</p>
+      </div>
+    </details>
+
+    <details class="bg-white rounded-2xl border border-slate-200 p-5">
+      <summary class="flex items-center justify-between"><span class="font-semibold">Slide 3 · Pemantik Meja Putar (koin A vs B)</span><span class="chev transition text-slate-400">▶</span></summary>
+      <div class="mt-3 text-sm leading-relaxed space-y-2">
+        $$f_s = m\omega^2 r \le \mu_s m g \;\Rightarrow\; \omega_{maks} = \sqrt{\frac{\mu_s g}{r}}$$
+        <p>\(r_A = 2r_B \Rightarrow \omega_{maks,A} = \omega_{maks,B}/\sqrt{2}\). Pada ω yang sama, koin A membutuhkan gaya sentripetal 2× lebih besar.</p>
+        <p><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Jawaban</span> Koin A (di tepi) terlempar lebih dulu.</p>
+      </div>
+    </details>
+
+    <details class="bg-white rounded-2xl border border-slate-200 p-5" open>
+      <summary class="flex items-center justify-between"><span class="font-semibold">Slide 4 · Soal PGK Koin di Piringan</span><span class="chev transition text-slate-400">▶</span></summary>
+      <div class="mt-3 text-sm leading-relaxed space-y-2">
+        <p class="text-slate-600">Data: \(r = 20\text{ cm} = 0{,}2\text{ m}\), \(\mu_s = 0{,}5\), \(g = 10\text{ m/s}^2\).</p>
+        <p><b>Langkah 1 – Identifikasi gaya.</b> Arah mendatar hanya ada gaya gesek statis → ia yang berperan sebagai gaya sentripetal: \(f_s = m\omega^2 r\).</p>
+        <p><b>Langkah 2 – Syarat diam.</b> \(N = mg\), \(f_s \le \mu_s N\):</p>
+        $$m\omega^2 r \le \mu_s m g \;\Rightarrow\; \omega \le \sqrt{\frac{\mu_s g}{r}} = \sqrt{\frac{0{,}5 \times 10}{0{,}2}} = \sqrt{25} = 5 \text{ rad/s}$$
+        <p><b>Langkah 3 – Konversi opsi C.</b> \(60 \text{ rpm} = \dfrac{60 \times 2\pi}{60\text{ s}} = 2\pi \approx 6{,}28\) rad/s.</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm mt-2 border border-slate-200 rounded-lg">
+            <thead class="bg-slate-50"><tr><th class="p-2 text-left">Opsi</th><th class="p-2 text-left">ω (rad/s)</th><th class="p-2 text-left">Status</th></tr></thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr><td class="p-2">A</td><td class="p-2">2,0</td><td class="p-2"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Diam ✔</span></td></tr>
+              <tr><td class="p-2">B</td><td class="p-2">4,8</td><td class="p-2"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Diam ✔</span></td></tr>
+              <tr><td class="p-2">C</td><td class="p-2">60 rpm ≈ 6,28</td><td class="p-2"><span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold">Terlempar</span></td></tr>
+              <tr><td class="p-2">D</td><td class="p-2">4,0</td><td class="p-2"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Diam ✔</span></td></tr>
+              <tr><td class="p-2">E</td><td class="p-2">5,5</td><td class="p-2"><span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold">Terlempar</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Kunci</span> <b>A, B, D</b>. Opsi pengecoh C menguji konversi satuan; opsi B (4,8) menguji ketelitian di dekat batas.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- WORKSHEET SOAL 1 -->
+  <section id="ws1" class="scroll-mt-20">
+    <h2 class="text-xl font-bold text-slate-900 mb-3">Worksheet Soal 1 · Sepeda di Tikungan Datar <span class="ml-2 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold align-middle">PGK</span></h2>
+    <div class="bg-white rounded-2xl border border-slate-200 p-5 text-sm leading-relaxed space-y-3">
+      <p class="text-slate-600">Data: \(R = 20\text{ m}\), \(\mu_s = 0{,}5\), \(g = 10\text{ m/s}^2\), jalan datar.</p>
+
+      <p><b>Langkah 1 – Diagram gaya.</b> Vertikal: \(N\) ke atas, \(mg\) ke bawah. Mendatar (menuju pusat tikungan): hanya gaya gesek statis \(f_s\).</p>
+      $$\Sigma F_y = 0 \;\Rightarrow\; N = mg$$
+      <p><b>Langkah 2 – Hukum II Newton arah radial.</b> Resultan gaya ke pusat = gaya sentripetal:</p>
+      $$f_s = \frac{m v^2}{R}$$
+      <p><b>Langkah 3 – Syarat tidak tergelincir.</b> Gesekan statis punya batas: \(f_s \le \mu_s N = \mu_s m g\).</p>
+      $$\frac{m v^2}{R} \le \mu_s m g \;\Rightarrow\; v^2 \le \mu_s g R \;\Rightarrow\; \boxed{v_{maks} = \sqrt{\mu_s g R}}$$
+      <p><b>Langkah 4 – Substitusi.</b></p>
+      $$v_{maks} = \sqrt{0{,}5 \times 10 \times 20} = \sqrt{100} = 10 \text{ m/s}$$
+      <p><b>Langkah 5 – Konversi ke km/jam.</b> \(1 \text{ m/s} = \dfrac{3600}{1000} = 3{,}6\) km/jam.</p>
+      $$v_{maks} = 10 \times 3{,}6 = 36 \text{ km/jam}$$
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border border-slate-200">
+          <thead class="bg-slate-50"><tr><th class="p-2 text-left">Opsi</th><th class="p-2 text-left">Nilai</th><th class="p-2 text-left">Dalam km/jam</th><th class="p-2 text-left">Dibanding 36 km/jam</th></tr></thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr><td class="p-2">A</td><td class="p-2">8 m/s</td><td class="p-2">28,8</td><td class="p-2"><span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">Aman</span></td></tr>
+            <tr><td class="p-2">B</td><td class="p-2">32 km/jam</td><td class="p-2">32</td><td class="p-2"><span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">Aman</span></td></tr>
+            <tr><td class="p-2">C</td><td class="p-2">40 km/jam</td><td class="p-2">40</td><td class="p-2"><span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold">Tergelincir ✔</span></td></tr>
+            <tr><td class="p-2">D</td><td class="p-2">12 m/s</td><td class="p-2">43,2</td><td class="p-2"><span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold">Tergelincir ✔</span></td></tr>
+            <tr><td class="p-2">E</td><td class="p-2">54 km/jam</td><td class="p-2">54 (= 15 m/s)</td><td class="p-2"><span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold">Tergelincir ✔</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Kunci</span> <b>C, D, E</b>.</p>
+      <p class="rounded-lg bg-blue-50 border border-blue-200 p-3"><b>Pertanyaan pendalaman (Level 3):</b> "Jika pesepeda membawa tas berat, apakah batas kecepatannya berubah?" → Tidak; \(m\) saling menghapus. "Jika jalan basah (μ turun)?" → \(v_{maks}\) turun sebanding \(\sqrt{\mu_s}\).</p>
+    </div>
+  </section>
+
+  <!-- WORKSHEET SOAL 2 -->
+  <section id="ws2" class="scroll-mt-20">
+    <h2 class="text-xl font-bold text-slate-900 mb-3">Worksheet Soal 2 · Benda A dan B <span class="ml-2 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold align-middle">Matriks B/S</span></h2>
+    <div class="bg-white rounded-2xl border border-slate-200 p-5 text-sm leading-relaxed space-y-3">
+      <p class="text-slate-600">Data: \(h = 1{,}25\text{ m}\), \(v_{0x} = 10\text{ m/s}\), \(v_{0y} = 0\), \(g = 10\text{ m/s}^2\), B mula-mula di \(x = 5\text{ m}\) dari kaki meja.</p>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="rounded-xl border border-slate-200 p-4">
+          <p class="font-semibold text-slate-900">Sumbu Y – Jatuh bebas (GLBB)</p>
+          $$h = v_{0y}t + \tfrac12 g t^2 = \tfrac12 g t^2$$
+          $$t = \sqrt{\frac{2h}{g}} = \sqrt{\frac{2(1{,}25)}{10}} = \sqrt{0{,}25} = 0{,}5\text{ s}$$
+          $$v_y = g t = 10(0{,}5) = 5\text{ m/s (ke bawah)}$$
+        </div>
+        <div class="rounded-xl border border-slate-200 p-4">
+          <p class="font-semibold text-slate-900">Sumbu X – GLB</p>
+          $$x = v_{0x}\, t = 10 \times 0{,}5 = 5\text{ m}$$
+          $$v_x = v_{0x} = 10\text{ m/s (konstan)}$$
+          <p class="text-slate-600">→ A menyentuh lantai tepat di posisi awal B.</p>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div class="rounded-xl border border-slate-200 p-4">
+          <p><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">P1 · BENAR</span> \(t = 0{,}5\) s (dari analisis sumbu Y).</p>
+        </div>
+        <div class="rounded-xl border border-slate-200 p-4 space-y-2">
+          <p><span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold">P2 · SALAH</span> A mendarat di \(x = 5\) m, yaitu posisi awal B. Agar bertemu tepat saat A menyentuh lantai, B cukup <b>tetap diam</b> (\(v_B = 0\)).</p>
+          <p>Jika B bergerak 10 m/s ke arah meja: \(x_B = 5 - 10t\). Pada \(t = 0{,}5\) s, \(x_B = 0\) (di kaki meja), sedangkan \(x_A = 5\) m → terpisah 5 m.</p>
+          <p class="text-slate-500">Catatan: posisi mendatar keduanya memang sama pada \(t = 0{,}25\) s (\(x = 2{,}5\) m), tetapi saat itu A masih di ketinggian \(1{,}25 - 5(0{,}25)^2 \approx 0{,}94\) m — bukan di lantai.</p>
+        </div>
+        <div class="rounded-xl border border-slate-200 p-4 space-y-2">
+          <p><span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-semibold">P3 · SALAH</span> \(v_x\) tetap 10 m/s hingga menyentuh lantai, sehingga kecepatan berarah miring:</p>
+          $$v = \sqrt{v_x^2 + v_y^2} = \sqrt{10^2 + 5^2} = \sqrt{125} = 5\sqrt5 \approx 11{,}2\text{ m/s}$$
+          $$\tan\alpha = \frac{v_y}{v_x} = \frac{5}{10} = 0{,}5 \;\Rightarrow\; \alpha \approx 26{,}6^\circ \text{ di bawah horizontal}$$
+        </div>
+      </div>
+      <p><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Kunci Matriks</span> <b>1 – Benar · 2 – Salah · 3 – Salah</b></p>
+    </div>
+  </section>
+
+  <!-- PENSKORAN -->
+  <section id="rubrik" class="scroll-mt-20">
+    <h2 class="text-xl font-bold text-slate-900 mb-3">Saran Penskoran Latihan</h2>
+    <div class="grid sm:grid-cols-2 gap-4 text-sm">
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <p class="font-semibold mb-2"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold mr-1">PGK</span> Soal 1 &amp; Slide 4</p>
+        <ul class="space-y-1 text-slate-700">
+          <li><b>2</b> – semua opsi benar dipilih, tanpa opsi salah</li>
+          <li><b>1</b> – tepat satu kekeliruan (satu terlewat <i>atau</i> satu salah pilih)</li>
+          <li><b>0</b> – dua kekeliruan atau lebih</li>
+        </ul>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-5">
+        <p class="font-semibold mb-2"><span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold mr-1">Matriks</span> Soal 2</p>
+        <ul class="space-y-1 text-slate-700">
+          <li><b>1</b> poin per baris yang tepat (maks. 3)</li>
+          <li><b>+1</b> bonus bila alasan P2 atau P3 ditulis benar secara fisis</li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-xs text-slate-500 mt-2">Skema ini untuk latihan kelas agar umpan balik lebih rinci; sesuaikan dengan ketentuan penskoran resmi yang berlaku bila ada.</p>
+  </section>
+
+  <!-- MISKONSEPSI -->
+  <section id="miskonsepsi" class="scroll-mt-20">
+    <h2 class="text-xl font-bold text-slate-900 mb-3">Waspada Miskonsepsi</h2>
+    <div class="space-y-3 text-sm">
+      <div class="bg-white rounded-2xl border-l-4 border-red-500 border-y border-r border-slate-200 p-5">
+        <span class="px-2.5 py-1 rounded-full bg-red-600 text-white text-xs font-bold">⚠ Gerak Melingkar</span>
+        <p class="mt-2 font-semibold">"Gaya sentripetal adalah gaya jenis baru yang harus ditambahkan di diagram gaya."</p>
+        <p class="mt-1 text-slate-700">Gaya sentripetal adalah <b>resultan</b> gaya-gaya yang mengarah ke pusat, bukan gaya tambahan. Pada koin di piringan dan sepeda di tikungan datar, perannya dibawakan oleh <b>gaya gesek statis</b>. Contoh lain: tegangan tali (bola diputar), gaya gravitasi (satelit).</p>
+        <p class="mt-2 text-slate-500"><b>Strategi:</b> larang menggambar panah berlabel "F<sub>s</sub> sentripetal" di diagram gaya; minta siswa menunjuk gaya nyata mana yang mengarah ke pusat.</p>
+      </div>
+      <div class="bg-white rounded-2xl border-l-4 border-red-500 border-y border-r border-slate-200 p-5">
+        <span class="px-2.5 py-1 rounded-full bg-red-600 text-white text-xs font-bold">⚠ Gerak Parabola</span>
+        <p class="mt-2 font-semibold">"Di titik tertinggi, kecepatan benda nol."</p>
+        <p class="mt-1 text-slate-700">Hanya \(v_y = 0\); komponen \(v_x = v_0\cos\theta\) tetap konstan sepanjang lintasan. Kecepatan di puncak = \(v_0\cos\theta\) (mendatar), dan percepatan tetap \(g\) ke bawah (tidak nol).</p>
+        <p class="mt-2 text-slate-500"><b>Strategi:</b> hubungkan dengan Pernyataan 3 Soal 2 — \(v_x\) yang konstan juga membuat kecepatan saat mendarat tidak pernah murni vertikal.</p>
+      </div>
+      <div class="bg-white rounded-2xl border-l-4 border-red-300 border-y border-r border-slate-200 p-5">
+        <span class="px-2.5 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold">Terkait</span>
+        <ul class="mt-2 space-y-1 text-slate-700 list-disc ml-5">
+          <li>"Benda lebih berat lebih mudah tergelincir di tikungan" → batas \(v_{maks}\) dan \(\omega_{maks}\) tidak bergantung massa.</li>
+          <li>"Sudut elevasi lebih besar selalu lebih jauh" → jangkauan maksimum di 45°; 30° dan 60° menghasilkan jangkauan sama.</li>
+          <li>Membandingkan opsi tanpa menyamakan satuan (m/s vs km/jam, rpm vs rad/s).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-center text-xs text-slate-400 pb-6">Panduan Guru · TKA Fisika Pertemuan 2</footer>
+</main>
+</body>
+</html>

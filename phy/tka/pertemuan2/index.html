@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TKA Fisika – Pertemuan 2</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .slide { display: none; }
+  .slide.active { display: flex; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .turntable {
+    transform-box: view-box;
+    transform-origin: 200px 200px;
+    animation: spin var(--dur, 6s) linear infinite;
+  }
+  .turntable.paused { animation-play-state: paused; }
+  .opt input:checked + .optbox { border-color: #2563eb; background: #eff6ff; }
+  .opt input:checked + .optbox .tick { background: #2563eb; border-color: #2563eb; color: #fff; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen overflow-hidden font-sans antialiased">
+
+<main id="deck" class="h-full w-full">
+
+  <!-- SLIDE 1 : JUDUL -->
+  <section class="slide active h-full w-full flex-col items-center justify-center px-12 pb-24 text-center">
+    <p class="text-xl tracking-[0.3em] uppercase text-blue-600 font-semibold mb-6">Pertemuan 2 · Persiapan TKA</p>
+    <h1 class="text-6xl md:text-7xl font-extrabold leading-tight text-slate-900">TKA Fisika</h1>
+    <h2 class="text-4xl md:text-5xl font-bold text-slate-700 mt-4">Analisis Gerak Parabola &amp; Melingkar</h2>
+    <div class="mt-12 flex flex-wrap gap-4 justify-center text-xl">
+      <span class="px-5 py-2 rounded-full bg-blue-100 text-blue-800 font-semibold">Level Kognitif 3 · Analisis &amp; Evaluasi</span>
+      <span class="px-5 py-2 rounded-full bg-emerald-100 text-emerald-800 font-semibold">Pilihan Ganda Kompleks</span>
+      <span class="px-5 py-2 rounded-full bg-amber-100 text-amber-800 font-semibold">Matriks Benar/Salah</span>
+    </div>
+    <p class="mt-14 text-lg text-slate-500">Gunakan tombol ◀ ▶ atau tombol panah keyboard untuk berpindah slide</p>
+  </section>
+
+  <!-- SLIDE 2 : PEMANTIK PARABOLA -->
+  <section class="slide h-full w-full flex-col justify-center px-12 pb-24">
+    <p class="text-lg uppercase tracking-widest text-blue-600 font-semibold">Pemantik 1 · Gerak Parabola</p>
+    <h2 class="text-4xl font-bold text-slate-900 mt-1 mb-6">Dua sudut tembak, satu titik jatuh</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
+      <div class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+        <svg viewBox="0 0 600 420" class="w-full h-auto" aria-label="Dua lintasan parabola dengan sudut 30 dan 60 derajat">
+          <!-- tanah -->
+          <line x1="40" y1="380" x2="560" y2="380" stroke="#334155" stroke-width="3"/>
+          <g stroke="#cbd5e1" stroke-width="2">
+            <line x1="60" y1="380" x2="48" y2="394"/><line x1="100" y1="380" x2="88" y2="394"/>
+            <line x1="140" y1="380" x2="128" y2="394"/><line x1="460" y1="380" x2="448" y2="394"/>
+            <line x1="500" y1="380" x2="488" y2="394"/><line x1="540" y1="380" x2="528" y2="394"/>
+          </g>
+          <!-- lintasan: kurva Bezier kuadrat = parabola eksak -->
+          <path d="M100 380 Q300 33.6 500 380" fill="none" stroke="#dc2626" stroke-width="4"/>
+          <path d="M100 380 Q300 264.5 500 380" fill="none" stroke="#2563eb" stroke-width="4"/>
+          <!-- titik puncak -->
+          <line x1="300" y1="206.8" x2="300" y2="380" stroke="#dc2626" stroke-dasharray="6 6" stroke-width="1.5"/>
+          <line x1="300" y1="322.3" x2="300" y2="380" stroke="#2563eb" stroke-dasharray="6 6" stroke-width="1.5" transform="translate(8 0)"/>
+          <!-- busur sudut -->
+          <path d="M160 380 A60 60 0 0 0 151.96 350" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+          <path d="M140 380 A40 40 0 0 0 120 345.36" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+          <text x="166" y="366" font-size="20" fill="#2563eb" font-weight="700">30°</text>
+          <text x="108" y="330" font-size="20" fill="#dc2626" font-weight="700">60°</text>
+          <!-- label lintasan -->
+          <text x="318" y="195" font-size="20" fill="#dc2626" font-weight="700">θ = 60°</text>
+          <text x="318" y="312" font-size="20" fill="#2563eb" font-weight="700">θ = 30°</text>
+          <!-- titik awal dan jatuh -->
+          <circle cx="100" cy="380" r="8" fill="#0f172a"/>
+          <circle cx="500" cy="380" r="8" fill="#0f172a"/>
+          <text x="70" y="410" font-size="18" fill="#0f172a">Titik awal</text>
+          <text x="460" y="410" font-size="18" fill="#0f172a">Titik jatuh</text>
+          <text x="210" y="410" font-size="16" fill="#64748b">(kelajuan awal v₀ sama)</text>
+          <!-- bola simulasi -->
+          <circle id="ball60" cx="100" cy="380" r="11" fill="#dc2626" stroke="#fff" stroke-width="2"/>
+          <circle id="ball30" cx="100" cy="380" r="11" fill="#2563eb" stroke="#fff" stroke-width="2"/>
+          <text id="simClock" x="580" y="40" text-anchor="end" font-size="20" fill="#475569" font-family="monospace"></text>
+        </svg>
+      </div>
+      <div class="lg:col-span-2 space-y-6">
+        <div class="bg-white border-l-8 border-blue-500 rounded-xl p-6 shadow-sm">
+          <p class="text-2xl font-semibold leading-snug">Mengapa sudut tembak yang berbeda bisa menjangkau <span class="text-blue-700">jarak mendatar yang sama</span>?</p>
+        </div>
+        <div class="bg-white border-l-8 border-red-500 rounded-xl p-6 shadow-sm">
+          <p class="text-2xl font-semibold leading-snug">Benda mana yang <span class="text-red-600">lebih lama berada di udara</span>?</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button onclick="simulate()" class="px-6 py-3 text-xl rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-700">▶ Simulasikan</button>
+          <button onclick="toggle('key2')" class="px-6 py-3 text-xl rounded-xl border-2 border-slate-300 font-semibold hover:bg-slate-100">Kunci Diskusi</button>
+        </div>
+        <div id="key2" class="hidden bg-emerald-50 border border-emerald-300 rounded-xl p-5 text-xl leading-relaxed">
+          <p>Jangkauan <b>R = v₀² sin 2θ / g</b>, dan sin 60° = sin 120° → R sama untuk θ dan (90° − θ).</p>
+          <p class="mt-2">Waktu terbang <b>T = 2v₀ sin θ / g</b> → sudut 60° lebih lama, T₆₀ : T₃₀ = √3 : 1 ≈ 1,73 : 1.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 : PEMANTIK MELINGKAR -->
+  <section class="slide h-full w-full flex-col justify-center px-12 pb-24">
+    <p class="text-lg uppercase tracking-widest text-blue-600 font-semibold">Pemantik 2 · Gerak Melingkar Beraturan</p>
+    <h2 class="text-4xl font-bold text-slate-900 mt-1 mb-6">Dua koin di atas meja putar</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-center">
+      <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-4 flex justify-center">
+        <svg viewBox="0 0 400 400" class="w-full max-w-md h-auto" aria-label="Piringan dilihat dari atas dengan koin A di tepi dan koin B di tengah jari-jari">
+          <g id="table" class="turntable" style="--dur:6s">
+            <circle cx="200" cy="200" r="180" fill="#1e293b"/>
+            <g fill="none" stroke="#334155" stroke-width="1.5">
+              <circle cx="200" cy="200" r="165"/><circle cx="200" cy="200" r="145"/>
+              <circle cx="200" cy="200" r="125"/><circle cx="200" cy="200" r="105"/>
+              <circle cx="200" cy="200" r="85"/><circle cx="200" cy="200" r="65"/>
+            </g>
+            <circle cx="200" cy="200" r="45" fill="#f59e0b"/>
+            <circle cx="200" cy="200" r="6" fill="#0f172a"/>
+            <!-- jari-jari -->
+            <line x1="200" y1="200" x2="360" y2="200" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="6 5"/>
+            <!-- koin -->
+            <circle cx="360" cy="200" r="15" fill="#fde047" stroke="#a16207" stroke-width="3"/>
+            <text x="360" y="206" text-anchor="middle" font-size="16" font-weight="800" fill="#713f12">A</text>
+            <circle cx="280" cy="200" r="15" fill="#fde047" stroke="#a16207" stroke-width="3"/>
+            <text x="280" y="206" text-anchor="middle" font-size="16" font-weight="800" fill="#713f12">B</text>
+          </g>
+          <text x="200" y="395" text-anchor="middle" font-size="14" fill="#475569">A: di tepi (r) · B: tengah jari-jari (r/2)</text>
+        </svg>
+      </div>
+      <div class="lg:col-span-3 space-y-6">
+        <div class="bg-white border-l-8 border-amber-500 rounded-xl p-6 shadow-sm">
+          <p class="text-3xl font-semibold leading-snug">Jika meja diputar <span class="text-amber-600">makin cepat</span>, koin mana yang akan terlempar lebih dulu? <span class="text-slate-500">Mengapa?</span></p>
+        </div>
+        <div>
+          <p class="text-lg text-slate-500 mb-2">Kecepatan putar:</p>
+          <div class="flex flex-wrap gap-3">
+            <button onclick="setSpeed(0)" class="spd px-5 py-3 text-xl rounded-xl border-2 border-slate-300 font-semibold hover:bg-slate-100">⏸ Diam</button>
+            <button onclick="setSpeed(8)" class="spd px-5 py-3 text-xl rounded-xl border-2 border-slate-300 font-semibold hover:bg-slate-100">Lambat</button>
+            <button onclick="setSpeed(3)" class="spd px-5 py-3 text-xl rounded-xl border-2 border-slate-300 font-semibold hover:bg-slate-100">Sedang</button>
+            <button onclick="setSpeed(0.9)" class="spd px-5 py-3 text-xl rounded-xl border-2 border-slate-300 font-semibold hover:bg-slate-100">Cepat</button>
+          </div>
+        </div>
+        <button onclick="toggle('key3')" class="px-6 py-3 text-xl rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-700">Kunci Diskusi</button>
+        <div id="key3" class="hidden bg-emerald-50 border border-emerald-300 rounded-xl p-5 text-xl leading-relaxed">
+          <p>Gaya sentripetal yang dibutuhkan: <b>F = m ω² r</b> — disediakan oleh <b>gaya gesek statis</b>, maksimum μₛ m g.</p>
+          <p class="mt-2">Koin diam selama ω ≤ √(μₛ g / r). Makin besar r, makin kecil ω batas → <b>koin A (di tepi) terlempar lebih dulu</b>.</p>
+          <p class="mt-2 text-slate-600">ω batas A = ω batas B / √2 ≈ 0,71 × ω batas B.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 : SOAL PGK -->
+  <section class="slide h-full w-full flex-col justify-center px-12 pb-24">
+    <div class="flex items-center gap-3">
+      <span class="px-4 py-1 rounded-full bg-emerald-100 text-emerald-800 text-lg font-bold">PGK · Jawaban benar lebih dari satu</span>
+      <span class="px-4 py-1 rounded-full bg-blue-100 text-blue-800 text-lg font-bold">Level 3</span>
+    </div>
+    <h2 class="text-4xl font-bold text-slate-900 mt-3 mb-4">Koin di atas piringan putar</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-6 text-2xl leading-relaxed shadow-sm">
+        <p>Sebuah koin diletakkan di atas piringan putar mendatar pada jarak <b>20 cm</b> dari sumbu putar. Koefisien gesek statis antara koin dan piringan <b>μₛ = 0,5</b> dan <b>g = 10 m/s²</b>. Piringan diputar dengan kecepatan sudut konstan ω.</p>
+        <p class="mt-5 font-semibold text-slate-900">Pilih <u>setiap</u> kecepatan sudut (ω) yang membuat koin <span class="text-blue-700">TETAP DIAM</span> (tidak terlempar) di atas piringan.</p>
+      </div>
+      <div class="lg:col-span-3 flex flex-col gap-3" id="options">
+        <!-- opsi diisi oleh JS -->
+      </div>
+    </div>
+    <div class="mt-6 flex gap-3">
+      <button onclick="showAnalysis()" class="px-7 py-3 text-xl rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700">Tampilkan Analisis</button>
+      <button onclick="resetPGK()" class="px-7 py-3 text-xl rounded-xl border-2 border-slate-300 font-semibold hover:bg-slate-100">Reset</button>
+    </div>
+
+    <!-- OVERLAY ANALISIS -->
+    <div id="overlay" class="hidden fixed inset-0 z-40 bg-slate-900/60 flex items-center justify-center p-8">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-full overflow-auto p-8">
+        <div class="flex justify-between items-start">
+          <h3 class="text-3xl font-bold text-slate-900">Analisis Jawaban</h3>
+          <button onclick="document.getElementById('overlay').classList.add('hidden')" class="text-3xl text-slate-400 hover:text-slate-700 leading-none">✕</button>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 mt-5">
+          <div class="text-xl leading-relaxed space-y-3">
+            <p class="font-semibold text-slate-700">1 · Gaya apa yang menyediakan gaya sentripetal?</p>
+            <p>Gaya gesek statis: <b>fₛ = m ω² r</b></p>
+            <p class="font-semibold text-slate-700">2 · Syarat koin tetap diam</p>
+            <p>fₛ ≤ μₛ m g &nbsp;⇒&nbsp; m ω² r ≤ μₛ m g</p>
+            <p>ω ≤ √(μₛ g / r) = √(0,5 × 10 / 0,2) = √25</p>
+            <p class="text-2xl font-bold text-blue-700 bg-blue-50 rounded-lg px-4 py-2 inline-block">ω<sub>maks</sub> = 5 rad/s</p>
+            <p class="text-lg text-slate-600">Catatan: massa koin saling menghapus → ω<sub>maks</sub> tidak bergantung massa. Konversi: 60 rpm = 60 × 2π / 60 = 2π ≈ 6,28 rad/s.</p>
+          </div>
+          <div>
+            <table class="w-full text-xl border-collapse">
+              <thead><tr class="text-left text-slate-500 border-b-2 border-slate-200"><th class="py-2">Opsi</th><th>ω (rad/s)</th><th>Status koin</th><th>Pilihanmu</th></tr></thead>
+              <tbody id="anaBody"></tbody>
+            </table>
+            <p class="mt-5 text-2xl font-bold">Kunci: <span class="text-emerald-700">A, B, dan D</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- NAVIGASI -->
+<nav class="fixed bottom-0 inset-x-0 z-30 flex items-center justify-between px-10 py-4 bg-white/90 backdrop-blur border-t border-slate-200">
+  <button id="prev" onclick="show(cur-1)" class="px-6 py-2 text-xl rounded-xl border-2 border-slate-300 font-semibold disabled:opacity-30 hover:bg-slate-100">◀ Sebelumnya</button>
+  <span id="counter" class="text-xl font-mono text-slate-500"></span>
+  <button id="next" onclick="show(cur+1)" class="px-6 py-2 text-xl rounded-xl bg-slate-900 text-white font-semibold disabled:opacity-30 hover:bg-slate-700">Berikutnya ▶</button>
+</nav>
+
+<script>
+  // ---------- Navigasi slide ----------
+  const slides = [...document.querySelectorAll('.slide')];
+  let cur = 0;
+  function show(n) {
+    cur = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === cur));
+    document.getElementById('counter').textContent = `${cur + 1} / ${slides.length}`;
+    document.getElementById('prev').disabled = cur === 0;
+    document.getElementById('next').disabled = cur === slides.length - 1;
+  }
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', 'PageDown'].includes(e.key)) show(cur + 1);
+    if (['ArrowLeft', 'PageUp'].includes(e.key)) show(cur - 1);
+    if (e.key === 'Escape') document.getElementById('overlay').classList.add('hidden');
+  });
+  function toggle(id) { document.getElementById(id).classList.toggle('hidden'); }
+  show(0);
+
+  // ---------- Slide 2: simulasi parabola ----------
+  // x = 100 + 400 s, y = 380 - 4H s(1-s), s = t/T ; T60/T30 = √3
+  const proj = [
+    { el: document.getElementById('ball30'), T: 2.0, H: 57.7 },
+    { el: document.getElementById('ball60'), T: 2.0 * Math.sqrt(3), H: 173.2 }
+  ];
+  let simRunning = false;
+  function simulate() {
+    if (simRunning) return;
+    simRunning = true;
+    const clock = document.getElementById('simClock');
+    const t0 = performance.now();
+    function frame(now) {
+      const t = (now - t0) / 1000;
+      let done = true;
+      proj.forEach(p => {
+        const s = Math.min(t / p.T, 1);
+        if (s < 1) done = false;
+        p.el.setAttribute('cx', 100 + 400 * s);
+        p.el.setAttribute('cy', 380 - 4 * p.H * s * (1 - s));
+      });
+      const land30 = t >= proj[0].T;
+      clock.textContent = `t = ${t.toFixed(2)} s` + (land30 ? '  (30° sudah mendarat)' : '');
+      if (!done) requestAnimationFrame(frame);
+      else { clock.textContent = 'Waktu terbang 60° : 30° ≈ 1,73 : 1'; simRunning = false; }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // ---------- Slide 3: kecepatan meja putar ----------
+  function setSpeed(dur) {
+    const tb = document.getElementById('table');
+    if (dur === 0) { tb.classList.add('paused'); return; }
+    tb.classList.remove('paused');
+    tb.style.setProperty('--dur', dur + 's');
+  }
+
+  // ---------- Slide 4: PGK ----------
+  const OMEGA_MAX = Math.sqrt(0.5 * 10 / 0.2); // 5 rad/s
+  const opts = [
+    { id: 'A', label: 'ω = 2,0 rad/s', w: 2.0 },
+    { id: 'B', label: 'ω = 4,8 rad/s', w: 4.8 },
+    { id: 'C', label: '60 rpm', w: 2 * Math.PI },
+    { id: 'D', label: 'ω = 4,0 rad/s', w: 4.0 },
+    { id: 'E', label: 'ω = 5,5 rad/s', w: 5.5 }
+  ];
+  const optWrap = document.getElementById('options');
+  opts.forEach(o => {
+    o.correct = o.w <= OMEGA_MAX;
+    optWrap.insertAdjacentHTML('beforeend', `
+      <label class="opt cursor-pointer block">
+        <input type="checkbox" class="sr-only" value="${o.id}">
+        <div class="optbox flex items-center gap-4 bg-white border-2 border-slate-200 rounded-xl px-5 py-3 text-2xl transition" data-id="${o.id}">
+          <span class="tick w-8 h-8 rounded-md border-2 border-slate-400 flex items-center justify-center text-lg font-bold">✓</span>
+          <span class="font-bold w-8">${o.id}.</span>
+          <span class="flex-1">${o.label}</span>
+          <span class="verdict text-lg font-semibold"></span>
+        </div>
+      </label>`);
+  });
+  function showAnalysis() {
+    const chosen = new Set([...optWrap.querySelectorAll('input:checked')].map(i => i.value));
+    const body = document.getElementById('anaBody');
+    body.innerHTML = '';
+    opts.forEach(o => {
+      const picked = chosen.has(o.id);
+      let v, cls;
+      if (o.correct && picked) { v = '✔ Tepat'; cls = 'text-emerald-700'; }
+      else if (o.correct && !picked) { v = '○ Terlewat'; cls = 'text-amber-600'; }
+      else if (!o.correct && picked) { v = '✘ Keliru'; cls = 'text-red-600'; }
+      else { v = '— Tepat tidak dipilih'; cls = 'text-slate-500'; }
+      body.insertAdjacentHTML('beforeend', `
+        <tr class="border-b border-slate-100">
+          <td class="py-2 font-bold">${o.id}</td>
+          <td>${o.w.toFixed(2).replace('.', ',')}</td>
+          <td class="${o.correct ? 'text-emerald-700' : 'text-red-600'} font-semibold">${o.correct ? 'Diam (≤ 5)' : 'Terlempar (> 5)'}</td>
+          <td class="${cls} font-semibold">${v}</td>
+        </tr>`);
+      const box = optWrap.querySelector(`[data-id="${o.id}"]`);
+      box.classList.remove('border-emerald-500', 'border-red-500');
+      box.classList.add(o.correct ? 'border-emerald-500' : 'border-red-500');
+      box.querySelector('.verdict').innerHTML = o.correct
+        ? '<span class="text-emerald-700">Diam</span>' : '<span class="text-red-600">Terlempar</span>';
+    });
+    document.getElementById('overlay').classList.remove('hidden');
+  }
+  function resetPGK() {
+    optWrap.querySelectorAll('input').forEach(i => i.checked = false);
+    optWrap.querySelectorAll('.optbox').forEach(b => {
+      b.classList.remove('border-emerald-500', 'border-red-500');
+      b.querySelector('.verdict').innerHTML = '';
+    });
+  }
+</script>
+</body>
+</html>
