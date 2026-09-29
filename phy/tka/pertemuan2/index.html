@@ -36,7 +36,167 @@
     <p class="mt-14 text-lg text-slate-500">Gunakan tombol ◀ ▶ atau tombol panah keyboard untuk berpindah slide</p>
   </section>
 
-  <!-- SLIDE 2 : PEMANTIK PARABOLA -->
+  <!-- SLIDE 2 : INGAT LAGI PARABOLA -->
+  <section class="slide h-full w-full flex-col justify-center px-12 pb-24">
+    <p class="text-lg uppercase tracking-widest text-violet-600 font-semibold">Ingat Lagi · Gerak Parabola</p>
+    <h2 class="text-4xl font-bold text-slate-900 mt-1 mb-5">Lintasan melengkung = <span class="text-violet-700">dua gerak lurus</span> sekaligus</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+      <div class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+        <svg viewBox="0 0 600 420" class="w-full h-auto" aria-label="Lintasan parabola dengan komponen kecepatan vx dan vy">
+          <defs>
+            <marker id="mBlue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+            <marker id="mRed" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+          </defs>
+          <!-- legenda -->
+          <line x1="20" y1="28" x2="60" y2="28" stroke="#2563eb" stroke-width="5" marker-end="url(#mBlue)"/>
+          <text x="70" y="34" font-size="18" fill="#1e3a8a" font-weight="700">vₓ (mendatar) → SELALU SAMA</text>
+          <line x1="20" y1="58" x2="60" y2="58" stroke="#dc2626" stroke-width="5" marker-end="url(#mRed)"/>
+          <text x="70" y="64" font-size="18" fill="#991b1b" font-weight="700">v_y (tegak) → BERUBAH karena g</text>
+          <!-- tanah & lintasan -->
+          <line x1="30" y1="300" x2="570" y2="300" stroke="#334155" stroke-width="3"/>
+          <path d="M60 300 Q300 -140 540 300" fill="none" stroke="#94a3b8" stroke-width="3" stroke-dasharray="8 6"/>
+          <!-- titik awal -->
+          <circle cx="60" cy="300" r="8" fill="#0f172a"/>
+          <line x1="60" y1="300" x2="115" y2="300" stroke="#2563eb" stroke-width="5" marker-end="url(#mBlue)"/>
+          <line x1="60" y1="300" x2="60" y2="200" stroke="#dc2626" stroke-width="5" marker-end="url(#mRed)"/>
+          <!-- seperempat -->
+          <circle cx="180" cy="135" r="7" fill="#0f172a"/>
+          <line x1="180" y1="135" x2="235" y2="135" stroke="#2563eb" stroke-width="5" marker-end="url(#mBlue)"/>
+          <line x1="180" y1="135" x2="180" y2="85" stroke="#dc2626" stroke-width="5" marker-end="url(#mRed)"/>
+          <!-- puncak -->
+          <circle cx="300" cy="80" r="8" fill="#0f172a"/>
+          <line x1="300" y1="80" x2="355" y2="80" stroke="#2563eb" stroke-width="5" marker-end="url(#mBlue)"/>
+          <text x="300" y="112" text-anchor="middle" font-size="18" fill="#991b1b" font-weight="700">puncak: v_y = 0</text>
+          <text x="300" y="134" text-anchor="middle" font-size="16" fill="#1e3a8a">(vₓ tetap ada!)</text>
+          <!-- tiga perempat -->
+          <circle cx="420" cy="135" r="7" fill="#0f172a"/>
+          <line x1="420" y1="135" x2="475" y2="135" stroke="#2563eb" stroke-width="5" marker-end="url(#mBlue)"/>
+          <line x1="420" y1="135" x2="420" y2="185" stroke="#dc2626" stroke-width="5" marker-end="url(#mRed)"/>
+          <!-- titik jatuh -->
+          <circle cx="540" cy="300" r="8" fill="#0f172a"/>
+          <line x1="540" y1="300" x2="595" y2="300" stroke="#2563eb" stroke-width="5" marker-end="url(#mBlue)"/>
+          <line x1="540" y1="300" x2="540" y2="400" stroke="#dc2626" stroke-width="5" marker-end="url(#mRed)"/>
+          <text x="60" y="330" text-anchor="middle" font-size="16" fill="#475569">naik</text>
+          <text x="540" y="330" text-anchor="end" font-size="16" fill="#475569">turun</text>
+        </svg>
+      </div>
+      <div class="lg:col-span-2 space-y-4">
+        <div class="bg-white rounded-xl border-l-8 border-blue-500 p-5 shadow-sm">
+          <p class="text-lg font-bold text-blue-700">Sumbu X (mendatar) → GLB</p>
+          <p class="text-xl mt-1">Tidak ada gaya mendatar, jadi kecepatannya tetap.</p>
+          <p class="text-2xl font-mono mt-2">vₓ = v₀ cos θ<br>x = vₓ · t</p>
+        </div>
+        <div class="bg-white rounded-xl border-l-8 border-red-500 p-5 shadow-sm">
+          <p class="text-lg font-bold text-red-700">Sumbu Y (tegak) → GLBB</p>
+          <p class="text-xl mt-1">Ditarik gravitasi seperti benda dilempar ke atas.</p>
+          <p class="text-2xl font-mono mt-2">v_y = v₀ sin θ − g·t<br>y = v₀ sin θ · t − ½ g t²</p>
+        </div>
+        <div class="bg-violet-50 rounded-xl border border-violet-200 p-4 text-xl">
+          🔗 <b>Penghubungnya: waktu t.</b> Cari t dari sumbu Y, lalu pakai t itu di sumbu X.
+        </div>
+        <button onclick="toggle('quick2')" class="px-5 py-2 text-lg rounded-xl border-2 border-slate-300 font-semibold hover:bg-slate-100">📌 Rumus cepat</button>
+        <div id="quick2" class="hidden bg-white rounded-xl border border-slate-200 p-4 text-xl font-mono leading-relaxed">
+          Waktu terbang: T = 2 v₀ sin θ / g<br>
+          Tinggi maks: H = v₀² sin²θ / 2g<br>
+          Jangkauan: R = v₀² sin 2θ / g<br>
+          <span class="font-sans text-lg text-slate-600">Dilempar mendatar dari tinggi h:</span> t = √(2h / g)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 3 : INGAT LAGI MELINGKAR -->
+  <section class="slide h-full w-full flex-col justify-center px-12 pb-24">
+    <p class="text-lg uppercase tracking-widest text-violet-600 font-semibold">Ingat Lagi · Gerak Melingkar Beraturan</p>
+    <h2 class="text-4xl font-bold text-slate-900 mt-1 mb-5">Kelajuan tetap, tapi <span class="text-violet-700">arahnya terus berbelok</span></h2>
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+      <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 p-4 flex justify-center">
+        <svg viewBox="0 0 420 400" class="w-full max-w-md h-auto" aria-label="Benda bergerak melingkar dengan kecepatan menyinggung dan percepatan ke pusat">
+          <defs>
+            <marker id="mGreen" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+            <marker id="mRed2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+            <marker id="mGray" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+          </defs>
+          <circle cx="200" cy="200" r="140" fill="none" stroke="#94a3b8" stroke-width="3" stroke-dasharray="8 6"/>
+          <circle cx="200" cy="200" r="6" fill="#0f172a"/>
+          <text x="186" y="228" font-size="16" fill="#0f172a">pusat</text>
+          <line x1="200" y1="200" x2="340" y2="200" stroke="#475569" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="225" y="225" font-size="22" font-style="italic" fill="#475569">r</text>
+          <!-- omega -->
+          <path d="M240 200 A40 40 0 0 0 200 160" fill="none" stroke="#475569" stroke-width="2.5" marker-end="url(#mGray)"/>
+          <text x="236" y="166" font-size="22" fill="#475569">ω</text>
+          <!-- benda -->
+          <line x1="340" y1="200" x2="340" y2="82" stroke="#16a34a" stroke-width="6" marker-end="url(#mGreen)"/>
+          <text x="352" y="100" font-size="20" font-weight="700" fill="#15803d">v</text>
+          <text x="352" y="122" font-size="14" fill="#15803d">menyinggung</text>
+          <line x1="340" y1="200" x2="268" y2="200" stroke="#dc2626" stroke-width="6" marker-end="url(#mRed2)"/>
+          <text x="262" y="188" font-size="16" font-weight="700" fill="#b91c1c">a_s, F_s</text>
+          <text x="262" y="258" font-size="14" fill="#b91c1c">selalu ke pusat</text>
+          <circle cx="340" cy="200" r="13" fill="#fde047" stroke="#a16207" stroke-width="3"/>
+        </svg>
+      </div>
+      <div class="lg:col-span-3 space-y-4">
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-white rounded-xl border border-slate-200 p-4"><p class="text-base text-slate-500">Kecepatan sudut</p><p class="text-2xl font-mono font-bold">ω = 2π / T = 2πf</p></div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4"><p class="text-base text-slate-500">Kecepatan linear</p><p class="text-2xl font-mono font-bold">v = ω · r</p></div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4"><p class="text-base text-slate-500">Percepatan sentripetal</p><p class="text-2xl font-mono font-bold">a_s = v²/r = ω²r</p></div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4"><p class="text-base text-slate-500">Gaya sentripetal</p><p class="text-2xl font-mono font-bold">F_s = m v²/r = mω²r</p></div>
+        </div>
+        <div class="bg-amber-50 rounded-xl border-2 border-amber-300 p-5">
+          <p class="text-2xl font-bold text-amber-900">⚠ Gaya sentripetal BUKAN gaya baru!</p>
+          <p class="text-xl mt-1">Tanyakan: <b>gaya nyata apa yang mengarah ke pusat?</b></p>
+          <div class="grid grid-cols-2 gap-x-6 gap-y-1 mt-3 text-lg">
+            <span>🪙 Koin di piringan</span><span class="font-semibold">→ gaya gesek statis</span>
+            <span>🚲 Sepeda di tikungan datar</span><span class="font-semibold">→ gaya gesek statis</span>
+            <span>🪢 Bola diikat tali</span><span class="font-semibold">→ tegangan tali</span>
+            <span>🛰 Satelit mengorbit</span><span class="font-semibold">→ gaya gravitasi</span>
+          </div>
+        </div>
+        <div class="bg-violet-50 rounded-xl border border-violet-200 p-4 text-xl">
+          🧮 <b>Kapan tergelincir?</b> Saat gaya yang <i>dibutuhkan</i> melebihi gesekan <i>maksimum</i>:
+          <span class="font-mono font-bold">m v²/r &gt; μₛ m g</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 4 : STRATEGI & SATUAN -->
+  <section class="slide h-full w-full flex-col justify-center px-12 pb-24">
+    <p class="text-lg uppercase tracking-widest text-violet-600 font-semibold">Ingat Lagi · Bekal Mengerjakan Soal TKA</p>
+    <h2 class="text-4xl font-bold text-slate-900 mt-1 mb-6">Satuan dulu, baru bandingkan</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <p class="text-2xl font-bold mb-4">🔁 Konversi yang sering muncul</p>
+        <div class="space-y-3 text-2xl">
+          <div class="flex justify-between border-b border-slate-100 pb-2"><span>km/jam → m/s</span><span class="font-mono font-bold text-blue-700">÷ 3,6</span></div>
+          <div class="flex justify-between border-b border-slate-100 pb-2"><span>m/s → km/jam</span><span class="font-mono font-bold text-blue-700">× 3,6</span></div>
+          <div class="flex justify-between border-b border-slate-100 pb-2"><span>rpm → rad/s</span><span class="font-mono font-bold text-blue-700">× 2π / 60</span></div>
+          <div class="flex justify-between"><span>cm → m</span><span class="font-mono font-bold text-blue-700">÷ 100</span></div>
+        </div>
+        <p class="mt-4 text-lg text-slate-500">Contoh: 36 km/jam = 10 m/s · 60 rpm = 2π ≈ 6,28 rad/s</p>
+      </div>
+      <div class="space-y-4">
+        <div class="bg-white rounded-2xl border-l-8 border-emerald-500 p-5 shadow-sm">
+          <p class="text-xl font-bold text-emerald-700">Pilihan Ganda Kompleks</p>
+          <p class="text-xl mt-1">Jawaban benar bisa <b>lebih dari satu</b>. Cek <u>setiap</u> opsi satu per satu — jangan berhenti di jawaban pertama.</p>
+        </div>
+        <div class="bg-white rounded-2xl border-l-8 border-amber-500 p-5 shadow-sm">
+          <p class="text-xl font-bold text-amber-700">Matriks Benar/Salah</p>
+          <p class="text-xl mt-1">Nilai tiap pernyataan <b>sendiri-sendiri</b>. Waspadai kata mutlak: <i>"murni", "selalu", "harus"</i>.</p>
+        </div>
+        <div class="bg-violet-50 rounded-2xl border border-violet-200 p-5">
+          <p class="text-xl font-bold text-violet-800">Resep 3 langkah</p>
+          <ol class="text-xl mt-1 list-decimal ml-6 space-y-1">
+            <li>Tulis data, ubah ke satuan SI.</li>
+            <li>Pilih konsep: gambar gaya <i>atau</i> pisah sumbu X–Y.</li>
+            <li>Hitung nilai batas, lalu bandingkan dengan tiap opsi.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 5 : PEMANTIK PARABOLA -->
   <section class="slide h-full w-full flex-col justify-center px-12 pb-24">
     <p class="text-lg uppercase tracking-widest text-blue-600 font-semibold">Pemantik 1 · Gerak Parabola</p>
     <h2 class="text-4xl font-bold text-slate-900 mt-1 mb-6">Dua sudut tembak, satu titik jatuh</h2>
@@ -83,6 +243,7 @@
         <div class="bg-white border-l-8 border-red-500 rounded-xl p-6 shadow-sm">
           <p class="text-2xl font-semibold leading-snug">Benda mana yang <span class="text-red-600">lebih lama berada di udara</span>?</p>
         </div>
+        <p class="text-lg text-slate-500">💡 Petunjuk: bandingkan nilai sin 2θ dan sin θ untuk kedua sudut (lihat "Rumus cepat" di slide Ingat Lagi).</p>
         <div class="flex flex-wrap gap-3">
           <button onclick="simulate()" class="px-6 py-3 text-xl rounded-xl bg-slate-900 text-white font-semibold hover:bg-slate-700">▶ Simulasikan</button>
           <button onclick="toggle('key2')" class="px-6 py-3 text-xl rounded-xl border-2 border-slate-300 font-semibold hover:bg-slate-100">Kunci Diskusi</button>
@@ -95,7 +256,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 3 : PEMANTIK MELINGKAR -->
+  <!-- SLIDE 6 : PEMANTIK MELINGKAR -->
   <section class="slide h-full w-full flex-col justify-center px-12 pb-24">
     <p class="text-lg uppercase tracking-widest text-blue-600 font-semibold">Pemantik 2 · Gerak Melingkar Beraturan</p>
     <h2 class="text-4xl font-bold text-slate-900 mt-1 mb-6">Dua koin di atas meja putar</h2>
@@ -126,6 +287,7 @@
         <div class="bg-white border-l-8 border-amber-500 rounded-xl p-6 shadow-sm">
           <p class="text-3xl font-semibold leading-snug">Jika meja diputar <span class="text-amber-600">makin cepat</span>, koin mana yang akan terlempar lebih dulu? <span class="text-slate-500">Mengapa?</span></p>
         </div>
+        <p class="text-lg text-slate-500">💡 Petunjuk: kedua koin punya ω yang sama. Bandingkan gaya yang dibutuhkan, F = m ω² r, untuk r besar dan r kecil.</p>
         <div>
           <p class="text-lg text-slate-500 mb-2">Kecepatan putar:</p>
           <div class="flex flex-wrap gap-3">
@@ -145,7 +307,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 4 : SOAL PGK -->
+  <!-- SLIDE 7 : SOAL PGK -->
   <section class="slide h-full w-full flex-col justify-center px-12 pb-24">
     <div class="flex items-center gap-3">
       <span class="px-4 py-1 rounded-full bg-emerald-100 text-emerald-800 text-lg font-bold">PGK · Jawaban benar lebih dari satu</span>
@@ -153,9 +315,13 @@
     </div>
     <h2 class="text-4xl font-bold text-slate-900 mt-3 mb-4">Koin di atas piringan putar</h2>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-      <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-6 text-2xl leading-relaxed shadow-sm">
+      <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-6 text-xl leading-relaxed shadow-sm">
         <p>Sebuah koin diletakkan di atas piringan putar mendatar pada jarak <b>20 cm</b> dari sumbu putar. Koefisien gesek statis antara koin dan piringan <b>μₛ = 0,5</b> dan <b>g = 10 m/s²</b>. Piringan diputar dengan kecepatan sudut konstan ω.</p>
         <p class="mt-5 font-semibold text-slate-900">Pilih <u>setiap</u> kecepatan sudut (ω) yang membuat koin <span class="text-blue-700">TETAP DIAM</span> (tidak terlempar) di atas piringan.</p>
+        <div class="mt-4 pt-4 border-t border-slate-200">
+          <button id="hintBtn" onclick="nextHint()" class="px-4 py-2 text-lg rounded-lg bg-amber-100 text-amber-900 font-semibold hover:bg-amber-200">💡 Butuh petunjuk?</button>
+          <ol id="hints" class="mt-3 space-y-2 text-lg list-decimal ml-6"></ol>
+        </div>
       </div>
       <div class="lg:col-span-3 flex flex-col gap-3" id="options">
         <!-- opsi diisi oleh JS -->
@@ -309,7 +475,26 @@
     });
     document.getElementById('overlay').classList.remove('hidden');
   }
+  // Petunjuk bertahap
+  const hints = [
+    'Gaya nyata apa yang menahan koin agar ikut berputar? (arah mendatar, menuju pusat)',
+    'Koin tetap diam jika gaya yang dibutuhkan ≤ gesekan maksimum: <b>m ω² r ≤ μₛ m g</b>. Massa m bisa dicoret!',
+    'Ubah satuan dulu: 20 cm = 0,2 m, dan 60 rpm = 60 × 2π / 60 rad/s. Hitung ω maksimum, lalu bandingkan dengan setiap opsi.'
+  ];
+  let hintIdx = 0;
+  function nextHint() {
+    if (hintIdx >= hints.length) return;
+    document.getElementById('hints').insertAdjacentHTML('beforeend', `<li>${hints[hintIdx]}</li>`);
+    hintIdx++;
+    const btn = document.getElementById('hintBtn');
+    if (hintIdx >= hints.length) { btn.disabled = true; btn.classList.add('opacity-40'); btn.textContent = 'Semua petunjuk sudah dibuka'; }
+    else btn.textContent = `💡 Petunjuk berikutnya (${hintIdx + 1}/${hints.length})`;
+  }
   function resetPGK() {
+    hintIdx = 0;
+    document.getElementById('hints').innerHTML = '';
+    const hb = document.getElementById('hintBtn');
+    hb.disabled = false; hb.classList.remove('opacity-40'); hb.textContent = '💡 Butuh petunjuk?';
     optWrap.querySelectorAll('input').forEach(i => i.checked = false);
     optWrap.querySelectorAll('.optbox').forEach(b => {
       b.classList.remove('border-emerald-500', 'border-red-500');
