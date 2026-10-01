@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Guru – Pertemuan 3</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  .katex-display { margin: .4rem 0; overflow-x: auto; overflow-y: hidden; }
+  .step { counter-increment: step; }
+  .step::before { content: counter(step); display:inline-flex; align-items:center; justify-content:center; width:1.6rem; height:1.6rem; border-radius:9999px; background:#0f172a; color:#fff; font-size:.8rem; font-weight:700; margin-right:.6rem; flex-shrink:0; }
+  .steps { counter-reset: step; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+<!-- Header -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <p class="text-xs uppercase tracking-widest text-slate-500">Panduan Guru · Cheat Sheet</p>
+      <h1 class="text-lg sm:text-xl font-bold text-slate-900">Pertemuan 3 — Dinamika &amp; Hukum Newton</h1>
+    </div>
+    <nav class="flex flex-wrap gap-2 text-sm">
+      <a href="#alur" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200">Alur</a>
+      <a href="#kunci" class="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200">Kunci</a>
+      <a href="#slide" class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 hover:bg-blue-200">Slide</a>
+      <a href="#ws1" class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 hover:bg-emerald-200">WS Soal 1</a>
+      <a href="#ws2" class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 hover:bg-emerald-200">WS Soal 2</a>
+      <a href="#miskonsepsi" class="px-3 py-1 rounded-full bg-red-100 text-red-800 hover:bg-red-200">Miskonsepsi</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-8">
+
+  <!-- Info -->
+  <section class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+    <div class="bg-white rounded-xl border border-slate-200 p-3"><p class="text-slate-500">Durasi</p><p class="font-semibold">90 menit</p></div>
+    <div class="bg-white rounded-xl border border-slate-200 p-3"><p class="text-slate-500">Level Kognitif</p><p class="font-semibold">L3 · Analisis &amp; Evaluasi</p></div>
+    <div class="bg-white rounded-xl border border-slate-200 p-3"><p class="text-slate-500">Bentuk Soal</p><p class="font-semibold">PGK &amp; Matriks B/S</p></div>
+    <div class="bg-white rounded-xl border border-slate-200 p-3"><p class="text-slate-500">Konstanta</p><p class="font-semibold">$g = 10\ \text{m/s}^2$</p></div>
+  </section>
+
+  <!-- Alur waktu -->
+  <section id="alur" class="scroll-mt-24">
+    <h2 class="text-xl font-bold mb-3">Alur Waktu Pembelajaran</h2>
+    <div class="overflow-x-auto bg-white rounded-2xl border border-slate-200">
+      <table class="w-full text-sm min-w-[640px]">
+        <thead class="bg-slate-100 text-left">
+          <tr><th class="p-3 w-24">Menit</th><th class="p-3 w-44">Fase</th><th class="p-3">Aktivitas Guru</th><th class="p-3 w-40">Media</th></tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <tr class="align-top">
+            <td class="p-3 font-mono font-semibold">0–15</td>
+            <td class="p-3"><span class="px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold">Pemantik</span></td>
+            <td class="p-3">Slide 2 (lift): minta siswa menebak dulu, lalu buka “Petunjuk Diskusi”. Slide 3 (buku di meja): voting cepat “aksi-reaksi atau bukan?” sebelum klik “Ungkap Jawaban”.</td>
+            <td class="p-3">Presentasi · Slide 1–3</td>
+          </tr>
+          <tr class="align-top">
+            <td class="p-3 font-mono font-semibold">15–45</td>
+            <td class="p-3"><span class="px-2 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold">Analisis Interaktif</span></td>
+            <td class="p-3">Slide 4 (PGK dua balok): siswa diskusi berpasangan 5 menit, wakil kelas mencentang opsi di proyektor, lalu “Tampilkan Analisis”. Tekankan strategi: <b>sistem dulu → baru pisahkan benda</b>.</td>
+            <td class="p-3">Presentasi · Slide 4</td>
+          </tr>
+          <tr class="align-top">
+            <td class="p-3 font-mono font-semibold">45–75</td>
+            <td class="p-3"><span class="px-2 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Drilling Mandiri</span></td>
+            <td class="p-3">Bagikan worksheet. Siswa mengerjakan individu tanpa diskusi. Keliling kelas: cek apakah siswa menggambar diagram gaya sebelum menghitung.</td>
+            <td class="p-3">Worksheet A4</td>
+          </tr>
+          <tr class="align-top">
+            <td class="p-3 font-mono font-semibold">75–90</td>
+            <td class="p-3"><span class="px-2 py-1 rounded-full bg-violet-100 text-violet-800 text-xs font-semibold">Review Matriks</span></td>
+            <td class="p-3">Bahas Soal 2 (Matriks B/S) pernyataan per pernyataan. Minta siswa angkat tangan B/S dulu, lalu tunjukkan pembuktian. Tutup dengan dua miskonsepsi (badge merah).</td>
+            <td class="p-3">Panduan ini · Papan tulis</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Kunci cepat -->
+  <section id="kunci" class="scroll-mt-24">
+    <h2 class="text-xl font-bold mb-3">Kunci Jawaban Cepat</h2>
+    <div class="grid md:grid-cols-3 gap-3">
+      <div class="bg-white rounded-2xl border border-slate-200 p-4">
+        <p class="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-2">Slide 4 · PGK</p>
+        <div class="flex flex-wrap gap-1.5 text-sm">
+          <span class="px-2 py-1 rounded bg-green-100 text-green-800 font-semibold">A ✓</span>
+          <span class="px-2 py-1 rounded bg-slate-100 text-slate-500">B ✗</span>
+          <span class="px-2 py-1 rounded bg-green-100 text-green-800 font-semibold">C ✓</span>
+          <span class="px-2 py-1 rounded bg-green-100 text-green-800 font-semibold">D ✓</span>
+          <span class="px-2 py-1 rounded bg-slate-100 text-slate-500">E ✗</span>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-4">
+        <p class="text-xs font-semibold text-emerald-700 uppercase tracking-wide mb-2">Worksheet Soal 1 · PGK</p>
+        <div class="flex flex-wrap gap-1.5 text-sm">
+          <span class="px-2 py-1 rounded bg-green-100 text-green-800 font-semibold">A ✓</span>
+          <span class="px-2 py-1 rounded bg-green-100 text-green-800 font-semibold">B ✓</span>
+          <span class="px-2 py-1 rounded bg-slate-100 text-slate-500">C ✗</span>
+          <span class="px-2 py-1 rounded bg-green-100 text-green-800 font-semibold">D ✓</span>
+          <span class="px-2 py-1 rounded bg-slate-100 text-slate-500">E ✗</span>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-4">
+        <p class="text-xs font-semibold text-emerald-700 uppercase tracking-wide mb-2">Worksheet Soal 2 · Matriks</p>
+        <div class="flex flex-wrap gap-1.5 text-sm">
+          <span class="px-2 py-1 rounded bg-red-100 text-red-800 font-semibold">P1 · Salah</span>
+          <span class="px-2 py-1 rounded bg-green-100 text-green-800 font-semibold">P2 · Benar</span>
+          <span class="px-2 py-1 rounded bg-red-100 text-red-800 font-semibold">P3 · Salah</span>
+        </div>
+      </div>
+    </div>
+    <p class="text-xs text-slate-500 mt-2">Penskoran PGK ala TKA: skor penuh hanya jika semua opsi benar tercentang dan tidak ada opsi salah tercentang.</p>
+  </section>
+
+  <!-- Slide -->
+  <section id="slide" class="scroll-mt-24 space-y-4">
+    <h2 class="text-xl font-bold">Penyelesaian Soal di Slide Presentasi</h2>
+
+    <article class="bg-white rounded-2xl border border-slate-200 p-5">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-semibold">Slide 2</span>
+        <h3 class="font-semibold">Orang di dalam lift yang dipercepat ke atas</h3>
+      </div>
+      <ol class="steps space-y-2 text-sm">
+        <li class="step flex items-start"><span>Gaya pada orang: $N$ (ke atas, dari lantai) dan $w = mg$ (ke bawah). Arah atas = positif karena searah $a$.</span></li>
+        <li class="step flex items-start"><span>Hukum II Newton: $$\Sigma F = ma \;\Rightarrow\; N - mg = ma \;\Rightarrow\; N = m(g + a)$$</span></li>
+        <li class="step flex items-start"><span>Contoh angka untuk ditulis di papan: $m = 60$ kg, $a = 2\ \text{m/s}^2$ → $N = 60(10+2) = 720$ N, sedangkan $w = 600$ N.</span></li>
+        <li class="step flex items-start"><span><b>Jawaban pemantik:</b> massa tetap 60 kg. Yang “terasa” adalah gaya normal (yang juga terbaca timbangan), dan $N &gt; w$ saat lift dipercepat ke atas.</span></li>
+      </ol>
+      <p class="mt-3 text-xs text-slate-500">Pertanyaan lanjutan: bagaimana jika lift diperlambat saat naik? ($a$ ke bawah → $N = m(g-a) &lt; w$, terasa lebih ringan.)</p>
+    </article>
+
+    <article class="bg-white rounded-2xl border border-slate-200 p-5">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="px-2 py-1 rounded-full bg-violet-100 text-violet-800 text-xs font-semibold">Slide 3</span>
+        <h3 class="font-semibold">Apakah N dan w pasangan aksi-reaksi?</h3>
+      </div>
+      <ol class="steps space-y-2 text-sm">
+        <li class="step flex items-start"><span>Syarat pasangan aksi-reaksi: sama besar, berlawanan arah, <b>bekerja pada dua benda berbeda</b>, dan jenis gayanya sama.</span></li>
+        <li class="step flex items-start"><span>$N$ (meja → buku) dan $w$ (Bumi → buku) keduanya bekerja pada <b>buku</b>, dan jenisnya berbeda (kontak vs gravitasi). Maka <b>bukan</b> aksi-reaksi.</span></li>
+        <li class="step flex items-start"><span>$N = w$ karena buku diam: $\Sigma F = 0$ (Hukum I). Bukti cepat: di lift dipercepat (Slide 2), $N \neq w$ — padahal pasangan aksi-reaksi <i>selalu</i> sama besar.</span></li>
+        <li class="step flex items-start"><span>Pasangan yang benar: $N \leftrightarrow N'$ (buku menekan meja) dan $w \leftrightarrow$ buku menarik Bumi.</span></li>
+      </ol>
+    </article>
+
+    <article class="bg-white rounded-2xl border border-slate-200 p-5">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="px-2 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold">Slide 4 · PGK</span>
+        <h3 class="font-semibold">Dua balok bersentuhan didorong F = 30 N ($m_A = 4$ kg, $m_B = 2$ kg, lantai licin)</h3>
+      </div>
+      <div class="grid md:grid-cols-[1fr_220px] gap-4">
+        <ol class="steps space-y-2 text-sm">
+          <li class="step flex items-start"><span>Tinjau sistem (A+B): gaya kontak adalah gaya internal sehingga tidak dihitung. $$a = \frac{F}{m_A + m_B} = \frac{30}{6} = 5\ \text{m/s}^2$$</span></li>
+          <li class="step flex items-start"><span>Tinjau B saja (hanya gaya kontak $P$ yang mendorong): $$P = m_B\, a = 2 \cdot 5 = 10\ \text{N}$$</span></li>
+          <li class="step flex items-start"><span>Cek pada A: $\Sigma F_A = F - P = 30 - 10 = 20$ N $= m_A a = 4 \cdot 5$ ✓</span></li>
+          <li class="step flex items-start"><span>Jika didorong dari sisi B, yang “didorong” oleh gaya kontak adalah A: $P' = m_A\, a = 20$ N &gt; 10 N.</span></li>
+        </ol>
+        <svg viewBox="0 0 220 150" class="w-full" aria-label="Diagram gaya balok B">
+          <defs><marker id="g-ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b45309"/></marker></defs>
+          <text x="110" y="18" text-anchor="middle" font-size="13" fill="#64748b">Diagram gaya balok B (horizontal)</text>
+          <line x1="20" y1="120" x2="200" y2="120" stroke="#94a3b8" stroke-width="2"/>
+          <rect x="95" y="65" width="60" height="55" fill="#fef3c7" stroke="#92400e" stroke-width="2"/>
+          <text x="125" y="98" text-anchor="middle" font-size="18" font-weight="700" fill="#92400e">B</text>
+          <line x1="40" y1="92" x2="92" y2="92" stroke="#b45309" stroke-width="4" marker-end="url(#g-ar)"/>
+          <text x="30" y="82" font-size="13" fill="#b45309">P = 10 N</text>
+        </svg>
+      </div>
+      <div class="mt-3 grid sm:grid-cols-5 gap-2 text-xs">
+        <div class="rounded-lg bg-green-50 border border-green-200 p-2"><b>A ✓</b> bergerak bersama, $a$ sama</div>
+        <div class="rounded-lg bg-slate-50 border border-slate-200 p-2"><b>B ✗</b> $P = 10$ N, bukan 30 N</div>
+        <div class="rounded-lg bg-green-50 border border-green-200 p-2"><b>C ✓</b> aksi-reaksi, tak bergantung massa</div>
+        <div class="rounded-lg bg-green-50 border border-green-200 p-2"><b>D ✓</b> $P' = 20$ N &gt; 10 N</div>
+        <div class="rounded-lg bg-slate-50 border border-slate-200 p-2"><b>E ✗</b> $\Sigma F_A = 20$ N</div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Worksheet 1 -->
+  <section id="ws1" class="scroll-mt-24">
+    <article class="bg-white rounded-2xl border border-slate-200 p-5">
+      <div class="flex flex-wrap items-center gap-2 mb-1">
+        <span class="px-2 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Worksheet Soal 1 · PGK</span>
+        <span class="px-2 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">Bidang Miring &amp; Gesekan</span>
+      </div>
+      <p class="text-sm text-slate-600 mb-4">Data: $m = 2000$ kg, $\theta = 37^\circ$, $\mu_s = 0{,}8$, $\mu_k = 0{,}6$, $\sin 37^\circ = 0{,}6$, $\cos 37^\circ = 0{,}8$.</p>
+      <div class="grid md:grid-cols-[1fr_280px] gap-5">
+        <ol class="steps space-y-3 text-sm">
+          <li class="step flex items-start"><span><b>Berat mobil:</b> $w = mg = 2000 \cdot 10 = 20\,000$ N.</span></li>
+          <li class="step flex items-start"><span><b>Uraikan $w$</b> terhadap sumbu sejajar dan tegak lurus bidang:
+            $$w \sin\theta = 20\,000 \cdot 0{,}6 = 12\,000\ \text{N} \quad(\text{sejajar, menuruni bidang})$$
+            $$w \cos\theta = 20\,000 \cdot 0{,}8 = 16\,000\ \text{N} \quad(\text{tegak lurus, menekan bidang})$$</span></li>
+          <li class="step flex items-start"><span><b>Gaya normal</b> (tidak ada percepatan tegak lurus bidang): $$N = w\cos\theta = 16\,000\ \text{N}$$</span></li>
+          <li class="step flex items-start"><span><b>Gesek statis maksimum:</b> $$f_{s,\max} = \mu_s N = 0{,}8 \cdot 16\,000 = 12\,800\ \text{N}$$</span></li>
+          <li class="step flex items-start"><span><b>Uji diam atau meluncur:</b> bandingkan gaya penggerak dengan $f_{s,\max}$.
+            $$w\sin\theta = 12\,000\ \text{N} \;\le\; f_{s,\max} = 12\,800\ \text{N} \;\Rightarrow\; \text{mobil DIAM}$$</span></li>
+          <li class="step flex items-start"><span><b>Gesek yang benar-benar bekerja</b> (Hukum I, $\Sigma F_\parallel = 0$): $$f_s = w\sin\theta = 12\,000\ \text{N} \quad(\text{bukan } 12\,800\ \text{N})$$ $f_{s,\max}$ hanya batas atas; gesek statis menyesuaikan diri sebesar yang dibutuhkan.</span></li>
+        </ol>
+        <div>
+          <svg viewBox="0 0 280 230" class="w-full" aria-label="Diagram gaya mobil di bidang miring">
+            <defs>
+              <marker id="w1-k" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f172a"/></marker>
+              <marker id="w1-b" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+              <marker id="w1-r" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+              <marker id="w1-g" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+              <marker id="w1-s" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker>
+            </defs>
+            <polygon points="10,215 270,215 270,20" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+            <text x="48" y="208" font-size="12" fill="#334155">37°</text>
+            <g transform="translate(140,117.5) rotate(-36.87)">
+              <rect x="-30" y="-30" width="60" height="30" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+              <!-- N -->
+              <line x1="0" y1="-15" x2="0" y2="-90" stroke="#2563eb" stroke-width="3" marker-end="url(#w1-b)"/>
+              <!-- f_s up the slope -->
+              <line x1="0" y1="-15" x2="75" y2="-15" stroke="#16a34a" stroke-width="3" marker-end="url(#w1-g)"/>
+              <!-- components dashed -->
+              <line x1="0" y1="-15" x2="-56" y2="-15" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="5 3" marker-end="url(#w1-s)"/>
+              <line x1="0" y1="-15" x2="0" y2="60" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="5 3" marker-end="url(#w1-s)"/>
+            </g>
+            <!-- w vertical -->
+            <line x1="131" y1="105.5" x2="131" y2="195" stroke="#dc2626" stroke-width="3" marker-end="url(#w1-r)"/>
+            <text x="136" y="196" font-size="13" font-weight="700" fill="#dc2626">w</text>
+            <text x="70" y="42" font-size="13" font-weight="700" fill="#2563eb">N</text>
+            <text x="200" y="45" font-size="13" font-weight="700" fill="#16a34a">fₛ</text>
+            <text x="50" y="150" font-size="11" fill="#64748b">w sin θ</text>
+            <text x="175" y="175" font-size="11" fill="#64748b">w cos θ</text>
+          </svg>
+          <p class="text-xs text-slate-500 mt-1">Garis putus-putus = komponen $w$ (bukan gaya tambahan).</p>
+        </div>
+      </div>
+      <div class="mt-4 grid sm:grid-cols-5 gap-2 text-xs">
+        <div class="rounded-lg bg-green-50 border border-green-200 p-2"><b>A ✓</b> $N = 16\,000$ N</div>
+        <div class="rounded-lg bg-green-50 border border-green-200 p-2"><b>B ✓</b> $w\sin\theta = 12\,000$ N, menuruni bidang</div>
+        <div class="rounded-lg bg-slate-50 border border-slate-200 p-2"><b>C ✗</b> 12.800 N itu $f_{s,\max}$; yang bekerja 12.000 N</div>
+        <div class="rounded-lg bg-green-50 border border-green-200 p-2"><b>D ✓</b> $12\,000 &lt; 12\,800$</div>
+        <div class="rounded-lg bg-slate-50 border border-slate-200 p-2"><b>E ✗</b> mobil diam → bukan gesek kinetis</div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Worksheet 2 -->
+  <section id="ws2" class="scroll-mt-24">
+    <article class="bg-white rounded-2xl border border-slate-200 p-5">
+      <div class="flex flex-wrap items-center gap-2 mb-1">
+        <span class="px-2 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold">Worksheet Soal 2 · Matriks B/S</span>
+        <span class="px-2 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">Sistem Katrol</span>
+      </div>
+      <p class="text-sm text-slate-600 mb-4">Data: $m_1 = 4$ kg (meja kasar), $m_2 = 2$ kg (menggantung), $\mu_k = 0{,}2$, $f_k = \mu_k m_1 g = 8$ N.</p>
+
+      <h4 class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-2">Langkah A · Cara cepat percepatan sistem</h4>
+      <ol class="steps space-y-2 text-sm mb-5">
+        <li class="step flex items-start"><span>Pandang tali sebagai satu jalur lurus. Gaya penggerak: $w_2 = m_2 g = 20$ N. Gaya penghambat: $f_k = 8$ N. Tegangan tali $T$ adalah gaya internal sehingga saling meniadakan.</span></li>
+        <li class="step flex items-start"><span>$$a = \frac{\Sigma F}{\Sigma m} = \frac{m_2 g - f_k}{m_1 + m_2} = \frac{20 - 8}{4 + 2} = \frac{12}{6} = 2\ \text{m/s}^2$$</span></li>
+      </ol>
+
+      <h4 class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-2">Langkah B · Diagram benda bebas untuk mencari T</h4>
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="rounded-xl border border-slate-200 p-4">
+          <div class="flex gap-4 items-center">
+            <svg viewBox="0 0 120 180" class="w-24 shrink-0" aria-label="Diagram benda bebas M2">
+              <defs>
+                <marker id="w2-b" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+                <marker id="w2-r" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+              </defs>
+              <rect x="35" y="70" width="50" height="45" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+              <text x="60" y="98" text-anchor="middle" font-size="14" font-weight="700">M₂</text>
+              <line x1="60" y1="70" x2="60" y2="18" stroke="#2563eb" stroke-width="3" marker-end="url(#w2-b)"/>
+              <text x="66" y="30" font-size="14" font-weight="700" fill="#2563eb">T</text>
+              <line x1="60" y1="115" x2="60" y2="172" stroke="#dc2626" stroke-width="3" marker-end="url(#w2-r)"/>
+              <text x="66" y="165" font-size="13" font-weight="700" fill="#dc2626">m₂g</text>
+              <text x="8" y="150" font-size="12" fill="#16a34a">a ↓</text>
+            </svg>
+            <div class="text-sm">
+              <p class="font-semibold mb-1">Tinjau M₂ (arah bawah positif)</p>
+              $$m_2 g - T = m_2 a$$
+              $$T = m_2(g - a) = 2(10 - 2) = 16\ \text{N}$$
+            </div>
+          </div>
+        </div>
+        <div class="rounded-xl border border-slate-200 p-4">
+          <div class="flex gap-4 items-center">
+            <svg viewBox="0 0 170 120" class="w-32 shrink-0" aria-label="Diagram benda bebas M1 horizontal">
+              <defs>
+                <marker id="w3-b" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+                <marker id="w3-g" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d97706"/></marker>
+              </defs>
+              <line x1="5" y1="90" x2="165" y2="90" stroke="#94a3b8" stroke-width="2"/>
+              <rect x="60" y="50" width="50" height="40" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+              <text x="85" y="75" text-anchor="middle" font-size="14" font-weight="700">M₁</text>
+              <line x1="110" y1="68" x2="160" y2="68" stroke="#2563eb" stroke-width="3" marker-end="url(#w3-b)"/>
+              <text x="138" y="60" font-size="14" font-weight="700" fill="#2563eb">T</text>
+              <line x1="60" y1="84" x2="12" y2="84" stroke="#d97706" stroke-width="3" marker-end="url(#w3-g)"/>
+              <text x="14" y="76" font-size="13" font-weight="700" fill="#d97706">f_k</text>
+            </svg>
+            <div class="text-sm">
+              <p class="font-semibold mb-1">Cek dengan M₁</p>
+              $$T - f_k = m_1 a$$
+              $$16 - 8 = 8 = 4 \cdot 2 \ ✓$$
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-2">Langkah C · Evaluasi pernyataan</h4>
+      <div class="space-y-2 text-sm">
+        <div class="flex gap-3 rounded-xl border border-slate-200 p-3">
+          <span class="h-fit px-2 py-1 rounded bg-red-100 text-red-800 text-xs font-bold shrink-0">P1 · SALAH</span>
+          <span>$T = 16$ N, sedangkan $w_2 = 20$ N. Karena M₂ dipercepat ke bawah, $T &lt; m_2 g$. $T = m_2 g$ hanya berlaku jika M₂ diam atau bergerak dengan kecepatan tetap.</span>
+        </div>
+        <div class="flex gap-3 rounded-xl border border-slate-200 p-3">
+          <span class="h-fit px-2 py-1 rounded bg-green-100 text-green-800 text-xs font-bold shrink-0">P2 · BENAR</span>
+          <span>Bentuk umum: $$a = \frac{m_2 g - \mu_k m_1 g}{m_1 + m_2}$$ Menambah $m_1$ membuat pembilang <b>mengecil</b> (gesekan naik) sekaligus penyebut <b>membesar</b>. Kedua efek menurunkan $a$. Contoh: $m_1 = 6$ kg → $a = \frac{20-12}{8} = 1\ \text{m/s}^2$. Bila $m_1$ terus ditambah sampai $\mu_s m_1 g \ge m_2 g$, sistem bahkan berhenti ($a = 0$) — tetap “menurun”.</span>
+        </div>
+        <div class="flex gap-3 rounded-xl border border-slate-200 p-3">
+          <span class="h-fit px-2 py-1 rounded bg-red-100 text-red-800 text-xs font-bold shrink-0">P3 · SALAH</span>
+          <span>Percepatannya sama, tetapi massanya berbeda: $\Sigma F_1 = m_1 a = 8$ N dan $\Sigma F_2 = m_2 a = 4$ N. Yang sama besar adalah <b>tegangan tali</b> dan <b>percepatan</b>, bukan resultan gaya.</span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Miskonsepsi -->
+  <section id="miskonsepsi" class="scroll-mt-24">
+    <h2 class="text-xl font-bold mb-3 flex items-center gap-2">Waspada Miskonsepsi <span class="px-2 py-0.5 rounded-full bg-red-600 text-white text-xs font-bold">PENTING</span></h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="rounded-2xl border-2 border-red-300 bg-red-50 p-5">
+        <span class="inline-block px-2 py-1 rounded-full bg-red-600 text-white text-xs font-bold mb-2">Miskonsepsi #1 · Fatal</span>
+        <h3 class="font-bold text-red-900 mb-2">“Tegangan tali = berat beban yang menggantung”</h3>
+        <p class="text-sm text-red-900 mb-2">Siswa langsung menulis $T = m_2 g$ padahal M₂ sedang <b>bergerak turun dipercepat</b>. Jika $T = m_2 g$, resultan gaya pada M₂ nol dan M₂ tidak akan dipercepat.</p>
+        <div class="bg-white rounded-lg p-3 text-sm border border-red-200">
+          $$T = m_2(g - a) = 2(10-2) = 16\ \text{N} \neq 20\ \text{N}$$
+        </div>
+        <p class="text-xs text-red-800 mt-2"><b>Cara menegur:</b> “Kalau T = 20 N, apa yang menarik M₂ ke bawah lebih kuat dari tali?”</p>
+      </div>
+      <div class="rounded-2xl border-2 border-red-300 bg-red-50 p-5">
+        <span class="inline-block px-2 py-1 rounded-full bg-red-600 text-white text-xs font-bold mb-2">Miskonsepsi #2</span>
+        <h3 class="font-bold text-red-900 mb-2">“Resultan gaya = gaya terbesar / gaya yang diberikan”</h3>
+        <p class="text-sm text-red-900 mb-2">$\Sigma F$ adalah jumlah <b>vektor</b> semua gaya pada <b>satu benda</b>, bukan satu gaya individual. Contoh di pertemuan ini:</p>
+        <ul class="text-sm text-red-900 space-y-1 list-disc pl-5">
+          <li>Slide 4: $F = 30$ N, tetapi $\Sigma F_A = 30 - 10 = 20$ N.</li>
+          <li>Worksheet 2: tiap benda punya $\Sigma F$ sendiri — $\Sigma F_1 = 8$ N, $\Sigma F_2 = 4$ N.</li>
+          <li>Worksheet 1: mobil diam → $\Sigma F = 0$, walaupun ada gaya 12.000 N dan 16.000 N.</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-red-200 bg-white p-5">
+        <span class="inline-block px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs font-bold mb-2">Tambahan</span>
+        <h3 class="font-semibold mb-1">$f_s$ selalu $= \mu_s N$</h3>
+        <p class="text-sm text-slate-700">$\mu_s N$ hanyalah nilai <b>maksimum</b>. Saat benda diam, $f_s$ sebesar yang diperlukan untuk menyeimbangkan (Worksheet 1: 12.000 N).</p>
+      </div>
+      <div class="rounded-2xl border border-red-200 bg-white p-5">
+        <span class="inline-block px-2 py-1 rounded-full bg-red-100 text-red-800 text-xs font-bold mb-2">Tambahan</span>
+        <h3 class="font-semibold mb-1">N dan w pasangan aksi-reaksi</h3>
+        <p class="text-sm text-slate-700">Keduanya bekerja pada benda yang sama. $N = w$ hanya kebetulan pada kondisi seimbang di bidang datar (Slide 3).</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="text-xs text-slate-400 text-center pt-4 pb-8">Panduan Guru · Pertemuan 3 · Drilling TKA Fisika</footer>
+</main>
+</body>
+</html>
