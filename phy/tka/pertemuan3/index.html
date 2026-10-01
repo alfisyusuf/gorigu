@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TKA Fisika – Pertemuan 3</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .slide { display: none; }
+  .slide.active { display: flex; animation: fadeIn .35s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  .opt input:checked + span.box { background: #1e293b; border-color: #1e293b; }
+  .opt input:checked + span.box::after { content: "✓"; color: white; font-size: 1.1rem; font-weight: 700; }
+  .opt.correct { border-color: #16a34a !important; background: #f0fdf4; }
+  .opt.wrong { border-color: #dc2626 !important; background: #fef2f2; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+<div class="min-h-screen flex flex-col">
+
+  <!-- Top bar -->
+  <header class="flex items-center justify-between px-8 py-4 border-b border-slate-200 bg-white">
+    <div class="flex items-center gap-3">
+      <span class="inline-block w-3 h-3 rounded-full bg-blue-600"></span>
+      <span class="font-semibold text-slate-700 tracking-wide">TKA Fisika · Pertemuan 3 · Dinamika</span>
+    </div>
+    <span id="counter" class="text-slate-500 font-mono text-lg">1 / 4</span>
+  </header>
+
+  <main class="flex-1 flex">
+
+    <!-- ============ SLIDE 1 : JUDUL ============ -->
+    <section class="slide active flex-1 flex-col items-center justify-center text-center px-10">
+      <p class="uppercase tracking-[0.3em] text-blue-600 font-semibold text-xl mb-6">Persiapan Tes Kemampuan Akademik</p>
+      <h1 class="text-6xl md:text-7xl font-extrabold text-slate-900 leading-tight max-w-5xl">
+        TKA Fisika – Analisis Dinamika &amp; Hukum Newton
+      </h1>
+      <div class="mt-10 flex flex-wrap justify-center gap-3 text-xl">
+        <span class="px-4 py-2 rounded-full bg-blue-50 text-blue-700 border border-blue-200">Hukum Newton I, II, III</span>
+        <span class="px-4 py-2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Gaya Kontak &amp; Gesek</span>
+        <span class="px-4 py-2 rounded-full bg-amber-50 text-amber-700 border border-amber-200">Kesetimbangan</span>
+      </div>
+      <p class="mt-12 text-2xl text-slate-500">Fokus: Kognitif Level 3 — Analisis &amp; Evaluasi Sistem</p>
+    </section>
+
+    <!-- ============ SLIDE 2 : LIFT ============ -->
+    <section class="slide flex-1 items-center justify-center px-10 py-8 gap-12">
+      <div class="w-[38%] flex justify-center">
+        <svg viewBox="0 0 420 440" class="w-full max-w-md" aria-label="Orang di dalam lift yang bergerak naik dipercepat">
+          <defs>
+            <marker id="s2-blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+            <marker id="s2-red" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+            <marker id="s2-green" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#16a34a"/></marker>
+          </defs>
+          <!-- shaft -->
+          <line x1="90" y1="0" x2="90" y2="440" stroke="#cbd5e1" stroke-width="3"/>
+          <line x1="310" y1="0" x2="310" y2="440" stroke="#cbd5e1" stroke-width="3"/>
+          <!-- cable -->
+          <line x1="200" y1="0" x2="200" y2="70" stroke="#475569" stroke-width="3"/>
+          <!-- cabin -->
+          <rect x="105" y="70" width="190" height="300" rx="6" fill="#f8fafc" stroke="#334155" stroke-width="4"/>
+          <line x1="105" y1="350" x2="295" y2="350" stroke="#334155" stroke-width="4"/>
+          <!-- person -->
+          <circle cx="185" cy="170" r="20" fill="none" stroke="#0f172a" stroke-width="4"/>
+          <line x1="185" y1="190" x2="185" y2="275" stroke="#0f172a" stroke-width="4"/>
+          <line x1="185" y1="210" x2="160" y2="250" stroke="#0f172a" stroke-width="4"/>
+          <line x1="185" y1="210" x2="210" y2="250" stroke="#0f172a" stroke-width="4"/>
+          <line x1="185" y1="275" x2="165" y2="350" stroke="#0f172a" stroke-width="4"/>
+          <line x1="185" y1="275" x2="205" y2="350" stroke="#0f172a" stroke-width="4"/>
+          <circle cx="185" cy="240" r="5" fill="#0f172a"/>
+          <!-- N (longer) -->
+          <line x1="245" y1="345" x2="245" y2="150" stroke="#2563eb" stroke-width="5" marker-end="url(#s2-blue)"/>
+          <text x="255" y="170" font-size="26" font-weight="700" fill="#2563eb">N</text>
+          <!-- w (shorter) -->
+          <line x1="140" y1="240" x2="140" y2="335" stroke="#dc2626" stroke-width="5" marker-end="url(#s2-red)"/>
+          <text x="116" y="330" font-size="26" font-weight="700" fill="#dc2626">w</text>
+          <!-- acceleration -->
+          <line x1="360" y1="290" x2="360" y2="150" stroke="#16a34a" stroke-width="5" marker-end="url(#s2-green)"/>
+          <text x="372" y="215" font-size="26" font-weight="700" fill="#16a34a">a</text>
+          <text x="330" y="320" font-size="16" fill="#16a34a">naik</text>
+          <!-- caption -->
+          <text x="200" y="410" font-size="18" text-anchor="middle" fill="#64748b">Panjang panah ∝ besar gaya: N &gt; w</text>
+        </svg>
+      </div>
+      <div class="w-[55%]">
+        <span class="inline-block px-4 py-1 rounded-full bg-blue-100 text-blue-700 font-semibold text-lg mb-4">Pemantik · Hukum Newton II</span>
+        <h2 class="text-5xl font-bold text-slate-900 leading-tight mb-8">Lift mulai bergerak naik dengan percepatan <span class="text-emerald-600">a</span></h2>
+        <div class="rounded-2xl bg-white border-l-8 border-blue-600 shadow-sm p-8">
+          <p class="text-3xl leading-relaxed text-slate-800">
+            Mengapa saat lift baru mulai bergerak naik, tubuh kita terasa <b>lebih berat</b>?
+          </p>
+          <p class="text-3xl leading-relaxed text-slate-800 mt-4">Apakah <b>massa</b> kita bertambah?</p>
+        </div>
+        <div class="mt-8 grid grid-cols-2 gap-4 text-2xl">
+          <div class="rounded-xl bg-blue-50 border border-blue-200 p-4"><b class="text-blue-700">N</b> = gaya lantai lift mendorong kaki</div>
+          <div class="rounded-xl bg-red-50 border border-red-200 p-4"><b class="text-red-700">w</b> = gaya tarik Bumi (m·g)</div>
+        </div>
+        <button onclick="toggle('hint2')" class="mt-8 px-6 py-3 rounded-xl bg-slate-900 text-white text-xl hover:bg-slate-700">Petunjuk Diskusi</button>
+        <div id="hint2" class="hidden mt-4 rounded-xl bg-amber-50 border border-amber-200 p-5 text-2xl leading-relaxed">
+          Tuliskan ΣF = m·a untuk orang tersebut (arah atas positif):<br>
+          <span class="font-mono">N − w = m·a  →  N = m(g + a)</span><br>
+          Yang kita “rasakan” sebagai berat adalah <b>N</b>, bukan w. Massa tetap!
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 3 : AKSI-REAKSI ============ -->
+    <section class="slide flex-1 items-center justify-center px-10 py-8 gap-12">
+      <div class="w-[40%] flex justify-center">
+        <svg viewBox="0 0 440 380" class="w-full max-w-lg" aria-label="Buku di atas meja dengan gaya normal dan gaya berat">
+          <defs>
+            <marker id="s3-blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+            <marker id="s3-red" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+            <marker id="s3-gray" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker>
+          </defs>
+          <!-- table -->
+          <rect x="40" y="230" width="360" height="18" fill="#e2e8f0" stroke="#334155" stroke-width="3"/>
+          <line x1="70" y1="248" x2="70" y2="360" stroke="#334155" stroke-width="6"/>
+          <line x1="370" y1="248" x2="370" y2="360" stroke="#334155" stroke-width="6"/>
+          <!-- book -->
+          <rect x="150" y="185" width="140" height="45" rx="3" fill="#fff" stroke="#0f172a" stroke-width="3"/>
+          <line x1="160" y1="197" x2="280" y2="197" stroke="#cbd5e1" stroke-width="2"/>
+          <line x1="160" y1="207" x2="280" y2="207" stroke="#cbd5e1" stroke-width="2"/>
+          <line x1="160" y1="217" x2="280" y2="217" stroke="#cbd5e1" stroke-width="2"/>
+          <text x="220" y="175" font-size="18" text-anchor="middle" fill="#334155">Buku</text>
+          <!-- N on book -->
+          <line x1="250" y1="228" x2="250" y2="90" stroke="#2563eb" stroke-width="5" marker-end="url(#s3-blue)"/>
+          <text x="262" y="110" font-size="26" font-weight="700" fill="#2563eb">N</text>
+          <!-- w on book -->
+          <line x1="190" y1="208" x2="190" y2="340" stroke="#dc2626" stroke-width="5" marker-end="url(#s3-red)"/>
+          <text x="160" y="330" font-size="26" font-weight="700" fill="#dc2626">w</text>
+          <!-- reaction pair (revealed) -->
+          <g id="reactionPair" style="display:none">
+            <line x1="320" y1="232" x2="320" y2="300" stroke="#94a3b8" stroke-width="4" stroke-dasharray="6 4" marker-end="url(#s3-gray)"/>
+            <text x="330" y="300" font-size="17" fill="#64748b">N′ (buku menekan meja)</text>
+          </g>
+        </svg>
+      </div>
+      <div class="w-[55%]">
+        <span class="inline-block px-4 py-1 rounded-full bg-violet-100 text-violet-700 font-semibold text-lg mb-4">Pemantik · Hukum Newton III</span>
+        <h2 class="text-5xl font-bold text-slate-900 leading-tight mb-8">Buku diam di atas meja</h2>
+        <div class="rounded-2xl bg-white border-l-8 border-violet-600 shadow-sm p-8">
+          <p class="text-3xl leading-relaxed">
+            Banyak yang mengira Gaya Normal (<b class="text-blue-700">N</b>) dan Gaya Berat (<b class="text-red-700">w</b>) adalah pasangan <b>Aksi-Reaksi</b>.
+          </p>
+          <p class="text-3xl leading-relaxed mt-4">Benarkah demikian? Mari kita buktikan.</p>
+        </div>
+        <button onclick="revealAR()" id="btnAR" class="mt-8 px-6 py-3 rounded-xl bg-violet-700 text-white text-xl hover:bg-violet-600">Ungkap Jawaban</button>
+        <div id="ans3" class="hidden mt-6 space-y-4">
+          <div class="rounded-xl bg-rose-50 border border-rose-300 p-5 text-2xl leading-relaxed">
+            <b class="text-rose-700">BUKAN aksi-reaksi.</b> N dan w sama-sama bekerja pada <b>benda yang sama</b> (buku). Pasangan aksi-reaksi selalu bekerja pada <b>dua benda berbeda</b>.
+          </div>
+          <table class="w-full text-xl border-collapse bg-white rounded-xl overflow-hidden">
+            <thead><tr class="bg-slate-100"><th class="p-3 text-left">Gaya pada buku</th><th class="p-3 text-left">Pasangan reaksinya yang benar</th></tr></thead>
+            <tbody>
+              <tr class="border-t"><td class="p-3"><b class="text-blue-700">N</b>: meja mendorong buku ke atas</td><td class="p-3">N′: buku menekan meja ke bawah</td></tr>
+              <tr class="border-t"><td class="p-3"><b class="text-red-700">w</b>: Bumi menarik buku ke bawah</td><td class="p-3">Buku menarik Bumi ke atas</td></tr>
+            </tbody>
+          </table>
+          <p class="text-xl text-slate-600">N = w di sini karena <b>Hukum Newton I</b> (buku diam, ΣF = 0) — bukan karena Hukum III.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SLIDE 4 : PGK ============ -->
+    <section class="slide flex-1 flex-col px-10 py-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="px-4 py-1 rounded-full bg-amber-100 text-amber-800 font-semibold text-lg">Soal Interaktif · PGK</span>
+        <span class="px-4 py-1 rounded-full bg-slate-200 text-slate-700 font-semibold text-lg">Level 3 · Analisis Sistem</span>
+      </div>
+      <div class="flex gap-10 items-start">
+        <div class="w-[38%]">
+          <p class="text-2xl leading-relaxed mb-4">
+            Balok A (<b>4 kg</b>) dan balok B (<b>2 kg</b>) diletakkan bersentuhan di atas lantai <b>licin</b>. Gaya mendatar <b>F = 30 N</b> mendorong sistem dari sisi balok A.
+          </p>
+          <svg viewBox="0 0 420 240" class="w-full bg-white rounded-2xl border border-slate-200" aria-label="Dua balok bersentuhan didorong gaya F dari sisi A">
+            <defs>
+              <marker id="s4-arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0f172a"/></marker>
+            </defs>
+            <line x1="20" y1="200" x2="400" y2="200" stroke="#334155" stroke-width="3"/>
+            <text x="300" y="225" font-size="15" fill="#64748b">lantai licin</text>
+            <rect x="130" y="90" width="120" height="110" fill="#dbeafe" stroke="#1e3a8a" stroke-width="3"/>
+            <text x="190" y="140" font-size="30" font-weight="700" text-anchor="middle" fill="#1e3a8a">A</text>
+            <text x="190" y="170" font-size="18" text-anchor="middle" fill="#1e3a8a">4 kg</text>
+            <rect x="250" y="130" width="80" height="70" fill="#fef3c7" stroke="#92400e" stroke-width="3"/>
+            <text x="290" y="162" font-size="26" font-weight="700" text-anchor="middle" fill="#92400e">B</text>
+            <text x="290" y="187" font-size="16" text-anchor="middle" fill="#92400e">2 kg</text>
+            <line x1="35" y1="150" x2="126" y2="150" stroke="#0f172a" stroke-width="5" marker-end="url(#s4-arr)"/>
+            <text x="60" y="138" font-size="22" font-weight="700" fill="#0f172a">F = 30 N</text>
+          </svg>
+        </div>
+        <div class="w-[60%]">
+          <p class="text-2xl font-semibold mb-4">Pilih <u>SETIAP</u> pernyataan yang tepat mengenai perbandingan gaya kontak dan percepatan sistem.</p>
+          <div id="pgk" class="space-y-3 text-xl">
+            <label class="opt flex items-start gap-4 p-4 rounded-xl border-2 border-slate-200 bg-white cursor-pointer" data-correct="1">
+              <input type="checkbox" class="sr-only"><span class="box mt-1 shrink-0 w-7 h-7 rounded-md border-2 border-slate-400 flex items-center justify-center"></span>
+              <span><b>(A)</b> Percepatan balok A sama dengan percepatan balok B.</span>
+            </label>
+            <label class="opt flex items-start gap-4 p-4 rounded-xl border-2 border-slate-200 bg-white cursor-pointer" data-correct="0">
+              <input type="checkbox" class="sr-only"><span class="box mt-1 shrink-0 w-7 h-7 rounded-md border-2 border-slate-400 flex items-center justify-center"></span>
+              <span><b>(B)</b> Gaya kontak yang dikerjakan A pada B sama dengan F, yaitu 30 N.</span>
+            </label>
+            <label class="opt flex items-start gap-4 p-4 rounded-xl border-2 border-slate-200 bg-white cursor-pointer" data-correct="1">
+              <input type="checkbox" class="sr-only"><span class="box mt-1 shrink-0 w-7 h-7 rounded-md border-2 border-slate-400 flex items-center justify-center"></span>
+              <span><b>(C)</b> Gaya kontak A pada B sama besar dengan gaya kontak B pada A, meskipun massa A lebih besar.</span>
+            </label>
+            <label class="opt flex items-start gap-4 p-4 rounded-xl border-2 border-slate-200 bg-white cursor-pointer" data-correct="1">
+              <input type="checkbox" class="sr-only"><span class="box mt-1 shrink-0 w-7 h-7 rounded-md border-2 border-slate-400 flex items-center justify-center"></span>
+              <span><b>(D)</b> Jika gaya F yang sama didorongkan dari sisi B, gaya kontak antarbalok menjadi lebih besar.</span>
+            </label>
+            <label class="opt flex items-start gap-4 p-4 rounded-xl border-2 border-slate-200 bg-white cursor-pointer" data-correct="0">
+              <input type="checkbox" class="sr-only"><span class="box mt-1 shrink-0 w-7 h-7 rounded-md border-2 border-slate-400 flex items-center justify-center"></span>
+              <span><b>(E)</b> Resultan gaya yang bekerja pada balok A adalah 30 N.</span>
+            </label>
+          </div>
+          <div class="mt-5 flex gap-3">
+            <button onclick="showAnalysis()" class="px-6 py-3 rounded-xl bg-amber-500 text-white text-xl font-semibold hover:bg-amber-600">Tampilkan Analisis</button>
+            <button onclick="resetPGK()" class="px-6 py-3 rounded-xl border-2 border-slate-300 text-xl hover:bg-slate-100">Ulangi</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Nav -->
+  <footer class="flex items-center justify-between px-8 py-4 border-t border-slate-200 bg-white">
+    <button id="prev" class="px-6 py-3 rounded-xl border-2 border-slate-300 text-xl font-semibold disabled:opacity-30 hover:bg-slate-100">← Prev</button>
+    <div id="dots" class="flex gap-3"></div>
+    <button id="next" class="px-6 py-3 rounded-xl bg-blue-600 text-white text-xl font-semibold disabled:opacity-30 hover:bg-blue-700">Next →</button>
+  </footer>
+</div>
+
+<!-- Analysis overlay -->
+<div id="overlay" class="hidden fixed inset-0 bg-slate-900/60 flex items-center justify-center p-6 z-50" onclick="if(event.target===this) closeAnalysis()">
+  <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[90vh] overflow-auto p-10 shadow-2xl">
+    <div class="flex justify-between items-start mb-6">
+      <h3 class="text-4xl font-bold">Analisis Jawaban</h3>
+      <button onclick="closeAnalysis()" class="text-3xl text-slate-400 hover:text-slate-700 leading-none">✕</button>
+    </div>
+    <div class="flex flex-wrap gap-3 mb-6 text-xl">
+      <span class="px-4 py-2 rounded-full bg-green-100 text-green-800 font-semibold">Kunci: A, C, D</span>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6 text-xl leading-relaxed">
+      <div class="rounded-2xl bg-slate-50 p-6 space-y-2">
+        <p class="font-semibold text-slate-500 uppercase tracking-wide text-base">1 · Sistem (A+B)</p>
+        <p class="font-mono text-2xl">a = F / (m<sub>A</sub>+m<sub>B</sub>)</p>
+        <p class="font-mono text-2xl">a = 30 / 6 = <b>5 m/s²</b></p>
+        <p class="font-semibold text-slate-500 uppercase tracking-wide text-base pt-3">2 · Tinjau B saja</p>
+        <p class="font-mono text-2xl">P = m<sub>B</sub>·a = 2·5 = <b>10 N</b></p>
+        <p class="font-semibold text-slate-500 uppercase tracking-wide text-base pt-3">3 · Cek pada A</p>
+        <p class="font-mono text-2xl">ΣF<sub>A</sub> = F − P = 20 N = m<sub>A</sub>·a ✓</p>
+      </div>
+      <div class="space-y-3">
+        <p><b class="text-green-700">(A) Benar</b> — kedua balok bergerak bersama, jadi a sama.</p>
+        <p><b class="text-red-700">(B) Salah</b> — gaya kontak hanya 10 N; F “terbagi” karena sebagian dipakai mempercepat A.</p>
+        <p><b class="text-green-700">(C) Benar</b> — pasangan aksi-reaksi (Hukum III), tidak bergantung massa.</p>
+        <p><b class="text-green-700">(D) Benar</b> — dorong dari sisi B: P′ = m<sub>A</sub>·a = 4·5 = 20 N &gt; 10 N.</p>
+        <p><b class="text-red-700">(E) Salah</b> — ΣF<sub>A</sub> = 20 N, bukan 30 N. Resultan ≠ gaya individual.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const counter = document.getElementById('counter');
+  const dots = document.getElementById('dots');
+  let current = 0;
+
+  slides.forEach((_, k) => {
+    const d = document.createElement('button');
+    d.className = 'w-3 h-3 rounded-full bg-slate-300';
+    d.setAttribute('aria-label', 'Slide ' + (k + 1));
+    d.onclick = () => show(k);
+    dots.appendChild(d);
+  });
+
+  function show(n) {
+    current = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === current));
+    Array.from(dots.children).forEach((d, k) => {
+      d.className = 'w-3 h-3 rounded-full ' + (k === current ? 'bg-blue-600 scale-125' : 'bg-slate-300');
+    });
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+  }
+  prevBtn.onclick = () => show(current - 1);
+  nextBtn.onclick = () => show(current + 1);
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('overlay').classList.contains('hidden')) {
+      if (e.key === 'Escape') closeAnalysis();
+      return;
+    }
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') show(current + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(current - 1);
+  });
+
+  function toggle(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+  function revealAR() {
+    const ans = document.getElementById('ans3');
+    const pair = document.getElementById('reactionPair');
+    const btn = document.getElementById('btnAR');
+    const hidden = ans.classList.toggle('hidden');
+    pair.style.display = hidden ? 'none' : 'inline';
+    btn.textContent = hidden ? 'Ungkap Jawaban' : 'Sembunyikan Jawaban';
+  }
+
+  function showAnalysis() {
+    document.querySelectorAll('#pgk .opt').forEach(o => {
+      const isCorrect = o.dataset.correct === '1';
+      const chosen = o.querySelector('input').checked;
+      o.classList.remove('correct', 'wrong');
+      if (isCorrect) o.classList.add('correct');
+      else if (chosen) o.classList.add('wrong');
+    });
+    document.getElementById('overlay').classList.remove('hidden');
+  }
+  function closeAnalysis() { document.getElementById('overlay').classList.add('hidden'); }
+  function resetPGK() {
+    document.querySelectorAll('#pgk .opt').forEach(o => {
+      o.classList.remove('correct', 'wrong');
+      o.querySelector('input').checked = false;
+    });
+  }
+
+  show(0);
+</script>
+</body>
+</html>
