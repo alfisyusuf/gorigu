@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drilling TKA Fisika #4 – Momentum & Impuls</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 20mm; }
+  body { font-family: 'Merriweather', Georgia, serif; line-height: 1.85; }
+  .sans { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+  .sheet { width: 210mm; min-height: 297mm; padding: 20mm; margin: 24px auto; background: #fff; box-shadow: 0 4px 24px rgba(15,23,42,.08); border-radius: 12px; }
+  .box { width: 22px; height: 22px; border: 2px solid #475569; border-radius: 5px; display: inline-block; flex-shrink: 0; margin-top: 4px; }
+  .circle { width: 24px; height: 24px; border: 2px solid #475569; border-radius: 999px; display: inline-block; }
+  .writing-line { border-bottom: 1px dashed #cbd5e1; height: 2.1em; }
+  .avoid-break { break-inside: avoid; page-break-inside: avoid; }
+  @media print {
+    body { background: #fff !important; }
+    .sheet { width: auto; min-height: auto; padding: 0; margin: 0; box-shadow: none; border-radius: 0; }
+    .no-print { display: none !important; }
+    .page-break { break-before: page; page-break-before: always; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+<div class="no-print sans max-w-[210mm] mx-auto mt-6 flex items-center justify-between px-2">
+  <p class="text-slate-500">Pratinjau A4 · siap cetak</p>
+  <button onclick="window.print()" class="rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold px-5 py-2">🖨️ Cetak</button>
+</div>
+
+<div class="sheet">
+
+  <!-- Header -->
+  <header class="border-b-2 border-slate-300 pb-4 mb-6">
+    <p class="sans text-sm font-semibold tracking-wide text-teal-700 uppercase">Lembar Kerja Siswa</p>
+    <h1 class="text-2xl font-bold mt-1">Drilling TKA Fisika #4 – Momentum &amp; Impuls</h1>
+    <div class="grid grid-cols-3 gap-6 mt-5 text-base">
+      <div class="col-span-2 flex items-end gap-2"><span>Nama</span><span class="flex-1 border-b border-slate-400 h-6"></span></div>
+      <div class="flex items-end gap-2"><span>Kelas</span><span class="flex-1 border-b border-slate-400 h-6"></span></div>
+    </div>
+  </header>
+
+  <!-- Kotak pengingat -->
+  <section class="avoid-break border-2 border-dashed border-teal-400 bg-teal-50 rounded-xl p-5 mb-8">
+    <p class="sans font-bold text-teal-800 text-lg mb-2">💡 Lupa rumus? Tenang, ini senjatamu:</p>
+    <ul class="space-y-2 text-base">
+      <li><b>Momentum:</b> &nbsp;p = m × v &nbsp;<span class="text-slate-600">(Perhatikan arah! Gerak ke kiri → beri tanda <b>minus</b>.)</span></li>
+      <li><b>Impuls:</b> &nbsp;I = F × Δt = Δp &nbsp;<span class="text-slate-600">(Gaya × selang waktu = perubahan momentum)</span></li>
+      <li><b>Hukum Kekekalan:</b> &nbsp;Total p awal = Total p akhir</li>
+      <li><b>Menempel setelah tumbukan?</b> &nbsp;m₁v₁ + m₂v₂ = (m₁ + m₂)v′ &nbsp;dan &nbsp;e = 0</li>
+    </ul>
+  </section>
+
+  <!-- Soal 1 -->
+  <section class="avoid-break mb-8">
+    <div class="flex items-center gap-3 mb-3 sans">
+      <span class="rounded-lg bg-blue-100 text-blue-800 font-bold px-3 py-1">Soal 1</span>
+      <span class="text-sm text-slate-500">Pilihan Ganda Kompleks · Level 3</span>
+    </div>
+    <div class="flex gap-5 items-start">
+      <p class="flex-1">Dalam pertandingan tinju resmi, petinju wajib memakai sarung tinju yang tebal dan empuk. Pukulan seorang petinju bisa membuat kepalan tangannya bergerak sangat cepat sebelum berhenti di tubuh lawan. Jika pukulan dilakukan tanpa sarung tinju, risiko cedera serius jauh lebih besar walaupun kecepatan pukulannya sama.</p>
+      <svg viewBox="0 0 120 100" class="w-28 shrink-0" aria-hidden="true">
+        <path d="M30,30 Q30,12 52,12 L82,12 Q104,12 104,36 L104,60 Q104,80 82,80 L46,80 Q30,80 30,64 Z" fill="#fecaca" stroke="#f87171" stroke-width="3"/>
+        <path d="M30,40 Q16,40 16,54 Q16,66 30,66" fill="#fecaca" stroke="#f87171" stroke-width="3"/>
+        <rect x="40" y="80" width="50" height="16" rx="5" fill="#e2e8f0" stroke="#94a3b8" stroke-width="3"/>
+        <path d="M60,26 Q76,24 88,30" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="mt-3"><b>Pilih SETIAP pernyataan</b> di bawah ini yang menjelaskan secara tepat prinsip fisika di balik penggunaan sarung tinju tebal untuk mengurangi risiko cedera.</p>
+    <p class="sans text-sm text-slate-500 mt-1">Jawaban benar bisa lebih dari satu. Beri tanda ✓ pada kotak.</p>
+    <div class="space-y-3 mt-4">
+      <div class="flex gap-3"><span class="box"></span><p><b>A.</b> Bantalan sarung tinju memperpanjang selang waktu kontak antara kepalan tangan dan tubuh lawan.</p></div>
+      <div class="flex gap-3"><span class="box"></span><p><b>B.</b> Sarung tinju tebal memperkecil perubahan momentum kepalan tangan ketika mengenai sasaran hingga berhenti.</p></div>
+      <div class="flex gap-3"><span class="box"></span><p><b>C.</b> Untuk perubahan momentum yang kurang lebih sama, gaya rata-rata yang diterima tubuh lawan menjadi lebih kecil.</p></div>
+      <div class="flex gap-3"><span class="box"></span><p><b>D.</b> Sarung tinju tebal memperbesar impuls yang diterima lawan sehingga gaya benturnya berkurang.</p></div>
+    </div>
+    <p class="sans text-sm text-slate-500 mt-4">🧭 Petunjuk berpikir: dari rumus F = Δp / Δt, besaran mana yang diubah oleh sarung tinju?</p>
+  </section>
+
+  <!-- Soal 2 -->
+  <section class="avoid-break page-break mb-8">
+    <div class="flex items-center gap-3 mb-3 sans">
+      <span class="rounded-lg bg-amber-100 text-amber-800 font-bold px-3 py-1">Soal 2</span>
+      <span class="text-sm text-slate-500">Matriks Benar/Salah · Level 3</span>
+    </div>
+    <p>Mobil Boks bermassa <b>2.000 kg</b> melaju dengan kecepatan <b>10 m/s</b> menabrak Mobil Sedan bermassa <b>1.000 kg</b> yang sedang <b>diam</b>. Setelah bertumbukan, keduanya <b>menempel</b> dan bergerak bersama.</p>
+
+    <svg viewBox="0 0 420 90" class="w-full max-w-md mx-auto my-4" aria-hidden="true">
+      <line x1="0" y1="80" x2="420" y2="80" stroke="#cbd5e1" stroke-width="2"/>
+      <rect x="20" y="12" width="110" height="52" rx="8" fill="#dbeafe" stroke="#60a5fa" stroke-width="2.5"/>
+      <rect x="132" y="28" width="44" height="36" rx="8" fill="#bfdbfe" stroke="#60a5fa" stroke-width="2.5"/>
+      <circle cx="52" cy="68" r="11" fill="#64748b"/><circle cx="152" cy="68" r="11" fill="#64748b"/>
+      <text x="75" y="44" text-anchor="middle" font-size="13" fill="#1e40af" font-family="sans-serif">Boks 2.000 kg</text>
+      <line x1="186" y1="22" x2="222" y2="22" stroke="#2563eb" stroke-width="3"/><path d="M222,17 L231,22 L222,27 Z" fill="#2563eb"/>
+      <text x="208" y="14" text-anchor="middle" font-size="12" fill="#1e40af" font-family="sans-serif">10 m/s</text>
+      <path d="M268,64 L268,50 Q270,44 278,43 L292,42 L304,30 Q306,28 312,28 L346,28 Q350,28 353,32 L362,42 L372,44 Q378,46 378,52 L378,64 Z" fill="#ccfbf1" stroke="#14b8a6" stroke-width="2.5"/>
+      <circle cx="292" cy="68" r="11" fill="#64748b"/><circle cx="356" cy="68" r="11" fill="#64748b"/>
+      <text x="323" y="58" text-anchor="middle" font-size="12" fill="#115e59" font-family="sans-serif">Sedan 1.000 kg (diam)</text>
+    </svg>
+
+    <p>Tentukan apakah setiap kondisi berikut <b>Benar (B)</b> atau <b>Salah (S)</b>.</p>
+    <table class="w-full mt-3 border border-slate-300 text-base">
+      <thead class="sans bg-slate-100">
+        <tr>
+          <th class="border border-slate-300 py-2 px-3 w-12">No</th>
+          <th class="border border-slate-300 py-2 px-3 text-left">Kondisi</th>
+          <th class="border border-slate-300 py-2 px-3 w-20">Benar</th>
+          <th class="border border-slate-300 py-2 px-3 w-20">Salah</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="border border-slate-300 text-center py-4">A</td><td class="border border-slate-300 px-3 py-4">Setelah tumbukan, kecepatan kedua mobil menjadi sama besar.</td><td class="border border-slate-300 text-center"><span class="circle"></span></td><td class="border border-slate-300 text-center"><span class="circle"></span></td></tr>
+        <tr><td class="border border-slate-300 text-center py-4">B</td><td class="border border-slate-300 px-3 py-4">Momentum total sistem sebelum tumbukan lebih besar daripada sesudah tumbukan.</td><td class="border border-slate-300 text-center"><span class="circle"></span></td><td class="border border-slate-300 text-center"><span class="circle"></span></td></tr>
+        <tr><td class="border border-slate-300 text-center py-4">C</td><td class="border border-slate-300 px-3 py-4">Koefisien restitusi tumbukan tersebut bernilai nol.</td><td class="border border-slate-300 text-center"><span class="circle"></span></td><td class="border border-slate-300 text-center"><span class="circle"></span></td></tr>
+      </tbody>
+    </table>
+
+    <!-- Scaffolding -->
+    <div class="mt-6 rounded-xl border border-slate-300 p-5">
+      <p class="sans font-bold text-slate-700 mb-3">🪜 Langkah bantu (isi pelan-pelan, ya!)</p>
+      <div class="space-y-1">
+        <p>1. Momentum awal Boks = ______ × ______ = __________ kg·m/s</p>
+        <p>2. Momentum awal Sedan = ______ × ______ = __________ kg·m/s</p>
+        <p>3. Total momentum awal = __________ kg·m/s</p>
+        <p>4. Karena menempel: (______ + ______) × v′ = __________ → v′ = ________ m/s</p>
+        <p>5. Total momentum akhir = __________ kg·m/s → bandingkan dengan langkah 3!</p>
+        <p>6. Benda menempel berarti tumbukan tidak lenting sama sekali → e = ______</p>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <p class="sans font-bold text-slate-700 mb-1">✏️ Ruang coretan</p>
+      <div class="writing-line"></div><div class="writing-line"></div><div class="writing-line"></div><div class="writing-line"></div><div class="writing-line"></div>
+    </div>
+  </section>
+
+  <!-- Refleksi -->
+  <section class="avoid-break rounded-xl bg-slate-50 border border-slate-200 p-5">
+    <p class="sans font-bold text-slate-700 mb-2">🌱 Refleksi singkat</p>
+    <p>Seberapa yakin kamu dengan materi hari ini? Lingkari salah satu:</p>
+    <p class="text-2xl mt-2 tracking-[0.6em]">😟 😐 🙂 😄</p>
+    <p class="mt-2">Bagian yang masih membingungkan:</p>
+    <div class="writing-line"></div>
+  </section>
+
+</div>
+</body>
+</html>
