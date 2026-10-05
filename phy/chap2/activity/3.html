@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GGL & Analisis Loop / EMF & Loop Analysis</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          washi:  '#FFFCF7', 
+          sand:   '#F2EAE0', 
+          ink:    '#2C1A1A', 
+          maroon: { DEFAULT: '#8B1515', light: '#FCECEC', dark: '#5e0a0a' }, 
+          gold:   { DEFAULT: '#F5A623', light: '#FFF6E5', dark: '#C48215' }, 
+          green:  { DEFAULT: '#4CAF50', light: '#E8F5E9', dark: '#2E7D32' }
+        },
+        fontFamily: { sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'] },
+        boxShadow: { soft: '0 4px 20px -2px rgba(139,21,21,.08)' }
+      }
+    }
+  }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- MathJax -->
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: { typeset: true }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+  body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+  
+  /* Linter Fix & Input styling */
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+
+  /* MathJax SVG Fix */
+  mjx-container svg { display: inline !important; }
+  mjx-container[display="true"] svg { display: block !important; margin: 0 auto; }
+
+  /* Interactive Elements */
+  .answer-input { transition: all .25s; }
+  .answer-input:focus { outline: none; border-color: #8B1515; box-shadow: 0 0 0 4px rgba(139,21,21,.15); }
+  .answer-input.is-correct { background: #E8F5E9 !important; border-color: #4CAF50 !important; color: #2E7D32; }
+  .answer-input.is-wrong   { background: #FCECEC !important; border-color: #8B1515 !important; color: #8B1515; }
+
+  .level-card { transition: opacity .4s, transform .4s, box-shadow .4s; }
+  .level-card.is-locked { opacity: .55; pointer-events: none; filter: grayscale(30%); }
+  .level-card.is-active { box-shadow: 0 0 0 2px #8B1515, 0 12px 32px -16px rgba(139,21,21,.25); }
+
+  .reveal { animation: reveal .55s ease both; }
+  @keyframes reveal { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: none; } }
+  .shake { animation: shake .4s; }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+
+  .diagram svg { width: 100%; height: auto; max-width: 440px; margin: 0 auto; display: block !important; }
+</style>
+</head>
+
+<body class="bg-washi text-ink min-h-screen antialiased">
+
+  <!-- ================= HEADER ================= -->
+  <header class="sticky top-0 z-20 bg-washi/90 backdrop-blur border-b border-sand">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-maroon text-white grid place-items-center font-bold shrink-0 shadow-sm">⚡</div>
+        <div class="min-w-0">
+          <p class="text-sm font-bold leading-tight truncate text-maroon" data-i18n="headTitle">Fisika Asyik! Ep. 3</p>
+          <p class="text-xs text-ink/60 leading-tight" data-i18n="headSub">GGL & Analisis Loop</p>
+        </div>
+      </div>
+      <div id="hud" class="hidden items-center gap-2 sm:gap-3 shrink-0">
+        <div class="hidden sm:flex items-center gap-2 text-xs text-ink/60 font-medium">
+          <span data-i18n="progress">Progres</span>
+          <div class="w-24 h-2.5 rounded-full bg-sand overflow-hidden">
+            <div id="progress-bar" class="h-full bg-gold rounded-full transition-all duration-500" style="width:0%"></div>
+          </div>
+          <span id="progress-text" class="tabular-nums">0/4</span>
+        </div>
+        <div class="flex items-center gap-1.5 rounded-full bg-white border border-sand px-3 py-1.5 text-sm shadow-sm" title="Wrong Attempts">
+          <span class="text-maroon">✕</span><span id="wrong-count" class="tabular-nums font-semibold">0</span>
+        </div>
+        <div id="timer-pill" class="flex items-center gap-1.5 rounded-full bg-maroon text-white px-3 py-1.5 text-sm font-semibold tabular-nums shadow-sm">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>
+          <span id="timer">00:00</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-4 py-8 sm:py-10">
+
+    <!-- ================= START SCREEN ================= -->
+    <section id="start-screen" class="reveal relative z-10">
+      <div class="bg-white rounded-[2rem] shadow-soft border border-sand p-6 sm:p-10 relative overflow-hidden">
+        
+        <!-- Language Selector -->
+        <div class="flex justify-center gap-3 mb-8 relative z-20">
+          <button id="btn-id" onclick="setLang('id')" class="px-5 py-2.5 rounded-xl bg-maroon text-white font-bold transition-all shadow-md active:scale-95 cursor-pointer">🇮🇩 Indonesia</button>
+          <button id="btn-en" onclick="setLang('en')" class="px-5 py-2.5 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80 active:scale-95 cursor-pointer">🇬🇧 English</button>
+        </div>
+
+        <p class="text-xs uppercase tracking-[.2em] text-maroon font-bold text-center" data-i18n="startGreeting">Misi Episode 3 👋</p>
+        <h1 class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-ink text-center" data-i18n="startTitle">GGL & Hukum Kirchhoff II</h1>
+        <p class="mt-3 text-ink/70 leading-relaxed font-medium text-center max-w-xl mx-auto" data-i18n="startDesc">
+          Tantangan ini menguji pemahamanmu tentang polaritas baterai, hambatan dalam, dan analisis loop. Pastikan teliti dengan tanda plus-minus! Semua jawaban berupa <strong>bilangan bulat</strong>. 🚀
+        </p>
+
+        <!-- Kumpulan Rumus -->
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center hover:border-maroon/30 transition-colors">
+            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formEMF">GGL & Hambatan Dalam</p>
+            <div class="text-[1.05rem] text-maroon font-semibold">\[I = \frac{\varepsilon}{R + r}\]</div>
+          </div>
+          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center hover:border-maroon/30 transition-colors">
+            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formKVL">Hukum II Kirchhoff</p>
+            <div class="text-[1.05rem] text-maroon font-semibold">\[\Sigma \varepsilon + \Sigma I \cdot R = 0\]</div>
+          </div>
+          <div class="rounded-2xl bg-washi border-2 border-sand p-4 text-center hover:border-maroon/30 transition-colors sm:col-span-2">
+            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider mb-2" data-i18n="formVAB">Beda Potensial Titik A-B</p>
+            <div class="text-[1.05rem] text-maroon font-semibold">\[V_{AB} = \Sigma \varepsilon + \Sigma I \cdot R \quad \text{(Jalur A ke B)}\]</div>
+          </div>
+        </div>
+
+        <button onclick="start()" class="mt-10 mx-auto flex items-center justify-center gap-2 rounded-2xl bg-maroon hover:bg-maroon-dark text-white font-bold px-8 py-4 text-lg transition-transform hover:scale-[1.02] active:scale-95 shadow-md relative z-20 cursor-pointer">
+          <span data-i18n="startBtn">Mulai Misi Sekarang!</span>
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= LEVELS ================= -->
+    <section id="levels" class="hidden space-y-6 relative z-10"></section>
+
+    <!-- ================= SUMMARY ================= -->
+    <section id="summary" class="hidden relative z-10">
+      <div class="bg-white rounded-[2rem] shadow-soft border border-sand p-6 sm:p-10 text-center reveal relative overflow-hidden">
+        <div class="mx-auto w-20 h-20 rounded-full bg-gold-light text-gold grid place-items-center text-4xl mb-4 shadow-sm">🏆</div>
+        <p class="text-xs uppercase tracking-[.2em] text-maroon font-bold" data-i18n="sumLabel">Misi Selesai!</p>
+        <h2 id="summary-title" class="mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight">Luar Biasa!</h2>
+        <p id="summary-msg" class="mt-3 text-ink/70 font-medium text-lg"></p>
+
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+          <div class="rounded-2xl bg-washi border-2 border-sand p-5">
+            <p class="text-xs text-ink/50 font-bold uppercase tracking-wider" data-i18n="sumTime">Total Waktu</p>
+            <p id="sum-time" class="mt-2 text-4xl font-black tabular-nums text-ink">00:00</p>
+          </div>
+          <div class="rounded-2xl bg-maroon-light border-2 border-maroon/20 p-5">
+            <p class="text-xs text-maroon-dark font-bold uppercase tracking-wider" data-i18n="sumScore">Skor Akhir</p>
+            <p class="mt-2 text-4xl font-black tabular-nums text-maroon"><span id="sum-score">100</span><span class="text-lg font-bold text-maroon/60">/100</span></p>
+          </div>
+          <div class="rounded-2xl bg-gold-light border-2 border-gold/30 p-5">
+            <p class="text-xs text-gold-dark font-bold uppercase tracking-wider" data-i18n="sumWrong">Kesalahan</p>
+            <p id="sum-wrong" class="mt-2 text-4xl font-black tabular-nums text-gold-dark">0</p>
+          </div>
+        </div>
+
+        <div class="mt-8 rounded-2xl border-2 border-sand overflow-hidden text-left bg-white">
+          <table class="w-full text-sm font-medium">
+            <thead class="bg-washi text-ink/50 border-b-2 border-sand">
+              <tr>
+                <th class="px-5 py-3 text-left" data-i18n="sumTblLvl">Level</th>
+                <th class="px-5 py-3 text-right" data-i18n="sumTblErr">Percobaan Salah</th>
+              </tr>
+            </thead>
+            <tbody id="sum-table" class="divide-y-2 divide-sand"></tbody>
+          </table>
+        </div>
+
+        <button onclick="location.reload()" class="mt-10 mx-auto flex items-center justify-center gap-2 rounded-2xl bg-ink hover:bg-black text-white font-bold px-8 py-4 text-lg transition-transform hover:scale-[1.02] active:scale-95 shadow-md cursor-pointer">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>
+          <span data-i18n="sumBtn">Mainkan Lagi</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+<script>
+/* =========================================================
+   I18N (DICTIONARY & TOGGLE LOGIC)
+   ========================================================= */
+let LANG = 'id';
+
+const DICT = {
+  headTitle: { id: "Fisika Asyik! Ep. 3", en: "Physics Fun! Ep. 3" },
+  headSub: { id: "GGL & Analisis Loop", en: "EMF & Loop Analysis" },
+  progress: { id: "Progres", en: "Progress" },
+  startGreeting: { id: "Misi Episode 3 👋", en: "Episode 3 Mission 👋" },
+  startTitle: { id: "GGL & Hukum Kirchhoff II", en: "EMF & Kirchhoff's 2nd Law" },
+  startDesc: { 
+    id: "Tantangan ini menguji pemahamanmu tentang polaritas baterai, hambatan dalam, dan analisis loop. Pastikan teliti dengan tanda plus-minus! Semua jawaban berupa <strong>bilangan bulat</strong>. 🚀", 
+    en: "This challenge tests your understanding of battery polarity, internal resistance, and loop analysis. Be careful with plus-minus signs! All answers are <strong>whole numbers</strong>. 🚀" 
+  },
+  formEMF: { id: "GGL & Hambatan Dalam", en: "EMF & Internal Resistance" },
+  formKVL: { id: "Hukum II Kirchhoff", en: "Kirchhoff's Voltage Law" },
+  formVAB: { id: "Beda Potensial Titik A-B", en: "Potential Difference A-B" },
+  startBtn: { id: "Mulai Misi Sekarang!", en: "Start Mission Now!" },
+  sumLabel: { id: "Misi Selesai!", en: "Mission Complete!" },
+  sumTime: { id: "Total Waktu", en: "Total Time" },
+  sumScore: { id: "Skor Akhir", en: "Final Score" },
+  sumWrong: { id: "Kesalahan", en: "Total Mistakes" },
+  sumTblLvl: { id: "Level", en: "Level" },
+  sumTblErr: { id: "Percobaan Salah", en: "Wrong Attempts" },
+  sumBtn: { id: "Mainkan Lagi", en: "Play Again" }
+};
+
+function setLang(l) {
+  LANG = l;
+  if(l === 'id') {
+    document.getElementById('btn-id').className = "px-5 py-2.5 rounded-xl bg-maroon text-white font-bold transition-all shadow-md active:scale-95 cursor-pointer";
+    document.getElementById('btn-en').className = "px-5 py-2.5 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80 active:scale-95 cursor-pointer";
+  } else {
+    document.getElementById('btn-en').className = "px-5 py-2.5 rounded-xl bg-maroon text-white font-bold transition-all shadow-md active:scale-95 cursor-pointer";
+    document.getElementById('btn-id').className = "px-5 py-2.5 rounded-xl bg-sand text-ink/50 font-bold transition-all hover:bg-sand/80 active:scale-95 cursor-pointer";
+  }
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (DICT[key]) el.innerHTML = DICT[key][LANG];
+  });
+}
+
+/* =========================================================
+   UTILITIES & MATH
+   ========================================================= */
+const T = String.raw;
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const fmt = s => String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+
+function typeset(el) {
+  if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise(el ? [el] : undefined).catch(() => {});
+}
+
+/* =========================================================
+   SVG DRAWING SYSTEM (Tailored for Loop & EMF)
+   ========================================================= */
+const WIRE = '#2C1A1A';
+const sub = (base, s) => `${base}<tspan font-size="10" dy="4">${s}</tspan>`;
+
+function resistorH(cx, y, name, value) {
+  return `<rect x="${cx - 28}" y="${y - 11}" width="56" height="22" rx="6" fill="#FFF" stroke="${WIRE}" stroke-width="2.5"/>
+          <text x="${cx}" y="${y - 19}" text-anchor="middle" font-size="14" font-weight="700" fill="#8B1515">${name}</text>
+          <text x="${cx}" y="${y + 29}" text-anchor="middle" font-size="13" font-weight="600" fill="#2C1A1A">${value}</text>`;
+}
+function resistorV(x, cy, name, value) {
+  return `<rect x="${x - 11}" y="${cy - 28}" width="22" height="56" rx="6" fill="#FFF" stroke="${WIRE}" stroke-width="2.5"/>
+          <text x="${x - 19}" y="${cy + 5}" text-anchor="end" font-size="14" font-weight="700" fill="#8B1515">${name}</text>
+          <text x="${x + 19}" y="${cy + 5}" text-anchor="start" font-size="13" font-weight="600" fill="#2C1A1A">${value}</text>`;
+}
+// Battery: long line is positive, short thick line is negative.
+function batteryV(x, yc, label, isPositiveUp = true) {
+  const pY = isPositiveUp ? yc - 6 : yc + 6;
+  const nY = isPositiveUp ? yc + 6 : yc - 6;
+  const signY = isPositiveUp ? yc - 15 : yc + 20;
+  return `<line x1="${x - 18}" y1="${pY}" x2="${x + 18}" y2="${pY}" stroke="${WIRE}" stroke-width="3"/>
+          <line x1="${x - 10}" y1="${nY}" x2="${x + 10}" y2="${nY}" stroke="${WIRE}" stroke-width="6"/>
+          <text x="${x - 28}" y="${signY + 5}" text-anchor="middle" font-size="14" fill="#8B1515" font-weight="800">+</text>
+          <text x="${x + 28}" y="${yc + 5}" text-anchor="start" font-size="14" font-weight="700" fill="#8B1515">${label}</text>`;
+}
+function batteryH(cx, y, label, isPositiveRight = true) {
+  const pX = isPositiveRight ? cx + 6 : cx - 6;
+  const nX = isPositiveRight ? cx - 6 : cx + 6;
+  const signX = isPositiveRight ? cx + 18 : cx - 18;
+  return `<line x1="${pX}" y1="${y - 18}" x2="${pX}" y2="${y + 18}" stroke="${WIRE}" stroke-width="3"/>
+          <line x1="${nX}" y1="${y - 10}" x2="${nX}" y2="${y + 10}" stroke="${WIRE}" stroke-width="6"/>
+          <text x="${signX}" y="${y - 25}" text-anchor="middle" font-size="14" fill="#8B1515" font-weight="800">+</text>
+          <text x="${cx}" y="${y + 30}" text-anchor="middle" font-size="14" font-weight="700" fill="#8B1515">${label}</text>`;
+}
+
+const arrowRight = (x, y, color="#F5A623") => `<polygon points="${x-7},${y-6} ${x+7},${y} ${x-7},${y+6}" fill="${color}"/>`;
+const arrowLeft = (x, y, color="#F5A623") => `<polygon points="${x+7},${y-6} ${x-7},${y} ${x+7},${y+6}" fill="${color}"/>`;
+const arrowDown = (x, y, color="#F5A623") => `<polygon points="${x-6},${y-7} ${x+6},${y-7} ${x},${y+7}" fill="${color}"/>`;
+const arrowUp = (x, y, color="#F5A623") => `<polygon points="${x-6},${y+7} ${x+6},${y+7} ${x},${y-7}" fill="${color}"/>`;
+
+const dot = (x, y, label="") => `<circle cx="${x}" cy="${y}" r="5" fill="${WIRE}"/>${label ? `<text x="${x}" y="${y-12}" font-size="14" font-weight="800" text-anchor="middle">${label}</text>` : ''}`;
+
+function svgL1({ e, r, R }) {
+  return `<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" role="img">
+    <path d="M70,50 L230,50 L230,150 L70,150 Z" fill="none" stroke="${WIRE}" stroke-width="2.5"/>
+    ${resistorH(150, 50, 'R', `${R} Ω`)}
+    <!-- Battery Box -->
+    <rect x="110" y="115" width="80" height="70" rx="8" fill="none" stroke="#F5A623" stroke-width="2" stroke-dasharray="6,4"/>
+    ${batteryH(140, 150, `ε = ${e} V`, true)}
+    <text x="180" y="155" font-size="14" font-weight="700" fill="#8B1515">r = ${r} Ω</text>
+    ${arrowRight(150, 30)} <text x="150" y="20" font-size="13" font-weight="700" text-anchor="middle">I = ?</text>
+  </svg>`;
+}
+
+function svgL2({ e1, e2, r1, r2 }) {
+  // 1 Loop
+  return `<svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" role="img">
+    <path d="M60,50 L240,50 L240,170 L60,170 Z" fill="none" stroke="${WIRE}" stroke-width="2.5"/>
+    ${batteryV(60, 110, `ε₁ = ${e1} V`, true)}
+    ${batteryV(240, 110, `ε₂ = ${e2} V`, true)}
+    ${resistorH(150, 50, sub('R',1), `${r1} Ω`)}
+    ${resistorH(150, 170, sub('R',2), `${r2} Ω`)}
+    <!-- Loop direction hint (clockwise) -->
+    <path d="M120,90 Q150,70 180,90 Q200,110 180,130 Q150,150 120,130 Q100,110 120,90" fill="none" stroke="#F5A623" stroke-width="2" stroke-dasharray="4"/>
+    ${arrowRight(150, 77, "#F5A623")}
+    <text x="150" y="115" font-size="13" font-weight="700" text-anchor="middle" fill="#F5A623">Loop</text>
+  </svg>`;
+}
+
+function svgL3({ r, e, I }) {
+  // Linear segment A to B
+  return `<svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" role="img">
+    <line x1="40" y1="60" x2="360" y2="60" stroke="${WIRE}" stroke-width="2.5"/>
+    ${dot(40, 60, "A")} ${dot(360, 60, "B")}
+    ${resistorH(140, 60, 'R', `${r} Ω`)}
+    ${batteryH(260, 60, `ε = ${e} V`, false)}
+    ${arrowRight(200, 40)} <text x="200" y="30" font-size="14" font-weight="700" text-anchor="middle">I = ${I} A</text>
+  </svg>`;
+}
+
+function svgL4({ e1, e3, r1, r2, r3, i1, i3 }) {
+  // 2 Loops
+  return `<svg viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" role="img">
+    <path d="M60,50 L340,50 L340,190 L60,190 Z" fill="none" stroke="${WIRE}" stroke-width="2.5"/>
+    <line x1="200" y1="50" x2="200" y2="190" stroke="${WIRE}" stroke-width="2.5"/>
+    
+    ${batteryV(60, 140, `ε₁ = ?`, true)}
+    ${resistorH(130, 50, sub('R',1), `${r1} Ω`)}
+    
+    ${resistorV(200, 120, sub('R',2), `${r2} Ω`)}
+    ${dot(200, 50)} ${dot(200, 190)}
+    
+    ${batteryV(340, 140, `ε₃ = ${e3} V`, true)}
+    ${resistorH(270, 50, sub('R',3), `${r3} Ω`)}
+
+    <!-- Currents -->
+    ${arrowUp(60, 90)} <text x="30" y="95" font-size="13" font-weight="700">I₁ = ${i1} A</text>
+    ${arrowDown(200, 80)} <text x="225" y="85" font-size="13" font-weight="700" fill="#F5A623">I₂ = ?</text>
+    ${arrowUp(340, 90)} <text x="375" y="95" font-size="13" font-weight="700" text-anchor="end">I₃ = ${i3} A</text>
+  </svg>`;
+}
+
+/* =========================================================
+   DYNAMIC QUESTION GENERATOR (All 4 Levels & Bilingual)
+   ========================================================= */
+let levels = [];
+const state = { wrong: 0, startTime: 0, timerId: null, solvedCount: 0 };
+
+function generateQuestions(l) {
+  // LEVEL 1 (EMF & Internal Resistance)
+  let I1 = rand(1, 5);
+  let R1 = rand(4, 15);
+  let r1_in = rand(1, 2);
+  let E1 = I1 * (R1 + r1_in); // E = I(R+r)
+  let V1 = I1 * R1;           // V_jepit = I*R
+
+  // LEVEL 2 (1 Loop Basics)
+  let I2 = rand(1, 4);
+  let R2_1 = rand(2, 8);
+  let R2_2 = rand(2, 8);
+  let E2_2 = rand(5, 12);
+  let E2_1 = E2_2 + I2 * (R2_1 + R2_2); // E1 - E2 = I(R1+R2) (Clockwise flow)
+
+  // LEVEL 3 (V_AB)
+  let I3 = rand(2, 5);
+  let R3 = rand(2, 8);
+  let E3 = rand(4, 15);
+  // Current I flows A -> B. Battery positive faces A, so we hit (+) first then (-). Wait, SVG batteryH(..., false) means positive is Left.
+  // Traveling A->B hits Positive then Negative. So EMF change is -E3.
+  // Eq: Va - I*R - E = Vb => Vab = Va - Vb = I*R + E. (Wait, if we hit + first, potential drops by E).
+  // Yes: V_A - I(R) - E = V_B. So V_AB = I*R + E.
+  let Vab = I3 * R3 + E3; 
+
+  // LEVEL 4 (Boss: 2 Loops)
+  let I4_1 = rand(2, 5);
+  let I4_3 = rand(1, 4);
+  let I4_2 = I4_1 + I4_3; // KCL at top node
+  let R4_1 = rand(2, 6);
+  let R4_2 = rand(2, 6);
+  let R4_3 = rand(2, 6);
+  // Left Loop (Clockwise): +E1 - I1*R1 - I2*R2 = 0 => E1 = I1*R1 + I2*R2
+  let E4_1 = I4_1 * R4_1 + I4_2 * R4_2;
+  // Right loop info just to complete the picture. E3 = I3*R3 + I2*R2
+  let E4_3 = I4_3 * R4_3 + I4_2 * R4_2;
+
+  return [
+    {
+      n: 1, title: l==='id' ? 'GGL & Tegangan Jepit' : "EMF & Terminal Voltage", formula: T`\[I = \frac{\varepsilon}{R + r}\]`,
+      question: l==='id' ? `Baterai dengan GGL (\\(\\varepsilon\\)) ${E1} V dan hambatan dalam (\\(r\\)) ${r1_in} \\(\\Omega\\) dihubungkan ke lampu \\(R = ${R1}\\,\\Omega\\). Tentukan arus total yang mengalir dan tegangan jepit (tegangan pada lampu).`
+                         : `A battery with EMF (\\(\\varepsilon\\)) ${E1} V and internal resistance (\\(r\\)) ${r1_in} \\(\\Omega\\) is connected to a lamp \\(R = ${R1}\\,\\Omega\\). Find the total current and the terminal voltage (voltage across the lamp).`,
+      svg: svgL1({ e: E1, r: r1_in, R: R1 }),
+      fields: [
+        { id: 'l1-i', label: l==='id'?'Arus (I)':'Current (I)', unit: 'A', answer: I1, 
+          hint: l==='id'?'Bagi GGL dengan hambatan total (R + r).':'Divide EMF by the total resistance (R + r).' },
+        { id: 'l1-v', label: l==='id'?'Teg. Jepit (V)':'Terminal Volt (V)', unit: 'V', answer: V1, 
+          hint: l==='id'?'Gunakan \\(V = I \\times R\\) lampu.':'Use \\(V = I \\times R\\) of the lamp.' }
+      ]
+    },
+    {
+      n: 2, title: l==='id' ? 'Analisis 1 Loop' : 'Single Loop Analysis', formula: T`\[\Sigma \varepsilon + \Sigma I R = 0\]`,
+      question: l==='id' ? `Perhatikan rangkaian loop tunggal dengan 2 baterai yang arahnya berlawanan. Jika \\(\\varepsilon_1 = ${E2_1}\\,\\text{V}\\) dan \\(\\varepsilon_2 = ${E2_2}\\,\\text{V}\\), tentukan besar arus (\\(I\\)) yang mengalir di rangkaian tersebut!`
+                         : `Look at the single loop circuit with 2 opposing batteries. If \\(\\varepsilon_1 = ${E2_1}\\,\\text{V}\\) and \\(\\varepsilon_2 = ${E2_2}\\,\\text{V}\\), calculate the current (\\(I\\)) flowing in the circuit!`,
+      svg: svgL2({ e1: E2_1, e2: E2_2, r1: R2_1, r2: R2_2 }),
+      fields: [
+        { id: 'l2-i', label: l==='id'?'Kuat Arus (I)':'Current (I)', unit: 'A', answer: I2,
+          hint: l==='id'?'Arah loop searah jarum jam. \\(\\varepsilon_1\\) positif, \\(\\varepsilon_2\\) negatif. \\(I = (\\varepsilon_1 - \\varepsilon_2) / (R_1 + R_2)\\)':'Loop is clockwise. \\(\\varepsilon_1\\) is positive, \\(\\varepsilon_2\\) is negative. \\(I = (\\varepsilon_1 - \\varepsilon_2) / (R_1 + R_2)\\)' }
+      ]
+    },
+    {
+      n: 3, title: l==='id' ? 'Beda Potensial A-B' : 'Potential Difference A-B', formula: T`\[V_{AB} = \Sigma \varepsilon + \Sigma I R\]`,
+      question: l==='id' ? `Arus \\(I = ${I3}\\,\\text{A}\\) mengalir dari titik A ke B melewati kawat lurus. Jika saat berjalan dari A ke B kita menabrak kutub positif baterai (panjang) lebih dulu, berapakah beda potensial \\(V_{AB}\\)?`
+                         : `A current \\(I = ${I3}\\,\\text{A}\\) flows from node A to B. If walking from A to B hits the positive (long) terminal of the battery first, what is the potential difference \\(V_{AB}\\)?`,
+      svg: svgL3({ r: R3, e: E3, I: I3 }),
+      fields: [
+        { id: 'l3-v', label: l==='id'?'Beda Potensial (V_{AB})':'Pot. Diff (V_{AB})', unit: 'V', answer: Vab,
+          hint: l==='id'?'Jalan A ke B. Potensial turun karena arus (\\(I \\times R\\)) dan turun karena ketemu plus baterai. \\(V_{AB} = V_A - V_B = I\\cdot R + \\varepsilon\\)':'Walk A to B. Potential drops due to resistor (\\(I \\times R\\)) and drops due to hitting positive battery terminal. \\(V_{AB} = I\\cdot R + \\varepsilon\\)' }
+      ]
+    },
+    {
+      n: 4, title: l==='id' ? 'Pengantar 2 Loop' : '2 Loops Intro', boss: true, formula: T`\[\text{KCL & KVL Gabungan}\]`,
+      question: l==='id' ? `Pada rangkaian 2 loop, arus \\(I_1\\) dan \\(I_3\\) bergabung di titik atas lalu turun menjadi \\(I_2\\). Tentukan besar arus \\(I_2\\) (Hukum I Kirchhoff), lalu gunakan loop sebelah kiri untuk mencari tegangan baterai \\(\\varepsilon_1\\) (Hukum II Kirchhoff)!`
+                         : `In this 2-loop circuit, currents \\(I_1\\) and \\(I_3\\) merge at the top node and flow down as \\(I_2\\). Find the current \\(I_2\\) (Kirchhoff I), then use the left loop to find the battery voltage \\(\\varepsilon_1\\) (Kirchhoff II)!`,
+      svg: svgL4({ e1: '?', e3: E4_3, r1: R4_1, r2: R4_2, r3: R4_3, i1: I4_1, i3: I4_3 }),
+      fields: [
+        { id: 'l4-i2', label: l==='id'?'Arus Tengah (I_2)':'Middle Current (I_2)', unit: 'A', answer: I4_2,
+          hint: l==='id'?'Hukum I Kirchhoff: Arus masuk = Arus keluar. \\(I_2 = I_1 + I_3\\)':'Kirchhoff I: Total In = Total Out. \\(I_2 = I_1 + I_3\\)' },
+        { id: 'l4-e1', label: l==='id'?'Tegangan (\\(\\varepsilon_1\\))':'Voltage (\\(\\varepsilon_1\\))', unit: 'V', answer: E4_1,
+          hint: l==='id'?'Gunakan loop kiri (searah jarum jam): \\(\\varepsilon_1 = (I_1 \\times R_1) + (I_2 \\times R_2)\\)':'Use the left loop (clockwise): \\(\\varepsilon_1 = (I_1 \\times R_1) + (I_2 \\times R_2)\\)' }
+      ]
+    }
+  ].map(lvl => ({ ...lvl, solved: false, wrong: 0 }));
+}
+
+/* =========================================================
+   UI RENDERING & FLOW LOGIC
+   ========================================================= */
+function fieldHTML(f) {
+  return `
+    <label class="block group">
+      <span class="text-sm font-semibold text-ink/80 ml-1">${f.label}</span>
+      <div class="relative mt-2">
+        <input type="number" inputmode="numeric" step="1" id="${f.id}" autocomplete="off" class="answer-input w-full rounded-xl border-2 border-sand bg-white pl-5 pr-14 py-3.5 text-xl font-bold tabular-nums text-ink shadow-sm" placeholder="0">
+        <span class="absolute right-5 top-1/2 -translate-y-1/2 text-ink/40 font-bold text-lg pointer-events-none">${f.unit}</span>
+      </div>
+      <div id="${f.id}-hint" class="hidden mt-3 text-sm font-medium text-maroon-dark bg-maroon-light rounded-xl px-4 py-3 border border-maroon/20"></div>
+    </label>`;
+}
+
+function levelHTML(l) {
+  return `
+    <article id="level-${l.n}" class="level-card is-locked bg-white rounded-[2rem] border-2 border-sand shadow-sm p-6 sm:p-8 relative overflow-hidden">
+      <div class="flex items-start justify-between gap-3 relative z-10">
+        <div class="flex items-center gap-4">
+          <span class="w-12 h-12 rounded-[1rem] ${l.boss ? 'bg-gold' : 'bg-maroon'} text-white grid place-items-center font-black text-xl shadow-lg">${l.n}</span>
+          <div>
+            <p class="text-xs uppercase tracking-[.2em] ${l.boss ? 'text-gold-dark' : 'text-maroon'} font-extrabold">Level ${l.n}${l.boss ? (LANG==='id'?' · Boss Stage 🔥':' · Boss Stage 🔥') : ''}</p>
+            <h2 class="text-2xl font-black tracking-tight text-ink mt-0.5">${l.title}</h2>
+          </div>
+        </div>
+        <span id="status-${l.n}" class="shrink-0 text-xs font-bold rounded-full px-4 py-1.5 bg-sand text-ink/50 border border-sand">🔒 ${LANG==='id'?'Terkunci':'Locked'}</span>
+      </div>
+
+      <p class="locked-note mt-6 text-sm font-medium text-ink/50 bg-washi p-4 rounded-xl text-center border border-dashed border-sand">
+        ${LANG==='id' ? `Selesaikan Level ${l.n - 1} untuk membuka tantangan ini.` : `Clear Level ${l.n - 1} to unlock this challenge.`}
+      </p>
+
+      <div class="level-body hidden mt-8 relative z-10">
+        <div class="rounded-2xl bg-washi border-2 border-sand p-3 mb-6 text-center">
+          <p class="text-xs font-bold uppercase tracking-widest text-ink/40 mb-1">${LANG==='id'?'Rumus Kunci':'Key Formula'}</p>
+          <div class="text-maroon font-semibold overflow-x-auto">${l.formula}</div>
+        </div>
+        ${l.svg ? `<div class="diagram rounded-2xl bg-washi border-2 border-sand p-6 mb-6 shadow-sm">${l.svg}</div>` : ''}
+        <p class="text-[1.1rem] leading-relaxed font-medium text-ink/90 bg-white">${l.question}</p>
+        <div class="mt-6 grid ${l.fields.length > 1 ? 'sm:grid-cols-2' : ''} gap-5">${l.fields.map(fieldHTML).join('')}</div>
+        <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4 pt-6 border-t border-sand">
+          <button id="check-${l.n}" onclick="checkLevel(${l.n})" class="check-btn inline-flex items-center justify-center gap-2 rounded-xl ${l.boss ? 'bg-gold text-ink' : 'bg-maroon text-white'} font-bold px-8 py-3.5 text-lg shadow-md hover:scale-[1.02] active:scale-95 transition-transform disabled:opacity-50 cursor-pointer">
+            ${LANG==='id'?'Cek Jawaban':'Check Answer'}
+          </button>
+          <p id="feedback-${l.n}" class="text-sm font-bold" aria-live="polite"></p>
+        </div>
+      </div>
+    </article>`;
+}
+
+function unlock(n) {
+  const card = document.getElementById('level-' + n);
+  card.classList.remove('is-locked'); card.classList.add('is-active', 'reveal');
+  card.querySelector('.locked-note').classList.add('hidden'); card.querySelector('.level-body').classList.remove('hidden');
+  const st = document.getElementById('status-' + n);
+  st.textContent = LANG==='id'?'Mengerjakan ✍️':'In Progress ✍️';
+  st.className = 'shrink-0 text-xs font-bold rounded-full px-4 py-1.5 bg-gold-light text-gold-dark border border-gold/30';
+  typeset(card);
+  setTimeout(() => { card.scrollIntoView({ behavior: 'smooth', block: 'start' }); card.querySelector('input')?.focus(); }, 150);
+}
+
+function checkLevel(n) {
+  const l = levels[n - 1], fb = document.getElementById('feedback-' + n);
+  if (l.solved) return;
+  let empty = false, allCorrect = true;
+
+  l.fields.forEach(f => {
+    const inp = document.getElementById(f.id), hint = document.getElementById(f.id + '-hint'), raw = inp.value.trim();
+    inp.classList.remove('is-correct', 'is-wrong');
+    if (raw === '') { empty = true; allCorrect = false; return; }
+    if (Number(raw) === f.answer) { inp.classList.add('is-correct'); hint.classList.add('hidden'); } 
+    else { allCorrect = false; inp.classList.add('is-wrong'); hint.innerHTML = '💡 ' + f.hint; hint.classList.remove('hidden'); typeset(hint); }
+  });
+
+  const anyWrong = l.fields.some(f => document.getElementById(f.id).classList.contains('is-wrong'));
+  if (!anyWrong && empty) { fb.textContent = LANG==='id'?'Isi semua kotak dulu ya!':'Please fill all boxes first!'; fb.className = 'text-sm font-bold text-ink/50'; return; }
+  
+  if (!allCorrect) {
+    state.wrong++; l.wrong++; document.getElementById('wrong-count').textContent = state.wrong;
+    fb.textContent = LANG==='id'?'Belum tepat. Cek petunjuk di atas! (−5 poin) 🙈':'Not quite. Check the hint above! (−5 points) 🙈';
+    fb.className = 'text-sm font-bold text-maroon';
+    const card = document.getElementById('level-' + n);
+    card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+    return;
+  }
+
+  // Jika Benar
+  l.solved = true; state.solvedCount++;
+  l.fields.forEach(f => document.getElementById(f.id).disabled = true); document.getElementById('check-' + n).disabled = true;
+  fb.innerHTML = n < levels.length ? (LANG==='id'?'🎉 <strong>Mantap!</strong> Lanjut.':'🎉 <strong>Correct!</strong> Next level unlocked.') : (LANG==='id'?'🏆 <strong>Luar biasa!</strong> Tamat.':'🏆 <strong>Amazing!</strong> You beat the Final Boss.');
+  fb.className = 'text-sm font-bold text-green-dark';
+  
+  document.getElementById('level-' + n).classList.remove('is-active');
+  const st = document.getElementById('status-' + n); st.textContent = '✓ ' + (LANG==='id'?'Tuntas':'Done'); st.className = 'shrink-0 text-xs font-bold rounded-full px-4 py-1.5 bg-green text-white shadow-sm';
+  document.getElementById('progress-bar').style.width = (state.solvedCount / levels.length * 100) + '%';
+  document.getElementById('progress-text').textContent = state.solvedCount + '/' + levels.length;
+
+  if (n < levels.length) setTimeout(() => unlock(n + 1), 800); else setTimeout(finish, 1200);
+}
+
+function start() {
+  levels = generateQuestions(LANG);
+  document.getElementById('levels').innerHTML = levels.map(levelHTML).join('');
+  
+  levels.forEach(l => {
+    l.fields.forEach(f => {
+      document.getElementById(f.id).addEventListener('keydown', e => { if (e.key === 'Enter') checkLevel(l.n); });
+      document.getElementById(f.id).addEventListener('input', e => e.target.classList.remove('is-correct', 'is-wrong'));
+    });
+  });
+
+  document.getElementById('start-screen').classList.add('hidden'); 
+  document.getElementById('levels').classList.remove('hidden');
+  document.getElementById('hud').classList.remove('hidden'); 
+  document.getElementById('hud').classList.add('flex');
+  document.getElementById('progress-text').textContent = '0/' + levels.length;
+  
+  state.startTime = Date.now(); 
+  state.timerId = setInterval(() => {
+    const s = Math.floor((Date.now() - state.startTime) / 1000);
+    document.getElementById('timer').textContent = fmt(s); 
+    if (s >= 45 * 60) document.getElementById('timer-pill').classList.replace('bg-maroon', 'bg-ink');
+  }, 1000);
+  
+  unlock(1);
+}
+
+function finish() {
+  clearInterval(state.timerId);
+  const secs = Math.floor((Date.now() - state.startTime) / 1000), score = Math.max(0, 100 - state.wrong * 5);
+  
+  document.getElementById('levels').classList.add('hidden'); 
+  document.getElementById('summary').classList.remove('hidden');
+  document.getElementById('sum-time').textContent = fmt(secs); 
+  document.getElementById('timer').textContent = fmt(secs);
+  document.getElementById('sum-score').textContent = score; 
+  document.getElementById('sum-wrong').textContent = state.wrong;
+
+  let title, msg;
+  if (score >= 90)      { title = LANG==='id'?'Jenius! 🌟':'Genius! 🌟'; msg = LANG==='id'?'Kamu berhasil menguasai materi paling menantang di Listrik Dinamis!':'You mastered the most challenging concepts in Circuit Analysis!'; }
+  else if (score >= 70) { title = LANG==='id'?'Bagus! 👍':'Good Job! 👍'; msg = LANG==='id'?'Analisis tanda plus-minusmu sudah baik, pertahankan!':'Your plus-minus sign analysis is good, keep it up!'; }
+  else                  { title = LANG==='id'?'Semangat! 💪':'Keep It Up! 💪'; msg = LANG==='id'?'Perhatikan lagi arah loop dan tanda baterainya ya.':'Pay more attention to loop directions and battery signs.'; }
+  document.getElementById('summary-title').textContent = title; 
+  document.getElementById('summary-msg').textContent = msg;
+
+  document.getElementById('sum-table').innerHTML = levels.map(l => `
+    <tr>
+      <td class="px-5 py-3 text-ink/80">Level ${l.n} · ${l.title}</td>
+      <td class="px-5 py-3 text-right tabular-nums ${l.wrong > 0 ? 'text-maroon font-bold' : 'text-green-dark'}">${l.wrong}</td>
+    </tr>`).join('');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
