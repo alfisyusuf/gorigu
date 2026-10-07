@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutor Virtual Kirchhoff Tahap Mahir: Modal & Belanja | SMA ABBS Surakarta</title>
+
+<!-- ============ FONT ============ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- ============ TAILWIND + SMA ABBS PALETTE ============ -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          maroon: { DEFAULT: '#8B1515', dark: '#6A0F0F', light: '#A82A2A' },
+          gold:   { DEFAULT: '#F5A623', dark: '#C9800A', light: '#FFE7BA' },
+          cream:  '#FFFCF7',
+          sand:   '#F2EAE0',
+          ink:    '#2C1A1A'
+        },
+        fontFamily: { sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+        boxShadow: { card: '0 10px 30px -12px rgba(139, 21, 21, 0.18)' }
+      }
+    }
+  };
+</script>
+
+<!-- ============ MATHJAX (SVG output) ============ -->
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready() {
+        MathJax.startup.defaultReady();
+        MathJax.startup.promise.then(() => { window.App.mathReady = true; window.App.typesetAll(); });
+      }
+    }
+  };
+</script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+  body { font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; background: #FFFCF7; }
+
+  /* ---- MathJax x Tailwind: keep inline math inline ---- */
+  mjx-container svg { display: inline !important; max-width: none; }
+  mjx-container[jax="SVG"] { display: inline-block !important; margin: 0 0.08em; line-height: 0; }
+  mjx-container[jax="SVG"][display="true"] {
+    display: block !important; text-align: center; margin: 0.8em 0 !important;
+    overflow-x: auto; overflow-y: hidden; padding: 2px 0;
+  }
+
+  /* ---- Number inputs: no spinners ---- */
+  input[type="number"] { -webkit-appearance: none; -moz-appearance: textfield; appearance: none; }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; appearance: none; margin: 0; }
+  input:focus { outline: none; }
+
+  /* ---- Theory typography ---- */
+  .theory p { margin: 0.55rem 0; line-height: 1.7; }
+  .theory ul { margin: 0.5rem 0; padding: 0; list-style: none; }
+  .theory li { margin: 0.45rem 0; line-height: 1.6; }
+  .theory .analogy { background: #fff; border: 2px dashed #F5A623; border-radius: 1rem; padding: 0.85rem 1rem; margin: 0.8rem 0; line-height: 1.65; }
+  .rich p { margin: 0.4rem 0; line-height: 1.7; }
+
+  .seg-unknown { background: repeating-linear-gradient(45deg, #FFE7BA 0 8px, #FFF6E5 8px 16px); border: 2px dashed #C9800A; color: #8A5A00; }
+
+  /* ---- Animations ---- */
+  @keyframes unlockIn { from { opacity: 0; transform: translateY(28px) scale(0.97); } to { opacity: 1; transform: none; } }
+  @keyframes pop { 0% { transform: scale(0.85); opacity: 0; } 60% { transform: scale(1.04); opacity: 1; } 100% { transform: scale(1); } }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-7px); } 40%,80% { transform: translateX(7px); } }
+  @keyframes glow { 0%,100% { box-shadow: 0 0 0 0 rgba(245,166,35,0.55); } 50% { box-shadow: 0 0 0 12px rgba(245,166,35,0); } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  .animate-unlock { animation: unlockIn 0.8s cubic-bezier(.2,.8,.2,1) both; }
+  .animate-unlock > div { animation: glow 1.6s ease-out 0.6s 2; }
+  .animate-pop { animation: pop 0.45s cubic-bezier(.2,.8,.2,1) both; }
+  .shake { animation: shake 0.45s ease-in-out; }
+  .fade-in { animation: fadeIn 0.3s ease-out both; }
+  .floaty { animation: floaty 2.4s ease-in-out infinite; }
+  .seg { transition: width 0.7s cubic-bezier(.2,.8,.2,1); }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-unlock, .animate-unlock > div, .animate-pop, .shake, .fade-in, .floaty { animation: none !important; }
+    .seg { transition: none; }
+  }
+  ::selection { background: #FFE7BA; }
+</style>
+</head>
+
+<body class="bg-cream text-ink antialiased min-h-screen">
+
+<canvas id="confetti" class="fixed inset-0 pointer-events-none z-[60]" aria-hidden="true"></canvas>
+
+<!-- ======================= HEADER ======================= -->
+<header class="sticky top-0 z-40 bg-maroon text-white shadow-lg">
+  <div class="max-w-5xl mx-auto px-4 pt-3 pb-2 flex items-center gap-3">
+    <div class="w-11 h-11 shrink-0 rounded-2xl bg-gold grid place-items-center text-2xl shadow-inner" aria-hidden="true">🏅</div>
+    <div class="flex-1 min-w-0">
+      <p class="text-[10px] sm:text-xs uppercase tracking-[0.18em] text-gold font-bold" data-i18n="school"></p>
+      <h1 class="text-[15px] sm:text-xl font-extrabold leading-tight truncate" data-i18n="appTitle"></h1>
+    </div>
+    <div class="flex shrink-0 bg-maroon-dark rounded-full p-1 text-xs sm:text-sm font-bold" role="group" aria-label="Language / Bahasa">
+      <button type="button" data-action="lang" data-lang="id" class="px-3 py-1.5 rounded-full transition">ID</button>
+      <button type="button" data-action="lang" data-lang="en" class="px-3 py-1.5 rounded-full transition">EN</button>
+    </div>
+  </div>
+  <div class="max-w-5xl mx-auto px-4 pb-3">
+    <div class="flex justify-between text-[11px] sm:text-xs mb-1 text-white/85">
+      <span data-i18n="progress"></span><span id="progress-text" class="font-semibold"></span>
+    </div>
+    <div id="progress-wrap" class="h-2.5 bg-maroon-dark rounded-full overflow-hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+      <div id="progress-bar" class="h-full bg-gold rounded-full transition-all duration-700 ease-out" style="width:0%"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ======================= MAIN ======================= -->
+<main id="app-main" class="max-w-5xl mx-auto px-4 py-6 sm:py-10 space-y-8">
+  <section id="hero"></section>
+  <section id="level-0" aria-live="polite"></section>
+  <section id="level-1" aria-live="polite"></section>
+  <section id="level-2" aria-live="polite"></section>
+  <section id="level-3" aria-live="polite"></section>
+  <section id="level-4" aria-live="polite"></section>
+  <section id="final"></section>
+</main>
+
+<footer class="max-w-5xl mx-auto px-4 pb-10 pt-2 text-center text-xs sm:text-sm text-[#7A675B]">
+  <p data-i18n="footer"></p>
+</footer>
+
+<div id="modal" class="hidden fixed inset-0 z-50 grid place-items-center p-4" role="dialog" aria-modal="true"></div>
+
+<script>
+/* =====================================================================
+   0. HELPERS
+   ===================================================================== */
+const tx = String.raw;   // keeps TeX backslashes intact
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const pick = arr => arr[rand(0, arr.length - 1)];
+const escAttr = s => String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+const fmt = (str, vars) => str.replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined ? vars[k] : m));
+const divInt = (a, b) => (b !== 0 && a % b === 0) ? a / b : null;   // exact integer division or null
+const sn = n => n < 0 ? '−' + (-n) : String(n);                        // pretty sign for HTML
+const paren = n => n < 0 ? `(${n})` : `${n}`;                          // wrap negatives in TeX products
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/** Worked elimination for:  N1 = a·I1 + R3·I2 ,  N2 = R3·I1 + d·I2  (TeX, language word for "subtract") */
+function elimTeX(q, subtractWord) {
+  return tx`(1)×${q.d}: \(${q.N1 * q.d} = ${q.a * q.d}I_1 + ${q.R3 * q.d}I_2\)<br>` +
+         tx`(2)×${q.R3}: \(${q.N2 * q.R3} = ${q.R3 * q.R3}I_1 + ${q.R3 * q.d}I_2\)<br>` +
+         tx`${subtractWord}: \(${q.N1 * q.d - q.N2 * q.R3} = ${q.a * q.d - q.R3 * q.R3}\,I_1 \Rightarrow I_1 = ${q.I1}\ \text{A}\)`;
+}
+const subI2TeX = q => tx`\(${q.N2} = ${q.R3}(${q.I1}) + ${q.d}\,I_2 \Rightarrow ${q.d}\,I_2 = ${q.N2 - q.R3 * q.I1} \Rightarrow I_2 = ${q.I2}\ \text{A}\)`;
+
+/* =====================================================================
+   1. TRANSLATIONS  (Indonesian + simple B1 English)
+   Function values receive q = {...problemParams, v: studentAnswer}
+   ===================================================================== */
+const I18N = {
+  /* ============================ BAHASA INDONESIA ============================ */
+  id: {
+    school: 'SMA ABBS Surakarta',
+    appTitle: 'Hukum Kirchhoff Tahap Mahir: Modal & Belanja',
+    progress: 'Progres belajarmu',
+    stepsWord: 'langkah',
+    footer: 'Dibuat untuk siswa SMA ABBS Surakarta • Di setiap loop: total modal = total belanja 💰',
+
+    heroTitle: 'Tahap Mahir: Siap Jadi Ahli Rangkaian? 🏅',
+    heroText: 'Kamu sudah bisa menyelesaikan rangkaian dua loop. Sekarang kita latih <b>soal tipe ujian</b>: baterai di cabang tengah, arus negatif, beda potensial, dan jembatan Wheatstone. Logikanya tetap sama: <b>modal = belanja</b>. 💪',
+    heroCards: [
+      ['🔋🎯', 'Baterai di Tengah', 'Satu loket, berlaku untuk dua loop.'],
+      ['💳', 'Arus Negatif', 'Baterai yang sedang diisi.'],
+      ['🗺️', 'Saldo Lewat 3 Rute', 'Beda potensial tidak tergantung jalan.'],
+      ['🌉', 'Jembatan Wheatstone', 'Saldo sama, jembatan sepi.'],
+      ['👑', 'Ujian Akhir', 'Semua konsep dalam satu soal (Boss).']
+    ],
+
+    level: 'Level',
+    boss: 'BOSS',
+    lockedText: 'Selesaikan Level {n} untuk membuka level ini. 🔒',
+    miniTheory: 'Mini-Teori',
+    question: 'Soal',
+    step: 'Langkah',
+    check: 'Cek ✓',
+    hint: 'Petunjuk 💡',
+    hideHint: 'Tutup petunjuk',
+    showSolution: 'Lihat pembahasan 📘',
+    solutionLabel: 'Pembahasan',
+    newQuestion: '🎲 Soal Baru',
+    completedBadge: 'Selesai ✅',
+    placeholder: '?',
+    lockedStep: 'Selesaikan langkah sebelumnya dulu ya 🔒',
+    attemptsNote: 'Sudah mencoba {n} kali. Tidak apa-apa! Kamu boleh membuka pembahasan, lalu jawab sendiri.',
+    correctMsgs: ['Benar! Modalnya pas! 🎉', 'Tepat sekali! 👏', 'Keren, hitunganmu rapi! ⭐', 'Betul! Ayo lanjut! 🚀', 'Mantap, calon ahli rangkaian! 🏅'],
+    almost: 'Hampir!',
+    emptyInput: 'Isi jawabanmu dulu ya ✏️ (angka saja)',
+    notInteger: 'Semua jawaban di sini adalah <b>bilangan bulat</b>. Coba cek hitunganmu lagi 🔢',
+    summaryTitle: 'Ringkasan & Fakta Menarik 📝',
+    subtractWord: 'Kurangkan',
+
+    /* ---- panels ---- */
+    eqTitle: '🧮 Buku Persamaan',
+    roleLabel: 'Peran ε₃:',
+    roleTax: '🧾 pajak', roleBonus: '🎁 bonus',
+    resultsTitle: '🎯 Hasil Arus',
+    negNote: '💳 Negatif → arah sebenarnya terbalik!',
+    eqTarget: 'Lengkapi kotak "?" dengan menjawab langkah-langkah di bawah 🎯',
+    eqDone: 'Persamaan lengkap! ✅',
+    routesTitle: '🗺️ Saldo di titik A (B = 0 V)',
+    routeMid: 'Rute tengah: A → R₃ → B',
+    routeLeft: 'Rute kiri: B → R₁ → ε₁ → A',
+    routeRight: 'Rute kanan: B → R₂ → ε₂ → A',
+    routesSame: 'Ketiga rute memberi saldo yang sama! ✅',
+    routesTarget: 'Ketiga rute harus memberi hasil yang sama 🎯',
+    wsTitle: '🌉 Saldo di Ujung Jembatan (B = 0 V)',
+    wsC: '📍 Saldo di C (jalur atas)',
+    wsD: '📍 Saldo di D (jalur bawah)',
+    wsBalanced: 'Saldo C = saldo D → jembatan sepi, \\(I_G = 0\\) ✅',
+    wsTarget: 'Supaya seimbang, saldo C harus sama dengan saldo D 🎯',
+
+    /* ---- svg ---- */
+    svgReal: 'arah nyata I₂ ↓',
+    svgBridge: 'jembatan',
+
+    /* ---- shared options & hints ---- */
+    opt_tax: '🧾 Pajak (modal berkurang)',
+    opt_bonus: '🎁 Bonus (modal bertambah)',
+    choiceTax: 'Kedua loop berjalan <b>turun</b> di cabang tengah. Garis yang ada di atas pada ε₃ adalah garis <b>panjang (+)</b>, jadi kamu menabraknya duluan → <b>pajak</b> 🧾.',
+    choiceBonus: 'Kedua loop berjalan <b>turun</b> di cabang tengah. Garis yang ada di atas pada ε₃ adalah garis <b>pendek (−)</b>, jadi kamu menabraknya duluan → <b>bonus</b> 🎁.',
+    mShouldSub: tx`Ups! ε₃ adalah <b>pajak</b>, jadi modal loop ini <b>berkurang</b> sebesar \(\varepsilon_3\). 🧾`,
+    mShouldAdd: tx`Ups! ε₃ adalah <b>bonus</b>, jadi modal loop ini <b>bertambah</b> sebesar \(\varepsilon_3\). 🎁`,
+    mForgotE3: tx`Kamu lupa baterai di cabang tengah! \(\varepsilon_3\) dilewati oleh <b>kedua</b> loop.`,
+    mWrongBattery: 'Hati-hati: baterai di cabang samping yang lain <b>bukan</b> bagian loop ini. Pakai baterai loop ini dan ε₃ saja.',
+    mGeneric: tx`Belum pas. Modal bersih = baterai loop ini ± \(\varepsilon_3\) (pajak → kurang, bonus → tambah).`,
+    rMult: tx`Hambatan dalam satu persamaan loop itu <b>dijumlahkan</b>, bukan dikalikan. ➕`,
+    coefForgotR3: tx`Kamu lupa \(R_3\)! Arus \(I_3 = I_1 + I_2\) juga lewat \(R_3\), jadi \(R_3\) ikut menempel pada arus loop ini.`,
+    coefForgotOwn: 'Kamu lupa resistor di cabang samping loop ini! Arus loop ini juga lewat sana.',
+    coefGeneric: tx`Belum pas. Tulis dulu \(I_3 = I_1 + I_2\), lalu kelompokkan suku dengan arus yang sama.`,
+    swap: 'Itu nilai arus yang satunya lagi. Cek lagi: arus mana yang dihilangkan saat eliminasi? 🔄',
+    iNeg: 'Besarnya benar, tapi tandanya terbalik. Cek lagi pengurangan di langkah eliminasi.',
+    ignoreOther: tx`Kamu mengabaikan suku arus yang lain. Kedua persamaan harus diselesaikan <b>bersama</b> (eliminasi/substitusi).`,
+    i1Generic: tx`Belum pas. Hilangkan \(I_2\) dengan eliminasi, lalu hitung \(I_1\).`,
+    i2Generic: tx`Belum pas. Masukkan \(I_1\) ke persamaan (2), lalu hitung \(I_2\).`,
+    dropSign: tx`Besarnya sudah benar! Tapi hasil hitunganmu seharusnya <b>negatif</b>. Jangan buang tandanya — itu informasi arah! 💳`,
+    i3AbsAdd: tx`Kamu menjumlahkan besarnya saja. Masukkan \(I_2\) <b>lengkap dengan tanda negatifnya</b>: \(I_3 = I_1 + (I_2)\).`,
+    i3Forgot: tx`Itu baru \(I_1\). Hukum I Kirchhoff: \(I_3 = I_1 + I_2\).`,
+    i3Generic: tx`Belum pas. Gunakan \(I_3 = I_1 + I_2\).`,
+
+    /* ================= LEVEL 1 : Baterai di Cabang Tengah ================= */
+    l1_title: 'Baterai di Cabang Tengah',
+    l1_theory: tx`
+      <p>🔋 Sekarang cabang tengah juga punya baterai \(\varepsilon_3\). Perhatikan arah jalan kedua loop:</p>
+      <ul>
+        <li>↻ Loop 1 (kiri) berjalan searah jarum jam → di cabang tengah ia berjalan <b>turun</b>.</li>
+        <li>↺ Loop 2 (kanan) berjalan berlawanan jarum jam → di cabang tengah ia juga berjalan <b>turun</b>.</li>
+      </ul>
+      <div class="analogy">🏪 <b>Analogi:</b> Toko bersama sekarang punya <b>loket</b>. Karena kedua teman lewat dari arah yang sama, loket itu memperlakukan mereka sama: kalau menagih (pajak), keduanya bayar; kalau memberi hadiah (bonus), keduanya dapat.</div>
+      <p>Dengan \(I_3 = I_1 + I_2\), persamaan kedua loop menjadi:</p>
+      \[\varepsilon_1 \mp \varepsilon_3 = (R_1 + R_3)\,I_1 + R_3\,I_2\]
+      \[\varepsilon_2 \mp \varepsilon_3 = R_3\,I_1 + (R_2 + R_3)\,I_2\]
+      <p>Tanda \(-\) untuk pajak, \(+\) untuk bonus. Di level ini kita fokus <b>menyusun persamaan</b> dulu.</p>`,
+    l1_question: q => tx`Rangkaian dua loop: \(\varepsilon_1 = ${q.E1}\ \text{V}\), \(\varepsilon_2 = ${q.E2}\ \text{V}\), \(\varepsilon_3 = ${q.E3}\ \text{V}\) (di cabang tengah), \(R_1 = ${q.R1}\ \Omega\), \(R_2 = ${q.R2}\ \Omega\), \(R_3 = ${q.R3}\ \Omega\). Susun persamaan kedua loop dengan melengkapi <b>Buku Persamaan</b>.`,
+    l1_s1: tx`Kedua loop berjalan turun di cabang tengah. Bagi kedua loop, baterai \(\varepsilon_3\) adalah…`,
+    l1_s2: tx`Hitung modal bersih loop 1: \(\varepsilon_1 \mp \varepsilon_3\)`,
+    l1_s3: tx`Hitung modal bersih loop 2: \(\varepsilon_2 \mp \varepsilon_3\)`,
+    l1_s4: tx`Koefisien \(I_1\) pada persamaan loop 1 adalah \(R_1 + R_3\). Berapa nilainya?`,
+    l1_s5: tx`Koefisien \(I_2\) pada persamaan loop 2 adalah \(R_2 + R_3\). Berapa nilainya?`,
+    l1_s1_hint: 'Lihat baterai di tengah dari atas ke bawah. Garis mana yang kamu tabrak lebih dulu: panjang (+) atau pendek (−)?',
+    l1_s2_hint: q => q.tax ? tx`ε₃ pajak → \(\varepsilon_1 - \varepsilon_3\).` : tx`ε₃ bonus → \(\varepsilon_1 + \varepsilon_3\).`,
+    l1_s3_hint: q => q.tax ? tx`ε₃ pajak → \(\varepsilon_2 - \varepsilon_3\).` : tx`ε₃ bonus → \(\varepsilon_2 + \varepsilon_3\).`,
+    l1_s4_hint: tx`Jumlahkan \(R_1\) dan \(R_3\).`,
+    l1_s5_hint: tx`Jumlahkan \(R_2\) dan \(R_3\).`,
+    l1_s1_sol: q => q.tax ? 'Turun di cabang tengah, kita menabrak garis panjang (+) dulu → <b>pajak</b> 🧾 bagi kedua loop.' : 'Turun di cabang tengah, kita menabrak garis pendek (−) dulu → <b>bonus</b> 🎁 bagi kedua loop.',
+    l1_s2_sol: q => tx`\(${q.E1} ${q.tax ? '-' : '+'} ${q.E3} = ${q.N1}\ \text{V}\)`,
+    l1_s3_sol: q => tx`\(${q.E2} ${q.tax ? '-' : '+'} ${q.E3} = ${q.N2}\ \text{V}\)`,
+    l1_s4_sol: q => tx`\(R_1 + R_3 = ${q.R1} + ${q.R3} = ${q.a}\ \Omega\)`,
+    l1_s5_sol: q => tx`\(R_2 + R_3 = ${q.R2} + ${q.R3} = ${q.d}\ \Omega\)`,
+    l1_summary: q => tx`
+      <p>Persamaan lengkapnya:</p>
+      \[(1)\quad ${q.N1} = ${q.a}\,I_1 + ${q.R3}\,I_2 \qquad\quad (2)\quad ${q.N2} = ${q.R3}\,I_1 + ${q.d}\,I_2\]
+      <p>🔍 <b>Penting:</b> menyusun persamaan adalah 80% pekerjaan! Kalau kamu penasaran, solusinya adalah \(I_1 = ${q.I1}\ \text{A}\) dan \(I_2 = ${q.I2}\ \text{A}\). Cara menyelesaikannya kita latih di level berikutnya.</p>`,
+
+    /* ================= LEVEL 2 : Arus Negatif ================= */
+    l2_title: 'Arus Negatif di Dua Loop',
+    l2_theory: tx`
+      <p>🧮 Setelah persamaan tersusun, selesaikan dengan <b>eliminasi</b> atau <b>substitusi</b>. Kadang salah satu arus hasilnya <b>negatif</b>.</p>
+      <div class="analogy">💳 <b>Ingat konsep utang:</b> arus negatif bukan berarti salah hitung. Besarnya benar, tetapi arah sebenarnya <b>berlawanan</b> dengan arah yang kita misalkan di gambar.</div>
+      <ul>
+        <li>⚠️ Tetap pakai tanda negatif saat menghitung arus lain, misalnya \(I_3 = I_1 + I_2\).</li>
+        <li>🔌 Jika arus masuk ke baterai lewat kutub (+), baterai itu sedang <b>diisi</b> (seperti HP yang di-charge).</li>
+      </ul>`,
+    l2_question: q => tx`Rangkaian dua loop tanpa baterai di tengah: \(\varepsilon_1 = ${q.E1}\ \text{V}\), \(\varepsilon_2 = ${q.E2}\ \text{V}\), \(R_1 = ${q.R1}\ \Omega\), \(R_2 = ${q.R2}\ \Omega\), \(R_3 = ${q.R3}\ \Omega\). Persamaannya sudah disusun di Buku Persamaan. Hitung semua arus dan tentukan arah sebenarnya.`,
+    l2_s1: tx`Selesaikan kedua persamaan. Berapa \(I_1\)?`,
+    l2_s2: tx`Berapa \(I_2\)? <span class="text-[#7A675B] font-normal">(Boleh negatif!)</span>`,
+    l2_s3: tx`Hitung \(I_3 = I_1 + I_2\)`,
+    l2_s4: tx`Ke mana arus di cabang kanan (\(I_2\)) <b>sebenarnya</b> mengalir?`,
+    l2_opt_up: '⬆️ Ke atas (sesuai permisalan)',
+    l2_opt_down: '⬇️ Ke bawah (kebalikan permisalan)',
+    l2_s1_hint: q => tx`(1): \(${q.N1} = ${q.a}I_1 + ${q.R3}I_2\), (2): \(${q.N2} = ${q.R3}I_1 + ${q.d}I_2\). Kalikan (1) dengan ${q.d} dan (2) dengan ${q.R3}, lalu kurangkan untuk menghilangkan \(I_2\).`,
+    l2_s2_hint: q => tx`Masukkan \(I_1\) ke persamaan (2): \(${q.N2} = ${q.R3}\,I_1 + ${q.d}\,I_2\).`,
+    l2_s3_hint: tx`Jumlahkan dengan tandanya. Contoh: \(5 + (-2) = 3\).`,
+    l2_s4_hint: tx`Lihat tanda \(I_2\). Negatif = arah sebenarnya kebalikan dari panah di gambar.`,
+    l2_s1_sol: q => elimTeX(q, 'Kurangkan'),
+    l2_s2_sol: q => subI2TeX(q),
+    l2_s3_sol: q => tx`\(I_3 = ${q.I1} + (${q.I2}) = ${q.I3}\ \text{A}\)`,
+    l2_s4_sol: 'Karena \\(I_2\\) negatif, arus sebenarnya mengalir <b>ke bawah</b> di cabang kanan.',
+    l2_dirWrong: tx`\(I_2\) bernilai <b>negatif</b>. Negatif = utang = arah sebenarnya <b>kebalikan</b> dari panah permisalan. 🔄`,
+    l2_summary: q => tx`
+      <p>\(I_1 = ${q.I1}\ \text{A}\), \(I_2 = ${q.I2}\ \text{A}\), \(I_3 = ${q.I3}\ \text{A}\).</p>
+      <p>🔌 <b>Fakta menarik:</b> arus sebesar ${-q.I2} A mengalir <b>ke bawah</b> di cabang kanan, jadi ia masuk ke \(\varepsilon_2\) lewat kutub (+). Artinya baterai 2 sedang <b>diisi</b> oleh baterai 1, seperti power bank yang mengisi HP! 🔋➡️📱</p>`,
+
+    /* ================= LEVEL 3 : Saldo lewat 3 rute ================= */
+    l3_title: 'Saldo Tidak Tergantung Rute',
+    l3_theory: tx`
+      <p>📍 Beda potensial antara dua titik cabang, \(V_{AB} = V_A - V_B\), bisa dihitung lewat <b>cabang mana saja</b>. Hasilnya pasti sama!</p>
+      <div class="analogy">⛰️ <b>Analogi:</b> Beda tinggi dua desa sama saja, mau lewat jalan memutar atau jalan pintas. Di rangkaian, "saldo" di titik A sama, lewat rute mana pun.</div>
+      <p>Jadikan B acuan 0 V. Hitung saldo di A:</p>
+      <ul>
+        <li>⬇️ <b>Rute tengah:</b> saldo A harus habis dibelanjakan di \(R_3\) sampai ke B → \(V_A = I_3 R_3\).</li>
+        <li>⬆️ <b>Rute samping:</b> dari B naik, bayar belanja \(I R\), lalu terima modal \(\varepsilon\) → \(V_A = \varepsilon - I R\).</li>
+      </ul>
+      <p>💡 Tips ujian: pilih rute dengan komponen <b>paling sedikit</b>.</p>`,
+    l3_question: q => tx`Pada rangkaian dua loop ini (\(\varepsilon_1 = ${q.E1}\ \text{V}\), \(\varepsilon_2 = ${q.E2}\ \text{V}\), \(R_1 = ${q.R1}\ \Omega\), \(R_2 = ${q.R2}\ \Omega\), \(R_3 = ${q.R3}\ \Omega\)), arusnya sudah dihitung: \(I_1 = ${q.I1}\ \text{A}\) dan \(I_2 = ${q.I2}\ \text{A}\). Hitung beda potensial \(V_{AB}\) lewat tiga rute berbeda.`,
+    l3_s1: tx`Hitung arus di cabang tengah: \(I_3 = I_1 + I_2\)`,
+    l3_s2: tx`Rute tengah: \(V_{AB} = I_3 \cdot R_3\)`,
+    l3_s3: tx`Rute kiri: \(V_{AB} = \varepsilon_1 - I_1 R_1\)`,
+    l3_s4: tx`Rute kanan: \(V_{AB} = \varepsilon_2 - I_2 R_2\)`,
+    l3_s1_hint: tx`Hukum I Kirchhoff: jumlahkan \(I_1\) dan \(I_2\).`,
+    l3_s2_hint: tx`Saldo di A habis dibelanjakan di \(R_3\). Kalikan \(I_3\) dengan \(R_3\).`,
+    l3_s3_hint: tx`Dari B naik lewat cabang kiri: bayar \(I_1 R_1\), lalu terima modal \(\varepsilon_1\).`,
+    l3_s4_hint: tx`Dari B naik lewat cabang kanan: bayar \(I_2 R_2\), lalu terima modal \(\varepsilon_2\).`,
+    l3_s1_sol: q => tx`\(I_3 = ${q.I1} + ${q.I2} = ${q.I3}\ \text{A}\)`,
+    l3_s2_sol: q => tx`\(V_{AB} = ${q.I3} \times ${q.R3} = ${q.VAB}\ \text{V}\)`,
+    l3_s3_sol: q => tx`\(V_{AB} = ${q.E1} - ${q.I1} \times ${q.R1} = ${q.E1} - ${q.I1 * q.R1} = ${q.VAB}\ \text{V}\)`,
+    l3_s4_sol: q => tx`\(V_{AB} = ${q.E2} - ${q.I2} \times ${q.R2} = ${q.E2} - ${q.I2 * q.R2} = ${q.VAB}\ \text{V}\)`,
+    midWrongI: tx`Arus yang lewat \(R_3\) adalah \(I_3\) (gabungan), bukan \(I_1\) atau \(I_2\) saja.`,
+    midAdd: tx`Tegangan resistor = arus <b>×</b> hambatan. ✖️`,
+    midGeneric: tx`Belum pas. Hitung \(I_3 \times R_3\).`,
+    sideAdd: tx`Belanja di resistor <b>mengurangi</b> saldo. Hitung \(\varepsilon - I R\). ➖`,
+    sideForgot: tx`Itu modal baterainya saja. Sebelum menerima modal, kamu sudah membayar belanja \(I R\) di resistor cabang ini.`,
+    sideOnly: tx`Itu belanjanya saja. Saldo = modal − belanja.`,
+    sideGeneric: tx`Belum pas. Saldo di A lewat cabang samping = \(\varepsilon - I R\) dari cabang itu.`,
+    l3_summary: q => tx`
+      <p>Ketiga rute memberi \(V_{AB} = ${q.VAB}\ \text{V}\) ✅</p>
+      \[I_3R_3 = ${q.I3 * q.R3} \qquad \varepsilon_1 - I_1R_1 = ${q.E1 - q.I1 * q.R1} \qquad \varepsilon_2 - I_2R_2 = ${q.E2 - q.I2 * q.R2}\]
+      <p>🔍 <b>Fakta menarik:</b> inilah cara cepat mengecek jawaban di ujian. Kalau dua rute memberi hasil berbeda, pasti ada arus yang salah hitung! 🕵️</p>`,
+
+    /* ================= LEVEL 4 : Jembatan Wheatstone ================= */
+    l4_title: 'Jembatan Wheatstone',
+    l4_theory: tx`
+      <p>🌉 Dari A ke B ada <b>dua jalur sejajar</b>: jalur atas (\(R_1\), titik C, \(R_2\)) dan jalur bawah (\(R_3\), titik D, \(R_x\)). Di antara C dan D ada "jembatan" berisi galvanometer G.</p>
+      <div class="analogy">💸 <b>Analogi:</b> Uang hanya menyeberang jembatan kalau saldo di kedua ujungnya <b>berbeda</b>. Kalau saldo C = saldo D, jembatan sepi: \(I_G = 0\). Keadaan ini disebut <b>seimbang</b>.</div>
+      <p>Syarat seimbang (kalikan hambatan yang <b>berseberangan</b>):</p>
+      \[R_1 \cdot R_x = R_2 \cdot R_3\]
+      <p>🔧 Dulu jembatan ini dipakai untuk mengukur hambatan yang belum diketahui dengan sangat teliti.</p>`,
+    l4_question: q => tx`Baterai \(\varepsilon = ${q.E}\ \text{V}\) (hambatan dalam diabaikan). Jalur atas: \(R_1 = ${q.R1}\ \Omega\), \(R_2 = ${q.R2}\ \Omega\). Jalur bawah: \(R_3 = ${q.R3}\ \Omega\) dan \(R_x\) yang belum diketahui. Galvanometer menunjukkan nol. Titik B = 0 V.`,
+    l4_s1: tx`Hitung arus di jalur atas: \(I_{ACB} = \dfrac{\varepsilon}{R_1 + R_2}\)`,
+    l4_s2: tx`Hitung saldo di titik C: \(V_C = \varepsilon - I_{ACB} R_1\)`,
+    l4_s3: tx`Gunakan syarat seimbang \(R_1 R_x = R_2 R_3\). Berapa \(R_x\)?`,
+    l4_s4: tx`Karena jembatan seimbang, berapa arus yang lewat galvanometer?`,
+    l4_opt_zero: '0️⃣ Nol, tidak ada arus',
+    l4_opt_cd: '➡️ Mengalir dari C ke D',
+    l4_opt_dc: '⬅️ Mengalir dari D ke C',
+    l4_s1_hint: tx`Saat seimbang, jalur atas tidak "bocor" ke jembatan. Jadi \(R_1\) dan \(R_2\) seri.`,
+    l4_s2_hint: tx`Di A saldonya \(\varepsilon\). Setelah membayar belanja di \(R_1\), sisanya adalah saldo di C.`,
+    l4_s3_hint: tx`\(R_x = \dfrac{R_2 \cdot R_3}{R_1}\)`,
+    l4_s4_hint: 'Uang hanya menyeberang jembatan kalau saldo di kedua ujungnya berbeda.',
+    l4_s1_sol: q => tx`\(I_{ACB} = \dfrac{${q.E}}{${q.R1} + ${q.R2}} = ${q.Ia}\ \text{A}\)`,
+    l4_s2_sol: q => tx`\(V_C = ${q.E} - ${q.Ia} \times ${q.R1} = ${q.VC}\ \text{V}\)`,
+    l4_s3_sol: q => tx`\(R_x = \dfrac{${q.R2} \times ${q.R3}}{${q.R1}} = \dfrac{${q.R2 * q.R3}}{${q.R1}} = ${q.Rx}\ \Omega\)`,
+    l4_s4_sol: 'Saldo C = saldo D, jadi tidak ada "uang" yang menyeberang: \\(I_G = 0\\).',
+    oneR: tx`Arus jalur atas melewati \(R_1\) <b>dan</b> \(R_2\). Pakai \(R_1 + R_2\).`,
+    iMult: tx`Kamu mengalikan. Arus = tegangan <b>÷</b> hambatan. ➗`,
+    iGeneric: tx`Belum pas. Hitung \(\dfrac{\varepsilon}{R_1 + R_2}\).`,
+    spentNotSaldo: tx`Itu belanja di \(R_1\). Saldo = modal − belanja. 🏧`,
+    forgotSpend: tx`Itu saldo di A. Sebelum sampai di C, kamu sudah membayar belanja di \(R_1\).`,
+    addSpend: tx`Belanja <b>mengurangi</b> saldo, bukan menambah. ➖`,
+    saldoGeneric: tx`Belum pas. Hitung \(\varepsilon - I_{ACB} R_1\).`,
+    wsSwap: tx`Pasangan perkalian silangnya tertukar. Yang dikalikan adalah hambatan yang <b>berseberangan</b>: \(R_1 R_x = R_2 R_3\).`,
+    wsNoDivide: tx`Hampir! Itu \(R_2 \cdot R_3\). Sekarang bagi dengan \(R_1\).`,
+    wsGeneric: tx`Belum pas. Hitung \(R_x = \dfrac{R_2 R_3}{R_1}\).`,
+    wsIG: 'Saat seimbang, saldo C dan D <b>sama</b>, jadi tidak ada arus yang menyeberangi jembatan. 🌉',
+    l4_summary: q => tx`
+      <p>\(R_x = ${q.Rx}\ \Omega\). Cek: saldo C = \(${q.VC}\ \text{V}\), saldo D = \(I_{ADB} R_x = ${q.Ib} \times ${q.Rx} = ${q.VC}\ \text{V}\) ✅</p>
+      <p>🔍 <b>Fakta menarik:</b> perhatikan bahwa \(\varepsilon\) tidak dipakai untuk mencari \(R_x\)! Syarat seimbang hanya bergantung pada <b>perbandingan</b> hambatan: \(R_1 : R_2 = R_3 : R_x = ${q.R1} : ${q.R2}\).</p>`,
+
+    /* ================= LEVEL 5 : Ujian Akhir (BOSS) ================= */
+    l5_title: 'Ujian Akhir: Dua Loop Lengkap',
+    l5_theory: tx`
+      <p>👑 Ini soal tipe ujian yang menggabungkan semuanya. Gunakan strategi 4 langkah:</p>
+      <ul>
+        <li>1️⃣ Tentukan peran \(\varepsilon_3\) di cabang tengah: pajak atau bonus?</li>
+        <li>2️⃣ Hitung modal bersih tiap loop dan susun persamaannya.</li>
+        <li>3️⃣ Selesaikan persamaan. Arus boleh negatif (💳 arah terbalik).</li>
+        <li>4️⃣ Hitung \(V_{AB}\) lewat rute tengah: saldo A habis dibayar ke \(\varepsilon_3\) (jika pajak) dan \(R_3\).</li>
+      </ul>
+      \[V_{AB} = \pm\varepsilon_3 + I_3 R_3 \qquad (+\ \text{jika pajak},\ -\ \text{jika bonus})\]
+      <div class="analogy">🧠 Kamu sudah melatih setiap bagiannya. Sekarang tinggal menyusunnya satu per satu. Pelan-pelan saja!</div>`,
+    l5_question: q => tx`\(\varepsilon_1 = ${q.E1}\ \text{V}\), \(\varepsilon_2 = ${q.E2}\ \text{V}\), \(\varepsilon_3 = ${q.E3}\ \text{V}\) (cabang tengah), \(R_1 = ${q.R1}\ \Omega\), \(R_2 = ${q.R2}\ \Omega\), \(R_3 = ${q.R3}\ \Omega\). Arah arus dimisalkan seperti gambar. Hitung \(I_1\), \(I_2\), dan beda potensial \(V_{AB}\).`,
+    l5_s1: tx`Bagi kedua loop (yang berjalan turun di cabang tengah), \(\varepsilon_3\) adalah…`,
+    l5_s2: tx`Modal bersih loop 1: \(\varepsilon_1 \mp \varepsilon_3\)`,
+    l5_s3: tx`Modal bersih loop 2: \(\varepsilon_2 \mp \varepsilon_3\)`,
+    l5_s4: tx`Selesaikan persamaan. Berapa \(I_1\)?`,
+    l5_s5: tx`Berapa \(I_2\)? <span class="text-[#7A675B] font-normal">(Boleh negatif!)</span>`,
+    l5_s6: tx`Hitung \(V_{AB}\) lewat rute tengah. <span class="text-[#7A675B] font-normal">(Boleh negatif!)</span>`,
+    l5_s1_hint: 'Lihat baterai di tengah dari atas ke bawah: garis mana yang ditabrak duluan?',
+    l5_s2_hint: q => q.tax ? tx`Pajak → \(\varepsilon_1 - \varepsilon_3\).` : tx`Bonus → \(\varepsilon_1 + \varepsilon_3\).`,
+    l5_s3_hint: q => q.tax ? tx`Pajak → \(\varepsilon_2 - \varepsilon_3\).` : tx`Bonus → \(\varepsilon_2 + \varepsilon_3\).`,
+    l5_s4_hint: q => tx`(1): \(${q.N1} = ${q.a}I_1 + ${q.R3}I_2\), (2): \(${q.N2} = ${q.R3}I_1 + ${q.d}I_2\). Kalikan (1) dengan ${q.d} dan (2) dengan ${q.R3}, lalu kurangkan.`,
+    l5_s5_hint: q => tx`Masukkan \(I_1\) ke (2): \(${q.N2} = ${q.R3}\,I_1 + ${q.d}\,I_2\).`,
+    l5_s6_hint: q => tx`Hitung dulu \(I_3 = I_1 + I_2\). Lalu ${q.tax ? tx`\(V_{AB} = +\varepsilon_3 + I_3R_3\) (pajak)` : tx`\(V_{AB} = -\varepsilon_3 + I_3R_3\) (bonus)`}.`,
+    l5_s1_sol: q => q.tax ? 'Garis panjang (+) ditabrak duluan → <b>pajak</b> 🧾.' : 'Garis pendek (−) ditabrak duluan → <b>bonus</b> 🎁.',
+    l5_s2_sol: q => tx`\(${q.E1} ${q.tax ? '-' : '+'} ${q.E3} = ${q.N1}\ \text{V}\)`,
+    l5_s3_sol: q => tx`\(${q.E2} ${q.tax ? '-' : '+'} ${q.E3} = ${q.N2}\ \text{V}\)`,
+    l5_s4_sol: q => tx`Persamaan: (1) \(${q.N1} = ${q.a}I_1 + ${q.R3}I_2\), (2) \(${q.N2} = ${q.R3}I_1 + ${q.d}I_2\)<br>` + elimTeX(q, 'Kurangkan'),
+    l5_s5_sol: q => subI2TeX(q),
+    l5_s6_sol: q => tx`\(I_3 = ${q.I1} + ${paren(q.I2)} = ${q.I3}\ \text{A}\)<br>\(V_{AB} = ${q.tax ? '+' : '-'}${q.E3} + ${paren(q.I3)}(${q.R3}) = ${q.VAB}\ \text{V}\)`,
+    vabForgotE3: tx`Kamu lupa baterai \(\varepsilon_3\) di rute tengah! Ia juga dilewati saat turun dari A ke B.`,
+    vabSign: tx`Cek lagi tanda \(\varepsilon_3\): pajak → \(+\varepsilon_3\) (saldo A dipakai untuk membayarnya), bonus → \(-\varepsilon_3\).`,
+    vabReverse: tx`Tandanya terbalik semua. Sepertinya kamu menghitung \(V_{BA}\). Kita mencari \(V_A - V_B\).`,
+    vabGeneric: tx`Belum pas. Hitung \(I_3 = I_1 + I_2\) dulu, lalu \(V_{AB} = \pm\varepsilon_3 + I_3R_3\).`,
+    l5_summary: q => tx`
+      <p>\(I_1 = ${q.I1}\ \text{A}\), \(I_2 = ${q.I2}\ \text{A}\), \(I_3 = ${q.I3}\ \text{A}\), \(V_{AB} = ${q.VAB}\ \text{V}\).</p>
+      <p>Cek lewat rute kiri: \(V_{AB} = \varepsilon_1 - I_1R_1 = ${q.E1} - ${q.I1 * q.R1} = ${q.VAB}\ \text{V}\) ✅ sama!</p>
+      <p>${q.I2 < 0 ? `💳 \\(I_2\\) negatif, jadi arus di cabang kanan sebenarnya mengalir ke bawah (baterai 2 sedang diisi). ` : ''}🏆 <b>Selamat!</b> Kamu sudah menguasai soal Kirchhoff tipe ujian dari awal sampai akhir.</p>`,
+
+    levelDone: 'Level {n} Selesai! 🎉',
+    unlockMsg: 'Kerja bagus! Level {n} sekarang terbuka. Siap untuk tantangan berikutnya?',
+    unlockBoss: 'Hebat! Sekarang saatnya <b>BOSS STAGE</b>: soal dua loop lengkap tipe ujian. Kamu pasti bisa! 🔥',
+    continueBtn: 'Lanjut ke Level {n} 🚀',
+    allDoneTitle: 'Kamu Ahli Rangkaian! 👑',
+    allDoneText: 'Semua level Tahap Mahir sudah kamu selesaikan: baterai di cabang tengah, arus negatif, beda potensial, jembatan Wheatstone, dan soal ujian dua loop. Tekan "Soal Baru" untuk latihan lagi!',
+    closeBtn: 'Yeay, tutup! 🙌',
+    finalBannerTitle: 'Misi Tahap Mahir Selesai! 👑',
+    finalBanner: 'Kamu sudah menaklukkan semua level. Rumus emasnya tetap sama: <b>di setiap loop, total modal = total belanja</b>. Terus berlatih dengan tombol 🎲 Soal Baru!'
+  },
+
+  /* ============================ ENGLISH (B1) ============================ */
+  en: {
+    school: 'SMA ABBS Surakarta',
+    appTitle: 'Kirchhoff\'s Laws, Expert Level: Capital & Spending',
+    progress: 'Your learning progress',
+    stepsWord: 'steps',
+    footer: 'Made for SMA ABBS Surakarta students • In every loop: total capital = total spending 💰',
+
+    heroTitle: 'Expert Level: Ready to Be a Circuit Expert? 🏅',
+    heroText: 'You can already solve two-loop circuits. Now let\'s practise <b>exam-style problems</b>: a battery in the middle branch, negative currents, potential difference and the Wheatstone bridge. The idea is still the same: <b>capital = spending</b>. 💪',
+    heroCards: [
+      ['🔋🎯', 'Battery in the Middle', 'One counter that works for two loops.'],
+      ['💳', 'Negative Current', 'A battery that is being charged.'],
+      ['🗺️', 'Balance by 3 Routes', 'Potential difference doesn\'t depend on the path.'],
+      ['🌉', 'Wheatstone Bridge', 'Same balance, empty bridge.'],
+      ['👑', 'Final Exam', 'Every idea in one problem (Boss).']
+    ],
+
+    level: 'Level',
+    boss: 'BOSS',
+    lockedText: 'Finish Level {n} to open this level. 🔒',
+    miniTheory: 'Mini-Theory',
+    question: 'Problem',
+    step: 'Step',
+    check: 'Check ✓',
+    hint: 'Hint 💡',
+    hideHint: 'Hide hint',
+    showSolution: 'Show solution 📘',
+    solutionLabel: 'Solution',
+    newQuestion: '🎲 New Problem',
+    completedBadge: 'Done ✅',
+    placeholder: '?',
+    lockedStep: 'Finish the step before this one first 🔒',
+    attemptsNote: 'You have tried {n} times. That\'s okay! You can open the solution, then answer it yourself.',
+    correctMsgs: ['Correct! The money adds up! 🎉', 'Exactly right! 👏', 'Nice, very neat work! ⭐', 'Correct! Let\'s go on! 🚀', 'Great, future circuit expert! 🏅'],
+    almost: 'Almost!',
+    emptyInput: 'Please type your answer first ✏️ (numbers only)',
+    notInteger: 'All answers here are <b>whole numbers</b>. Please check your calculation again 🔢',
+    summaryTitle: 'Summary & Fun Fact 📝',
+    subtractWord: 'Subtract',
+
+    eqTitle: '🧮 Equation Book',
+    roleLabel: 'Role of ε₃:',
+    roleTax: '🧾 tax', roleBonus: '🎁 bonus',
+    resultsTitle: '🎯 Current Results',
+    negNote: '💳 Negative → the real direction is the opposite!',
+    eqTarget: 'Fill in the "?" boxes by answering the steps below 🎯',
+    eqDone: 'Equations complete! ✅',
+    routesTitle: '🗺️ Balance at point A (B = 0 V)',
+    routeMid: 'Middle route: A → R₃ → B',
+    routeLeft: 'Left route: B → R₁ → ε₁ → A',
+    routeRight: 'Right route: B → R₂ → ε₂ → A',
+    routesSame: 'All three routes give the same balance! ✅',
+    routesTarget: 'All three routes must give the same answer 🎯',
+    wsTitle: '🌉 Balance at Both Ends of the Bridge (B = 0 V)',
+    wsC: '📍 Balance at C (top path)',
+    wsD: '📍 Balance at D (bottom path)',
+    wsBalanced: 'Balance at C = balance at D → empty bridge, \\(I_G = 0\\) ✅',
+    wsTarget: 'To be balanced, C and D must have the same balance 🎯',
+
+    svgReal: 'real I₂ ↓',
+    svgBridge: 'bridge',
+
+    opt_tax: '🧾 Tax (capital goes down)',
+    opt_bonus: '🎁 Bonus (capital goes up)',
+    choiceTax: 'Both loops walk <b>down</b> the middle branch. The line at the top of ε₃ is the <b>long line (+)</b>, so you hit it first → <b>tax</b> 🧾.',
+    choiceBonus: 'Both loops walk <b>down</b> the middle branch. The line at the top of ε₃ is the <b>short line (−)</b>, so you hit it first → <b>bonus</b> 🎁.',
+    mShouldSub: tx`Oops! ε₃ is a <b>tax</b>, so this loop's capital <b>goes down</b> by \(\varepsilon_3\). 🧾`,
+    mShouldAdd: tx`Oops! ε₃ is a <b>bonus</b>, so this loop's capital <b>goes up</b> by \(\varepsilon_3\). 🎁`,
+    mForgotE3: tx`You forgot the battery in the middle branch! <b>Both</b> loops pass through \(\varepsilon_3\).`,
+    mWrongBattery: 'Careful: the battery in the other side branch is <b>not</b> part of this loop. Use only this loop\'s battery and ε₃.',
+    mGeneric: tx`Not yet. Net capital = this loop's battery ± \(\varepsilon_3\) (tax → minus, bonus → plus).`,
+    rMult: tx`Resistances in one loop equation are <b>added</b>, not multiplied. ➕`,
+    coefForgotR3: tx`You forgot \(R_3\)! The current \(I_3 = I_1 + I_2\) also goes through \(R_3\), so \(R_3\) joins this loop's current too.`,
+    coefForgotOwn: 'You forgot the resistor in this loop\'s side branch! This loop\'s current goes through it too.',
+    coefGeneric: tx`Not yet. First write \(I_3 = I_1 + I_2\), then group the terms with the same current.`,
+    swap: 'That\'s the value of the other current. Check again: which current did you remove in the elimination? 🔄',
+    iNeg: 'The size is right, but the sign is reversed. Check the subtraction in your elimination step.',
+    ignoreOther: tx`You ignored the term with the other current. You must solve both equations <b>together</b> (elimination/substitution).`,
+    i1Generic: tx`Not yet. Remove \(I_2\) by elimination, then find \(I_1\).`,
+    i2Generic: tx`Not yet. Put \(I_1\) into equation (2), then find \(I_2\).`,
+    dropSign: tx`The size is right! But your result should be <b>negative</b>. Keep the sign — it tells you the direction! 💳`,
+    i3AbsAdd: tx`You added only the sizes. Use \(I_2\) <b>with its minus sign</b>: \(I_3 = I_1 + (I_2)\).`,
+    i3Forgot: tx`That's only \(I_1\). Kirchhoff's First Law: \(I_3 = I_1 + I_2\).`,
+    i3Generic: tx`Not yet. Use \(I_3 = I_1 + I_2\).`,
+
+    /* ================= LEVEL 1 ================= */
+    l1_title: 'A Battery in the Middle Branch',
+    l1_theory: tx`
+      <p>🔋 Now the middle branch also has a battery \(\varepsilon_3\). Look at how each loop walks:</p>
+      <ul>
+        <li>↻ Loop 1 (left) walks clockwise → in the middle branch it walks <b>down</b>.</li>
+        <li>↺ Loop 2 (right) walks anticlockwise → in the middle branch it also walks <b>down</b>.</li>
+      </ul>
+      <div class="analogy">🏪 <b>Analogy:</b> The shared shop now has a <b>counter</b>. Both friends come from the same side, so the counter treats them the same way: if it charges (tax), both pay; if it gives a gift (bonus), both get it.</div>
+      <p>With \(I_3 = I_1 + I_2\), the two loop equations become:</p>
+      \[\varepsilon_1 \mp \varepsilon_3 = (R_1 + R_3)\,I_1 + R_3\,I_2\]
+      \[\varepsilon_2 \mp \varepsilon_3 = R_3\,I_1 + (R_2 + R_3)\,I_2\]
+      <p>Use \(-\) for a tax and \(+\) for a bonus. In this level we focus on <b>building the equations</b> first.</p>`,
+    l1_question: q => tx`Two-loop circuit: \(\varepsilon_1 = ${q.E1}\ \text{V}\), \(\varepsilon_2 = ${q.E2}\ \text{V}\), \(\varepsilon_3 = ${q.E3}\ \text{V}\) (middle branch), \(R_1 = ${q.R1}\ \Omega\), \(R_2 = ${q.R2}\ \Omega\), \(R_3 = ${q.R3}\ \Omega\). Build the two loop equations by completing the <b>Equation Book</b>.`,
+    l1_s1: tx`Both loops walk down the middle branch. For both loops, battery \(\varepsilon_3\) is a…`,
+    l1_s2: tx`Find the net capital of loop 1: \(\varepsilon_1 \mp \varepsilon_3\)`,
+    l1_s3: tx`Find the net capital of loop 2: \(\varepsilon_2 \mp \varepsilon_3\)`,
+    l1_s4: tx`The number in front of \(I_1\) in loop 1 is \(R_1 + R_3\). What is it?`,
+    l1_s5: tx`The number in front of \(I_2\) in loop 2 is \(R_2 + R_3\). What is it?`,
+    l1_s1_hint: 'Look at the middle battery from top to bottom. Which line do you hit first: the long one (+) or the short one (−)?',
+    l1_s2_hint: q => q.tax ? tx`ε₃ is a tax → \(\varepsilon_1 - \varepsilon_3\).` : tx`ε₃ is a bonus → \(\varepsilon_1 + \varepsilon_3\).`,
+    l1_s3_hint: q => q.tax ? tx`ε₃ is a tax → \(\varepsilon_2 - \varepsilon_3\).` : tx`ε₃ is a bonus → \(\varepsilon_2 + \varepsilon_3\).`,
+    l1_s4_hint: tx`Add \(R_1\) and \(R_3\).`,
+    l1_s5_hint: tx`Add \(R_2\) and \(R_3\).`,
+    l1_s1_sol: q => q.tax ? 'Walking down the middle branch, we hit the long line (+) first → <b>tax</b> 🧾 for both loops.' : 'Walking down the middle branch, we hit the short line (−) first → <b>bonus</b> 🎁 for both loops.',
+    l1_s2_sol: q => tx`\(${q.E1} ${q.tax ? '-' : '+'} ${q.E3} = ${q.N1}\ \text{V}\)`,
+    l1_s3_sol: q => tx`\(${q.E2} ${q.tax ? '-' : '+'} ${q.E3} = ${q.N2}\ \text{V}\)`,
+    l1_s4_sol: q => tx`\(R_1 + R_3 = ${q.R1} + ${q.R3} = ${q.a}\ \Omega\)`,
+    l1_s5_sol: q => tx`\(R_2 + R_3 = ${q.R2} + ${q.R3} = ${q.d}\ \Omega\)`,
+    l1_summary: q => tx`
+      <p>The complete equations are:</p>
+      \[(1)\quad ${q.N1} = ${q.a}\,I_1 + ${q.R3}\,I_2 \qquad\quad (2)\quad ${q.N2} = ${q.R3}\,I_1 + ${q.d}\,I_2\]
+      <p>🔍 <b>Important:</b> building the equations is 80% of the work! If you're curious, the answers are \(I_1 = ${q.I1}\ \text{A}\) and \(I_2 = ${q.I2}\ \text{A}\). We will practise solving them in the next level.</p>`,
+
+    /* ================= LEVEL 2 ================= */
+    l2_title: 'Negative Current in Two Loops',
+    l2_theory: tx`
+      <p>🧮 Once the equations are built, solve them by <b>elimination</b> or <b>substitution</b>. Sometimes one of the currents comes out <b>negative</b>.</p>
+      <div class="analogy">💳 <b>Remember the debt idea:</b> a negative current does not mean you made a mistake. The size is right, but the real direction is <b>opposite</b> to the arrow we drew.</div>
+      <ul>
+        <li>⚠️ Keep the minus sign when you use it for other currents, for example \(I_3 = I_1 + I_2\).</li>
+        <li>🔌 If current goes into a battery through its (+) side, the battery is being <b>charged</b> (like a phone on a charger).</li>
+      </ul>`,
+    l2_question: q => tx`Two-loop circuit with no battery in the middle: \(\varepsilon_1 = ${q.E1}\ \text{V}\), \(\varepsilon_2 = ${q.E2}\ \text{V}\), \(R_1 = ${q.R1}\ \Omega\), \(R_2 = ${q.R2}\ \Omega\), \(R_3 = ${q.R3}\ \Omega\). The equations are already in the Equation Book. Find all the currents and their real directions.`,
+    l2_s1: tx`Solve both equations. What is \(I_1\)?`,
+    l2_s2: tx`What is \(I_2\)? <span class="text-[#7A675B] font-normal">(It can be negative!)</span>`,
+    l2_s3: tx`Find \(I_3 = I_1 + I_2\)`,
+    l2_s4: tx`Which way does the current in the right branch (\(I_2\)) <b>really</b> flow?`,
+    l2_opt_up: '⬆️ Up (same as the arrow)',
+    l2_opt_down: '⬇️ Down (opposite to the arrow)',
+    l2_s1_hint: q => tx`(1): \(${q.N1} = ${q.a}I_1 + ${q.R3}I_2\), (2): \(${q.N2} = ${q.R3}I_1 + ${q.d}I_2\). Multiply (1) by ${q.d} and (2) by ${q.R3}, then subtract to remove \(I_2\).`,
+    l2_s2_hint: q => tx`Put \(I_1\) into equation (2): \(${q.N2} = ${q.R3}\,I_1 + ${q.d}\,I_2\).`,
+    l2_s3_hint: tx`Add them with their signs. Example: \(5 + (-2) = 3\).`,
+    l2_s4_hint: tx`Look at the sign of \(I_2\). Negative = the real direction is opposite to the arrow in the picture.`,
+    l2_s1_sol: q => elimTeX(q, 'Subtract'),
+    l2_s2_sol: q => subI2TeX(q),
+    l2_s3_sol: q => tx`\(I_3 = ${q.I1} + (${q.I2}) = ${q.I3}\ \text{A}\)`,
+    l2_s4_sol: 'Because \\(I_2\\) is negative, the real current flows <b>down</b> in the right branch.',
+    l2_dirWrong: tx`\(I_2\) is <b>negative</b>. Negative = debt = the real direction is the <b>opposite</b> of the arrow. 🔄`,
+    l2_summary: q => tx`
+      <p>\(I_1 = ${q.I1}\ \text{A}\), \(I_2 = ${q.I2}\ \text{A}\), \(I_3 = ${q.I3}\ \text{A}\).</p>
+      <p>🔌 <b>Fun fact:</b> a current of ${-q.I2} A flows <b>down</b> in the right branch, so it goes into \(\varepsilon_2\) through its (+) side. This means battery 2 is being <b>charged</b> by battery 1, like a power bank charging a phone! 🔋➡️📱</p>`,
+
+    /* ================= LEVEL 3 ================= */
+    l3_title: 'The Balance Doesn\'t Depend on the Route',
+    l3_theory: tx`
+      <p>📍 The potential difference between two junctions, \(V_{AB} = V_A - V_B\), can be found through <b>any branch</b>. The answer is always the same!</p>
+      <div class="analogy">⛰️ <b>Analogy:</b> The height difference between two villages is the same, whether you take the long road or the short cut. In a circuit, the "balance" at point A is the same by any route.</div>
+      <p>Use B as the 0 V reference. Find the balance at A:</p>
+      <ul>
+        <li>⬇️ <b>Middle route:</b> the balance at A must be all spent at \(R_3\) on the way to B → \(V_A = I_3 R_3\).</li>
+        <li>⬆️ <b>Side route:</b> from B go up, pay the spending \(I R\), then receive the capital \(\varepsilon\) → \(V_A = \varepsilon - I R\).</li>
+      </ul>
+      <p>💡 Exam tip: choose the route with the <b>fewest</b> components.</p>`,
+    l3_question: q => tx`In this two-loop circuit (\(\varepsilon_1 = ${q.E1}\ \text{V}\), \(\varepsilon_2 = ${q.E2}\ \text{V}\), \(R_1 = ${q.R1}\ \Omega\), \(R_2 = ${q.R2}\ \Omega\), \(R_3 = ${q.R3}\ \Omega\)), the currents are already known: \(I_1 = ${q.I1}\ \text{A}\) and \(I_2 = ${q.I2}\ \text{A}\). Find the potential difference \(V_{AB}\) using three different routes.`,
+    l3_s1: tx`Find the current in the middle branch: \(I_3 = I_1 + I_2\)`,
+    l3_s2: tx`Middle route: \(V_{AB} = I_3 \cdot R_3\)`,
+    l3_s3: tx`Left route: \(V_{AB} = \varepsilon_1 - I_1 R_1\)`,
+    l3_s4: tx`Right route: \(V_{AB} = \varepsilon_2 - I_2 R_2\)`,
+    l3_s1_hint: tx`Kirchhoff's First Law: add \(I_1\) and \(I_2\).`,
+    l3_s2_hint: tx`The balance at A is all spent at \(R_3\). Multiply \(I_3\) by \(R_3\).`,
+    l3_s3_hint: tx`From B go up the left branch: pay \(I_1 R_1\), then receive the capital \(\varepsilon_1\).`,
+    l3_s4_hint: tx`From B go up the right branch: pay \(I_2 R_2\), then receive the capital \(\varepsilon_2\).`,
+    l3_s1_sol: q => tx`\(I_3 = ${q.I1} + ${q.I2} = ${q.I3}\ \text{A}\)`,
+    l3_s2_sol: q => tx`\(V_{AB} = ${q.I3} \times ${q.R3} = ${q.VAB}\ \text{V}\)`,
+    l3_s3_sol: q => tx`\(V_{AB} = ${q.E1} - ${q.I1} \times ${q.R1} = ${q.E1} - ${q.I1 * q.R1} = ${q.VAB}\ \text{V}\)`,
+    l3_s4_sol: q => tx`\(V_{AB} = ${q.E2} - ${q.I2} \times ${q.R2} = ${q.E2} - ${q.I2 * q.R2} = ${q.VAB}\ \text{V}\)`,
+    midWrongI: tx`The current through \(R_3\) is \(I_3\) (the combined one), not just \(I_1\) or \(I_2\).`,
+    midAdd: tx`Resistor voltage = current <b>×</b> resistance. ✖️`,
+    midGeneric: tx`Not yet. Calculate \(I_3 \times R_3\).`,
+    sideAdd: tx`Spending at a resistor <b>lowers</b> the balance. Calculate \(\varepsilon - I R\). ➖`,
+    sideForgot: tx`That's only the battery's capital. Before you receive it, you already paid \(I R\) at this branch's resistor.`,
+    sideOnly: tx`That's only the spending. Balance = capital − spending.`,
+    sideGeneric: tx`Not yet. Balance at A by a side branch = \(\varepsilon - I R\) of that branch.`,
+    l3_summary: q => tx`
+      <p>All three routes give \(V_{AB} = ${q.VAB}\ \text{V}\) ✅</p>
+      \[I_3R_3 = ${q.I3 * q.R3} \qquad \varepsilon_1 - I_1R_1 = ${q.E1 - q.I1 * q.R1} \qquad \varepsilon_2 - I_2R_2 = ${q.E2 - q.I2 * q.R2}\]
+      <p>🔍 <b>Fun fact:</b> this is a quick way to check your answers in an exam. If two routes give different answers, one of your currents must be wrong! 🕵️</p>`,
+
+    /* ================= LEVEL 4 ================= */
+    l4_title: 'The Wheatstone Bridge',
+    l4_theory: tx`
+      <p>🌉 From A to B there are <b>two parallel paths</b>: the top path (\(R_1\), point C, \(R_2\)) and the bottom path (\(R_3\), point D, \(R_x\)). Between C and D there is a "bridge" with a galvanometer G.</p>
+      <div class="analogy">💸 <b>Analogy:</b> Money only crosses the bridge if the balances at its two ends are <b>different</b>. If the balance at C = the balance at D, the bridge is empty: \(I_G = 0\). We call this <b>balanced</b>.</div>
+      <p>The balance condition (multiply the resistances that are <b>opposite</b> each other):</p>
+      \[R_1 \cdot R_x = R_2 \cdot R_3\]
+      <p>🔧 In the past, this bridge was used to measure an unknown resistance very accurately.</p>`,
+    l4_question: q => tx`A battery \(\varepsilon = ${q.E}\ \text{V}\) (ignore its internal resistance). Top path: \(R_1 = ${q.R1}\ \Omega\), \(R_2 = ${q.R2}\ \Omega\). Bottom path: \(R_3 = ${q.R3}\ \Omega\) and an unknown \(R_x\). The galvanometer reads zero. Point B = 0 V.`,
+    l4_s1: tx`Find the current in the top path: \(I_{ACB} = \dfrac{\varepsilon}{R_1 + R_2}\)`,
+    l4_s2: tx`Find the balance at point C: \(V_C = \varepsilon - I_{ACB} R_1\)`,
+    l4_s3: tx`Use the balance condition \(R_1 R_x = R_2 R_3\). What is \(R_x\)?`,
+    l4_s4: tx`The bridge is balanced. What is the current through the galvanometer?`,
+    l4_opt_zero: '0️⃣ Zero, no current',
+    l4_opt_cd: '➡️ It flows from C to D',
+    l4_opt_dc: '⬅️ It flows from D to C',
+    l4_s1_hint: tx`When it's balanced, nothing "leaks" from the top path into the bridge. So \(R_1\) and \(R_2\) are in series.`,
+    l4_s2_hint: tx`At A the balance is \(\varepsilon\). After paying the spending at \(R_1\), what's left is the balance at C.`,
+    l4_s3_hint: tx`\(R_x = \dfrac{R_2 \cdot R_3}{R_1}\)`,
+    l4_s4_hint: 'Money only crosses the bridge if the balances at its two ends are different.',
+    l4_s1_sol: q => tx`\(I_{ACB} = \dfrac{${q.E}}{${q.R1} + ${q.R2}} = ${q.Ia}\ \text{A}\)`,
+    l4_s2_sol: q => tx`\(V_C = ${q.E} - ${q.Ia} \times ${q.R1} = ${q.VC}\ \text{V}\)`,
+    l4_s3_sol: q => tx`\(R_x = \dfrac{${q.R2} \times ${q.R3}}{${q.R1}} = \dfrac{${q.R2 * q.R3}}{${q.R1}} = ${q.Rx}\ \Omega\)`,
+    l4_s4_sol: 'Balance at C = balance at D, so no "money" crosses: \\(I_G = 0\\).',
+    oneR: tx`The top-path current goes through \(R_1\) <b>and</b> \(R_2\). Use \(R_1 + R_2\).`,
+    iMult: tx`You multiplied. Current = voltage <b>÷</b> resistance. ➗`,
+    iGeneric: tx`Not yet. Calculate \(\dfrac{\varepsilon}{R_1 + R_2}\).`,
+    spentNotSaldo: tx`That's the spending at \(R_1\). Balance = capital − spending. 🏧`,
+    forgotSpend: tx`That's the balance at A. Before reaching C, you already paid the spending at \(R_1\).`,
+    addSpend: tx`Spending <b>lowers</b> the balance, it doesn't raise it. ➖`,
+    saldoGeneric: tx`Not yet. Calculate \(\varepsilon - I_{ACB} R_1\).`,
+    wsSwap: tx`The pairs are mixed up. Multiply the resistances that are <b>opposite</b> each other: \(R_1 R_x = R_2 R_3\).`,
+    wsNoDivide: tx`Almost! That's \(R_2 \cdot R_3\). Now divide it by \(R_1\).`,
+    wsGeneric: tx`Not yet. Calculate \(R_x = \dfrac{R_2 R_3}{R_1}\).`,
+    wsIG: 'When balanced, C and D have the <b>same</b> balance, so no current crosses the bridge. 🌉',
+    l4_summary: q => tx`
+      <p>\(R_x = ${q.Rx}\ \Omega\). Check: balance at C = \(${q.VC}\ \text{V}\), balance at D = \(I_{ADB} R_x = ${q.Ib} \times ${q.Rx} = ${q.VC}\ \text{V}\) ✅</p>
+      <p>🔍 <b>Fun fact:</b> notice that we didn't need \(\varepsilon\) to find \(R_x\)! The balance condition only depends on the <b>ratio</b> of the resistances: \(R_1 : R_2 = R_3 : R_x = ${q.R1} : ${q.R2}\).</p>`,
+
+    /* ================= LEVEL 5 (BOSS) ================= */
+    l5_title: 'Final Exam: The Complete Two-Loop Problem',
+    l5_theory: tx`
+      <p>👑 This is an exam-style problem that puts everything together. Use this 4-step plan:</p>
+      <ul>
+        <li>1️⃣ Decide the role of \(\varepsilon_3\) in the middle branch: tax or bonus?</li>
+        <li>2️⃣ Find each loop's net capital and build the equations.</li>
+        <li>3️⃣ Solve the equations. A current can be negative (💳 opposite direction).</li>
+        <li>4️⃣ Find \(V_{AB}\) by the middle route: A's balance pays \(\varepsilon_3\) (if it's a tax) and \(R_3\).</li>
+      </ul>
+      \[V_{AB} = \pm\varepsilon_3 + I_3 R_3 \qquad (+\ \text{for a tax},\ -\ \text{for a bonus})\]
+      <div class="analogy">🧠 You have already practised every part. Now just put them together, one at a time. Take your time!</div>`,
+    l5_question: q => tx`\(\varepsilon_1 = ${q.E1}\ \text{V}\), \(\varepsilon_2 = ${q.E2}\ \text{V}\), \(\varepsilon_3 = ${q.E3}\ \text{V}\) (middle branch), \(R_1 = ${q.R1}\ \Omega\), \(R_2 = ${q.R2}\ \Omega\), \(R_3 = ${q.R3}\ \Omega\). The current directions are assumed as in the picture. Find \(I_1\), \(I_2\) and the potential difference \(V_{AB}\).`,
+    l5_s1: tx`For both loops (which walk down the middle branch), \(\varepsilon_3\) is a…`,
+    l5_s2: tx`Net capital of loop 1: \(\varepsilon_1 \mp \varepsilon_3\)`,
+    l5_s3: tx`Net capital of loop 2: \(\varepsilon_2 \mp \varepsilon_3\)`,
+    l5_s4: tx`Solve the equations. What is \(I_1\)?`,
+    l5_s5: tx`What is \(I_2\)? <span class="text-[#7A675B] font-normal">(It can be negative!)</span>`,
+    l5_s6: tx`Find \(V_{AB}\) by the middle route. <span class="text-[#7A675B] font-normal">(It can be negative!)</span>`,
+    l5_s1_hint: 'Look at the middle battery from top to bottom: which line do you hit first?',
+    l5_s2_hint: q => q.tax ? tx`Tax → \(\varepsilon_1 - \varepsilon_3\).` : tx`Bonus → \(\varepsilon_1 + \varepsilon_3\).`,
+    l5_s3_hint: q => q.tax ? tx`Tax → \(\varepsilon_2 - \varepsilon_3\).` : tx`Bonus → \(\varepsilon_2 + \varepsilon_3\).`,
+    l5_s4_hint: q => tx`(1): \(${q.N1} = ${q.a}I_1 + ${q.R3}I_2\), (2): \(${q.N2} = ${q.R3}I_1 + ${q.d}I_2\). Multiply (1) by ${q.d} and (2) by ${q.R3}, then subtract.`,
+    l5_s5_hint: q => tx`Put \(I_1\) into (2): \(${q.N2} = ${q.R3}\,I_1 + ${q.d}\,I_2\).`,
+    l5_s6_hint: q => tx`First find \(I_3 = I_1 + I_2\). Then ${q.tax ? tx`\(V_{AB} = +\varepsilon_3 + I_3R_3\) (tax)` : tx`\(V_{AB} = -\varepsilon_3 + I_3R_3\) (bonus)`}.`,
+    l5_s1_sol: q => q.tax ? 'The long line (+) is hit first → <b>tax</b> 🧾.' : 'The short line (−) is hit first → <b>bonus</b> 🎁.',
+    l5_s2_sol: q => tx`\(${q.E1} ${q.tax ? '-' : '+'} ${q.E3} = ${q.N1}\ \text{V}\)`,
+    l5_s3_sol: q => tx`\(${q.E2} ${q.tax ? '-' : '+'} ${q.E3} = ${q.N2}\ \text{V}\)`,
+    l5_s4_sol: q => tx`Equations: (1) \(${q.N1} = ${q.a}I_1 + ${q.R3}I_2\), (2) \(${q.N2} = ${q.R3}I_1 + ${q.d}I_2\)<br>` + elimTeX(q, 'Subtract'),
+    l5_s5_sol: q => subI2TeX(q),
+    l5_s6_sol: q => tx`\(I_3 = ${q.I1} + ${paren(q.I2)} = ${q.I3}\ \text{A}\)<br>\(V_{AB} = ${q.tax ? '+' : '-'}${q.E3} + ${paren(q.I3)}(${q.R3}) = ${q.VAB}\ \text{V}\)`,
+    vabForgotE3: tx`You forgot battery \(\varepsilon_3\) on the middle route! You also pass it when going down from A to B.`,
+    vabSign: tx`Check the sign of \(\varepsilon_3\) again: tax → \(+\varepsilon_3\) (A's balance pays for it), bonus → \(-\varepsilon_3\).`,
+    vabReverse: tx`All the signs are reversed. It looks like you found \(V_{BA}\). We want \(V_A - V_B\).`,
+    vabGeneric: tx`Not yet. First find \(I_3 = I_1 + I_2\), then \(V_{AB} = \pm\varepsilon_3 + I_3R_3\).`,
+    l5_summary: q => tx`
+      <p>\(I_1 = ${q.I1}\ \text{A}\), \(I_2 = ${q.I2}\ \text{A}\), \(I_3 = ${q.I3}\ \text{A}\), \(V_{AB} = ${q.VAB}\ \text{V}\).</p>
+      <p>Check by the left route: \(V_{AB} = \varepsilon_1 - I_1R_1 = ${q.E1} - ${q.I1 * q.R1} = ${q.VAB}\ \text{V}\) ✅ the same!</p>
+      <p>${q.I2 < 0 ? `💳 \\(I_2\\) is negative, so the current in the right branch really flows down (battery 2 is being charged). ` : ''}🏆 <b>Congratulations!</b> You can now solve exam-style Kirchhoff problems from start to finish.</p>`,
+
+    levelDone: 'Level {n} Complete! 🎉',
+    unlockMsg: 'Great work! Level {n} is now open. Are you ready for the next challenge?',
+    unlockBoss: 'Amazing! Now it\'s time for the <b>BOSS STAGE</b>: a complete exam-style two-loop problem. You can do it! 🔥',
+    continueBtn: 'Go to Level {n} 🚀',
+    allDoneTitle: 'You\'re a Circuit Expert! 👑',
+    allDoneText: 'You have finished every Expert level: a battery in the middle branch, negative currents, potential difference, the Wheatstone bridge and the two-loop exam problem. Press "New Problem" to practise again!',
+    closeBtn: 'Yay, close! 🙌',
+    finalBannerTitle: 'Expert Mission Complete! 👑',
+    finalBanner: 'You have beaten every level. The golden rule is still the same: <b>in every loop, total capital = total spending</b>. Keep practising with the 🎲 New Problem button!'
+  }
+};
+
+/* =====================================================================
+   2. CIRCUIT DRAWINGS (inline SVG, thick #2C1A1A lines)
+   ===================================================================== */
+const WIRE = '#2C1A1A', RES = '#8B1515', GOLD_D = '#C9800A', PLUS = '#B3261E', MINUS = '#1F4E8C', GREEN = '#1E7B45', UNK = '#D2691E';
+
+const line = (x1, y1, x2, y2) =>
+  `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${WIRE}" stroke-width="4.5" stroke-linecap="round"/>`;
+const txt = (x, y, s, { size = 15, weight = 700, fill = '#2C1A1A', anchor = 'middle' } = {}) =>
+  `<text x="${x}" y="${y}" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}">${s}</text>`;
+const dot = (x, y, c = RES) => `<circle cx="${x}" cy="${y}" r="6.5" fill="${c}"/>`;
+
+function resH(x1, x2, y, color = RES) {
+  const n = 6, seg = (x2 - x1) / n, amp = 10;
+  let d = `M${x1},${y}`;
+  for (let k = 0; k < n; k++) d += ` L${x1 + seg * (k + 0.5)},${y + (k % 2 ? amp : -amp)}`;
+  return `<path d="${d} L${x2},${y}" fill="none" stroke="${color}" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+}
+function resV(x, y1, y2, color = RES) {
+  const n = 6, seg = (y2 - y1) / n, amp = 10;
+  let d = `M${x},${y1}`;
+  for (let k = 0; k < n; k++) d += ` L${x + (k % 2 ? amp : -amp)},${y1 + seg * (k + 0.5)}`;
+  return `<path d="${d} L${x},${y2}" fill="none" stroke="${color}" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+}
+function batV(x, cy, plusTop, signDx) {
+  const yP = plusTop ? cy - 8 : cy + 8, yM = plusTop ? cy + 8 : cy - 8;
+  return `<line x1="${x - 22}" y1="${yP}" x2="${x + 22}" y2="${yP}" stroke="${WIRE}" stroke-width="4.5" stroke-linecap="round"/>` +
+         `<line x1="${x - 11}" y1="${yM}" x2="${x + 11}" y2="${yM}" stroke="${WIRE}" stroke-width="9"/>` +
+         txt(x + signDx, plusTop ? cy - 11 : cy + 22, '+', { size: 18, fill: PLUS, weight: 800 }) +
+         txt(x + signDx, plusTop ? cy + 22 : cy - 11, '−', { size: 18, fill: MINUS, weight: 800 });
+}
+function batH(cx, y, plusLeft) {
+  const xP = plusLeft ? cx - 8 : cx + 8, xM = plusLeft ? cx + 8 : cx - 8;
+  return `<line x1="${xP}" y1="${y - 22}" x2="${xP}" y2="${y + 22}" stroke="${WIRE}" stroke-width="4.5" stroke-linecap="round"/>` +
+         `<line x1="${xM}" y1="${y - 11}" x2="${xM}" y2="${y + 11}" stroke="${WIRE}" stroke-width="9"/>` +
+         txt(xP + (plusLeft ? -8 : 8), y - 28, '+', { size: 18, fill: PLUS, weight: 800 }) +
+         txt(xM + (plusLeft ? 8 : -8), y - 28, '−', { size: 18, fill: MINUS, weight: 800 });
+}
+function arrow(x, y, dir, c = GOLD_D) {
+  const pts = { r: [[-8, -8], [8, 0], [-8, 8]], l: [[8, -8], [-8, 0], [8, 8]], u: [[-8, 8], [0, -8], [8, 8]], d: [[-8, -8], [0, 8], [8, -8]] }[dir];
+  return `<polygon points="${pts.map(([a, b]) => `${x + a},${y + b}`).join(' ')}" fill="${c}"/>`;
+}
+const svgOpen = (w, h, label) =>
+  `<svg viewBox="0 0 ${w} ${h}" class="w-full h-auto max-w-2xl mx-auto" role="img" aria-label="${escAttr(label)}" style="font-family:'Plus Jakarta Sans',sans-serif">`;
+function loopArrow(cx, cy, label, cw = true) {
+  const r = 28;
+  const path = cw ? `M ${cx} ${cy - r} A ${r} ${r} 0 1 1 ${cx - r} ${cy}` : `M ${cx} ${cy - r} A ${r} ${r} 0 1 0 ${cx + r} ${cy}`;
+  return `<path d="${path}" fill="none" stroke="${GOLD_D}" stroke-width="3" stroke-dasharray="5 4"/>` +
+         arrow(cw ? cx - r : cx + r, cy - 3, 'u') + txt(cx, cy + 4, label, { size: 10.5, fill: GOLD_D });
+}
+
+/**
+ * Two-loop circuit. Left: ε1 (top) + R1, middle: optional ε3 (top) + R3, right: ε2 (top) + R2.
+ * opts: { mid: bool, nodes: bool, realI2: bool }
+ */
+function drawTwoLoop(p, opts = {}) {
+  const xl = 110, xm = 300, xr = 490, T = 60, B = 240;
+  const midTop = opts.mid
+    ? line(xm, T, xm, 92) + batV(xm, 100, p.tax, 30) + line(xm, 108, xm, 145) + txt(xm + 52, 105, `ε₃ = ${p.E3} V`, { anchor: 'start', size: 14 })
+    : line(xm, T, xm, 145);
+  return svgOpen(600, 290, 'Two-loop circuit') +
+    line(xl, T, xr, T) + line(xl, B, xr, B) +
+    // left branch
+    line(xl, T, xl, 92) + batV(xl, 100, true, 30) + line(xl, 108, xl, 145) + resV(xl, 145, 195) + line(xl, 195, xl, B) +
+    txt(xl - 34, 105, `ε₁ = ${p.E1} V`, { anchor: 'end' }) + txt(xl - 22, 175, `R₁ = ${p.R1} Ω`, { anchor: 'end', fill: RES }) +
+    // middle branch
+    midTop + resV(xm, 145, 195) + line(xm, 195, xm, B) +
+    txt(xm + 18, 175, `R₃ = ${p.R3} Ω`, { anchor: 'start', fill: RES, size: 14 }) +
+    arrow(xm, 222, 'd') + txt(xm - 14, 226, 'I₃', { fill: GOLD_D, anchor: 'end' }) +
+    // right branch
+    line(xr, T, xr, 92) + batV(xr, 100, true, -30) + line(xr, 108, xr, 145) + resV(xr, 145, 195) + line(xr, 195, xr, B) +
+    txt(xr + 34, 105, `ε₂ = ${p.E2} V`, { anchor: 'start' }) + txt(xr + 22, 175, `R₂ = ${p.R2} Ω`, { anchor: 'start', fill: RES }) +
+    // junctions + currents
+    dot(xm, T) + dot(xm, B) +
+    arrow(205, T, 'r') + txt(205, T - 14, 'I₁', { fill: GOLD_D }) +
+    arrow(395, T, 'l') + txt(395, T - 14, 'I₂', { fill: GOLD_D }) +
+    (opts.nodes ? txt(xm, T - 14, 'A', { size: 18, fill: RES, weight: 800 }) + txt(xm, B + 28, 'B', { size: 18, fill: RES, weight: 800 }) : '') +
+    (opts.realI2 ? arrow(xr + 40, 222, 'd', PLUS) + txt(xr + 54, 226, t('svgReal'), { anchor: 'start', fill: PLUS, size: 12 }) : '') +
+    loopArrow(205, 160, 'Loop 1', true) + loopArrow(395, 160, 'Loop 2', false) + '</svg>';
+}
+
+/* Wheatstone bridge: A left, B right, top path R1–C–R2, bottom path R3–D–Rx, G between C and D, battery underneath */
+function drawBridge(p, L) {
+  const xA = 110, xB = 470, xC = 290, yT = 70, yM = 160, yBt = 250, yBat = 305;
+  const rx = L.solved[2] ? `Rₓ = ${p.Rx} Ω` : 'Rₓ = ? Ω';
+  return svgOpen(580, 340, 'Wheatstone bridge') +
+    // A and B nodes connect to both paths
+    line(xA, yT, xA, yBt) + line(xB, yT, xB, yBt) +
+    // top path
+    line(xA, yT, 150, yT) + resH(150, 230, yT) + line(230, yT, 350, yT) + resH(350, 430, yT) + line(430, yT, xB, yT) +
+    txt(190, yT - 20, `R₁ = ${p.R1} Ω`, { fill: RES }) + txt(390, yT - 20, `R₂ = ${p.R2} Ω`, { fill: RES }) +
+    // bottom path
+    line(xA, yBt, 150, yBt) + resH(150, 230, yBt) + line(230, yBt, 350, yBt) + resH(350, 430, yBt) + line(430, yBt, xB, yBt) +
+    txt(190, yBt + 32, `R₃ = ${p.R3} Ω`, { fill: RES }) + txt(390, yBt + 32, rx, { fill: L.solved[2] ? RES : UNK }) +
+    // bridge with galvanometer
+    `<line x1="${xC}" y1="${yT}" x2="${xC}" y2="${yM - 20}" stroke="${GOLD_D}" stroke-width="3.5" stroke-dasharray="7 5"/>` +
+    `<line x1="${xC}" y1="${yM + 20}" x2="${xC}" y2="${yBt}" stroke="${GOLD_D}" stroke-width="3.5" stroke-dasharray="7 5"/>` +
+    `<circle cx="${xC}" cy="${yM}" r="20" fill="#FFF6E5" stroke="${WIRE}" stroke-width="3.5"/>` + txt(xC, yM + 6, 'G', { size: 17, weight: 800 }) +
+    txt(xC + 30, yM + 5, t('svgBridge') + ' 🌉', { anchor: 'start', size: 12, fill: GOLD_D }) +
+    dot(xC, yT, GREEN) + txt(xC, yT - 14, 'C', { size: 17, fill: GREEN, weight: 800 }) +
+    dot(xC, yBt, MINUS) + txt(xC - 16, yBt + 26, 'D', { size: 17, fill: MINUS, weight: 800 }) +
+    dot(xA, yM) + txt(xA - 16, yM + 6, 'A', { size: 18, fill: RES, weight: 800, anchor: 'end' }) +
+    dot(xB, yM) + txt(xB + 16, yM + 6, 'B', { size: 18, fill: RES, weight: 800, anchor: 'start' }) +
+    // battery loop below: A → left → down → battery → up → B   (+ on the left so A is at ε)
+    line(xA, yM, 50, yM) + line(50, yM, 50, yBat) + line(50, yBat, xC - 8, yBat) + batH(xC, yBat, true) +
+    line(xC + 8, yBat, 530, yBat) + line(530, yBat, 530, yM) + line(530, yM, xB, yM) +
+    txt(xC + 40, yBat + 6, `ε = ${p.E} V`, { anchor: 'start' }) + '</svg>';
+}
+
+/* =====================================================================
+   3. PANELS (equation book, routes, bridge balance)
+   ===================================================================== */
+const slot = (v, known) => known
+  ? `<span class="inline-block min-w-[2rem] text-center px-2 py-0.5 rounded-lg bg-green-100 text-green-800 font-extrabold tabular-nums">${sn(v)}</span>`
+  : `<span class="inline-block min-w-[2rem] text-center px-2 py-0.5 rounded-lg seg-unknown font-extrabold">?</span>`;
+const fixed = v => `<span class="font-extrabold tabular-nums">${sn(v)}</span>`;
+function panelBox(title, inner, ok, okText, targetText) {
+  return `
+    <div class="rounded-2xl bg-white border-2 border-[#EADBC8] p-4 space-y-2.5">
+      <p class="text-[13px] font-extrabold uppercase tracking-wider text-maroon">${title}</p>
+      ${inner}
+      <div class="rounded-xl px-3 py-2 text-[13px] sm:text-sm border ${ok ? 'bg-green-100 text-green-900 border-green-300' : 'bg-[#FFF6E5] text-[#6B4A06] border-gold/50'}">${ok ? okText : targetText}</div>
+    </div>`;
+}
+const eqLine = (label, parts) =>
+  `<div class="flex flex-wrap items-center gap-1.5 text-[15px]"><span class="w-16 shrink-0 text-xs font-bold text-maroon">${label}</span>${parts}</div>`;
+function equationBook(p, k) {   // k = {N1, N2, a, d, role}: which pieces are known
+  const role = k.role === null ? `<span class="px-2 py-0.5 rounded-lg seg-unknown font-extrabold">?</span>`
+             : `<span class="font-bold ${p.tax ? 'text-[#B3261E]' : 'text-green-700'}">${p.tax ? t('roleTax') : t('roleBonus')}</span>`;
+  return (k.role !== undefined ? `<div class="text-sm flex items-center gap-2"><span class="font-semibold text-[#4A3A33]">${t('roleLabel')}</span>${role}</div>` : '') +
+    eqLine('Loop 1', `${slot(p.N1, k.N1)} = ${slot(p.a, k.a)} <span>I₁ +</span> ${fixed(p.R3)} <span>I₂</span>`) +
+    eqLine('Loop 2', `${slot(p.N2, k.N2)} = ${fixed(p.R3)} <span>I₁ +</span> ${slot(p.d, k.d)} <span>I₂</span>`);
+}
+const resultRow = (label, v, known, unit = 'A') =>
+  `<div class="flex items-center justify-between py-1 border-t border-dashed border-[#EADBC8] text-sm"><span class="font-semibold text-[#4A3A33]">${label}</span><span>${slot(v, known)} <span class="text-[#7A675B] font-semibold">${unit}</span></span></div>`;
+
+/* =====================================================================
+   4. LEVEL DEFINITIONS  (integer answers by construction)
+   ===================================================================== */
+/** Generic two-loop generator: picks currents first, then derives EMFs so everything is an integer. */
+function genTwoLoop({ mid = false, i2 = 'pos', i1Max = 3, r3Max = 4 } = {}) {
+  for (let guard = 0; guard < 5000; guard++) {
+    const I1 = rand(1, i1Max);
+    const I2 = i2 === 'neg' ? -rand(1, 2) : i2 === 'any' ? pick([-2, -1, 1, 2, 3]) : rand(1, 3);
+    const R1 = rand(1, 5), R2 = rand(1, 5), R3 = rand(1, r3Max);
+    const a = R1 + R3, d = R2 + R3, I3 = I1 + I2;
+    if (I3 === 0) continue;
+    const N1 = a * I1 + R3 * I2, N2 = R3 * I1 + d * I2;     // net capital of each loop
+    if (N1 < 1 || N2 < 1) continue;
+    const tax = mid ? Math.random() < 0.5 : false, E3 = mid ? rand(1, 6) : 0;
+    const E1 = mid ? (tax ? N1 + E3 : N1 - E3) : N1;
+    const E2 = mid ? (tax ? N2 + E3 : N2 - E3) : N2;
+    if (E1 < 1 || E2 < 1 || (mid && (E1 === E3 || E2 === E3))) continue;
+    const VAB = mid ? (tax ? E3 + I3 * R3 : I3 * R3 - E3) : I3 * R3;
+    return { I1, I2, I3, R1, R2, R3, a, d, N1, N2, E1, E2, E3, tax, VAB };
+  }
+  return genTwoLoop({});   // fallback (practically never reached)
+}
+
+/* shared diagnosers */
+const dNet = (own, other) => (v, p) =>
+  (p.tax && v === p[own] + p.E3) ? 'mShouldSub' : (!p.tax && v === p[own] - p.E3) ? 'mShouldAdd'
+  : v === p[own] ? 'mForgotE3' : (v === p[own] + p[other] || v === p[own] - p[other]) ? 'mWrongBattery' : 'mGeneric';
+const dCoef = own => (v, p) => v === p[own] ? 'coefForgotR3' : v === p.R3 ? 'coefForgotOwn' : v === p[own] * p.R3 ? 'rMult' : 'coefGeneric';
+const dI1 = (v, p) => v === -p.I1 ? 'iNeg' : v === p.I2 ? 'swap' : v === divInt(p.N1, p.a) ? 'ignoreOther' : 'i1Generic';
+const dI2 = (v, p) => (p.I2 < 0 && v === -p.I2) ? 'dropSign' : (p.I2 > 0 && v === -p.I2) ? 'iNeg' : v === p.I1 ? 'swap' : v === divInt(p.N2, p.d) ? 'ignoreOther' : 'i2Generic';
+const choiceTaxBonus = { type: 'choice', options: ['tax', 'bonus'], optKey: 'opt_', answer: p => p.tax ? 'tax' : 'bonus', diagnose: (v, p) => p.tax ? 'choiceTax' : 'choiceBonus' };
+
+const LEVELS = [
+  { // ---------------- LEVEL 1: battery in the middle branch ----------------
+    gen: () => genTwoLoop({ mid: true }),
+    draw: p => drawTwoLoop(p, { mid: true }),
+    panel: (p, L) => panelBox(t('eqTitle'),
+      equationBook(p, { role: L.solved[0] ? true : null, N1: L.solved[1], N2: L.solved[2], a: L.solved[3], d: L.solved[4] }),
+      L.solved.every(Boolean), t('eqDone'), t('eqTarget')),
+    steps: [
+      choiceTaxBonus,
+      { sym: tx`\varepsilon_{net,1}`, unit: 'V', answer: p => p.N1, diagnose: dNet('E1', 'E2') },
+      { sym: tx`\varepsilon_{net,2}`, unit: 'V', answer: p => p.N2, diagnose: dNet('E2', 'E1') },
+      { sym: tx`R_1 + R_3`, unit: 'Ω', answer: p => p.a, diagnose: dCoef('R1') },
+      { sym: tx`R_2 + R_3`, unit: 'Ω', answer: p => p.d, diagnose: dCoef('R2') }
+    ]
+  },
+  { // ---------------- LEVEL 2: negative current ----------------
+    gen: () => genTwoLoop({ i2: 'neg', i1Max: 4, r3Max: 6 }),
+    draw: (p, L) => drawTwoLoop(p, { realI2: L.solved[3] }),
+    panel: (p, L) => panelBox(t('eqTitle'),
+      equationBook(p, { N1: true, N2: true, a: true, d: true }) +
+      `<div class="pt-1">${resultRow('I₁', p.I1, L.solved[0])}${resultRow('I₂', p.I2, L.solved[1])}${resultRow('I₃', p.I3, L.solved[2])}</div>` +
+      (L.solved[1] ? `<p class="text-[13px] font-semibold text-[#B3261E]">${t('negNote')}</p>` : ''),
+      L.solved.every(Boolean), t('eqDone'), t('eqTarget')),
+    steps: [
+      { sym: tx`I_1`, unit: 'A', answer: p => p.I1, diagnose: dI1 },
+      { sym: tx`I_2`, unit: 'A', answer: p => p.I2, diagnose: dI2 },
+      { sym: tx`I_3`, unit: 'A', answer: p => p.I3,
+        diagnose: (v, p) => v === p.I1 - p.I2 ? 'i3AbsAdd' : v === p.I1 ? 'i3Forgot' : 'i3Generic' },
+      { type: 'choice', options: ['up', 'down'], optKey: 'l2_opt_', answer: () => 'down', diagnose: () => 'l2_dirWrong' }
+    ]
+  },
+  { // ---------------- LEVEL 3: V_AB by three routes ----------------
+    gen: () => genTwoLoop({}),
+    draw: p => drawTwoLoop(p, { nodes: true }),
+    panel: (p, L) => panelBox(t('routesTitle'),
+      resultRow('I₃', p.I3, L.solved[0]) +
+      resultRow(t('routeMid'), p.VAB, L.solved[1], 'V') +
+      resultRow(t('routeLeft'), p.VAB, L.solved[2], 'V') +
+      resultRow(t('routeRight'), p.VAB, L.solved[3], 'V'),
+      L.solved.every(Boolean), t('routesSame'), t('routesTarget')),
+    steps: [
+      { sym: tx`I_3`, unit: 'A', answer: p => p.I3, diagnose: (v, p) => v === p.I1 ? 'i3Forgot' : 'i3Generic' },
+      { sym: tx`V_{AB}`, unit: 'V', answer: p => p.VAB,
+        diagnose: (v, p) => (v === p.I1 * p.R3 || v === p.I2 * p.R3) ? 'midWrongI' : v === p.I3 + p.R3 ? 'midAdd' : 'midGeneric' },
+      { sym: tx`V_{AB}`, unit: 'V', answer: p => p.VAB,
+        diagnose: (v, p) => v === p.E1 + p.I1 * p.R1 ? 'sideAdd' : v === p.E1 ? 'sideForgot' : v === p.I1 * p.R1 ? 'sideOnly' : 'sideGeneric' },
+      { sym: tx`V_{AB}`, unit: 'V', answer: p => p.VAB,
+        diagnose: (v, p) => v === p.E2 + p.I2 * p.R2 ? 'sideAdd' : v === p.E2 ? 'sideForgot' : v === p.I2 * p.R2 ? 'sideOnly' : 'sideGeneric' }
+    ]
+  },
+  { // ---------------- LEVEL 4: Wheatstone bridge ----------------
+    gen() {
+      // top ratio R1:R2 equals bottom ratio R3:Rx = R1:R2 with R3 = m·R1, Rx = m·R2
+      const R1 = rand(1, 6), R2 = rand(1, 6), m = rand(2, 3), Ib = rand(1, 2), Ia = m * Ib;
+      const R3 = m * R1, Rx = m * R2, E = Ia * (R1 + R2);
+      return { R1, R2, R3, Rx, m, Ia, Ib, E, VC: Ia * R2 };
+    },
+    draw: (p, L) => drawBridge(p, L),
+    panel: (p, L) => panelBox(t('wsTitle'),
+      resultRow(t('wsC'), p.VC, L.solved[1], 'V') + resultRow(t('wsD'), p.VC, L.solved[2], 'V'),
+      L.solved[2], t('wsBalanced'), t('wsTarget')),
+    steps: [
+      { sym: tx`I_{ACB}`, unit: 'A', answer: p => p.Ia,
+        diagnose: (v, p) => (v === divInt(p.E, p.R1) || v === divInt(p.E, p.R2)) ? 'oneR' : v === p.E * (p.R1 + p.R2) ? 'iMult' : 'iGeneric' },
+      { sym: tx`V_C`, unit: 'V', answer: p => p.VC,
+        diagnose: (v, p) => v === p.Ia * p.R1 ? 'spentNotSaldo' : v === p.E ? 'forgotSpend' : v === p.E + p.Ia * p.R1 ? 'addSpend' : 'saldoGeneric' },
+      { sym: tx`R_x`, unit: 'Ω', answer: p => p.Rx,
+        diagnose: (v, p) => v === divInt(p.R1 * p.R3, p.R2) ? 'wsSwap' : v === p.R2 * p.R3 ? 'wsNoDivide' : 'wsGeneric' },
+      { type: 'choice', options: ['zero', 'cd', 'dc'], optKey: 'l4_opt_', answer: () => 'zero', diagnose: () => 'wsIG' }
+    ]
+  },
+  { // ---------------- LEVEL 5: final exam (BOSS) ----------------
+    gen: () => genTwoLoop({ mid: true, i2: 'any', i1Max: 3, r3Max: 4 }),
+    draw: (p, L) => drawTwoLoop(p, { mid: true, nodes: true, realI2: L.solved[4] && p.I2 < 0 }),
+    panel: (p, L) => panelBox(t('eqTitle'),
+      equationBook(p, { role: L.solved[0] ? true : null, N1: L.solved[1], N2: L.solved[2], a: true, d: true }) +
+      `<div class="pt-1">${resultRow('I₁', p.I1, L.solved[3])}${resultRow('I₂', p.I2, L.solved[4])}${resultRow('I₃', p.I3, L.solved[4])}${resultRow('V<sub>AB</sub>', p.VAB, L.solved[5], 'V')}</div>` +
+      (L.solved[4] && p.I2 < 0 ? `<p class="text-[13px] font-semibold text-[#B3261E]">${t('negNote')}</p>` : ''),
+      L.solved.every(Boolean), t('eqDone'), t('eqTarget')),
+    steps: [
+      choiceTaxBonus,
+      { sym: tx`\varepsilon_{net,1}`, unit: 'V', answer: p => p.N1, diagnose: dNet('E1', 'E2') },
+      { sym: tx`\varepsilon_{net,2}`, unit: 'V', answer: p => p.N2, diagnose: dNet('E2', 'E1') },
+      { sym: tx`I_1`, unit: 'A', answer: p => p.I1, diagnose: dI1 },
+      { sym: tx`I_2`, unit: 'A', answer: p => p.I2, diagnose: dI2 },
+      { sym: tx`V_{AB}`, unit: 'V', answer: p => p.VAB,
+        diagnose: (v, p) => {
+          const alt = p.tax ? p.I3 * p.R3 - p.E3 : p.E3 + p.I3 * p.R3;   // wrong sign on ε3
+          if (v === p.I3 * p.R3) return 'vabForgotE3';
+          if (v === alt) return 'vabSign';
+          if (v === -p.VAB) return 'vabReverse';
+          return 'vabGeneric';
+        } }
+    ]
+  }
+];
+const TOTAL_STEPS = LEVELS.reduce((n, L) => n + L.steps.length, 0);
+
+/* =====================================================================
+   5. STATE
+   ===================================================================== */
+function freshLevelState(li) {
+  const n = LEVELS[li].steps.length;
+  return {
+    p: LEVELS[li].gen(),
+    solved: Array(n).fill(false), values: Array(n).fill(''), feedback: Array(n).fill(null),
+    attempts: Array(n).fill(0), showHint: Array(n).fill(false), showSol: Array(n).fill(false),
+    completed: false
+  };
+}
+const state = {
+  lang: 'id', unlocked: 1,
+  levels: LEVELS.map((_, i) => freshLevelState(i)),
+  modal: null, justUnlocked: null, focus: null, shake: null
+};
+function t(key, q) {
+  const v = I18N[state.lang][key] ?? I18N.id[key] ?? key;
+  return (typeof v === 'function' && q !== undefined) ? v(q) : v;
+}
+
+/* =====================================================================
+   6. MATHJAX QUEUE
+   ===================================================================== */
+const App = window.App = {
+  mathReady: false,
+  typesetAll() { typeset(document.getElementById('app-main')); typeset(document.getElementById('modal')); }
+};
+let mjChain = Promise.resolve();
+function typeset(el) {
+  if (!App.mathReady || !el) return;
+  mjChain = mjChain.then(() => MathJax.typesetPromise([el])).catch(err => console.warn('MathJax:', err));
+}
+function clearMath(el) { if (App.mathReady && el) MathJax.typesetClear([el]); }
+
+/* =====================================================================
+   7. RENDERING
+   ===================================================================== */
+function renderStatic() {
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-action="lang"]').forEach(b => {
+    const on = b.dataset.lang === state.lang;
+    b.className = 'px-3 py-1.5 rounded-full transition ' + (on ? 'bg-gold text-maroon-dark shadow' : 'text-white/80 hover:text-white');
+    b.setAttribute('aria-pressed', on);
+  });
+  document.documentElement.lang = state.lang;
+}
+
+function renderHero() {
+  document.getElementById('hero').innerHTML = `
+    <div class="rounded-3xl bg-gradient-to-br from-[#F2EAE0] to-[#FFF6E5] border border-[#EADBC8] p-6 sm:p-8 shadow-card">
+      <div class="flex items-start gap-4">
+        <div class="text-5xl floaty" aria-hidden="true">🧑‍🔧</div>
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-maroon">${t('heroTitle')}</h2>
+          <p class="mt-2 text-[15px] sm:text-base leading-relaxed text-[#4A3A33]">${t('heroText')}</p>
+        </div>
+      </div>
+      <div class="mt-5 grid grid-cols-2 lg:grid-cols-5 gap-3">
+        ${t('heroCards').map(([e, h, d], i) => `
+          <div class="rounded-2xl bg-white/85 border border-[#EADBC8] p-3.5 ${i === 4 ? 'col-span-2 lg:col-span-1' : ''}">
+            <p class="text-2xl" aria-hidden="true">${e}</p>
+            <p class="mt-1 font-extrabold text-maroon text-sm sm:text-[15px]"><span class="text-gold-dark">L${i + 1}</span> · ${h}</p>
+            <p class="text-xs sm:text-sm text-[#6B5A50]">${d}</p>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function updateProgress() {
+  let done = 0;
+  state.levels.forEach((L, i) => { done += L.completed ? LEVELS[i].steps.length : L.solved.filter(Boolean).length; });
+  const pct = Math.round((done / TOTAL_STEPS) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-wrap').setAttribute('aria-valuenow', pct);
+  document.getElementById('progress-text').textContent = `${done}/${TOTAL_STEPS} ${t('stepsWord')} • ${pct}%`;
+}
+
+function feedbackHTML(fb, p) {
+  if (!fb) return '';
+  const base = 'mt-3 rounded-xl px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed fade-in rich';
+  if (fb.type === 'ok')
+    return `<div class="${base} bg-green-100 border border-green-300 text-green-900 font-semibold">✅ ${t('correctMsgs')[fb.i]}</div>`;
+  if (fb.type === 'warn')
+    return `<div class="${base} bg-gold-light/60 border border-gold text-[#6B4A06]">${t(fb.key)}</div>`;
+  return `<div class="${base} bg-[#FFF1E6] border border-[#F3C9A8] text-[#7A2E0E]">🤔 <b>${t('almost')}</b> ${t(fb.key, { ...p, v: fb.v })}</div>`;
+}
+
+function hintBtn(li, si, disabled) {
+  return `<button type="button" data-action="hint" data-level="${li}" data-step="${si}" ${disabled ? 'disabled' : ''}
+    class="px-3 py-2.5 rounded-xl border-2 border-maroon/20 hover:border-maroon/50 text-maroon font-bold text-sm transition disabled:opacity-50 disabled:cursor-not-allowed">${state.levels[li].showHint[si] ? t('hideHint') : t('hint')}</button>`;
+}
+
+function inputHTML(li, si, solved, disabled) {
+  const L = state.levels[li], S = LEVELS[li].steps[si], p = L.p, id = `in-${li}-${si}`;
+  if (S.type === 'choice') {
+    const ans = S.answer(p);
+    return `<div class="mt-3 flex flex-wrap gap-2" role="group">` + S.options.map((k, i) => {
+      const isAns = k === ans, picked = L.values[si] === k;
+      const cls = solved ? (isAns ? 'bg-green-500 text-white border-green-500' : 'bg-white text-[#9A8A7D] border-[#E5D8C8] opacity-60')
+                : picked ? 'bg-[#FFF1E6] border-[#F3C9A8] text-[#7A2E0E]'
+                : 'bg-white border-gold hover:bg-gold-light text-maroon-dark';
+      return `<button type="button" ${i === 0 ? `id="${id}"` : ''} data-action="choose" data-level="${li}" data-step="${si}" data-key="${k}" ${disabled ? 'disabled' : ''}
+        class="px-4 py-2.5 rounded-xl border-2 font-bold text-[14px] sm:text-[15px] transition active:scale-95 disabled:cursor-not-allowed ${cls}">${t(S.optKey + k)}</button>`;
+    }).join('') + (solved ? '' : hintBtn(li, si, disabled)) + `</div>`;
+  }
+  return `
+    <div class="mt-3 flex flex-wrap items-center gap-2">
+      <label for="${id}" class="flex items-center rounded-xl border-2 ${solved ? 'border-green-300 bg-green-50' : 'border-[#E5D8C8] bg-white focus-within:border-maroon'} transition overflow-hidden">
+        <span class="pl-3 pr-1 text-maroon font-semibold whitespace-nowrap">\\(${S.sym} =\\)</span>
+        <input id="${id}" type="number" inputmode="numeric" step="1" autocomplete="off"
+          data-level="${li}" data-step="${si}" value="${escAttr(solved ? S.answer(p) : L.values[si])}"
+          placeholder="${escAttr(t('placeholder'))}" ${disabled ? 'disabled' : ''}
+          class="w-20 sm:w-24 px-2 py-2 text-lg font-bold text-ink bg-transparent text-center disabled:cursor-not-allowed"
+          aria-label="${escAttr(t('step') + ' ' + (si + 1))}">
+        <span class="pr-3 text-[#7A675B] font-semibold">${S.unit}</span>
+      </label>
+      ${solved ? '' : `
+      <button type="button" data-action="check" data-level="${li}" data-step="${si}" ${disabled ? 'disabled' : ''}
+        class="px-4 py-2.5 rounded-xl bg-gold hover:bg-[#E89A12] active:scale-95 text-maroon-dark font-extrabold shadow-sm transition disabled:opacity-50 disabled:cursor-not-allowed">${t('check')}</button>
+      ${hintBtn(li, si, disabled)}`}
+    </div>`;
+}
+
+function stepHTML(li, si) {
+  const L = state.levels[li], n = li + 1, p = L.p;
+  const solved = L.solved[si], open = si === 0 || L.solved[si - 1], disabled = solved || !open;
+  const box = solved ? 'border-green-400 bg-green-50/70' : open ? 'border-gold bg-white shadow-sm' : 'border-[#E5D8C8] bg-[#FAF6F0] opacity-60';
+  const circle = solved ? 'bg-green-500 text-white' : open ? 'bg-gold text-maroon-dark' : 'bg-[#E5D8C8] text-[#8A7A6D]';
+  return `
+  <div class="rounded-2xl border-2 ${box} p-4 sm:p-5 transition-all duration-300">
+    <div class="flex gap-3">
+      <span class="w-8 h-8 shrink-0 rounded-full ${circle} grid place-items-center font-extrabold text-sm">${solved ? '✓' : si + 1}</span>
+      <div class="flex-1 min-w-0">
+        <p class="font-semibold text-[15px] sm:text-base leading-relaxed">${t('step')} ${si + 1}: ${t(`l${n}_s${si + 1}`, p)}</p>
+        ${inputHTML(li, si, solved, disabled)}
+        ${!open ? `<p class="mt-2 text-sm text-[#8A7A6D]">${t('lockedStep')}</p>` : ''}
+        ${L.showHint[si] && !solved ? `<div class="mt-3 rounded-xl bg-[#FFF8EA] border border-gold/60 px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed fade-in rich">💡 ${t(`l${n}_s${si + 1}_hint`, p)}</div>` : ''}
+        ${feedbackHTML(L.feedback[si], p)}
+        ${!solved && L.attempts[si] >= 2 && !L.showSol[si] ? `
+          <div class="mt-3 flex flex-wrap items-center gap-2 text-sm text-[#6B5A50] fade-in">
+            <span>${fmt(t('attemptsNote'), { n: L.attempts[si] })}</span>
+            <button type="button" data-action="solution" data-level="${li}" data-step="${si}" class="px-3 py-1.5 rounded-lg bg-maroon text-white font-bold hover:bg-maroon-light transition">${t('showSolution')}</button>
+          </div>` : ''}
+        ${L.showSol[si] ? `<div class="mt-3 rounded-xl bg-white border-2 border-maroon/20 px-4 py-3 text-[14px] sm:text-[15px] leading-relaxed fade-in rich"><b class="text-maroon">📘 ${t('solutionLabel')}:</b><br>${t(`l${n}_s${si + 1}_sol`, p)}</div>` : ''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderLevel(li) {
+  const el = document.getElementById('level-' + li);
+  clearMath(el);
+  const n = li + 1, isBoss = li === LEVELS.length - 1, def = LEVELS[li];
+
+  if (li >= state.unlocked) {
+    el.className = '';
+    el.innerHTML = `
+      <div class="rounded-3xl border-2 border-dashed border-[#D9C9B6] bg-sand/70 p-5 sm:p-6 flex items-center gap-4">
+        <div class="w-12 h-12 shrink-0 rounded-2xl bg-white grid place-items-center text-2xl" aria-hidden="true">${isBoss ? '👑' : '🔒'}</div>
+        <div>
+          <p class="text-xs font-bold uppercase tracking-wider text-maroon/70">${t('level')} ${n}${isBoss ? ` • ${t('boss')}` : ''}</p>
+          <p class="font-bold text-lg text-[#5C4A40]">${t(`l${n}_title`)}</p>
+          <p class="text-sm text-[#7A675B]">${fmt(t('lockedText'), { n: li })}</p>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const L = state.levels[li], p = L.p;
+  el.className = state.justUnlocked === li ? 'animate-unlock' : '';
+  el.innerHTML = `
+    <div class="bg-white rounded-3xl shadow-card border ${isBoss ? 'border-gold border-2' : 'border-[#EADBC8]'} overflow-hidden">
+      <div class="bg-gradient-to-r ${isBoss ? 'from-maroon-dark via-maroon to-[#B8451A]' : 'from-maroon to-maroon-light'} text-white px-5 sm:px-7 py-4 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <span class="w-11 h-11 shrink-0 rounded-full bg-gold text-maroon-dark font-extrabold text-lg grid place-items-center shadow">${isBoss ? '👑' : n}</span>
+          <div class="min-w-0">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-gold font-bold">${t('level')} ${n}${isBoss ? ` • ${t('boss')} STAGE` : ''}</p>
+            <h2 class="text-lg sm:text-xl font-extrabold leading-tight">${t(`l${n}_title`)}</h2>
+          </div>
+        </div>
+        ${L.completed ? `<span class="shrink-0 px-3 py-1 rounded-full bg-white/15 border border-white/30 text-sm font-bold">${t('completedBadge')}</span>` : ''}
+      </div>
+
+      <div class="p-5 sm:p-7 space-y-6">
+        <div class="theory rounded-2xl bg-[#FFF6E5] border-l-[6px] border-gold p-5 sm:p-6 text-[15px] sm:text-base text-[#3D2C26]">
+          <p class="!mt-0 text-sm font-extrabold uppercase tracking-wider text-maroon">📚 ${t('miniTheory')}</p>
+          ${t(`l${n}_theory`)}
+        </div>
+
+        <div class="rounded-2xl bg-sand/60 border border-[#EADBC8] p-5 sm:p-6 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <p class="text-sm font-extrabold uppercase tracking-wider text-maroon">🧩 ${t('question')}</p>
+            <button type="button" data-action="new" data-level="${li}" class="px-3 py-1.5 rounded-xl bg-white border border-[#E5D8C8] hover:border-gold text-sm font-bold text-maroon transition">${t('newQuestion')}</button>
+          </div>
+          <p class="text-[15px] sm:text-base leading-relaxed">${t(`l${n}_question`, p)}</p>
+          <div class="grid gap-4 lg:grid-cols-5">
+            <div class="lg:col-span-3 rounded-2xl bg-white border border-[#EADBC8] p-3 sm:p-4 grid place-items-center">${def.draw(p, L)}</div>
+            <div class="lg:col-span-2">${def.panel(p, L)}</div>
+          </div>
+        </div>
+
+        <div class="space-y-4">${def.steps.map((_, si) => stepHTML(li, si)).join('')}</div>
+
+        ${L.solved.every(Boolean) ? `
+          <div class="rounded-2xl bg-gradient-to-br from-green-50 to-[#FFF6E5] border-2 border-green-300 p-5 sm:p-6 text-[15px] sm:text-base fade-in rich">
+            <p class="text-sm font-extrabold uppercase tracking-wider text-green-800 mb-1">${t('summaryTitle')}</p>
+            ${t(`l${n}_summary`, p)}
+          </div>` : ''}
+      </div>
+    </div>`;
+
+  typeset(el);
+
+  if (state.shake) {
+    const s = document.getElementById(state.shake);
+    const wrap = s && (s.closest('label') || s.parentElement);
+    if (wrap && wrap.classList) { wrap.classList.remove('shake'); void wrap.offsetWidth; wrap.classList.add('shake'); }
+    state.shake = null;
+  }
+  if (state.focus) {
+    const f = document.getElementById(state.focus);
+    if (f && !f.disabled && f.focus) f.focus();
+    state.focus = null;
+  }
+}
+
+function renderFinal() {
+  const el = document.getElementById('final');
+  if (!state.levels[LEVELS.length - 1].completed) { el.innerHTML = ''; return; }
+  el.innerHTML = `
+    <div class="rounded-3xl bg-gradient-to-br from-maroon to-maroon-dark text-white p-6 sm:p-8 text-center shadow-card animate-pop">
+      <div class="text-5xl floaty" aria-hidden="true">👑</div>
+      <h2 class="mt-2 text-2xl font-extrabold text-gold">${t('finalBannerTitle')}</h2>
+      <p class="mt-2 text-white/90 max-w-xl mx-auto leading-relaxed">${t('finalBanner')}</p>
+    </div>`;
+}
+
+function renderModal() {
+  const m = document.getElementById('modal');
+  clearMath(m);
+  if (!state.modal) { m.classList.add('hidden'); m.innerHTML = ''; return; }
+  const { kind, li } = state.modal, final = kind === 'final';
+  const nextIsBoss = li + 1 === LEVELS.length - 1;
+  m.classList.remove('hidden');
+  m.innerHTML = `
+    <div class="absolute inset-0 bg-[#2C1A1A]/55 backdrop-blur-sm" data-action="modal-close"></div>
+    <div class="relative w-full max-w-md rounded-3xl bg-cream border-4 border-gold p-7 text-center shadow-2xl animate-pop">
+      <div class="text-6xl floaty" aria-hidden="true">${final ? '👑' : nextIsBoss ? '🔥' : '🎉'}</div>
+      <h3 class="mt-3 text-2xl font-extrabold text-maroon">${final ? t('allDoneTitle') : fmt(t('levelDone'), { n: li + 1 })}</h3>
+      <p class="mt-2 text-[#4A3A33] leading-relaxed">${final ? t('allDoneText') : nextIsBoss ? t('unlockBoss') : fmt(t('unlockMsg'), { n: li + 2 })}</p>
+      <button type="button" id="modal-btn" data-action="modal-close" class="mt-6 w-full px-5 py-3 rounded-2xl bg-gold hover:bg-[#E89A12] active:scale-95 text-maroon-dark font-extrabold text-lg shadow transition">
+        ${final ? t('closeBtn') : fmt(t('continueBtn'), { n: li + 2 })}
+      </button>
+    </div>`;
+  setTimeout(() => { const b = document.getElementById('modal-btn'); if (b && b.focus) b.focus(); }, 50);
+}
+
+function renderAll() {
+  renderStatic(); renderHero();
+  LEVELS.forEach((_, i) => renderLevel(i));
+  renderFinal(); renderModal(); updateProgress();
+}
+
+/* =====================================================================
+   8. LOGIC
+   ===================================================================== */
+function checkStep(li, si) {
+  const L = state.levels[li], S = LEVELS[li].steps[si];
+  if (L.solved[si] || (si > 0 && !L.solved[si - 1])) return;
+  const id = `in-${li}-${si}`;
+  let v;
+  if (S.type === 'choice') {
+    v = L.values[si];
+  } else {
+    const raw = String(L.values[si] ?? '').trim().replace(/[−–]/g, '-').replace(',', '.');
+    v = Number(raw);
+    if (raw === '' || !Number.isFinite(v)) { L.feedback[si] = { type: 'warn', key: 'emptyInput' }; state.shake = id; state.focus = id; renderLevel(li); return; }
+    if (!Number.isInteger(v)) { L.feedback[si] = { type: 'warn', key: 'notInteger' }; state.shake = id; state.focus = id; renderLevel(li); return; }
+  }
+  if (v === S.answer(L.p)) {
+    L.solved[si] = true; L.showHint[si] = false;
+    L.feedback[si] = { type: 'ok', i: rand(0, t('correctMsgs').length - 1) };
+    if (si + 1 < LEVELS[li].steps.length) state.focus = `in-${li}-${si + 1}`;
+    renderLevel(li); updateProgress();
+    if (L.solved.every(Boolean)) completeLevel(li);
+  } else {
+    L.attempts[si]++;
+    L.feedback[si] = { type: 'err', key: S.diagnose(v, L.p), v };
+    state.shake = id; state.focus = S.type === 'choice' ? null : id;
+    renderLevel(li);
+  }
+}
+
+function completeLevel(li) {
+  const L = state.levels[li], firstTime = !L.completed;
+  L.completed = true;
+  confetti(); renderLevel(li); updateProgress();
+  if (!firstTime) return;
+  setTimeout(() => {
+    state.modal = { kind: li === LEVELS.length - 1 ? 'final' : 'level', li };
+    renderModal();
+    if (li === LEVELS.length - 1) renderFinal();
+  }, 700);
+}
+
+function closeModal() {
+  const m = state.modal;
+  state.modal = null; renderModal();
+  const smooth = prefersReducedMotion ? 'auto' : 'smooth';
+  if (m && m.kind === 'level') {
+    const next = m.li + 1;
+    state.unlocked = Math.max(state.unlocked, next + 1);
+    state.justUnlocked = next; state.focus = `in-${next}-0`;
+    renderLevel(next); state.justUnlocked = null;
+    setTimeout(() => document.getElementById('level-' + next).scrollIntoView({ behavior: smooth, block: 'start' }), 80);
+  } else if (m && m.kind === 'final') {
+    document.getElementById('final').scrollIntoView({ behavior: smooth, block: 'center' });
+  }
+}
+
+function newQuestion(li) {
+  const wasCompleted = state.levels[li].completed;
+  state.levels[li] = freshLevelState(li);
+  state.levels[li].completed = wasCompleted;
+  state.focus = `in-${li}-0`;
+  renderLevel(li); updateProgress();
+}
+
+function setLang(lang) {
+  if (lang === state.lang) return;
+  state.lang = lang;
+  try { localStorage.setItem('abbs-kvl3-lang', lang); } catch (e) { /* storage blocked */ }
+  renderAll();
+}
+
+/* =====================================================================
+   9. CONFETTI (with gold coins)
+   ===================================================================== */
+function confetti() {
+  if (prefersReducedMotion) return;
+  const c = document.getElementById('confetti'), ctx = c.getContext && c.getContext('2d');
+  if (!ctx) return;
+  const dpr = window.devicePixelRatio || 1;
+  c.width = innerWidth * dpr; c.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const colors = ['#8B1515', '#F5A623', '#FFD166', '#E85D75', '#2BB673', '#4A90E2', '#FFFFFF'];
+  const parts = Array.from({ length: 170 }, () => ({
+    x: innerWidth / 2 + (Math.random() - 0.5) * 240, y: innerHeight * 0.38,
+    vx: (Math.random() - 0.5) * 16, vy: -Math.random() * 15 - 5,
+    s: rand(6, 12), c: pick(colors), rot: Math.random() * 6, vr: (Math.random() - 0.5) * 0.35, coin: Math.random() < 0.2
+  }));
+  let frame = 0;
+  (function tick() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    parts.forEach(q => {
+      q.vy += 0.38; q.vx *= 0.985; q.x += q.vx; q.y += q.vy; q.rot += q.vr;
+      ctx.save(); ctx.translate(q.x, q.y); ctx.rotate(q.rot);
+      ctx.globalAlpha = Math.max(0, 1 - frame / 200);
+      if (q.coin) { ctx.fillStyle = '#F5A623'; ctx.beginPath(); ctx.arc(0, 0, q.s / 1.6, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = '#C9800A'; ctx.lineWidth = 2; ctx.stroke(); }
+      else { ctx.fillStyle = q.c; ctx.fillRect(-q.s / 2, -q.s / 4, q.s, q.s / 2); }
+      ctx.restore();
+    });
+    if (++frame < 200) requestAnimationFrame(tick); else ctx.clearRect(0, 0, innerWidth, innerHeight);
+  })();
+}
+
+/* =====================================================================
+   10. EVENTS
+   ===================================================================== */
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-action]');
+  if (!b || b.disabled) return;
+  const li = Number(b.dataset.level), si = Number(b.dataset.step);
+  switch (b.dataset.action) {
+    case 'check': checkStep(li, si); break;
+    case 'choose': state.levels[li].values[si] = b.dataset.key; checkStep(li, si); break;
+    case 'hint': state.levels[li].showHint[si] = !state.levels[li].showHint[si]; state.focus = `in-${li}-${si}`; renderLevel(li); break;
+    case 'solution': state.levels[li].showSol[si] = true; state.focus = `in-${li}-${si}`; renderLevel(li); break;
+    case 'new': newQuestion(li); break;
+    case 'lang': setLang(b.dataset.lang); break;
+    case 'modal-close': closeModal(); break;
+  }
+});
+document.addEventListener('input', e => {
+  const inp = e.target.closest('input[data-level]');
+  if (inp) state.levels[Number(inp.dataset.level)].values[Number(inp.dataset.step)] = inp.value;
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const inp = e.target.closest('input[data-level]');
+    if (inp) { e.preventDefault(); checkStep(Number(inp.dataset.level), Number(inp.dataset.step)); }
+  }
+  if (e.key === 'Escape' && state.modal) closeModal();
+});
+document.addEventListener('wheel', e => { const a = document.activeElement; if (a && a.type === 'number' && e.target === a) a.blur(); }, { passive: true });
+
+/* =====================================================================
+   11. START
+   ===================================================================== */
+try { const saved = localStorage.getItem('abbs-kvl3-lang'); if (saved === 'id' || saved === 'en') state.lang = saved; } catch (e) { /* ignore */ }
+renderAll();
+</script>
+</body>
+</html>
