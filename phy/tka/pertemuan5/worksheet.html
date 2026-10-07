@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drilling Fisika #5 – Pelan-pelan Paham Rotasi</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: 'Lora', Georgia, serif; font-size: 13.5pt; line-height: 1.8; }
+  .halaman {
+    width: 210mm; min-height: 297mm; padding: 16mm 18mm 14mm;
+    margin: 10mm auto; background: #fff; box-shadow: 0 4px 24px rgba(15,23,42,.08);
+    position: relative; display: flex; flex-direction: column;
+  }
+  .garis { border-bottom: 1.5px dotted #94a3b8; height: 2.1em; }
+  .kotak-cek { width: 1.15em; height: 1.15em; border: 2px solid #475569; border-radius: 4px; display: inline-block; flex-shrink: 0; margin-top: .35em; }
+  .kotak-bs { width: 1.6em; height: 1.6em; border: 2px solid #475569; border-radius: 6px; display: inline-block; }
+  @media print {
+    body { background: #fff !important; }
+    .halaman { margin: 0; box-shadow: none; page-break-after: always; break-after: page; }
+    .halaman:last-of-type { page-break-after: auto; break-after: auto; }
+    .tanpa-cetak { display: none !important; }
+  }
+</style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+<div class="tanpa-cetak text-center pt-6">
+  <button onclick="window.print()" class="px-6 py-3 rounded-xl bg-sky-200 hover:bg-sky-300 text-sky-900 font-semibold">🖨️ Cetak Lembar Kerja (A4)</button>
+  <p class="text-sm text-slate-500 mt-2">Tips: di jendela cetak, aktifkan "Background graphics" agar warna kotak ikut tercetak.</p>
+</div>
+
+<!-- ================= HALAMAN 1 ================= -->
+<section class="halaman">
+  <!-- Header -->
+  <header class="border-b-2 border-slate-200 pb-3 mb-4">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <p class="text-sm tracking-widest uppercase text-sky-700 font-semibold">TKA Fisika · Pertemuan 5</p>
+        <h1 class="text-[22pt] font-bold leading-tight text-slate-800">Drilling Fisika #5</h1>
+        <p class="text-[15pt] italic text-emerald-700">Pelan-pelan Paham Rotasi</p>
+      </div>
+      <svg viewBox="0 0 80 80" class="w-16 h-16 shrink-0" aria-hidden="true">
+        <circle cx="40" cy="40" r="34" fill="#e0f2fe"/>
+        <circle cx="40" cy="40" r="22" fill="none" stroke="#38bdf8" stroke-width="5"/>
+        <line x1="40" y1="18" x2="40" y2="62" stroke="#7dd3fc" stroke-width="4"/>
+        <line x1="18" y1="40" x2="62" y2="40" stroke="#7dd3fc" stroke-width="4"/>
+        <circle cx="40" cy="40" r="6" fill="#10b981"/>
+      </svg>
+    </div>
+    <div class="grid grid-cols-[1fr_auto] gap-x-8 gap-y-1 mt-3">
+      <div class="flex items-end gap-2"><span class="font-semibold">Nama</span><span class="flex-1 garis"></span></div>
+      <div class="flex items-end gap-2 w-56"><span class="font-semibold">Kelas</span><span class="flex-1 garis"></span></div>
+    </div>
+  </header>
+
+  <!-- Klinik Konsep -->
+  <div class="rounded-2xl border-2 border-emerald-200 bg-emerald-50 px-6 py-4 mb-5">
+    <p class="text-[15pt] font-bold text-emerald-800">🩺 KLINIK KONSEP</p>
+    <p class="mb-2">Halo! Lupa rumus? <b>Jangan panik</b>, pakai logika ini:</p>
+    <ul class="space-y-2">
+      <li class="flex gap-3"><span class="text-sky-600 font-bold">①</span>
+        <span>Mau memutar benda? Butuh <b>Torsi</b> (Gaya dikali jarak ke poros). Pastikan gayanya <b>tegak lurus (siku-siku)</b>!</span></li>
+      <li class="flex gap-3"><span class="text-sky-600 font-bold">②</span>
+        <span><b>Momen Inersia (I)</b> = seberapa <i>"bandel"</i> benda kalau mau diputar. Makin tersebar massanya, makin bandel (susah diputar).</span></li>
+      <li class="flex gap-3"><span class="text-sky-600 font-bold">③</span>
+        <span><b>Hukum Katrol Realistis:</b> Karena katrol sekarang punya massa, maka Tali Kiri dan Tali Kanan tarikannya (Tegangannya) <b>BEDA</b>!</span></li>
+    </ul>
+  </div>
+
+  <!-- Soal 1 -->
+  <div class="flex items-center gap-3 mb-2">
+    <span class="px-3 py-0.5 rounded-full bg-sky-100 text-sky-800 text-[11pt] font-semibold">Soal 1</span>
+    <span class="px-3 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11pt]">Pilihan Ganda Kompleks</span>
+  </div>
+
+  <p class="mb-2">Bayangkan sebuah <b>bola bowling pejal</b> meluncur di <b>es yang super licin</b> (hanya geser/translasi), dan bola bowling lain yang <b>identik</b> (massa dan ukurannya sama) <b>menggelinding</b> di <b>lantai kasar</b>. Keduanya punya <b>kecepatan maju yang sama</b>.</p>
+
+  <svg viewBox="0 0 640 130" class="w-full mb-2" aria-label="Bola meluncur di es dan bola menggelinding di lantai kasar">
+    <!-- Es -->
+    <rect x="10" y="98" width="290" height="16" rx="4" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="2"/>
+    <text x="155" y="128" text-anchor="middle" font-size="14" fill="#0369a1" font-style="italic">es super licin</text>
+    <circle cx="110" cy="66" r="31" fill="#cbd5e1" stroke="#475569" stroke-width="3"/>
+    <circle cx="101" cy="54" r="4" fill="#475569"/><circle cx="114" cy="52" r="4" fill="#475569"/><circle cx="108" cy="64" r="4" fill="#475569"/>
+    <line x1="152" y1="66" x2="220" y2="66" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="218,58 232,66 218,74" fill="#0284c7"/>
+    <text x="190" y="54" text-anchor="middle" font-size="16" font-weight="700" fill="#0284c7">v</text>
+    <text x="110" y="20" text-anchor="middle" font-size="14" fill="#475569">hanya meluncur</text>
+    <!-- Lantai kasar -->
+    <rect x="340" y="98" width="290" height="16" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <path d="M345 114 l8 -8 M360 114 l8 -8 M375 114 l8 -8 M390 114 l8 -8 M405 114 l8 -8 M420 114 l8 -8 M435 114 l8 -8 M450 114 l8 -8 M465 114 l8 -8 M480 114 l8 -8 M495 114 l8 -8 M510 114 l8 -8 M525 114 l8 -8 M540 114 l8 -8 M555 114 l8 -8 M570 114 l8 -8 M585 114 l8 -8 M600 114 l8 -8" stroke="#d97706" stroke-width="1.5"/>
+    <text x="485" y="128" text-anchor="middle" font-size="14" fill="#b45309" font-style="italic">lantai kasar</text>
+    <circle cx="440" cy="66" r="31" fill="#bbf7d0" stroke="#047857" stroke-width="3"/>
+    <circle cx="431" cy="54" r="4" fill="#047857"/><circle cx="444" cy="52" r="4" fill="#047857"/><circle cx="438" cy="64" r="4" fill="#047857"/>
+    <path d="M 418 30 A 44 44 0 0 1 478 40" fill="none" stroke="#10b981" stroke-width="3"/>
+    <polygon points="474,32 484,44 470,46" fill="#10b981"/>
+    <line x1="482" y1="66" x2="550" y2="66" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="548,58 562,66 548,74" fill="#0284c7"/>
+    <text x="520" y="54" text-anchor="middle" font-size="16" font-weight="700" fill="#0284c7">v</text>
+    <text x="440" y="16" text-anchor="middle" font-size="14" fill="#047857">maju + berputar</text>
+  </svg>
+
+  <p class="mb-2 font-semibold">Pilih <u>SETIAP</u> pernyataan di bawah ini yang benar dari peristiwa tersebut. <span class="font-normal italic text-slate-500">(Jawaban benar bisa lebih dari satu.)</span></p>
+
+  <div class="space-y-2">
+    <div class="flex gap-3"><span class="kotak-cek"></span><p><b>A.</b> Bola di atas es tidak ikut berputar, karena es yang super licin tidak bisa "menahan" bagian bawah bola untuk memutarnya.</p></div>
+    <div class="flex gap-3"><span class="kotak-cek"></span><p><b>B.</b> Bola di lantai kasar bisa <i>mulai</i> berputar karena gaya gesek lantai pada bagian bawah bola memberikan torsi (efek pemutar).</p></div>
+    <div class="flex gap-3"><span class="kotak-cek"></span><p><b>C.</b> Karena kecepatan majunya sama, energi kinetik kedua bola pasti sama besar.</p></div>
+    <div class="flex gap-3"><span class="kotak-cek"></span><p><b>D.</b> Bola yang menggelinding punya energi kinetik total lebih besar, karena selain bergerak maju ia juga "menabung" energi putar.</p></div>
+    <div class="flex gap-3"><span class="kotak-cek"></span><p><b>E.</b> Pada bola yang menggelinding, energi putarnya lebih besar daripada energi majunya.</p></div>
+    <div class="flex gap-3"><span class="kotak-cek"></span><p><b>F.</b> Energi kinetik bola yang menggelinding sama dengan 1,4 kali energi kinetik bola yang meluncur.</p></div>
+  </div>
+
+  <div class="mt-auto pt-3">
+    <p class="italic text-slate-600">✏️ Tulis alasan untuk <b>satu</b> pilihanmu dengan kalimatmu sendiri:</p>
+    <div class="garis"></div><div class="garis"></div>
+  </div>
+</section>
+
+<!-- ================= HALAMAN 2 ================= -->
+<section class="halaman">
+  <div class="flex items-center gap-3 mb-2">
+    <span class="px-3 py-0.5 rounded-full bg-sky-100 text-sky-800 text-[11pt] font-semibold">Soal 2</span>
+    <span class="px-3 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11pt]">Matriks Benar / Salah</span>
+  </div>
+
+  <p class="mb-3">Pak Budi menimba air dari sumur. Tali dililitkan melewati <b>katrol yang cukup berat</b> (katrolnya bermassa, berbentuk silinder). Pak Budi menarik ujung tali ke bawah dengan <b>gaya tetap</b>, sehingga ember berisi air naik <b>makin lama makin cepat</b>. Tali <b>tidak selip</b> pada katrol.</p>
+
+  <div class="grid grid-cols-[1.1fr_1fr] gap-5 items-center mb-4">
+    <svg viewBox="0 0 420 300" class="w-full" aria-label="Skema katrol sumur bermassa">
+      <!-- Tiang & palang -->
+      <rect x="112" y="24" width="10" height="166" fill="#d6b88a" stroke="#92400e" stroke-width="2"/>
+      <rect x="298" y="24" width="10" height="166" fill="#d6b88a" stroke="#92400e" stroke-width="2"/>
+      <rect x="104" y="16" width="212" height="12" rx="3" fill="#d6b88a" stroke="#92400e" stroke-width="2"/>
+      <line x1="210" y1="28" x2="210" y2="60" stroke="#64748b" stroke-width="4"/>
+      <!-- Katrol -->
+      <circle cx="210" cy="60" r="32" fill="#e0e7ff" stroke="#4f46e5" stroke-width="4"/>
+      <circle cx="210" cy="60" r="6" fill="#4f46e5"/>
+      <path d="M 186 30 A 40 40 0 0 1 238 32" fill="none" stroke="#10b981" stroke-width="3"/>
+      <polygon points="234,24 246,36 230,38" fill="#10b981"/>
+      <text x="262" y="36" font-size="14" fill="#047857" font-style="italic">ikut berputar</text>
+      <!-- Tanah & sumur -->
+      <rect x="0" y="190" width="140" height="10" fill="#bbf7d0"/>
+      <rect x="226" y="190" width="194" height="10" fill="#bbf7d0"/>
+      <rect x="130" y="190" width="16" height="96" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+      <rect x="210" y="190" width="16" height="96" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+      <rect x="146" y="264" width="64" height="22" fill="#bae6fd"/>
+      <!-- Tali kiri ke ember -->
+      <line x1="178" y1="60" x2="178" y2="212" stroke="#78350f" stroke-width="3"/>
+      <!-- Ember -->
+      <path d="M 162 212 L 194 212 L 190 246 L 166 246 Z" fill="#fde68a" stroke="#b45309" stroke-width="3" stroke-linejoin="round"/>
+      <text x="100" y="236" font-size="14" fill="#b45309" text-anchor="middle">ember</text>
+      <line x1="118" y1="232" x2="158" y2="230" stroke="#b45309" stroke-width="1.5"/>
+      <!-- percepatan ember -->
+      <line x1="160" y1="150" x2="160" y2="112" stroke="#0284c7" stroke-width="3"/>
+      <polygon points="153,116 160,102 167,116" fill="#0284c7"/>
+      <text x="146" y="132" font-size="15" font-weight="700" fill="#0284c7" text-anchor="end">a</text>
+      <!-- Tali kanan ke tangan -->
+      <line x1="242" y1="60" x2="242" y2="150" stroke="#78350f" stroke-width="3"/>
+      <rect x="230" y="150" width="26" height="30" rx="10" fill="#fde2c4" stroke="#b45309" stroke-width="2.5"/>
+      <text x="270" y="170" font-size="14" fill="#b45309">tangan</text>
+      <line x1="262" y1="104" x2="262" y2="138" stroke="#e11d48" stroke-width="3"/>
+      <polygon points="255,134 262,148 269,134" fill="#e11d48"/>
+      <text x="270" y="122" font-size="14" font-weight="700" fill="#e11d48">tarik</text>
+      <!-- Label tegangan -->
+      <text x="186" y="104" font-size="16" font-weight="700" fill="#78350f">T₁</text>
+      <text x="221" y="104" font-size="16" font-weight="700" fill="#78350f" text-anchor="end">T₂</text>
+    </svg>
+
+    <!-- Tangga bantuan -->
+    <div class="rounded-2xl border-2 border-sky-200 bg-sky-50 px-5 py-4">
+      <p class="font-bold text-sky-800 mb-2">🪜 Tangga Bantuan</p>
+      <ol class="space-y-2 text-[12.5pt]">
+        <li class="flex gap-2"><span class="font-bold text-sky-700">1.</span><span><i>(Hint: Katrol ikutan berputar karena ada <b>selisih tarikan tali</b> lho!)</i></span></li>
+        <li class="flex gap-2"><span class="font-bold text-sky-700">2.</span><span>T₁ = tarikan tali di sisi ember, T₂ = tarikan tali di sisi tangan.</span></li>
+        <li class="flex gap-2"><span class="font-bold text-sky-700">3.</span><span>Katrol berat = katrol "bandel". Sebagian tarikan tangan "habis" dipakai untuk memutar katrol.</span></li>
+        <li class="flex gap-2"><span class="font-bold text-sky-700">4.</span><span>Tanya dirimu: apa yang membuat tali bisa "menyeret" katrol ikut berputar?</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <p class="mb-2 font-semibold">Beri tanda centang (✓) pada kolom <b>Benar</b> atau <b>Salah</b> untuk setiap kondisi.</p>
+
+  <table class="w-full border-collapse mb-4">
+    <thead>
+      <tr class="bg-slate-100">
+        <th class="border-2 border-slate-300 px-3 py-2 w-12">No</th>
+        <th class="border-2 border-slate-300 px-3 py-2 text-left">Pernyataan</th>
+        <th class="border-2 border-slate-300 px-3 py-2 w-20 bg-emerald-50">Benar</th>
+        <th class="border-2 border-slate-300 px-3 py-2 w-20 bg-rose-50">Salah</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border-2 border-slate-300 px-3 py-4 text-center font-bold">A</td>
+        <td class="border-2 border-slate-300 px-3 py-4">Tegangan tali yang menempel pada ember sama persis dengan tegangan tali yang ditarik oleh tangan.</td>
+        <td class="border-2 border-slate-300 text-center"><span class="kotak-bs"></span></td>
+        <td class="border-2 border-slate-300 text-center"><span class="kotak-bs"></span></td>
+      </tr>
+      <tr>
+        <td class="border-2 border-slate-300 px-3 py-4 text-center font-bold">B</td>
+        <td class="border-2 border-slate-300 px-3 py-4">Semakin berat massa katrol sumur tersebut, ember akan semakin lambat naiknya (percepatan berkurang).</td>
+        <td class="border-2 border-slate-300 text-center"><span class="kotak-bs"></span></td>
+        <td class="border-2 border-slate-300 text-center"><span class="kotak-bs"></span></td>
+      </tr>
+      <tr>
+        <td class="border-2 border-slate-300 px-3 py-4 text-center font-bold">C</td>
+        <td class="border-2 border-slate-300 px-3 py-4">Jika katrol licin sempurna terhadap tali, katrol tetap akan berputar.</td>
+        <td class="border-2 border-slate-300 text-center"><span class="kotak-bs"></span></td>
+        <td class="border-2 border-slate-300 text-center"><span class="kotak-bs"></span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="italic text-slate-600">✏️ Pilih satu kondisi (A, B, atau C), lalu jelaskan alasanmu dengan bahasamu sendiri:</p>
+  <div class="garis"></div><div class="garis"></div><div class="garis"></div>
+
+  <div class="mt-auto pt-4 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3 text-[12pt]">
+      <span>Perasaanku setelah mengerjakan:</span>
+      <span class="inline-flex gap-3 text-[16pt]">😟 <span class="kotak-cek !mt-0"></span> 😐 <span class="kotak-cek !mt-0"></span> 😊 <span class="kotak-cek !mt-0"></span></span>
+    </div>
+    <p class="text-[11pt] italic text-emerald-700 text-right">Bingung itu wajar. Angkat tangan, bertanya itu tanda kamu sedang belajar 💪</p>
+  </div>
+</section>
+
+</body>
+</html>
