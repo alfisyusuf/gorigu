@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bermain Logika Fluida</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Nunito', sans-serif; }
+  .slide { display: none; }
+  .slide.active { display: flex; animation: fadeUp .6s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  .bob { animation: bob 3.2s ease-in-out infinite; }
+  @keyframes sink { 0% { transform: translateY(0); opacity: 1; } 85% { opacity: 1; } 100% { transform: translateY(105px); opacity: .2; } }
+  .sink { animation: sink 4.5s ease-in infinite; }
+  @keyframes flow { to { stroke-dashoffset: -40; } }
+  .flow-slow { stroke-dasharray: 10 12; animation: flow 1.6s linear infinite; }
+  .flow-fast { stroke-dasharray: 10 12; animation: flow .45s linear infinite; }
+  @keyframes wave { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-18px); } }
+  .wave { animation: wave 6s ease-in-out infinite; }
+  .opt { transition: all .25s ease; }
+</style>
+</head>
+<body class="bg-sky-50 text-slate-700 min-h-screen">
+<main class="min-h-screen flex flex-col">
+
+  <div class="flex-1 flex">
+
+    <!-- SLIDE 1 -->
+    <section class="slide active flex-1 flex-col items-center justify-center text-center px-10 py-16 gap-10">
+      <div class="text-7xl">🌊</div>
+      <h1 class="text-5xl md:text-7xl font-black text-sky-800 leading-tight">TKA Fisika:<br>Bermain Logika Air &amp; Udara 🌊</h1>
+      <p class="text-2xl md:text-4xl text-slate-600 max-w-4xl leading-relaxed">Tarik napas panjang, hari ini kita cuma main tebak-tebakan logika.</p>
+      <div class="bg-white/80 rounded-2xl px-8 py-4 text-xl text-sky-700 shadow-sm">Pertemuan 6 · Fluida Statis &amp; Dinamis · 🧊 ✈️ 💧</div>
+      <svg viewBox="0 0 1200 120" class="w-full max-w-5xl mt-4" aria-hidden="true">
+        <g class="wave">
+          <path d="M0 60 Q 75 20 150 60 T 300 60 T 450 60 T 600 60 T 750 60 T 900 60 T 1050 60 T 1200 60 T 1350 60 V120 H0 Z" fill="#bae6fd"/>
+          <path d="M0 80 Q 75 50 150 80 T 300 80 T 450 80 T 600 80 T 750 80 T 900 80 T 1050 80 T 1200 80 T 1350 80 V120 H0 Z" fill="#7dd3fc" opacity=".6"/>
+        </g>
+      </svg>
+      <p class="text-lg text-slate-400">Tekan → atau klik "Lanjut" untuk mulai</p>
+    </section>
+
+    <!-- SLIDE 2 : ARCHIMEDES -->
+    <section class="slide flex-1 flex-col justify-center px-10 md:px-20 py-12 gap-10">
+      <div class="flex items-center gap-4">
+        <span class="bg-sky-200 text-sky-800 rounded-2xl px-5 py-2 text-xl font-bold">Pemantik 1 · Archimedes</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="bg-white rounded-2xl p-6 shadow-sm">
+          <svg viewBox="0 0 600 360" class="w-full" role="img" aria-label="Kapal baja mengapung, kerikil tenggelam">
+            <rect x="0" y="150" width="600" height="210" rx="20" fill="#bae6fd"/>
+            <path d="M0 150 Q 50 140 100 150 T 200 150 T 300 150 T 400 150 T 500 150 T 600 150" stroke="#38bdf8" stroke-width="4" fill="none"/>
+            <!-- Kapal -->
+            <g class="bob">
+              <path d="M40 128 L270 128 L240 178 L70 178 Z" fill="#64748b"/>
+              <rect x="100" y="92" width="110" height="36" rx="6" fill="#e2e8f0"/>
+              <rect x="120" y="70" width="40" height="22" rx="4" fill="#cbd5e1"/>
+              <circle cx="125" cy="110" r="7" fill="#7dd3fc"/><circle cx="155" cy="110" r="7" fill="#7dd3fc"/><circle cx="185" cy="110" r="7" fill="#7dd3fc"/>
+              <rect x="170" y="52" width="12" height="40" fill="#f87171"/>
+            </g>
+            <text x="155" y="225" text-anchor="middle" font-size="22" font-weight="700" fill="#0c4a6e">Kapal baja 🚢</text>
+            <text x="155" y="252" text-anchor="middle" font-size="17" fill="#334155">ribuan ton · NGAPUNG</text>
+            <!-- Kerikil -->
+            <g class="sink">
+              <ellipse cx="450" cy="200" rx="16" ry="12" fill="#78716c"/>
+            </g>
+            <text x="450" y="70" text-anchor="middle" font-size="22" font-weight="700" fill="#0c4a6e">Kerikil 🪨</text>
+            <text x="450" y="96" text-anchor="middle" font-size="17" fill="#334155">beberapa gram · TENGGELAM</text>
+            <line x1="450" y1="110" x2="450" y2="180" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6 6"/>
+          </svg>
+        </div>
+        <div class="flex flex-col gap-8">
+          <p class="text-3xl leading-relaxed">Pernah kepikiran nggak? Baja itu <b>super berat</b>, tapi kapal pesiar raksasa bisa ngapung santai. Eh, giliran kita lempar <b>kerikil kecil</b>, malah langsung tenggelam.</p>
+          <p class="text-4xl font-extrabold text-sky-800">Kok bisa air pilih kasih? 🤔</p>
+          <button onclick="reveal('rahasia1', this)" class="self-start bg-sky-500 hover:bg-sky-600 text-white text-2xl font-bold rounded-2xl px-8 py-4 shadow-md">🔓 Buka Rahasia Air</button>
+          <div id="rahasia1" class="hidden bg-white rounded-2xl p-8 shadow-sm text-2xl leading-relaxed space-y-4" style="animation:fadeUp .5s ease">
+            <p>Ternyata kuncinya bukan di <b>berat</b>, tapi di <b>massa jenis rata-rata</b> dan <b>seberapa banyak air yang digeser</b>. 💡</p>
+            <p>🚢 Kapal itu kayak mangkok raksasa yang isinya banyak udara. Massa jenis rata-ratanya jadi lebih kecil dari air, dan dia menggeser air dalam jumlah super banyak.</p>
+            <p>🪨 Kerikil padat, massa jenisnya ±2,5× air. Gaya angkatnya nggak cukup buat nahan beratnya.</p>
+            <p class="text-sky-800 font-bold">Air itu adil kok: "Kamu geser aku seberapa, aku dorong balik seberat itu." 😄</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 : KONTINUITAS & BERNOULLI -->
+    <section class="slide flex-1 flex-col justify-center px-10 md:px-20 py-12 gap-10">
+      <span class="self-start bg-sky-200 text-sky-800 rounded-2xl px-5 py-2 text-xl font-bold">Pemantik 2 · Dua Misteri Sehari-hari</span>
+      <div class="grid md:grid-cols-2 gap-10">
+        <!-- Selang -->
+        <div class="bg-white rounded-2xl p-8 shadow-sm flex flex-col gap-6">
+          <h2 class="text-3xl font-extrabold text-sky-800">💧 Misteri Selang Air</h2>
+          <svg viewBox="0 0 340 190" class="w-full" role="img" aria-label="Selang dipencet, air keluar lebih cepat">
+            <rect x="10" y="70" width="190" height="44" rx="18" fill="#86efac" />
+            <path d="M200 70 L245 85 L245 99 L200 114 Z" fill="#86efac"/>
+            <ellipse cx="232" cy="72" rx="18" ry="11" fill="#fcd34d"/>
+            <text x="232" y="56" text-anchor="middle" font-size="13" fill="#92400e">jempol</text>
+            <line x1="25" y1="92" x2="195" y2="92" stroke="#0284c7" stroke-width="4" class="flow-slow"/>
+            <path d="M245 92 Q 290 92 318 150" stroke="#0284c7" stroke-width="5" fill="none" class="flow-fast"/>
+            <text x="320" y="178" text-anchor="middle" font-size="26">🌱</text>
+            <text x="105" y="140" text-anchor="middle" font-size="15" fill="#334155">lebar → santai 🐢</text>
+            <text x="270" y="130" text-anchor="middle" font-size="15" fill="#334155">sempit → ngebut 🚀</text>
+          </svg>
+          <p class="text-2xl leading-relaxed">Makin dipencet ujungnya, airnya makin <b>ngebut</b>. <span class="text-sky-700 font-bold">(Kontinuitas)</span></p>
+        </div>
+        <!-- Kertas -->
+        <div class="bg-white rounded-2xl p-8 shadow-sm flex flex-col gap-6">
+          <h2 class="text-3xl font-extrabold text-sky-800">📄 Misteri Kertas</h2>
+          <svg viewBox="0 0 340 190" class="w-full" role="img" aria-label="Meniup bagian atas kertas, kertas naik">
+            <text x="30" y="110" text-anchor="middle" font-size="40">😗</text>
+            <path d="M62 102 Q150 112 255 165" stroke="#cbd5e1" stroke-width="4" fill="none" stroke-dasharray="6 6"/>
+            <text x="262" y="182" font-size="12" fill="#94a3b8">sebelum ditiup</text>
+            <path d="M62 102 Q150 96 265 82" stroke="#f472b6" stroke-width="7" fill="none" stroke-linecap="round"/>
+            <path d="M62 86 Q150 76 300 60" stroke="#38bdf8" stroke-width="3" fill="none" class="flow-fast"/>
+            <path d="M62 72 Q150 60 300 44" stroke="#38bdf8" stroke-width="3" fill="none" class="flow-fast"/>
+            <text x="230" y="30" text-anchor="middle" font-size="15" fill="#334155">udara ngebut 💨</text>
+          </svg>
+          <p class="text-2xl leading-relaxed">Ditiup <b>di atasnya</b>, kertas malah <b>melengkung naik</b>! <span class="text-sky-700 font-bold">(Bernoulli)</span></p>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-6">
+        <p class="text-3xl font-extrabold text-slate-700">Aneh kan? 🤯</p>
+        <button onclick="reveal('rahasia2', this)" class="bg-sky-500 hover:bg-sky-600 text-white text-2xl font-bold rounded-2xl px-8 py-4 shadow-md">🔓 Intip Penjelasannya</button>
+      </div>
+      <div id="rahasia2" class="hidden grid md:grid-cols-2 gap-10 text-2xl leading-relaxed" style="animation:fadeUp .5s ease">
+        <div class="bg-sky-100 rounded-2xl p-6">Air yang lewat tiap detik jumlahnya <b>harus sama</b>. Jalannya disempitin? Ya air harus lari lebih kencang biar "antreannya" nggak macet. 🚗</div>
+        <div class="bg-sky-100 rounded-2xl p-6">Udara yang <b>ngebut</b> di atas kertas tekanannya jadi <b>kecil</b>. Udara diam di bawah tekanannya lebih besar → kertas didorong naik. ⬆️</div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 : SAYAP PESAWAT -->
+    <section class="slide flex-1 flex-col justify-center px-10 md:px-20 py-12 gap-8">
+      <span class="self-start bg-amber-100 text-amber-800 rounded-2xl px-5 py-2 text-xl font-bold">Jembatan ke TKA ✈️</span>
+      <div class="grid md:grid-cols-5 gap-10 items-center">
+        <div class="md:col-span-3 bg-white rounded-2xl p-6 shadow-sm">
+          <svg viewBox="0 0 700 330" class="w-full" role="img" aria-label="Penampang sayap pesawat dengan aliran udara">
+            <!-- aliran atas -->
+            <path d="M20 120 C 200 120, 260 60, 420 70 S 620 120, 690 125" stroke="#0284c7" stroke-width="3" fill="none" class="flow-fast"/>
+            <path d="M20 145 C 200 145, 260 95, 420 102 S 620 145, 690 150" stroke="#0284c7" stroke-width="3" fill="none" class="flow-fast"/>
+            <!-- aliran bawah -->
+            <path d="M20 215 C 220 215, 400 212, 690 205" stroke="#7dd3fc" stroke-width="3" fill="none" class="flow-slow"/>
+            <path d="M20 245 C 220 245, 400 244, 690 238" stroke="#7dd3fc" stroke-width="3" fill="none" class="flow-slow"/>
+            <!-- sayap -->
+            <path d="M150 180 C 190 120, 330 105, 430 125 C 500 140, 560 165, 600 182 C 500 192, 300 196, 150 180 Z" fill="#94a3b8" stroke="#475569" stroke-width="3"/>
+            <text x="370" y="170" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">SAYAP</text>
+            <text x="40" y="100" font-size="20" font-weight="700" fill="#0c4a6e">Udara ATAS</text>
+            <text x="40" y="285" font-size="20" font-weight="700" fill="#0c4a6e">Udara BAWAH</text>
+            <!-- label rahasia -->
+            <g id="wingLabels" style="display:none">
+              <rect x="430" y="20" width="250" height="36" rx="12" fill="#e0f2fe"/>
+              <text x="555" y="44" text-anchor="middle" font-size="18" fill="#0c4a6e">v besar → P kecil</text>
+              <rect x="430" y="270" width="250" height="36" rx="12" fill="#e0f2fe"/>
+              <text x="555" y="294" text-anchor="middle" font-size="18" fill="#0c4a6e">v kecil → P besar</text>
+              <line x1="370" y1="250" x2="370" y2="40" stroke="#22c55e" stroke-width="8" marker-end="url(#ah)"/>
+              <text x="300" y="45" text-anchor="end" font-size="20" font-weight="800" fill="#15803d">Gaya angkat</text>
+            </g>
+            <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#22c55e"/></marker></defs>
+          </svg>
+        </div>
+        <div class="md:col-span-2 flex flex-col gap-4">
+          <p class="text-2xl leading-relaxed">Mari uji insting kita! Pesawat seberat <b>paus biru</b> 🐋 bisa terbang karena <b>perbedaan tekanan udara</b> di sayapnya.</p>
+          <p class="text-2xl font-bold text-sky-800">Coba pilih mana tebakan yang paling masuk akal di bawah ini.</p>
+        </div>
+      </div>
+      <div id="quiz" class="grid md:grid-cols-2 gap-5">
+        <button class="opt text-left bg-white rounded-2xl p-5 text-xl shadow-sm border-2 border-transparent hover:border-sky-300" data-ok="0" data-fb="Hmm, hampir! Justru udara di atas yang lebih ngebut, dan yang ngebut tekanannya malah kecil. Insting kita sering kebalik di sini 😉">
+          <b>A.</b> Udara di atas sayap bergerak lebih <b>lambat</b>, jadi tekanannya lebih besar dan mendorong sayap naik.</button>
+        <button class="opt text-left bg-white rounded-2xl p-5 text-xl shadow-sm border-2 border-transparent hover:border-sky-300" data-ok="1" data-fb="Yes, tepat! 🎉 Udara di atas ngebut → tekanan kecil. Udara di bawah lebih santai → tekanan besar. Selisih tekanan × luas sayap = gaya angkat.">
+          <b>B.</b> Udara di atas sayap bergerak lebih <b>cepat</b>, sehingga tekanan di atas lebih <b>kecil</b> daripada di bawah.</button>
+        <button class="opt text-left bg-white rounded-2xl p-5 text-xl shadow-sm border-2 border-transparent hover:border-sky-300" data-ok="0" data-fb="Mesin memang penting buat maju ke depan, tapi yang 'mengangkat' pesawat adalah beda tekanan di sayap. Kalau tekanannya sama, nggak ada dorongan ke atas 🙂">
+          <b>C.</b> Tekanan di atas dan di bawah sayap <b>sama</b>; pesawat naik murni karena dorongan mesin.</button>
+        <button class="opt text-left bg-white rounded-2xl p-5 text-xl shadow-sm border-2 border-transparent hover:border-sky-300" data-ok="0" data-fb="Kalau udara bawah yang ngebut, tekanannya yang kecil di bawah — sayap malah 'ditarik' turun. Coba balik logikanya ya 😊">
+          <b>D.</b> Udara di bawah sayap bergerak lebih <b>cepat</b> sehingga menghantam sayap ke atas.</button>
+      </div>
+      <div id="feedback" class="hidden rounded-2xl p-6 text-2xl leading-relaxed"></div>
+    </section>
+
+  </div>
+
+  <!-- NAVIGASI -->
+  <nav class="flex items-center justify-between px-10 py-6">
+    <button id="prev" class="bg-white text-sky-700 text-xl font-bold rounded-2xl px-6 py-3 shadow-sm disabled:opacity-30">← Kembali</button>
+    <div id="dots" class="flex gap-3"></div>
+    <button id="next" class="bg-sky-500 text-white text-xl font-bold rounded-2xl px-6 py-3 shadow-sm disabled:opacity-30">Lanjut →</button>
+  </nav>
+</main>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const dots = document.getElementById('dots');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  let cur = 0;
+
+  slides.forEach((_, k) => {
+    const d = document.createElement('button');
+    d.className = 'w-4 h-4 rounded-full bg-sky-200 transition-all';
+    d.setAttribute('aria-label', 'Slide ' + (k + 1));
+    d.onclick = () => show(k);
+    dots.appendChild(d);
+  });
+
+  function show(n) {
+    cur = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === cur));
+    [...dots.children].forEach((d, k) => {
+      d.className = 'h-4 rounded-full transition-all ' + (k === cur ? 'w-10 bg-sky-500' : 'w-4 bg-sky-200');
+    });
+    prev.disabled = cur === 0;
+    next.disabled = cur === slides.length - 1;
+    window.scrollTo(0, 0);
+  }
+  prev.onclick = () => show(cur - 1);
+  next.onclick = () => show(cur + 1);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') show(cur + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(cur - 1);
+  });
+
+  function reveal(id, btn) {
+    document.getElementById(id).classList.remove('hidden');
+    btn.classList.add('hidden');
+  }
+
+  const fb = document.getElementById('feedback');
+  document.querySelectorAll('#quiz .opt').forEach(b => {
+    b.onclick = () => {
+      document.querySelectorAll('#quiz .opt').forEach(o => o.classList.remove('border-emerald-400', 'bg-emerald-50', 'border-amber-300', 'bg-amber-50'));
+      const ok = b.dataset.ok === '1';
+      b.classList.add(ok ? 'border-emerald-400' : 'border-amber-300', ok ? 'bg-emerald-50' : 'bg-amber-50');
+      fb.className = 'rounded-2xl p-6 text-2xl leading-relaxed ' + (ok ? 'bg-emerald-100 text-emerald-900' : 'bg-amber-100 text-amber-900');
+      fb.textContent = b.dataset.fb;
+      if (ok) document.getElementById('wingLabels').style.display = 'inline';
+    };
+  });
+
+  show(0);
+</script>
+</body>
+</html>
