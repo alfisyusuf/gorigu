@@ -22,7 +22,6 @@
         .kitab-paper {
             /* Old paper / Kitab Kuning color */
             background-color: #f4e8d1;
-            /* Subtle texture effect using noise-like linear gradients could be added, but solid warm color is often cleaner */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 0 50px rgba(139, 90, 43, 0.1);
             border: 2px solid #b89972;
             outline: 6px double #b89972;
@@ -31,7 +30,7 @@
 
         .arabic-text {
             font-family: 'Amiri', serif;
-            line-height: 2.2;
+            line-height: 2.4; /* Sedikit dilonggarkan agar harokat tidak bertabrakan */
             color: #2c1a0c; /* Very dark brown ink */
         }
 
@@ -56,7 +55,7 @@
         
         <!-- Header / Bismillah -->
         <header class="mb-12 text-center">
-            <h1 class="arabic-text text-4xl sm:text-5xl font-bold mb-4" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</h1>
+            <h1 class="arabic-text text-4xl sm:text-5xl font-bold mb-4" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</h1>
             <div class="h-px w-3/4 mx-auto bg-[#b89972] mb-1"></div>
             <div class="h-px w-2/4 mx-auto bg-[#b89972]"></div>
             <h2 class="indo-text text-xl sm:text-2xl mt-6 font-medium uppercase tracking-widest text-[#5c4028]">Syair Nasihat Jiwa</h2>
@@ -69,7 +68,7 @@
             <!-- Bait 1 -->
             <div class="group relative">
                 <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    جمود العين من قسوة القلب
+                    جُمُودُ الْعَيْنِ مِنْ قَسْوَةِ الْقَلْبِ
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Kekakuan mata (tidak bisa menangis karena takut kepada Allah) berasal dari kekerasan hati
@@ -79,7 +78,7 @@
             <!-- Bait 2 -->
             <div class="group relative">
                 <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    وقسوة القلب من كثرة الذنوب
+                    وَقَسْوَةُ الْقَلْبِ مِنْ كَثْرَةِ الذُّنُوبِ
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Dan kekerasan hati berasal dari banyaknya dosa
@@ -89,7 +88,7 @@
             <!-- Bait 3 -->
             <div class="group relative">
                 <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    وكثرة الذنوب من نسيان الموت
+                    وَكَثْرَةُ الذُّنُوبِ مِنْ نِسْيَانِ الْمَوْتِ
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Dan banyaknya dosa berasal dari lupa akan kematian
@@ -99,7 +98,7 @@
             <!-- Bait 4 -->
             <div class="group relative">
                 <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    ونسيان الموت من طول الأمل
+                    وَنِسْيَانُ الْمَوْتِ مِنْ طُولِ الْأَمَلِ
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Dan lupa akan kematian berasal dari panjang angan-angan
@@ -109,7 +108,7 @@
             <!-- Bait 5 -->
             <div class="group relative">
                 <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    وطول الأمل من حب الدنيا
+                    وَطُولُ الْأَمَلِ مِنْ حُبِّ الدُّنْيَا
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Dan panjang angan-angan berasal dari cinta dunia
@@ -119,7 +118,7 @@
             <!-- Bait 6 -->
             <div class="group relative">
                 <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    وحب الدنيا رأس كل خطيئة
+                    وَحُبُّ الدُّنْيَا رَأْسُ كُلِّ خَطِيئَةٍ
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Dan cinta dunia adalah pokok dari segala kesalahan
@@ -132,8 +131,8 @@
             <!-- Bait 7 -->
             <div class="group relative">
                 <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    النفس تبكي على الدنيا وقد علمت<br>
-                    <span class="inline-block mt-2">أن السلامة فيها ترك ما فيها</span>
+                    النَّفْسُ تَبْكِي عَلَى الدُّنْيَا وَقَدْ عَلِمَتْ<br>
+                    <span class="inline-block mt-2">أَنَّ السَّلَامَةَ فِيهَا تَرْكُ مَا فِيهَا</span>
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Jiwa menangisi dunia padahal ia tahu bahwa keselamatan di dalamnya adalah dengan meninggalkan apa yang ada di dalamnya
@@ -143,8 +142,8 @@
             <!-- Bait 8 -->
             <div class="group relative">
                 <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    وغنى النفوس هو الكفاف فإن أبت<br>
-                    <span class="inline-block mt-2">فجميع ما في الأرض لا يكفيها</span>
+                    وَغِنَى النُّفُوسِ هُوَ الْكَفَافُ فَإِنْ أَبَتْ<br>
+                    <span class="inline-block mt-2">فَجَمِيعُ مَا فِي الْأَرْضِ لَا يَكْفِيهَا</span>
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Kekayaan jiwa adalah kecukupan, namun jika ia menolak (terus merasa kurang), maka semua yang ada di bumi tidak akan mencukupinya
@@ -154,8 +153,8 @@
             <!-- Bait 9 -->
             <div class="group relative">
                 <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    هي القناعة فاحفظها تكن مالكا<br>
-                    <span class="inline-block mt-2">لولا لم يكن لك فيها إلا راحة البدن</span>
+                    هِيَ الْقَنَاعَةُ فَاحْفَظْهَا تَكُنْ مَالِكًا<br>
+                    <span class="inline-block mt-2">لَوْلَا لَمْ يَكُنْ لَكَ فِيهَا إِلَّا رَاحَةُ الْبَدَنِ</span>
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Itulah sifat qanaah (merasa cukup), maka jagalah ia niscaya engkau menjadi seorang raja, meskipun tidak ada bagimu di dunia ini selain ketenangan badan
@@ -165,8 +164,8 @@
             <!-- Bait 10 -->
             <div class="group relative pb-8">
                 <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    وانظر إلى من أوتي الدنيا بأكملها<br>
-                    <span class="inline-block mt-2">هل راح منها بغير القطن والكفن؟</span>
+                    وَانْظُرْ إِلَى مَنْ أُوتِيَ الدُّنْيَا بِأَكْمَلِهَا<br>
+                    <span class="inline-block mt-2">هَلْ رَاحَ مِنْهَا بِغَيْرِ الْقُطْنِ وَالْكَفَنِ؟</span>
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Dan perhatikanlah orang yang diberi dunia secara keseluruhan, apakah ia pergi darinya dengan membawa selain kain kapas dan kain kafan?
@@ -177,7 +176,7 @@
 
         <!-- Footer -->
         <footer class="mt-12 pt-8 border-t-2 border-dashed border-[#b89972] text-center">
-            <p class="arabic-text text-2xl mb-2" dir="rtl">والله أعلم بالصواب</p>
+            <p class="arabic-text text-2xl mb-2" dir="rtl">وَاللَّهُ أَعْلَمُ بِالصَّوَابِ</p>
             <p class="indo-text text-sm">Didokumentasikan dari kutipan nasihat dan syair Arab klasik.</p>
         </footer>
 
@@ -185,4 +184,3 @@
 
 </body>
 </html>
-
