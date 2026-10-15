@@ -30,20 +30,22 @@
 
         .arabic-text {
             font-family: 'Amiri', serif;
-            line-height: 2.4; /* Sedikit dilonggarkan agar harokat tidak bertabrakan */
+            /* Line height diperbesar secara signifikan agar harokat tidak tabrakan */
+            line-height: 3.5; 
             color: #2c1a0c; /* Very dark brown ink */
         }
 
         .indo-text {
             font-family: 'Lora', serif;
             color: #4a3320;
+            line-height: 1.8;
         }
 
         .ornament {
             color: #b89972;
             font-size: 1.5rem;
             text-align: center;
-            margin: 2rem 0;
+            margin: 3rem 0;
             user-select: none;
         }
     </style>
@@ -54,20 +56,20 @@
     <main class="kitab-paper max-w-4xl mx-auto py-16 px-8 sm:px-16 rounded-sm relative">
         
         <!-- Header / Bismillah -->
-        <header class="mb-12 text-center">
-            <h1 class="arabic-text text-4xl sm:text-5xl font-bold mb-4" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</h1>
+        <header class="mb-14 text-center">
+            <h1 class="arabic-text text-4xl sm:text-5xl font-bold mb-6" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</h1>
             <div class="h-px w-3/4 mx-auto bg-[#b89972] mb-1"></div>
             <div class="h-px w-2/4 mx-auto bg-[#b89972]"></div>
-            <h2 class="indo-text text-xl sm:text-2xl mt-6 font-medium uppercase tracking-widest text-[#5c4028]">Syair Nasihat Jiwa</h2>
+            <h2 class="indo-text text-xl sm:text-2xl mt-8 font-medium uppercase tracking-widest text-[#5c4028]">Syair Nasihat Jiwa</h2>
             <p class="indo-text italic text-sm mt-2">Tentang Kerasnya Hati dan Bahaya Cinta Dunia</p>
         </header>
 
         <!-- Verses Container -->
-        <article class="space-y-8">
+        <article class="space-y-12"> <!-- Jarak antar bait juga diperlebar -->
 
             <!-- Bait 1 -->
             <div class="group relative">
-                <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
+                <p class="arabic-text text-3xl sm:text-4xl text-right mb-6" dir="rtl" lang="ar">
                     جُمُودُ الْعَيْنِ مِنْ قَسْوَةِ الْقَلْبِ
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
@@ -77,7 +79,7 @@
 
             <!-- Bait 2 -->
             <div class="group relative">
-                <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
+                <p class="arabic-text text-3xl sm:text-4xl text-right mb-6" dir="rtl" lang="ar">
                     وَقَسْوَةُ الْقَلْبِ مِنْ كَثْرَةِ الذُّنُوبِ
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
@@ -87,7 +89,7 @@
 
             <!-- Bait 3 -->
             <div class="group relative">
-                <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
+                <p class="arabic-text text-3xl sm:text-4xl text-right mb-6" dir="rtl" lang="ar">
                     وَكَثْرَةُ الذُّنُوبِ مِنْ نِسْيَانِ الْمَوْتِ
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
@@ -97,7 +99,7 @@
 
             <!-- Bait 4 -->
             <div class="group relative">
-                <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
+                <p class="arabic-text text-3xl sm:text-4xl text-right mb-6" dir="rtl" lang="ar">
                     وَنِسْيَانُ الْمَوْتِ مِنْ طُولِ الْأَمَلِ
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
@@ -107,7 +109,7 @@
 
             <!-- Bait 5 -->
             <div class="group relative">
-                <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
+                <p class="arabic-text text-3xl sm:text-4xl text-right mb-6" dir="rtl" lang="ar">
                     وَطُولُ الْأَمَلِ مِنْ حُبِّ الدُّنْيَا
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
@@ -117,7 +119,7 @@
 
             <!-- Bait 6 -->
             <div class="group relative">
-                <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
+                <p class="arabic-text text-3xl sm:text-4xl text-right mb-6" dir="rtl" lang="ar">
                     وَحُبُّ الدُّنْيَا رَأْسُ كُلِّ خَطِيئَةٍ
                 </p>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
@@ -130,10 +132,10 @@
 
             <!-- Bait 7 -->
             <div class="group relative">
-                <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    النَّفْسُ تَبْكِي عَلَى الدُّنْيَا وَقَدْ عَلِمَتْ<br>
-                    <span class="inline-block mt-2">أَنَّ السَّلَامَةَ فِيهَا تَرْكُ مَا فِيهَا</span>
-                </p>
+                <div class="arabic-text text-3xl sm:text-4xl text-right mb-6" dir="rtl" lang="ar">
+                    <span class="block mb-2">النَّفْسُ تَبْكِي عَلَى الدُّنْيَا وَقَدْ عَلِمَتْ</span>
+                    <span class="block">أَنَّ السَّلَامَةَ فِيهَا تَرْكُ مَا فِيهَا</span>
+                </div>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Jiwa menangisi dunia padahal ia tahu bahwa keselamatan di dalamnya adalah dengan meninggalkan apa yang ada di dalamnya
                 </p>
@@ -141,10 +143,10 @@
 
             <!-- Bait 8 -->
             <div class="group relative">
-                <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    وَغِنَى النُّفُوسِ هُوَ الْكَفَافُ فَإِنْ أَبَتْ<br>
-                    <span class="inline-block mt-2">فَجَمِيعُ مَا فِي الْأَرْضِ لَا يَكْفِيهَا</span>
-                </p>
+                <div class="arabic-text text-3xl sm:text-4xl text-right mb-6" dir="rtl" lang="ar">
+                    <span class="block mb-2">وَغِنَى النُّفُوسِ هُوَ الْكَفَافُ فَإِنْ أَبَتْ</span>
+                    <span class="block">فَجَمِيعُ مَا فِي الْأَرْضِ لَا يَكْفِيهَا</span>
+                </div>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Kekayaan jiwa adalah kecukupan, namun jika ia menolak (terus merasa kurang), maka semua yang ada di bumi tidak akan mencukupinya
                 </p>
@@ -152,10 +154,10 @@
 
             <!-- Bait 9 -->
             <div class="group relative">
-                <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    هِيَ الْقَنَاعَةُ فَاحْفَظْهَا تَكُنْ مَالِكًا<br>
-                    <span class="inline-block mt-2">لَوْلَا لَمْ يَكُنْ لَكَ فِيهَا إِلَّا رَاحَةُ الْبَدَنِ</span>
-                </p>
+                <div class="arabic-text text-3xl sm:text-4xl text-right mb-6" dir="rtl" lang="ar">
+                    <span class="block mb-2">هِيَ الْقَنَاعَةُ فَاحْفَظْهَا تَكُنْ مَالِكًا</span>
+                    <span class="block">لَوْلَا لَمْ يَكُنْ لَكَ فِيهَا إِلَّا رَاحَةُ الْبَدَنِ</span>
+                </div>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Itulah sifat qanaah (merasa cukup), maka jagalah ia niscaya engkau menjadi seorang raja, meskipun tidak ada bagimu di dunia ini selain ketenangan badan
                 </p>
@@ -163,10 +165,10 @@
 
             <!-- Bait 10 -->
             <div class="group relative pb-8">
-                <p class="arabic-text text-3xl sm:text-4xl text-right mb-4" dir="rtl" lang="ar">
-                    وَانْظُرْ إِلَى مَنْ أُوتِيَ الدُّنْيَا بِأَكْمَلِهَا<br>
-                    <span class="inline-block mt-2">هَلْ رَاحَ مِنْهَا بِغَيْرِ الْقُطْنِ وَالْكَفَنِ؟</span>
-                </p>
+                <div class="arabic-text text-3xl sm:text-4xl text-right mb-6" dir="rtl" lang="ar">
+                    <span class="block mb-2">وَانْظُرْ إِلَى مَنْ أُوتِيَ الدُّنْيَا بِأَكْمَلِهَا</span>
+                    <span class="block">هَلْ رَاحَ مِنْهَا بِغَيْرِ الْقُطْنِ وَالْكَفَنِ؟</span>
+                </div>
                 <p class="indo-text text-base sm:text-lg text-left italic border-l-4 border-[#b89972] pl-4">
                     Dan perhatikanlah orang yang diberi dunia secara keseluruhan, apakah ia pergi darinya dengan membawa selain kain kapas dan kain kafan?
                 </p>
@@ -175,8 +177,8 @@
         </article>
 
         <!-- Footer -->
-        <footer class="mt-12 pt-8 border-t-2 border-dashed border-[#b89972] text-center">
-            <p class="arabic-text text-2xl mb-2" dir="rtl">وَاللَّهُ أَعْلَمُ بِالصَّوَابِ</p>
+        <footer class="mt-14 pt-10 border-t-2 border-dashed border-[#b89972] text-center">
+            <p class="arabic-text text-2xl mb-4" dir="rtl">وَاللَّهُ أَعْلَمُ بِالصَّوَابِ</p>
             <p class="indo-text text-sm">Didokumentasikan dari kutipan nasihat dan syair Arab klasik.</p>
         </footer>
 
