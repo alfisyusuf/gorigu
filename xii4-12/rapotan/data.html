@@ -1,0 +1,2785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asisten Rapotan Online - Lengkap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f3f4f6;
+            --sidebar-bg: #ffffff;
+            --main-bg: #ffffff;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Layout */
+        .sidebar {
+            width: 320px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+            padding: 30px;
+            background-color: #f9fafb;
+        }
+
+        /* Sidebar Elements */
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            background: #f8fafc;
+        }
+
+        .sidebar-header h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            color: #0f172a;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .student-list {
+            flex: 1;
+            overflow-y: auto;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .student-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .student-item:hover { background-color: #f1f5f9; }
+        .student-item.active {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Main Content Elements */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            background: var(--main-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .student-profile h1 {
+            margin: 0 0 5px 0;
+            font-size: 1.8rem;
+            color: #111827;
+        }
+        
+        .student-badges {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: #f3f4f6;
+            color: #374151;
+        }
+        .badge.rank { background: #dbeafe; color: #1e40af; }
+
+        .timer-section {
+            text-align: right;
+        }
+
+        .timer-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: monospace;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .btn-start { background: var(--success); color: white; }
+        .btn-stop { background: var(--danger); color: white; display: none;}
+
+        /* Data Grids */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--main-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+            color: #374151;
+            font-size: 1.1rem;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        th, td {
+            padding: 8px 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th { color: var(--text-light); font-weight: 600; }
+        .score-high { color: var(--success); font-weight: 600;}
+        .score-low { color: var(--danger); font-weight: 600;}
+
+        /* Notes Box */
+        .notes-box {
+            background: #fdf8f6;
+            border: 1px solid #fed7aa;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            color: #9a3412;
+        }
+
+        .tka-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #166534;
+        }
+
+        /* Empty State */
+        #empty-state {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+        #main-dashboard { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Daftar Siswa (XII 4)</h2>
+            <input type="text" id="searchInput" class="search-box" placeholder="Cari nama siswa..." onkeyup="filterStudents()">
+        </div>
+        <ul class="student-list" id="studentList">
+            <!-- List generated by JS -->
+        </ul>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <div id="empty-state">
+            <p>👈 Pilih siswa dari daftar di sebelah kiri untuk melihat profil lengkapnya.</p>
+        </div>
+
+        <div id="main-dashboard">
+            <!-- Header Profil -->
+            <div class="top-bar">
+                <div class="student-profile">
+                    <h1 id="ds-nama">Nama Siswa</h1>
+                    <div class="student-badges">
+                        <span class="badge" id="ds-nis">NIS: -</span>
+                        <span class="badge rank" id="ds-rank">Rank: -</span>
+                        <span class="badge">Sakit: <span id="ds-sakit">0</span> | Izin: <span id="ds-izin">0</span> | Alfa: <span id="ds-alfa">0</span></span>
+                    </div>
+                </div>
+                <div class="timer-section">
+                    <div class="timer-display" id="timer-display">06:00</div>
+                    <button class="btn btn-start" id="btn-start" onclick="startCall()">▶ Mulai Telpon (6 Menit)</button>
+                    <button class="btn btn-stop" id="btn-stop" onclick="stopCall()">■ Akhiri</button>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Kolom Kiri: Nilai Akademik -->
+                <div class="left-col">
+                    <div class="card">
+                        <h3>📊 Legger Rapot (Rata-rata Kelas: <span id="ds-rata-kelas">80.25</span>)</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Mata Pelajaran</th>
+                                    <th>Nilai Siswa</th>
+                                    <th>Rerata Kelas</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ds-nilai-table">
+                                <!-- Generated by JS -->
+                            </tbody>
+                            <tfoot>
+                                <tr style="background: #f8fafc; font-weight: bold;">
+                                    <td>RATA-RATA KESELURUHAN</td>
+                                    <td id="ds-rata-total" colspan="3">-</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: BK & TKA -->
+                <div class="right-col">
+                    <div class="card">
+                        <h3>💬 Laporan Konseling BK</h3>
+                        <div class="notes-box" id="ds-bk">
+                            Data konseling BK belum diinput.
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>📈 Perkembangan TKA</h3>
+                        <div class="tka-box" id="ds-tka">
+                            Data perkembangan TKA belum diinput.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Peringatan -->
+    <audio id="alert-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
+
+    <script>
+        // DATA LENGKAP SISWA DARI SPREADSHEET
+        const dataSiswa = [
+    {
+        "nis": "24121004",
+        "nama": "Abimanyu Fadhil Rachman",
+        "rank": 9,
+        "sakit": 2,
+        "izin": 3,
+        "alfa": 0,
+        "rata_rata": 82.06,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 98.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 82.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 81.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 83.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 100.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 77.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 79.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 85.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121041",
+        "nama": "Darwinda Kertayuga",
+        "rank": 12,
+        "sakit": 3,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 80.25,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 91.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 78.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 96.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 83.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 87.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121043",
+        "nama": "Deco Wibowo",
+        "rank": 1,
+        "sakit": 8,
+        "izin": 2,
+        "alfa": 0,
+        "rata_rata": 93.38,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 95.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 98.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 92.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 86.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 100.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 98.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 98.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 93.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 100.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 86.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 100.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121045",
+        "nama": "Devara Ardhana Pradita",
+        "rank": 10,
+        "sakit": 3,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 81.6,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 93.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 89.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 76.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 80.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 91.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 93.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 72.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 85.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121060",
+        "nama": "Fattah Bagus Aryaputra",
+        "rank": 3,
+        "sakit": 3,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 88.41,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 100.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 87.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 92.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 78.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 93.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 91.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 89.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 92.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 89.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 83.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 76.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 91.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121062",
+        "nama": "Firas Abdat",
+        "rank": 11,
+        "sakit": 3,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 81.04,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 84.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 78.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 77.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 89.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 98.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 86.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 76.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 81.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 77.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 76.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121063",
+        "nama": "Frey Falenas Luthfie",
+        "rank": 4,
+        "sakit": 2,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 86.07,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 91.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 84.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 76.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 96.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 90.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 98.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 79.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 78.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 96.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 76.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 94.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121066",
+        "nama": "Gossan Awal Thariq",
+        "rank": 28,
+        "sakit": 5,
+        "izin": 5,
+        "alfa": 0,
+        "rata_rata": 73.92,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 75.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 55.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 55.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 80.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 91.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 66.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 83.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 81.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 76.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121069",
+        "nama": "Haikhal Prayoga",
+        "rank": 13,
+        "sakit": 0,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 79.58,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 80.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 85.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 89.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 80.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 93.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 77.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 76.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121071",
+        "nama": "Hasan Abdurrahman",
+        "rank": 6,
+        "sakit": 5,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 83.82,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 91.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 82.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 95.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 98.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 95.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 83.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 78.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 83.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 76.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121073",
+        "nama": "Ibanez Rafhael Ramadhan",
+        "rank": 29,
+        "sakit": 3,
+        "izin": 5,
+        "alfa": 0,
+        "rata_rata": 73.08,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 75.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 55.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 89.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 80.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 75.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 76.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 72.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 55.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121074",
+        "nama": "Ibrahim Yumna Rafif",
+        "rank": 21,
+        "sakit": 6,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 76.4,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 95.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 89.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 75.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 78.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 55.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121076",
+        "nama": "Ilham Nur Hasan",
+        "rank": 20,
+        "sakit": 2,
+        "izin": 1,
+        "alfa": 0,
+        "rata_rata": 76.83,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 75.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 76.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 76.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 89.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 78.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121083",
+        "nama": "Kevin Ata Wibowo",
+        "rank": 17,
+        "sakit": 5,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 78.0,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 91.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 76.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 76.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 90.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121091",
+        "nama": "Maheswara Rahadhani Widiarso",
+        "rank": 16,
+        "sakit": 2,
+        "izin": 3,
+        "alfa": 0,
+        "rata_rata": 78.17,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 76.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 76.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 78.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 94.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 89.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121092",
+        "nama": "Mahir Dzaki Maulana Hebat",
+        "rank": 31,
+        "sakit": 5,
+        "izin": 1,
+        "alfa": 0,
+        "rata_rata": 66.75,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 76.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 55.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 55.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 55.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 75.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 55.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 55.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121104",
+        "nama": "Muhammad Azka Athallah",
+        "rank": 25,
+        "sakit": 2,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 76.08,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 86.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 90.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 78.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 76.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 55.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121112",
+        "nama": "Muhammad Hafizh Anshari",
+        "rank": 15,
+        "sakit": 0,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 78.6,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 82.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 87.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 85.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 86.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121123",
+        "nama": "Muhammad Rafiq Laudza'i",
+        "rank": 30,
+        "sakit": 5,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 71.42,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 80.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 57.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 55.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 85.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 75.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 65.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 87.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 93.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 55.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 55.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121124",
+        "nama": "Muhammad Rangga Buna Aditya",
+        "rank": 14,
+        "sakit": 0,
+        "izin": 1,
+        "alfa": 0,
+        "rata_rata": 78.99,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 86.0,
+                "rerata": 85.76
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 93.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 93.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 76.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121132",
+        "nama": "Naufal Athaullah Putradea",
+        "rank": 5,
+        "sakit": 1,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 84.21,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 93.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 87.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 79.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 76.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 78.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 96.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 100.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 78.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 81.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 80.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 76.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 87.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121136",
+        "nama": "Nuke Abdullah Al-Fathu Zaki Fatih",
+        "rank": 24,
+        "sakit": 1,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 76.17,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 76.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 76.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 84.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121137",
+        "nama": "Nurujati Noviantara",
+        "rank": 19,
+        "sakit": 4,
+        "izin": 0,
+        "alfa": 0,
+        "rata_rata": 77.08,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 80.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 76.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 89.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 77.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121138",
+        "nama": "Panji Satya Satria Priyanto",
+        "rank": 26,
+        "sakit": 4,
+        "izin": 1,
+        "alfa": 0,
+        "rata_rata": 75.0,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 84.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 85.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 75.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 76.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 55.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121140",
+        "nama": "Prada Ali Yuda Winarno",
+        "rank": 18,
+        "sakit": 5,
+        "izin": 5,
+        "alfa": 0,
+        "rata_rata": 77.5,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 84.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 95.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 73.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 75.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121142",
+        "nama": "Pradipta Maulana Priyanto",
+        "rank": 23,
+        "sakit": 0,
+        "izin": 3,
+        "alfa": 0,
+        "rata_rata": 76.18,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 75.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 79.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 76.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 55.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 90.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 86.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 95.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 55.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121151",
+        "nama": "Rafi Hafizh Fadhila",
+        "rank": 8,
+        "sakit": 2,
+        "izin": 1,
+        "alfa": 0,
+        "rata_rata": 82.28,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 86.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 91.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 81.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 93.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 95.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 94.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 89.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 55.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121157",
+        "nama": "Ramadhan Rifa Arasyid",
+        "rank": 27,
+        "sakit": 5,
+        "izin": 1,
+        "alfa": 0,
+        "rata_rata": 74.5,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 89.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 76.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 80.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 75.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 69.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 75.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 55.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121164",
+        "nama": "Sarfaraz Rafif Julianto",
+        "rank": 2,
+        "sakit": 0,
+        "izin": 4,
+        "alfa": 0,
+        "rata_rata": 92.63,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 100.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 96.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 94.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 79.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 93.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 100.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 93.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 92.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 94.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 95.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 83.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 93.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121165",
+        "nama": "Sasangka Pramudita Huttama",
+        "rank": 32,
+        "sakit": 5,
+        "izin": 5,
+        "alfa": 0,
+        "rata_rata": 63.25,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 75.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 75.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 55.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 55.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 75.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 75.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 69.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 55.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 0.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121172",
+        "nama": "Tegar Bahtiar",
+        "rank": 22,
+        "sakit": 4,
+        "izin": 1,
+        "alfa": 0,
+        "rata_rata": 76.25,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 86.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 75.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 79.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 75.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 75.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 87.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 78.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 79.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 75.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 75.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 76.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 55.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    },
+    {
+        "nis": "24121177",
+        "nama": "Yahya Ibrahimi",
+        "rank": 7,
+        "sakit": 2,
+        "izin": 2,
+        "alfa": 0,
+        "rata_rata": 82.62,
+        "nilai": [
+            {
+                "mapel": "PAI",
+                "nilai": 98.0,
+                "rerata": 85.81
+            },
+            {
+                "mapel": "Pend. Pancasila",
+                "nilai": 82.0,
+                "rerata": 78.91
+            },
+            {
+                "mapel": "Bahasa Indonesia",
+                "nilai": 77.0,
+                "rerata": 76.84
+            },
+            {
+                "mapel": "Matematika",
+                "nilai": 79.0,
+                "rerata": 72.63
+            },
+            {
+                "mapel": "Bahasa Inggris",
+                "nilai": 85.0,
+                "rerata": 79.75
+            },
+            {
+                "mapel": "Penjaskes",
+                "nilai": 87.0,
+                "rerata": 87.16
+            },
+            {
+                "mapel": "Sejarah",
+                "nilai": 82.0,
+                "rerata": 82.72
+            },
+            {
+                "mapel": "Kimia",
+                "nilai": 76.0,
+                "rerata": 76.44
+            },
+            {
+                "mapel": "Biologi",
+                "nilai": 81.0,
+                "rerata": 79.17
+            },
+            {
+                "mapel": "Fisika",
+                "nilai": 94.0,
+                "rerata": 81.69
+            },
+            {
+                "mapel": "Matematika TL",
+                "nilai": 74.0,
+                "rerata": 73.41
+            },
+            {
+                "mapel": "Informatika",
+                "nilai": 74.0,
+                "rerata": 71.28
+            }
+        ],
+        "bk": "",
+        "tka": ""
+    }
+];
+
+        let activeStudentNis = null;
+        let timerInterval;
+        let timeLeft = 360; // 6 Menit
+
+        // Inisialisasi Sidebar
+        function initSidebar() {
+            const list = document.getElementById('studentList');
+            list.innerHTML = '';
+            
+            dataSiswa.forEach(siswa => {
+                const li = document.createElement('li');
+                li.className = 'student-item';
+                li.id = `item-${siswa.nis}`;
+                li.innerHTML = `
+                    <div style="font-weight: 500;">${siswa.nama}</div>
+                    <div style="font-size: 0.8rem; color: #6b7280; font-family: monospace;">R: ${siswa.rank}</div>
+                `;
+                li.onclick = () => loadStudentData(siswa.nis);
+                list.appendChild(li);
+            });
+        }
+
+        // Filter Pencarian
+        function filterStudents() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.getElementsByClassName('student-item');
+            
+            for (let i = 0; i < items.length; i++) {
+                const text = items[i].innerText.toLowerCase();
+                items[i].style.display = text.includes(input) ? '' : 'none';
+            }
+        }
+
+        // Load Data Siswa
+        function loadStudentData(nis) {
+            // UI Switch
+            document.getElementById('empty-state').style.display = 'none';
+            document.getElementById('main-dashboard').style.display = 'block';
+            
+            // Highlight sidebar
+            if(activeStudentNis) {
+                document.getElementById(`item-${activeStudentNis}`).classList.remove('active');
+            }
+            activeStudentNis = nis;
+            document.getElementById(`item-${nis}`).classList.add('active');
+
+            // Ambil data
+            const siswa = dataSiswa.find(s => s.nis === nis);
+            
+            // Render Header
+            document.getElementById('ds-nama').innerText = siswa.nama;
+            document.getElementById('ds-nis').innerText = `NIS: ${siswa.nis}`;
+            document.getElementById('ds-rank').innerText = `Ranking: ${siswa.rank}`;
+            document.getElementById('ds-sakit').innerText = siswa.sakit;
+            document.getElementById('ds-izin').innerText = siswa.izin;
+            document.getElementById('ds-alfa').innerText = siswa.alfa;
+
+            // Render Nilai
+            const table = document.getElementById('ds-nilai-table');
+            table.innerHTML = '';
+            siswa.nilai.forEach(n => {
+                const statusClass = n.nilai >= n.rerata ? 'score-high' : 'score-low';
+                const statusText = n.nilai >= n.rerata ? '▲ Di atas rerata' : '▼ Di bawah rerata';
+                
+                table.innerHTML += `
+                    <tr>
+                        <td>${n.mapel}</td>
+                        <td style="font-weight:bold;">${n.nilai}</td>
+                        <td>${n.rerata}</td>
+                        <td class="${statusClass}">${statusText}</td>
+                    </tr>
+                `;
+            });
+            document.getElementById('ds-rata-total').innerText = siswa.rata_rata;
+
+            // Render BK & TKA (Data default karena belum ada di file excel yang dilampirkan)
+            document.getElementById('ds-bk').innerText = siswa.bk || 'Tidak ada catatan khusus dari BK.';
+            document.getElementById('ds-tka').innerText = siswa.tka || 'Belum ada data nilai TKA.';
+        }
+
+        // FUNGSI TIMER 
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        function startCall() {
+            clearInterval(timerInterval);
+            timeLeft = 360;
+            const display = document.getElementById('timer-display');
+            document.getElementById('btn-start').style.display = 'none';
+            document.getElementById('btn-stop').style.display = 'inline-block';
+            display.style.color = '#1f2937';
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                display.innerText = formatTime(timeLeft);
+
+                if (timeLeft === 60) {
+                    display.style.color = '#f59e0b'; // Kuning 1 menit
+                    document.getElementById('alert-sound').play().catch(e=>console.log(e));
+                }
+                if (timeLeft <= 10) {
+                    display.style.color = '#ef4444'; // Merah
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    display.innerText = "00:00 WAKTU HABIS";
+                    document.getElementById('alert-sound').play().catch(e=>console.log(e));
+                }
+            }, 1000);
+        }
+
+        function stopCall() {
+            clearInterval(timerInterval);
+            document.getElementById('timer-display').innerText = "06:00";
+            document.getElementById('timer-display').style.color = '#1f2937';
+            document.getElementById('btn-start').style.display = 'inline-block';
+            document.getElementById('btn-stop').style.display = 'none';
+        }
+
+        // Init page
+        initSidebar();
+    </script>
+</body>
+</html>
