@@ -10,6 +10,8 @@
   .slide{display:none}.slide.active{display:flex}
   @media (prefers-reduced-motion:no-preference){.slide.active{animation:f .4s ease}}
   @keyframes f{from{opacity:0}to{opacity:1}}
+  .eq{background:#fff;border:2px solid #fcd34d;border-radius:1rem;padding:.5rem 1.2rem;font-size:1.8rem;font-family:Georgia,"Times New Roman",serif;display:inline-block}
+  .eq-sm{font-size:1.5rem}
   button:focus-visible{outline:4px solid #f59e0b;outline-offset:2px}
 </style>
 </head>
@@ -40,6 +42,64 @@
   </div>
 </section>
 
+<!-- Slide: Hukum Snell -->
+<section class="slide h-full flex-row items-center justify-center gap-12 px-12 pb-16">
+  <svg viewBox="0 0 360 260" class="w-[30rem] shrink-0" role="img" aria-label="Sinar datang dari udara ke air dibiaskan mendekati garis normal">
+    <rect x="0" y="130" width="360" height="130" fill="#bae6fd" opacity=".6"/>
+    <line x1="0" y1="130" x2="360" y2="130" stroke="#0284c7" stroke-width="2"/>
+    <line x1="180" y1="10" x2="180" y2="250" stroke="#64748b" stroke-dasharray="6 5"/>
+    <line x1="70" y1="20" x2="180" y2="130" stroke="#f59e0b" stroke-width="4"/>
+    <line x1="180" y1="130" x2="249" y2="240" stroke="#ea580c" stroke-width="4"/>
+    <text x="140" y="95" font-size="16" fill="#92400e">θ₁ = 45°</text>
+    <text x="205" y="185" font-size="16" fill="#9a3412">θ₂ ≈ 32°</text>
+    <text x="190" y="22" font-size="13" fill="#475569">garis normal</text>
+    <text x="10" y="150" font-size="14" fill="#0369a1">air n₂ = 1,33</text>
+    <text x="10" y="120" font-size="14" fill="#475569">udara n₁ = 1</text>
+  </svg>
+  <div class="max-w-2xl space-y-5">
+    <h2 class="text-4xl font-extrabold">Kenapa cahaya "bengkok"? 🌈</h2>
+    <p class="text-2xl">Cahaya melambat di medium yang lebih rapat, jadi arahnya berbelok.</p>
+    <div class="eq">n₁ sin θ₁ = n₂ sin θ₂</div><br>
+    <div class="eq eq-sm">n = c / v</div>
+    <p class="text-2xl">Masuk medium <b>lebih rapat</b> (n lebih besar) → sinar <b>mendekati garis normal</b>. Sudut selalu diukur dari garis normal, bukan dari permukaan! 🌟</p>
+  </div>
+</section>
+
+<!-- Slide: Lensa -->
+<section class="slide h-full flex-col items-center justify-center gap-4 px-10 pb-16">
+  <h2 class="text-4xl font-extrabold">Lensa &amp; 3 sinar istimewa 🔍</h2>
+  <div class="flex items-center gap-8">
+    <svg viewBox="0 0 450 200" class="w-[32rem]" role="img" aria-label="Lensa cembung membentuk bayangan nyata terbalik">
+      <line x1="10" y1="110" x2="440" y2="110" stroke="#cbd5e1"/>
+      <ellipse cx="300" cy="110" rx="9" ry="72" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+      <circle cx="220" cy="110" r="4" fill="#0f172a"/><circle cx="380" cy="110" r="4" fill="#0f172a"/>
+      <text x="220" y="128" font-size="13" text-anchor="middle">F</text><text x="380" y="128" font-size="13" text-anchor="middle">F</text>
+      <line x1="100" y1="110" x2="100" y2="60" stroke="#16a34a" stroke-width="4"/><polygon points="94,66 100,54 106,66" fill="#16a34a"/>
+      <polyline points="100,60 300,60 450,153.75" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+      <line x1="100" y1="60" x2="450" y2="147.5" stroke="#ea580c" stroke-width="2.5"/>
+      <polyline points="100,60 300,143.3 450,143.3" fill="none" stroke="#0ea5e9" stroke-width="2.5"/>
+      <line x1="433" y1="110" x2="433" y2="143" stroke="#dc2626" stroke-width="4"/><polygon points="427,137 433,149 439,137" fill="#dc2626"/>
+      <text x="100" y="135" font-size="12" text-anchor="middle">benda</text>
+      <text x="380" y="188" font-size="12" text-anchor="middle">bayangan nyata, terbalik</text>
+    </svg>
+    <svg viewBox="0 0 300 200" class="w-[21rem]" role="img" aria-label="Lensa cekung menyebarkan sinar sejajar">
+      <line x1="10" y1="100" x2="290" y2="100" stroke="#cbd5e1"/>
+      <path d="M136 30 Q152 100 136 170 L164 170 Q148 100 164 30 Z" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+      <circle cx="80" cy="100" r="4" fill="#0f172a"/><text x="80" y="122" font-size="13" text-anchor="middle">F (maya)</text>
+      <polyline points="10,75 150,75 290,25" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+      <polyline points="10,125 150,125 290,175" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+      <line x1="150" y1="75" x2="80" y2="100" stroke="#f59e0b" stroke-dasharray="5 4"/><line x1="150" y1="125" x2="80" y2="100" stroke="#f59e0b" stroke-dasharray="5 4"/>
+      <text x="215" y="195" font-size="12" text-anchor="middle">lensa cekung menyebarkan</text>
+    </svg>
+  </div>
+  <div class="flex flex-wrap justify-center gap-4">
+    <div class="eq">1/f = 1/s + 1/s′</div>
+    <div class="eq">M = |s′ / s|</div>
+    <div class="eq">P = 100 / f <span class="text-xl">(f dalam cm)</span></div>
+  </div>
+  <p class="text-xl max-w-5xl text-center">Aturan tanda: s′ positif = bayangan <b>nyata</b>, s′ negatif = bayangan <b>maya</b>. f cembung = (+), f cekung = (−). 🌟</p>
+</section>
+
 <!-- Slide 3 -->
 <section class="slide h-full flex-row items-center justify-center gap-14 px-14">
   <svg viewBox="0 0 360 200" class="w-[36rem] shrink-0" role="img" aria-label="Mata miopi: bayangan jatuh di depan retina">
@@ -56,6 +116,76 @@
   <div class="max-w-2xl">
     <h2 class="text-5xl font-extrabold mb-6">Kacamata minus 👓</h2>
     <p class="text-3xl leading-relaxed">Kenapa anak SMA banyak yang pakai kacamata minus? Karena lensa matanya terlalu cembung (lelah lihat layar dekat terus), jadi butuh lensa cekung (minus) buat menyebarkan cahaya biar pas jatuh di retina.</p>
+  </div>
+</section>
+
+<!-- Slide: Resep kacamata -->
+<section class="slide h-full flex-col items-center justify-center gap-4 px-10 pb-16">
+  <h2 class="text-4xl font-extrabold">Resep kacamata: satu rumus, dua kasus 👓</h2>
+  <div class="eq">P = 100/s + 100/s′</div>
+  <p class="text-2xl bg-red-100 text-red-800 rounded-2xl px-5 py-2">⚠️ s′ SELALU diberi tanda minus (−), karena bayangan lensa kacamata itu maya!</p>
+  <div class="flex gap-8 items-start">
+    <div class="bg-white rounded-2xl border-2 border-amber-200 p-5 w-[34rem] text-center">
+      <h3 class="text-2xl font-bold">Rabun jauh (miopi) → lensa cekung (−)</h3>
+      <svg viewBox="0 0 380 200" class="w-80 mx-auto" role="img" aria-label="Miopi setelah dikoreksi lensa cekung, bayangan jatuh di retina">
+        <ellipse cx="210" cy="100" rx="125" ry="82" fill="#fff" stroke="#64748b" stroke-width="4"/>
+        <path d="M296 36 Q335 100 296 164" fill="none" stroke="#dc2626" stroke-width="6"/>
+        <path d="M14 55 Q26 100 14 145 L34 145 Q22 100 34 55 Z" fill="#fde68a" stroke="#d97706" stroke-width="2"/>
+        <polyline points="0,70 24,70 128,76 301,100" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+        <polyline points="0,130 24,130 128,124 301,100" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+        <circle cx="301" cy="100" r="5" fill="#16a34a"/><text x="200" y="30" font-size="12" text-anchor="middle" fill="#15803d">sesudah dikoreksi: pas di retina</text>
+      </svg>
+      <p class="text-xl">Benda jauh (s = ∞), bayangan di titik jauh (PR):</p>
+      <div class="eq eq-sm">P = −100 / PR</div>
+      <p class="text-lg mt-1">Contoh: PR = 200 cm → P = −0,5 D</p>
+    </div>
+    <div class="bg-white rounded-2xl border-2 border-amber-200 p-5 w-[34rem] text-center">
+      <h3 class="text-2xl font-bold">Rabun dekat (hipermetropi) → lensa cembung (+)</h3>
+      <svg viewBox="0 0 380 200" class="w-80 mx-auto" role="img" aria-label="Hipermetropi: bayangan jatuh di belakang retina">
+        <ellipse cx="200" cy="100" rx="125" ry="82" fill="#fff" stroke="#64748b" stroke-width="4"/>
+        <ellipse cx="120" cy="100" rx="8" ry="36" fill="#fcd34d" stroke="#d97706" stroke-width="3"/>
+        <path d="M306 36 Q345 100 306 164" fill="none" stroke="#dc2626" stroke-width="6"/>
+        <polyline points="8,62 118,70 358,100" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+        <polyline points="8,138 118,130 358,100" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+        <circle cx="358" cy="100" r="5" fill="#ea580c"/><text x="200" y="30" font-size="12" text-anchor="middle" fill="#c2410c">bayangan di belakang retina</text>
+      </svg>
+      <p class="text-xl">Baca di s = 25 cm, bayangan di titik dekat (PP):</p>
+      <div class="eq eq-sm">P = 4 − 100 / PP</div>
+      <p class="text-lg mt-1">Contoh: PP = 50 cm → P = 4 − 2 = +2 D</p>
+    </div>
+  </div>
+</section>
+
+<!-- Slide: Rumus mikroskop -->
+<section class="slide h-full flex-row items-center justify-center gap-10 px-10 pb-16">
+  <div>
+    <h2 class="text-4xl font-extrabold mb-4">Mikroskop: hitung bertahap 🔬</h2>
+    <svg viewBox="0 0 400 190" class="w-[36rem]" role="img" aria-label="Mikroskop skala: objektif f 1 cm, okuler f 5 cm, tabung 8 cm">
+      <line x1="10" y1="85" x2="390" y2="85" stroke="#cbd5e1" stroke-dasharray="5 5"/>
+      <line x1="50" y1="85" x2="50" y2="65" stroke="#16a34a" stroke-width="4"/><polygon points="44,70 50,58 56,70" fill="#16a34a"/>
+      <ellipse cx="80" cy="85" rx="8" ry="40" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+      <circle cx="60" cy="85" r="3" fill="#0f172a"/><circle cx="100" cy="85" r="3" fill="#0f172a"/>
+      <line x1="140" y1="85" x2="140" y2="125" stroke="#ea580c" stroke-width="4"/><polygon points="134,119 140,131 146,119" fill="#ea580c"/>
+      <ellipse cx="240" cy="85" rx="8" ry="55" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+      <circle cx="140" cy="85" r="3" fill="#0f172a"/><circle cx="340" cy="85" r="3" fill="#0f172a"/>
+      <text x="360" y="75" font-size="22">👁️</text>
+      <text x="50" y="50" font-size="12" text-anchor="middle">benda</text>
+      <text x="80" y="140" font-size="12" text-anchor="middle">objektif</text>
+      <text x="240" y="28" font-size="12" text-anchor="middle">okuler</text>
+      <text x="140" y="148" font-size="12" text-anchor="middle">s′ob = 3 cm</text>
+      <text x="65" y="165" font-size="12" text-anchor="middle">sob = 1,5</text>
+      <line x1="80" y1="178" x2="240" y2="178" stroke="#475569"/><text x="160" y="174" font-size="13" text-anchor="middle">d = 8 cm</text>
+      <text x="290" y="108" font-size="11" text-anchor="middle">Fok (5 cm)</text>
+    </svg>
+    <p class="text-xl text-slate-600">Titik = fokus. Bayangan objektif tepat di Fok → mata rileks. 😌</p>
+  </div>
+  <div class="space-y-3">
+    <div class="eq eq-sm">1/f<sub>ob</sub> = 1/s<sub>ob</sub> + 1/s′<sub>ob</sub></div><br>
+    <div class="eq eq-sm">M<sub>ob</sub> = s′<sub>ob</sub> / s<sub>ob</sub></div><br>
+    <div class="eq eq-sm">M<sub>ok</sub> = 25 / f<sub>ok</sub> <span class="text-lg">(tanpa akomodasi)</span></div><br>
+    <div class="eq eq-sm">M<sub>total</sub> = M<sub>ob</sub> × M<sub>ok</sub></div><br>
+    <div class="eq eq-sm">d = s′<sub>ob</sub> + f<sub>ok</sub> <span class="text-lg">(tanpa akomodasi)</span></div>
+    <p class="text-xl bg-orange-100 rounded-2xl p-4 max-w-md">Contoh soal laboran: s′ob = 3 cm → M<sub>ob</sub> = 2, M<sub>ok</sub> = 5, M = 10×, d = 8 cm ✨</p>
   </div>
 </section>
 
@@ -83,7 +213,7 @@
 
 <nav class="fixed bottom-5 left-0 right-0 flex items-center justify-center gap-6">
   <button id="prev" class="bg-white border-2 border-amber-300 text-2xl px-6 py-2 rounded-2xl" aria-label="Sebelumnya">◀</button>
-  <span id="count" class="text-xl text-slate-600">1 / 4</span>
+  <span id="count" class="text-xl text-slate-600">1 / 8</span>
   <button id="next" class="bg-white border-2 border-amber-300 text-2xl px-6 py-2 rounded-2xl" aria-label="Berikutnya">▶</button>
 </nav>
 
