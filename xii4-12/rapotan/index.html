@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Rapotan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --bg: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.95em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid var(--primary);
+            transition: transform 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .student-name {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .timer-display {
+            font-size: 1.5em;
+            font-weight: 600;
+            font-family: monospace;
+            color: var(--text-muted);
+            background: var(--bg);
+            padding: 4px 12px;
+            border-radius: 6px;
+            min-width: 90px;
+            text-align: center;
+        }
+        
+        .timer-display.warning {
+            color: var(--warning);
+            background: #FEF3C7;
+        }
+        
+        .timer-display.danger {
+            color: var(--danger);
+            background: #FEE2E2;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-start {
+            background-color: var(--success);
+            color: white;
+            flex: 1;
+        }
+        
+        .btn-start:hover { background-color: #059669; }
+
+        .btn-stop {
+            background-color: var(--danger);
+            color: white;
+            flex: 1;
+        }
+        
+        .btn-stop:hover { background-color: #DC2626; }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .btn-copy {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-copy:hover { background-color: var(--primary-hover); }
+
+        .btn-pdf {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .btn-pdf:hover { background-color: #D97706; }
+        
+        .message-content {
+            display: none;
+        }
+        
+        .pdf-link {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Dashboard Telekomunikasi Rapotan</h1>
+        <p>Alokasi waktu: 6 menit per siswa. Suara peringatan akan berbunyi di sisa waktu 1 menit.</p>
+    </div>
+
+    <div class="grid">
+
+        <div class="card" id="card-0">
+            <div class="card-header">
+                <div class="student-name">Abimanyu Fadhil Rachman</div>
+                <div class="timer-display" id="timer-0">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(0)" id="btn-start-0">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(0)" id="btn-stop-0" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(0, 'msg')" id="btn-copy-msg-0">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(0, 'pdf')" id="btn-copy-pdf-0">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-0">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Abimanyu Fadhil Rachman*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6285894443891
+🔑 *Password* : 979174
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-0">https://drive.google.com/file/d/1Hn76FwVmKcBJrk61zSQVjdpeJJqoPbce/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-1">
+            <div class="card-header">
+                <div class="student-name">Darwinda Kertayuga</div>
+                <div class="timer-display" id="timer-1">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(1)" id="btn-start-1">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(1)" id="btn-stop-1" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(1, 'msg')" id="btn-copy-msg-1">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(1, 'pdf')" id="btn-copy-pdf-1">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-1">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Darwinda Kertayuga*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 628122988750
+🔑 *Password* : 702379
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-1">https://drive.google.com/file/d/1ruRJ7rgqs0JXQuhFHp_aBx7tcY28cAzS/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-2">
+            <div class="card-header">
+                <div class="student-name">Deco Wibowo</div>
+                <div class="timer-display" id="timer-2">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(2)" id="btn-start-2">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(2)" id="btn-stop-2" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(2, 'msg')" id="btn-copy-msg-2">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(2, 'pdf')" id="btn-copy-pdf-2">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-2">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Deco Wibowo*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281226108214
+🔑 *Password* : 385477
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-2">https://drive.google.com/file/d/1xtdj50SNhsr7p4RIna52-oN-7MkEqwxK/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-3">
+            <div class="card-header">
+                <div class="student-name">Devara Ardhana Pradita</div>
+                <div class="timer-display" id="timer-3">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(3)" id="btn-start-3">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(3)" id="btn-stop-3" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(3, 'msg')" id="btn-copy-msg-3">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(3, 'pdf')" id="btn-copy-pdf-3">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-3">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Devara Ardhana Pradita*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281398794267
+🔑 *Password* : 745954
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-3">https://drive.google.com/file/d/1iwJWW0c-ZSX41kRSSxEyG3wPvehK2woU/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-4">
+            <div class="card-header">
+                <div class="student-name">Fattah Bagus Aryaputra</div>
+                <div class="timer-display" id="timer-4">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(4)" id="btn-start-4">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(4)" id="btn-stop-4" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(4, 'msg')" id="btn-copy-msg-4">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(4, 'pdf')" id="btn-copy-pdf-4">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-4">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Fattah Bagus Aryaputra*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6285725692008
+🔑 *Password* : 318651
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-4">https://drive.google.com/file/d/1zISojUPImon3R7PfA0aOnj86lPMdBm_5/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-5">
+            <div class="card-header">
+                <div class="student-name">Firas Abdat</div>
+                <div class="timer-display" id="timer-5">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(5)" id="btn-start-5">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(5)" id="btn-stop-5" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(5, 'msg')" id="btn-copy-msg-5">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(5, 'pdf')" id="btn-copy-pdf-5">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-5">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Firas Abdat*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 628170088173
+🔑 *Password* : 861803
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-5">https://drive.google.com/file/d/1h0YEBOS3c5XgyETQqc8C6HgKN6gLAdF8/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-6">
+            <div class="card-header">
+                <div class="student-name">Frey Falenas Luthfie</div>
+                <div class="timer-display" id="timer-6">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(6)" id="btn-start-6">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(6)" id="btn-stop-6" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(6, 'msg')" id="btn-copy-msg-6">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(6, 'pdf')" id="btn-copy-pdf-6">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-6">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Frey Falenas Luthfie*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281393604557
+🔑 *Password* : 834331
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-6">https://drive.google.com/file/d/1RNmBawEVOVDLW0BFYF9net2IPdLOM_qN/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-7">
+            <div class="card-header">
+                <div class="student-name">Gossan Awal Thariq</div>
+                <div class="timer-display" id="timer-7">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(7)" id="btn-start-7">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(7)" id="btn-stop-7" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(7, 'msg')" id="btn-copy-msg-7">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(7, 'pdf')" id="btn-copy-pdf-7">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-7">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Gossan Awal Thariq*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281329027833
+🔑 *Password* : 330018
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-7">https://drive.google.com/file/d/1j39PmXI5o-Pe5BW3ub9Ahs01sJgOiqmi/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-8">
+            <div class="card-header">
+                <div class="student-name">Haikhal Prayoga</div>
+                <div class="timer-display" id="timer-8">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(8)" id="btn-start-8">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(8)" id="btn-stop-8" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(8, 'msg')" id="btn-copy-msg-8">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(8, 'pdf')" id="btn-copy-pdf-8">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-8">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Haikhal Prayoga*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281567638888
+🔑 *Password* : 357708
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-8">https://drive.google.com/file/d/1TfTlgF5hfi9MQP4NbL-xcZHTA2fyQ3oP/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-9">
+            <div class="card-header">
+                <div class="student-name">Hasan Abdurrahman</div>
+                <div class="timer-display" id="timer-9">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(9)" id="btn-start-9">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(9)" id="btn-stop-9" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(9, 'msg')" id="btn-copy-msg-9">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(9, 'pdf')" id="btn-copy-pdf-9">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-9">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Hasan Abdurrahman*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281393116637
+🔑 *Password* : 911607
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-9">https://drive.google.com/file/d/1CD0JfZRklhGspJaNESJsAcfPPSSa5mjR/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-10">
+            <div class="card-header">
+                <div class="student-name">Ibanez Rafhael Ramadhan</div>
+                <div class="timer-display" id="timer-10">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(10)" id="btn-start-10">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(10)" id="btn-stop-10" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(10, 'msg')" id="btn-copy-msg-10">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(10, 'pdf')" id="btn-copy-pdf-10">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-10">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Ibanez Rafhael Ramadhan*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6282257584620
+🔑 *Password* : 375469
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-10">https://drive.google.com/file/d/1hEjJZmYLl_yfg8cnWspsomlCyhh378jy/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-11">
+            <div class="card-header">
+                <div class="student-name">Ibrahim Yumna Rafif</div>
+                <div class="timer-display" id="timer-11">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(11)" id="btn-start-11">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(11)" id="btn-stop-11" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(11, 'msg')" id="btn-copy-msg-11">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(11, 'pdf')" id="btn-copy-pdf-11">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-11">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Ibrahim Yumna Rafif*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281225911409
+🔑 *Password* : 859598
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-11">https://drive.google.com/file/d/1OwZsMBCruqkW_ztc4CzCtfPQsTpuQ2Qa/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-12">
+            <div class="card-header">
+                <div class="student-name">Ilham Nur Hasan</div>
+                <div class="timer-display" id="timer-12">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(12)" id="btn-start-12">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(12)" id="btn-stop-12" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(12, 'msg')" id="btn-copy-msg-12">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(12, 'pdf')" id="btn-copy-pdf-12">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-12">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Ilham Nur Hasan*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281227972597
+🔑 *Password* : 584672
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-12">https://drive.google.com/file/d/1CdBaBcZqt7DnrckIFLBIJ_xaqggCF4lW/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-13">
+            <div class="card-header">
+                <div class="student-name">Kevin Ata Wibowo</div>
+                <div class="timer-display" id="timer-13">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(13)" id="btn-start-13">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(13)" id="btn-stop-13" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(13, 'msg')" id="btn-copy-msg-13">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(13, 'pdf')" id="btn-copy-pdf-13">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-13">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Kevin Ata Wibowo*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281548515137
+🔑 *Password* : 670711
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-13">https://drive.google.com/file/d/1Q8n7FuXCiZ8yl1xNOEJB-ZqVApEvLyy9/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-14">
+            <div class="card-header">
+                <div class="student-name">Maheswara Rahadhani Widiarso</div>
+                <div class="timer-display" id="timer-14">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(14)" id="btn-start-14">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(14)" id="btn-stop-14" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(14, 'msg')" id="btn-copy-msg-14">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(14, 'pdf')" id="btn-copy-pdf-14">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-14">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Maheswara Rahadhani Widiarso*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6289608608232
+🔑 *Password* : 159243
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-14">https://drive.google.com/file/d/1R-tPaPJx7I_4Lm7-G_dcjbmZKNv_BwI2/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-15">
+            <div class="card-header">
+                <div class="student-name">Mahir Dzaki Maulana Hebat</div>
+                <div class="timer-display" id="timer-15">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(15)" id="btn-start-15">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(15)" id="btn-stop-15" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(15, 'msg')" id="btn-copy-msg-15">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(15, 'pdf')" id="btn-copy-pdf-15">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-15">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Mahir Dzaki Maulana Hebat*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6288216508602
+🔑 *Password* : 86089
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-15">https://drive.google.com/file/d/1WYdOT4YPyeDaBPzTqs4qdeUkhNGSS8qP/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-16">
+            <div class="card-header">
+                <div class="student-name">Muhammad Azka Athallah</div>
+                <div class="timer-display" id="timer-16">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(16)" id="btn-start-16">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(16)" id="btn-stop-16" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(16, 'msg')" id="btn-copy-msg-16">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(16, 'pdf')" id="btn-copy-pdf-16">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-16">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Muhammad Azka Athallah*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281229850199
+🔑 *Password* : 102571
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-16">https://drive.google.com/file/d/1J4aUoS-opcSWwBLAz_X3ZYPYXbKucjiE/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-17">
+            <div class="card-header">
+                <div class="student-name">Muhammad Hafizh Anshari</div>
+                <div class="timer-display" id="timer-17">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(17)" id="btn-start-17">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(17)" id="btn-stop-17" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(17, 'msg')" id="btn-copy-msg-17">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(17, 'pdf')" id="btn-copy-pdf-17">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-17">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Muhammad Hafizh Anshari*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281329334050
+🔑 *Password* : 760388
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-17">https://drive.google.com/file/d/1IilAY00M6NS90iaDLJBFIpUWvjeFZACr/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-18">
+            <div class="card-header">
+                <div class="student-name">Muhammad Rafiq Laudza'i</div>
+                <div class="timer-display" id="timer-18">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(18)" id="btn-start-18">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(18)" id="btn-stop-18" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(18, 'msg')" id="btn-copy-msg-18">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(18, 'pdf')" id="btn-copy-pdf-18">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-18">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Muhammad Rafiq Laudza'i*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6285747262275
+🔑 *Password* : 869255
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-18">https://drive.google.com/file/d/1T_YvWz81A7-rmvh8gtZSqRKbaTAMbvGq/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-19">
+            <div class="card-header">
+                <div class="student-name">Muhammad Rangga Buna Aditya</div>
+                <div class="timer-display" id="timer-19">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(19)" id="btn-start-19">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(19)" id="btn-stop-19" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(19, 'msg')" id="btn-copy-msg-19">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(19, 'pdf')" id="btn-copy-pdf-19">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-19">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Muhammad Rangga Buna Aditya*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281393008163
+🔑 *Password* : 520669
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-19">https://drive.google.com/file/d/1b9lYyb4JMsHUv0Pc-UYk2TpTMAWQvfkd/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-20">
+            <div class="card-header">
+                <div class="student-name">Naufal Athaullah Putradea</div>
+                <div class="timer-display" id="timer-20">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(20)" id="btn-start-20">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(20)" id="btn-stop-20" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(20, 'msg')" id="btn-copy-msg-20">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(20, 'pdf')" id="btn-copy-pdf-20">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-20">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Naufal Athaullah Putradea*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281368523666
+🔑 *Password* : 809747
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-20">https://drive.google.com/file/d/1kbjbzR-QFzwd51I3K7jTIK4CmjuuKlYV/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-21">
+            <div class="card-header">
+                <div class="student-name">Nuke Abdullah Al-Fathu Zaki Fatih</div>
+                <div class="timer-display" id="timer-21">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(21)" id="btn-start-21">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(21)" id="btn-stop-21" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(21, 'msg')" id="btn-copy-msg-21">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(21, 'pdf')" id="btn-copy-pdf-21">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-21">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Nuke Abdullah Al-Fathu Zaki Fatih*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6283151276235
+🔑 *Password* : 779589
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-21">https://drive.google.com/file/d/1rB-JRpTkhoZKWFByK2cGB46vgiLYcocQ/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-22">
+            <div class="card-header">
+                <div class="student-name">Nurujati Noviantara</div>
+                <div class="timer-display" id="timer-22">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(22)" id="btn-start-22">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(22)" id="btn-stop-22" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(22, 'msg')" id="btn-copy-msg-22">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(22, 'pdf')" id="btn-copy-pdf-22">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-22">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Nurujati Noviantara*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6282141777802
+🔑 *Password* : 693581
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-22">https://drive.google.com/file/d/1T5dWVVa1UDh4p2-P6ZNkdAZ__DORhNm_/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-23">
+            <div class="card-header">
+                <div class="student-name">Panji Satya Satria Priyanto</div>
+                <div class="timer-display" id="timer-23">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(23)" id="btn-start-23">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(23)" id="btn-stop-23" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(23, 'msg')" id="btn-copy-msg-23">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(23, 'pdf')" id="btn-copy-pdf-23">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-23">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Panji Satya Satria Priyanto*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281329044954
+🔑 *Password* : 574273
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-23">https://drive.google.com/file/d/1cbtwEYG-C7b_rtESqdVxhVGfPkR1SE-k/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-24">
+            <div class="card-header">
+                <div class="student-name">Prada Ali Yuda Winarno</div>
+                <div class="timer-display" id="timer-24">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(24)" id="btn-start-24">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(24)" id="btn-stop-24" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(24, 'msg')" id="btn-copy-msg-24">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(24, 'pdf')" id="btn-copy-pdf-24">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-24">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Prada Ali Yuda Winarno*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281804222605
+🔑 *Password* : 902771
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-24">https://drive.google.com/file/d/12oNygFlLeAUWNd_dNxehKt-PfutzKGx4/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-25">
+            <div class="card-header">
+                <div class="student-name">Pradipta Maulana Priyanto</div>
+                <div class="timer-display" id="timer-25">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(25)" id="btn-start-25">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(25)" id="btn-stop-25" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(25, 'msg')" id="btn-copy-msg-25">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(25, 'pdf')" id="btn-copy-pdf-25">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-25">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Pradipta Maulana Priyanto*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281329715005
+🔑 *Password* : 821415
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-25">https://drive.google.com/file/d/14XjH1Az85HieetBU8qzs5RjlsrQC-Q9r/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-26">
+            <div class="card-header">
+                <div class="student-name">Rafi Hafizh Fadhila</div>
+                <div class="timer-display" id="timer-26">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(26)" id="btn-start-26">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(26)" id="btn-stop-26" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(26, 'msg')" id="btn-copy-msg-26">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(26, 'pdf')" id="btn-copy-pdf-26">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-26">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Rafi Hafizh Fadhila*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281236004874
+🔑 *Password* : 392806
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-26">https://drive.google.com/file/d/1FtFtH_tc3iElo2E3259_OXnNIhf86rK1/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-27">
+            <div class="card-header">
+                <div class="student-name">Ramadhan Rifa Arasyid</div>
+                <div class="timer-display" id="timer-27">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(27)" id="btn-start-27">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(27)" id="btn-stop-27" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(27, 'msg')" id="btn-copy-msg-27">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(27, 'pdf')" id="btn-copy-pdf-27">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-27">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Ramadhan Rifa Arasyid*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281329137553
+🔑 *Password* : 438364
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-27">https://drive.google.com/file/d/1WB8VFB0lpcIc0PvV-7SZbMbQWF2G70gp/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-28">
+            <div class="card-header">
+                <div class="student-name">Sarfaraz Rafif Julianto</div>
+                <div class="timer-display" id="timer-28">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(28)" id="btn-start-28">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(28)" id="btn-stop-28" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(28, 'msg')" id="btn-copy-msg-28">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(28, 'pdf')" id="btn-copy-pdf-28">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-28">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Sarfaraz Rafif Julianto*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281329668393
+🔑 *Password* : 220878
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-28">https://drive.google.com/file/d/1OJW82wSNGcWj5sb3crFXu0Ytg6YQmpzL/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-29">
+            <div class="card-header">
+                <div class="student-name">Sasangka Pramudita Huttama</div>
+                <div class="timer-display" id="timer-29">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(29)" id="btn-start-29">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(29)" id="btn-stop-29" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(29, 'msg')" id="btn-copy-msg-29">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(29, 'pdf')" id="btn-copy-pdf-29">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-29">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Sasangka Pramudita Huttama*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6289525206540
+🔑 *Password* : 476583
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-29">https://drive.google.com/file/d/19JZgDEKZO_2v-bj94QCcBdaSpjimafhV/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-30">
+            <div class="card-header">
+                <div class="student-name">Tegar Bahtiar</div>
+                <div class="timer-display" id="timer-30">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(30)" id="btn-start-30">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(30)" id="btn-stop-30" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(30, 'msg')" id="btn-copy-msg-30">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(30, 'pdf')" id="btn-copy-pdf-30">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-30">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Tegar Bahtiar*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6285751824331
+🔑 *Password* : 738741
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-30">https://drive.google.com/file/d/1J36cMEZN6lGypp7MLU8HkgGDooJvFEEz/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-31">
+            <div class="card-header">
+                <div class="student-name">Yahya Ibrahimi</div>
+                <div class="timer-display" id="timer-31">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(31)" id="btn-start-31">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(31)" id="btn-stop-31" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(31, 'msg')" id="btn-copy-msg-31">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(31, 'pdf')" id="btn-copy-pdf-31">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-31">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Yahya Ibrahimi*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6281327792535
+🔑 *Password* : 166940
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-31">https://drive.google.com/file/d/1cPi0Ry766EFa9i2TGOfUk0RUIh4P_xsI/view?usp=drivesdk</div>
+        </div>
+        <div class="card" id="card-32">
+            <div class="card-header">
+                <div class="student-name">Zaidan Retano Athaya</div>
+                <div class="timer-display" id="timer-32">06:00</div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn-start" onclick="startTimer(32)" id="btn-start-32">▶ Mulai Telpon</button>
+                <button class="btn-stop" onclick="stopTimer(32)" id="btn-stop-32" style="display:none;">■ Akhiri</button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-copy" onclick="copyText(32, 'msg')" id="btn-copy-msg-32">📋 Copy Pesan</button>
+                <button class="btn-pdf" onclick="copyText(32, 'pdf')" id="btn-copy-pdf-32">📄 Copy Link PDF</button>
+            </div>
+            
+            <div class="message-content" id="data-msg-32">*PEMBERITAHUAN RAPOTAN*
+
+Assalamu'alaikum Warahmatullahi Wabarakatuh,
+Bapak/Ibu wali murid dari ananda *Zaidan Retano Athaya*,
+
+Berikut kami sampaikan informasi login untuk mengakses rapor ananda melalui portal *siswa.alabidin.id* :
+
+👤 *Username* : 6285641835934
+🔑 *Password* : 627805
+
+Silakan login menggunakan data di atas. Jika ada kendala, mohon segera menghubungi kami.
+Terima kasih.</div>
+            <div class="pdf-link" id="data-pdf-32">Link PDF tidak tersedia</div>
+        </div>
+    </div>
+
+    <!-- Audio untuk peringatan 1 menit terakhir -->
+    <audio id="alert-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
+    <audio id="end-sound" src="https://assets.mixkit.co/active_storage/sfx/1000/1000-preview.mp3" preload="auto"></audio>
+
+    <script>
+        const timers = {};
+        const TOTAL_SECONDS = 360; // 6 menit
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        function startTimer(id) {
+            if (timers[id]) return; // Already running
+            
+            let timeLeft = TOTAL_SECONDS;
+            const display = document.getElementById(`timer-${id}`);
+            const btnStart = document.getElementById(`btn-start-${id}`);
+            const btnStop = document.getElementById(`btn-stop-${id}`);
+            const alertSound = document.getElementById('alert-sound');
+            const endSound = document.getElementById('end-sound');
+            const card = document.getElementById(`card-${id}`);
+
+            btnStart.style.display = 'none';
+            btnStop.style.display = 'flex';
+            card.style.borderColor = '#10B981'; // Green while active
+
+            display.classList.remove('warning', 'danger');
+            display.innerText = formatTime(timeLeft);
+
+            timers[id] = setInterval(() => {
+                timeLeft--;
+                display.innerText = formatTime(timeLeft);
+
+                if (timeLeft === 60) {
+                    display.classList.add('warning');
+                    alertSound.play().catch(e => console.log("Autoplay blocked"));
+                }
+
+                if (timeLeft <= 10) {
+                    display.classList.remove('warning');
+                    display.classList.add('danger');
+                }
+
+                if (timeLeft <= 0) {
+                    clearInterval(timers[id]);
+                    delete timers[id];
+                    display.innerText = "00:00";
+                    endSound.play().catch(e => console.log("Autoplay blocked"));
+                    card.style.borderColor = '#EF4444'; // Red when time's up
+                    btnStart.style.display = 'flex';
+                    btnStart.innerText = '↺ Ulangi';
+                    btnStop.style.display = 'none';
+                }
+            }, 1000);
+        }
+
+        function stopTimer(id) {
+            if (timers[id]) {
+                clearInterval(timers[id]);
+                delete timers[id];
+            }
+            
+            const display = document.getElementById(`timer-${id}`);
+            const btnStart = document.getElementById(`btn-start-${id}`);
+            const btnStop = document.getElementById(`btn-stop-${id}`);
+            const card = document.getElementById(`card-${id}`);
+
+            display.classList.remove('warning', 'danger');
+            display.innerText = "06:00";
+            card.style.borderColor = '#E5E7EB'; // Reset border
+            
+            btnStart.style.display = 'flex';
+            btnStart.innerText = '▶ Mulai Telpon';
+            btnStop.style.display = 'none';
+        }
+
+        function copyText(id, type) {
+            const text = document.getElementById(`data-${type}-${id}`).innerText;
+            const btn = document.getElementById(`btn-copy-${type}-${id}`);
+            const originalText = btn.innerText;
+            
+            if (text === "Link PDF tidak tersedia") {
+                alert("Maaf, link PDF untuk siswa ini tidak ditemukan di data.");
+                return;
+            }
+
+            navigator.clipboard.writeText(text).then(() => {
+                btn.innerText = '✅ Tersalin!';
+                btn.style.opacity = '0.8';
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.opacity = '1';
+                }, 2000);
+            }).catch(err => {
+                alert('Gagal menyalin teks.');
+            });
+        }
+    </script>
+</body>
+</html>
