@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TKA Fisika: Bermain Cahaya & Lensa</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+  body{font-family:ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif}
+  .slide{display:none}.slide.active{display:flex}
+  @media (prefers-reduced-motion:no-preference){.slide.active{animation:f .4s ease}}
+  @keyframes f{from{opacity:0}to{opacity:1}}
+  button:focus-visible{outline:4px solid #f59e0b;outline-offset:2px}
+</style>
+</head>
+<body class="bg-amber-50 text-slate-800 h-screen overflow-hidden">
+
+<main class="h-full">
+
+<!-- Slide 1 -->
+<section class="slide active h-full flex-col items-center justify-center text-center px-16 gap-8">
+  <div class="text-7xl">👓 🔬 🌟</div>
+  <h1 class="text-6xl font-extrabold">TKA Fisika: Bermain Cahaya &amp; Lensa 🌟</h1>
+  <p class="text-3xl max-w-4xl leading-relaxed text-slate-700">Selamat! Kalian berhasil melewati Gladi Bersih TKA. Hari ini kita relaksasi otak pakai materi Optik.</p>
+</section>
+
+<!-- Slide 2 -->
+<section class="slide h-full flex-row items-center justify-center gap-14 px-14">
+  <svg viewBox="0 0 300 220" class="w-[34rem] shrink-0" role="img" aria-label="Pensil tampak patah di dalam gelas berisi air">
+    <rect x="90" y="70" width="120" height="130" rx="12" fill="#fffbeb" stroke="#64748b" stroke-width="4"/>
+    <rect x="94" y="110" width="112" height="86" rx="8" fill="#7dd3fc" opacity=".55"/>
+    <line x1="94" y1="110" x2="206" y2="110" stroke="#0284c7" stroke-width="2"/>
+    <line x1="195" y1="12" x2="163" y2="110" stroke="#f59e0b" stroke-width="12" stroke-linecap="round"/>
+    <line x1="146" y1="110" x2="114" y2="188" stroke="#f59e0b" stroke-width="12" stroke-linecap="round"/>
+    <text x="215" y="108" font-size="13" fill="#0369a1">air</text>
+  </svg>
+  <div class="max-w-2xl">
+    <h2 class="text-5xl font-extrabold mb-6">Pensil patah? ✏️</h2>
+    <p class="text-3xl leading-relaxed">Fisika itu tukang tipu. Kalian lihat pensil ini patah, padahal aslinya utuh. Otak kita selalu mengira cahaya bergerak lurus, padahal ia bisa "bengkok" saat pindah medium.</p>
+  </div>
+</section>
+
+<!-- Slide 3 -->
+<section class="slide h-full flex-row items-center justify-center gap-14 px-14">
+  <svg viewBox="0 0 360 200" class="w-[36rem] shrink-0" role="img" aria-label="Mata miopi: bayangan jatuh di depan retina">
+    <ellipse cx="200" cy="100" rx="125" ry="82" fill="#fff" stroke="#64748b" stroke-width="4"/>
+    <ellipse cx="120" cy="100" rx="11" ry="42" fill="#fcd34d" stroke="#d97706" stroke-width="3"/>
+    <path d="M306 36 Q345 100 306 164" fill="none" stroke="#dc2626" stroke-width="6"/>
+    <g stroke="#f59e0b" stroke-width="3" fill="none">
+      <polyline points="8,58 118,72 268,100"/><polyline points="8,142 118,128 268,100"/><line x1="8" y1="100" x2="268" y2="100"/>
+    </g>
+    <circle cx="268" cy="100" r="6" fill="#ea580c"/>
+    <text x="196" y="30" font-size="12" fill="#c2410c" text-anchor="middle">bayangan jatuh di depan retina</text>
+    <text x="325" y="190" font-size="12" fill="#dc2626" text-anchor="middle">retina</text>
+  </svg>
+  <div class="max-w-2xl">
+    <h2 class="text-5xl font-extrabold mb-6">Kacamata minus 👓</h2>
+    <p class="text-3xl leading-relaxed">Kenapa anak SMA banyak yang pakai kacamata minus? Karena lensa matanya terlalu cembung (lelah lihat layar dekat terus), jadi butuh lensa cekung (minus) buat menyebarkan cahaya biar pas jatuh di retina.</p>
+  </div>
+</section>
+
+<!-- Slide 4 -->
+<section class="slide h-full flex-col items-center justify-center gap-6 px-14 text-center">
+  <h2 class="text-5xl font-extrabold">Jembatan ke TKA 🔬</h2>
+  <svg viewBox="0 0 420 170" class="w-[46rem]" role="img" aria-label="Diagram mikroskop dengan lensa objektif dan okuler">
+    <line x1="10" y1="85" x2="410" y2="85" stroke="#cbd5e1" stroke-dasharray="5 5"/>
+    <line x1="40" y1="85" x2="40" y2="65" stroke="#16a34a" stroke-width="4"/><polygon points="34,70 40,58 46,70" fill="#16a34a"/>
+    <text x="40" y="115" font-size="12" text-anchor="middle">benda</text>
+    <ellipse cx="100" cy="85" rx="9" ry="45" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+    <text x="100" y="150" font-size="12" text-anchor="middle">objektif</text>
+    <line x1="195" y1="85" x2="195" y2="120" stroke="#ea580c" stroke-width="4"/><polygon points="189,115 195,127 201,115" fill="#ea580c"/>
+    <text x="195" y="150" font-size="12" text-anchor="middle">bayangan 1 (nyata, terbalik)</text>
+    <ellipse cx="260" cy="85" rx="9" ry="45" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+    <text x="260" y="30" font-size="12" text-anchor="middle">okuler</text>
+    <text x="365" y="90" font-size="30">👁️</text>
+  </svg>
+  <p class="text-3xl max-w-4xl leading-relaxed">Coba tebak logika ini: Kenapa bayangan akhir di mikroskop itu selalu terbalik?</p>
+  <button id="reveal" class="bg-orange-400 hover:bg-orange-500 text-white text-2xl font-bold px-8 py-4 rounded-2xl">Klik untuk bahas 💡</button>
+  <p id="answer" class="hidden text-2xl max-w-4xl leading-relaxed bg-white rounded-2xl p-6 border-2 border-amber-300">Lensa objektif membentuk bayangan <b>nyata &amp; terbalik</b>. Lensa okuler bekerja seperti kaca pembesar: ia hanya memperbesar bayangan itu tanpa membaliknya lagi. Hasil akhir: maya, terbalik, diperbesar.</p>
+</section>
+
+</main>
+
+<nav class="fixed bottom-5 left-0 right-0 flex items-center justify-center gap-6">
+  <button id="prev" class="bg-white border-2 border-amber-300 text-2xl px-6 py-2 rounded-2xl" aria-label="Sebelumnya">◀</button>
+  <span id="count" class="text-xl text-slate-600">1 / 4</span>
+  <button id="next" class="bg-white border-2 border-amber-300 text-2xl px-6 py-2 rounded-2xl" aria-label="Berikutnya">▶</button>
+</nav>
+
+<script>
+const s=[...document.querySelectorAll('.slide')];let i=0;
+function go(n){i=Math.max(0,Math.min(s.length-1,n));s.forEach((e,k)=>e.classList.toggle('active',k===i));document.getElementById('count').textContent=(i+1)+' / '+s.length}
+document.getElementById('prev').onclick=()=>go(i-1);
+document.getElementById('next').onclick=()=>go(i+1);
+document.getElementById('reveal').onclick=()=>document.getElementById('answer').classList.toggle('hidden');
+document.addEventListener('keydown',e=>{if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(i+1)}if(['ArrowLeft','PageUp'].includes(e.key))go(i-1)});
+</script>
+</body>
+</html>
