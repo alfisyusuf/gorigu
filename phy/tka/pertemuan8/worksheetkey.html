@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembahasan Soal TKA - Fisika</title>
+    
+    <!-- Tailwind CSS untuk Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- MathJax untuk render rumus (LaTeX format) -->
+    <script>
+        MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <!-- FontAwesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+        
+        /* Animasi Transisi untuk Step */
+        .reveal-step {
+            opacity: 0;
+            transform: translateY(30px);
+            display: none;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .reveal-step.active {
+            opacity: 1;
+            transform: translateY(0);
+            display: block;
+            animation: slideFadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes slideFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Styling box khusus */
+        .math-block {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            margin: 1rem 0;
+            font-size: 1.35rem;
+            box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+            overflow-x: auto;
+        }
+        .info-box { border-left: 6px solid #3b82f6; background-color: #eff6ff; }
+        .correct-box { border-left: 6px solid #22c55e; background-color: #f0fdf4; border-radius: 0 0.5rem 0.5rem 0;}
+        .wrong-box { border-left: 6px solid #ef4444; background-color: #fef2f2; border-radius: 0 0.5rem 0.5rem 0;}
+        
+        /* Floating Action Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="pb-32 text-xl leading-relaxed">
+
+    <!-- Header -->
+    <header class="bg-blue-900 text-white py-8 shadow-md">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <h1 class="text-4xl font-bold mb-2">Pembahasan Soal TKA</h1>
+            <p class="text-blue-200 text-xl">Kalor, Asas Black & Pemanasan Global</p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 py-10 space-y-12" id="presentation-container">
+        
+        <!-- ======================= SOAL 1 ======================= -->
+        <section class="reveal-step bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 border-b-2 border-slate-100 pb-4">
+                <i class="fa-solid fa-fire text-orange-500 mr-3"></i> Soal 1 - Asas Black
+            </h2>
+            <div class="info-box p-6 rounded-r-xl mb-6">
+                <p class="font-semibold text-blue-900 mb-2">Konteks Soal:</p>
+                <p>Logam ($m_L = 200\text{ g}$, $T_L = 100^\circ\text{C}$, $c_L = 0,5\text{ kal/g}^\circ\text{C}$) dimasukkan ke dalam air ($m_A = 100\text{ g}$, $T_A = 20^\circ\text{C}$, $c_A = 1\text{ kal/g}^\circ\text{C}$).</p>
+                <p class="mt-2 text-slate-600 italic">Asas Black: Kalor yang dilepas = Kalor yang diterima ($Q_{lepas} = Q_{terima}$)</p>
+            </div>
+        </section>
+
+        <!-- Soal 1 - Pernyataan 1 -->
+        <section class="reveal-step bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-2xl mb-4 text-slate-700">Pernyataan 1: <span class="font-normal">Suhu akhir campuran adalah 60°C.</span></h3>
+            <p class="mb-2">Mari kita hitung suhu campuran ($T_c$):</p>
+            <div class="math-block">
+                $$ m_L \cdot c_L \cdot (T_L - T_c) = m_A \cdot c_A \cdot (T_c - T_A) $$
+                $$ 200 \cdot 0,5 \cdot (100 - T_c) = 100 \cdot 1 \cdot (T_c - 20) $$
+                $$ 100 \cdot (100 - T_c) = 100 \cdot (T_c - 20) $$
+                $$ 100 - T_c = T_c - 20 \implies 2T_c = 120 \implies T_c = 60^\circ\text{C} $$
+            </div>
+            <div class="correct-box p-4 mt-4 flex items-center">
+                <i class="fa-solid fa-circle-check text-green-500 text-3xl mr-4"></i>
+                <p class="font-bold text-green-800 text-2xl">BENAR</p>
+            </div>
+        </section>
+
+        <!-- Soal 1 - Pernyataan 2 -->
+        <section class="reveal-step bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-2xl mb-4 text-slate-700">Pernyataan 2: <span class="font-normal">Kalor yang dilepas logam sama dengan kalor yang diterima air, yaitu 4.000 kal.</span></h3>
+            <p class="mb-2">Hitung dari sisi air yang menerima kalor dengan $T_c = 60^\circ\text{C}$:</p>
+            <div class="math-block">
+                $$ Q_{terima} = m_A \cdot c_A \cdot \Delta T_A $$
+                $$ Q_{terima} = 100 \cdot 1 \cdot (60 - 20) $$
+                $$ Q_{terima} = 100 \cdot 40 = 4.000\text{ kal} $$
+            </div>
+            <div class="correct-box p-4 mt-4 flex items-center">
+                <i class="fa-solid fa-circle-check text-green-500 text-3xl mr-4"></i>
+                <p class="font-bold text-green-800 text-2xl">BENAR</p>
+            </div>
+        </section>
+
+        <!-- Soal 1 - Pernyataan 3 -->
+        <section class="reveal-step bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-2xl mb-4 text-slate-700">Pernyataan 3: <span class="font-normal">Jika massa air diganti 200 g, suhu akhir campuran menjadi lebih tinggi dari 60°C.</span></h3>
+            <p class="mb-2">Logikanya, massa zat dingin bertambah, maka campuran akan lebih dingin. Mari buktikan:</p>
+            <div class="math-block">
+                $$ 200 \cdot 0,5 \cdot (100 - T_c') = 200 \cdot 1 \cdot (T_c' - 20) $$
+                $$ 100 \cdot (100 - T_c') = 200 \cdot (T_c' - 20) $$
+                $$ 100 - T_c' = 2T_c' - 40 \implies 3T_c' = 140 \implies T_c' \approx 46,67^\circ\text{C} $$
+            </div>
+            <p class="mt-2 text-slate-600">Suhu akhir justru lebih rendah (46,67°C), bukan lebih tinggi.</p>
+            <div class="wrong-box p-4 mt-4 flex items-center">
+                <i class="fa-solid fa-circle-xmark text-red-500 text-3xl mr-4"></i>
+                <p class="font-bold text-red-800 text-2xl">SALAH</p>
+            </div>
+        </section>
+
+        <!-- ======================= SOAL 2 ======================= -->
+        <section class="reveal-step bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mt-16">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6 border-b-2 border-slate-100 pb-4">
+                <i class="fa-solid fa-earth-americas text-emerald-500 mr-3"></i> Soal 2 - Pemanasan Global (PGK)
+            </h2>
+            <div class="info-box p-6 rounded-r-xl mb-6">
+                <p class="font-semibold text-blue-900 mb-2">Kasus Laporan Fiktif:</p>
+                <p>Konsentrasi gas sejak 1850: 
+                   <br>• $CO_2$ naik (280 ppm $\rightarrow$ 420 ppm)
+                   <br>• $CH_4$ naik (700 ppb $\rightarrow$ 1.900 ppb)
+                   <br>Suhu permukaan bumi naik sekitar $1,1^\circ\text{C}$.</p>
+                <p class="mt-4 font-bold">Instruksi: Pilih kesimpulan yang benar mengenai dampaknya berdasarkan prinsip efek rumah kaca.</p>
+            </div>
+        </section>
+
+        <!-- Soal 2 - Opsi A -->
+        <section class="reveal-step bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-2xl mb-4 text-slate-700">Opsi A: <span class="font-normal text-xl">Kedua gas menyerap dan memancarkan kembali radiasi inframerah dari bumi, sehingga panas terperangkap.</span></h3>
+            <p class="text-slate-600 mb-4"><strong>Analisis:</strong> Ini adalah definisi utama efek rumah kaca. Gas rumah kaca meneruskan radiasi gelombang pendek (matahari), tapi menyerap dan memancarkan balik gelombang panjang (inframerah/panas) dari bumi.</p>
+            <div class="correct-box p-4 flex items-center">
+                <i class="fa-solid fa-circle-check text-green-500 text-3xl mr-4"></i>
+                <p class="font-bold text-green-800 text-2xl">BENAR</p>
+            </div>
+        </section>
+
+        <!-- Soal 2 - Opsi B -->
+        <section class="reveal-step bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-2xl mb-4 text-slate-700">Opsi B: <span class="font-normal text-xl">Kenaikan suhu terjadi karena kedua gas menipiskan lapisan ozon sehingga lebih banyak sinar UV masuk.</span></h3>
+            <p class="text-slate-600 mb-4"><strong>Analisis:</strong> Kesalahpahaman umum. Penipisan ozon (akibat CFC) dan pemanasan global (akibat $CO_2, CH_4$) adalah dua fenomena berbeda. Pemanasan diakibatkan panas terperangkap, bukan karena UV.</p>
+            <div class="wrong-box p-4 flex items-center">
+                <i class="fa-solid fa-circle-xmark text-red-500 text-3xl mr-4"></i>
+                <p class="font-bold text-red-800 text-2xl">SALAH</p>
+            </div>
+        </section>
+
+        <!-- Soal 2 - Opsi C -->
+        <section class="reveal-step bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-2xl mb-4 text-slate-700">Opsi C: <span class="font-normal text-xl">Walaupun konsentrasi CH4 jauh lebih kecil daripada CO2, per molekul CH4 dapat menjebak panas lebih efektif.</span></h3>
+            <p class="text-slate-600 mb-4"><strong>Analisis:</strong> Metana ($CH_4$) memiliki <em>Global Warming Potential</em> (GWP) yang jauh lebih tinggi (sekitar 25-80 kali lebih kuat) daripada karbon dioksida ($CO_2$) dalam memerangkap panas per molekulnya.</p>
+            <div class="correct-box p-4 flex items-center">
+                <i class="fa-solid fa-circle-check text-green-500 text-3xl mr-4"></i>
+                <p class="font-bold text-green-800 text-2xl">BENAR</p>
+            </div>
+        </section>
+
+        <!-- Soal 2 - Opsi D -->
+        <section class="reveal-step bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h3 class="font-bold text-2xl mb-4 text-slate-700">Opsi D: <span class="font-normal text-xl">Kedua gas memantulkan radiasi matahari gelombang pendek kembali ke luar angkasa, sehingga suhu bumi turun.</span></h3>
+            <p class="text-slate-600 mb-4"><strong>Analisis:</strong> Bertolak belakang. Gas rumah kaca tidak memantulkan gelombang pendek ke luar angkasa dan fungsinya justru membuat suhu bumi naik, bukan turun.</p>
+            <div class="wrong-box p-4 flex items-center">
+                <i class="fa-solid fa-circle-xmark text-red-500 text-3xl mr-4"></i>
+                <p class="font-bold text-red-800 text-2xl">SALAH</p>
+            </div>
+        </section>
+
+        <!-- Soal 2 - Kesimpulan -->
+        <section class="reveal-step bg-emerald-50 border border-emerald-200 p-8 rounded-2xl shadow-sm mb-20 text-center">
+            <h3 class="font-bold text-3xl text-emerald-800 mb-2">Kesimpulan Akhir Soal 2</h3>
+            <p class="text-2xl text-emerald-900">Pernyataan yang tepat adalah <strong>A dan C</strong>.</p>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-bar">
+        <div class="text-slate-500 font-medium">
+            <span id="step-counter">0</span> / <span id="total-steps">0</span> Ditampilkan
+            <span class="ml-4 text-sm hidden md:inline"><i class="fa-regular fa-keyboard mr-1"></i> Gunakan 'Spasi' atau 'Panah Kanan'</span>
+        </div>
+        <button id="next-btn" onclick="showNext()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform active:scale-95 flex items-center">
+            <span>Langkah Selanjutnya</span>
+            <i class="fa-solid fa-arrow-right ml-3"></i>
+        </button>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const steps = document.querySelectorAll('.reveal-step');
+            const totalSteps = steps.length;
+            let currentStepIndex = 0;
+            
+            document.getElementById('total-steps').innerText = totalSteps;
+            
+            // Show the first item automatically on load
+            showNext();
+
+            window.showNext = function() {
+                if (currentStepIndex < totalSteps) {
+                    // Activate current step
+                    const el = steps[currentStepIndex];
+                    el.classList.add('active');
+                    
+                    // Smooth scroll slightly past the center so reading flow is natural
+                    setTimeout(() => {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                    
+                    currentStepIndex++;
+                    document.getElementById('step-counter').innerText = currentStepIndex;
+
+                    // Disable button if all steps shown
+                    if (currentStepIndex >= totalSteps) {
+                        const btn = document.getElementById('next-btn');
+                        btn.innerHTML = '<span>Pembahasan Selesai</span> <i class="fa-solid fa-check-double ml-3"></i>';
+                        btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                        btn.classList.add('bg-slate-400', 'cursor-not-allowed');
+                        btn.onclick = null;
+                    }
+                }
+            };
+
+            // Keyboard navigation (Space or Right Arrow)
+            window.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' || e.code === 'ArrowRight') {
+                    e.preventDefault(); // Prevent default page scroll
+                    showNext();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
