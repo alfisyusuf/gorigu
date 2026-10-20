@@ -53,6 +53,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .card:active{transform:scale(.96)}
 .card:hover{border-color:var(--heart)}
 .card .ico{font-size:3rem;line-height:1.1}
+.card .thumb{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px;display:block}
 .card h3{font-family:var(--display);font-size:1.1rem;line-height:1.15;margin:6px 0 2px}
 .card .por{font-size:.78rem;color:var(--muted)}
 .dots{display:flex;justify-content:center;gap:6px;margin:10px 0 8px}
@@ -267,7 +268,7 @@ function renderGrid(){
     const dots = ['sodium','sugar','satFat'].map(k =>
       `<span class="dot lv-${a.levels[k]}" title="${esc(RULES[k].label)}: ${RULES[k].words[a.levels[k]]}"></span>`).join('');
     return `<button class="card" data-id="${esc(f.id)}" aria-label="Lihat rapor jantung ${esc(f.name)}">
-      <div class="ico" aria-hidden="true">${esc(f.icon)}</div>
+      ${f.image ? `<img class="thumb" src="${esc(f.image)}" alt="" loading="lazy">` : `<div class="ico" aria-hidden="true">${esc(f.icon)}</div>`}
       <h3>${esc(f.name)}</h3><div class="por">${esc(f.portion)}</div>
       <div class="dots" aria-hidden="true">${dots}</div>
       <span class="pill lv-${a.verdict.level}">${a.verdict.title}</span></button>`;
