@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TKA Fisika: Suara & Mesin</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Inter',system-ui,sans-serif}
+.slide{display:none;min-height:100vh;padding:2rem 3rem 5rem}.slide.on{display:flex;flex-direction:column;justify-content:center;animation:f .35s ease}
+@keyframes f{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.glass{background:rgba(255,255,255,.65);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.9);box-shadow:0 10px 40px -12px rgba(16,94,72,.18)}
+.stm{cursor:pointer;transition:.2s;border:2px solid transparent}.stm:hover{border-color:#6ee7b7}.stm.sel{background:#d1fae5;border-color:#059669}
+.bs button{width:2.6rem;height:2.6rem;border-radius:9999px;font-weight:800;background:#ecfdf5;color:#065f46}.bs button.sel{background:#059669;color:#fff}.bs button.sel.s{background:#e11d48}
+.fx{font-size:clamp(2.4rem,5.5vw,4.6rem)}
+@media(prefers-reduced-motion:reduce){.slide.on{animation:none}}
+button:focus-visible{outline:3px solid #059669;outline-offset:2px}
+</style></head>
+<body class="bg-emerald-50 text-slate-800">
+
+<!-- 1 COVER -->
+<section class="slide on text-center items-center">
+ <div class="glass rounded-2xl px-16 py-14 max-w-4xl">
+  <p class="text-xl text-emerald-700 font-medium mb-4">Misi TKA Terakhir #9 · Kognitif Level 3: Analisis & Evaluasi</p>
+  <h1 class="text-6xl md:text-7xl font-black leading-tight">TKA Fisika:<br>Suara & Mesin 🔊⚙️</h1>
+  <p class="mt-8 text-2xl text-slate-600">Efek Doppler · Gas Ideal · Siklus Mesin Kalor</p>
+  <p class="mt-10 text-lg text-emerald-800">Lupa rumus? Tenang. Kita mulai dari pengingat, lalu bedah soal bersama.</p>
+  <p class="mt-6 text-sm text-slate-500">Tekan → atau klik tombol “Lanjut”</p>
+ </div>
+</section>
+
+<!-- 2 DOPPLER -->
+<section class="slide">
+ <h2 class="text-4xl font-extrabold mb-4">Pengingat 1: Efek Doppler</h2>
+ <div class="grid lg:grid-cols-2 gap-6 items-center">
+  <div class="glass rounded-2xl p-4">
+  <svg viewBox="0 0 520 260" class="w-full">
+   <rect x="0" y="200" width="520" height="6" fill="#94a3b8" rx="3"/>
+   <g transform="translate(40,140)"><rect width="110" height="46" rx="8" fill="#fff" stroke="#334155" stroke-width="3"/><rect x="72" y="6" width="30" height="20" rx="4" fill="#bae6fd"/><rect x="38" y="-10" width="30" height="10" fill="#ef4444" rx="3"/><path d="M48 12v22M37 23h22" stroke="#ef4444" stroke-width="6"/><circle cx="25" cy="48" r="11" fill="#334155"/><circle cx="85" cy="48" r="11" fill="#334155"/></g>
+   <text x="95" y="125" text-anchor="middle" font-size="15" font-weight="800" fill="#e11d48">SUMBER (fs)</text>
+   <path d="M165 150a20 20 0 0 1 0 30M180 140a38 38 0 0 1 0 50M198 130a56 56 0 0 1 0 70" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
+   <path d="M60 110h70" stroke="#e11d48" stroke-width="5" marker-end="url(#a)"/>
+   <g transform="translate(400,120)"><circle cx="20" cy="10" r="14" fill="#fde68a" stroke="#334155" stroke-width="3"/><path d="M20 24v38M20 36l-18 14M20 36l18 14M20 62l-14 24M20 62l14 24" stroke="#334155" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+   <text x="420" y="108" text-anchor="middle" font-size="15" font-weight="800" fill="#2563eb">PENDENGAR (fp)</text>
+   <path d="M460 100h-60" stroke="#2563eb" stroke-width="5" marker-end="url(#b)"/>
+   <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#e11d48"/></marker><marker id="b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#2563eb"/></marker></defs>
+   <text x="260" y="240" text-anchor="middle" font-size="16" font-weight="700" fill="#047857">Saling mendekat → gelombang “tertekan” → fp NAIK</text>
+  </svg></div>
+  <div class="glass rounded-2xl p-6 text-center">
+   <p class="text-slate-500 mb-2">Rumus utama</p>
+   <p class="fx font-black"><span class="text-slate-800">f<sub class="text-3xl">p</sub> = f<sub class="text-3xl">s</sub></span> <span class="inline-block align-middle text-center"><span class="block border-b-4 border-slate-800 px-2"><span class="text-blue-600">v ± v<sub class="text-3xl">p</sub></span></span><span class="block"><span class="text-rose-600">v ± v<sub class="text-3xl">s</sub></span></span></span></p>
+   <div class="mt-5 grid gap-3 text-left text-xl">
+    <div class="rounded-2xl bg-blue-100 text-blue-900 p-3"><b>Pendengar mendekat = (+)</b> · menjauh = (−)</div>
+    <div class="rounded-2xl bg-rose-100 text-rose-900 p-3"><b>Sumber mendekat = (−)</b> · menjauh = (+)</div>
+    <div class="rounded-2xl bg-emerald-200 text-emerald-900 p-3 font-bold">Ingat: Makin dekat, frekuensi makin NAIK ⬆️</div>
+   </div>
+  </div>
+ </div>
+ <p class="mt-4 text-lg text-slate-600">Keterangan: v = cepat rambat bunyi di udara, v<sub>p</sub> = kecepatan pendengar, v<sub>s</sub> = kecepatan sumber.</p>
+</section>
+
+<!-- 3 TERMO -->
+<section class="slide">
+ <h2 class="text-4xl font-extrabold mb-3">Pengingat 2: Gas Ideal & Mesin Kalor</h2>
+ <p class="fx font-black text-center mb-4">P · V = n · R · T</p>
+ <div class="grid lg:grid-cols-2 gap-6">
+  <div class="glass rounded-2xl p-4">
+   <svg viewBox="0 0 400 290" class="w-full">
+    <path d="M60 30v220h300" stroke="#334155" stroke-width="3" fill="none"/>
+    <text x="30" y="26" font-weight="700" fill="#334155">P</text><text x="362" y="270" font-weight="700" fill="#334155">V</text>
+    <path d="M110 70 L110 250 L300 250 L300 130 Q200 90 110 70Z" fill="#34d399" fill-opacity=".45"/>
+    <path d="M110 70Q200 90 300 130" stroke="#047857" stroke-width="5" fill="none"/>
+    <path d="M110 70V250M300 130V250" stroke="#047857" stroke-dasharray="6" stroke-width="2"/>
+    <text x="110" y="270" text-anchor="middle" font-size="14">V₁</text><text x="300" y="270" text-anchor="middle" font-size="14">V₂</text>
+    <text x="205" y="205" text-anchor="middle" font-size="19" font-weight="800" fill="#064e3b">W = Luas</text>
+    <text x="205" y="228" text-anchor="middle" font-size="14" fill="#064e3b">di bawah kurva</text>
+   </svg>
+   <p class="text-center font-bold text-xl">Usaha W = Luas Area di bawah kurva</p>
+   <p class="text-center text-slate-600">Isobarik: W = P·ΔV · Isokhorik: W = 0 · Hukum I: ΔU = Q − W</p>
+  </div>
+  <div class="glass rounded-2xl p-4">
+   <svg viewBox="0 0 400 290" class="w-full">
+    <rect x="130" y="10" width="140" height="48" rx="14" fill="#fecaca"/><text x="200" y="40" text-anchor="middle" font-weight="800" fill="#991b1b" font-size="20">T₁ (panas)</text>
+    <circle cx="200" cy="145" r="45" fill="#fff" stroke="#334155" stroke-width="4"/><text x="200" y="152" text-anchor="middle" font-weight="800" font-size="20">Mesin</text>
+    <rect x="130" y="232" width="140" height="48" rx="14" fill="#bfdbfe"/><text x="200" y="263" text-anchor="middle" font-weight="800" fill="#1e3a8a" font-size="20">T₂ (dingin)</text>
+    <path d="M200 60v40" stroke="#dc2626" stroke-width="6" marker-end="url(#c)"/><text x="215" y="85" fill="#dc2626" font-weight="800">Q₁ masuk</text>
+    <path d="M200 192v38" stroke="#2563eb" stroke-width="6" marker-end="url(#d)"/><text x="215" y="215" fill="#2563eb" font-weight="800">Q₂ keluar</text>
+    <path d="M246 145h120" stroke="#059669" stroke-width="6" marker-end="url(#e)"/><text x="296" y="135" fill="#059669" font-weight="800">W</text>
+    <defs><marker id="c" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#dc2626"/></marker><marker id="d" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#2563eb"/></marker><marker id="e" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8z" fill="#059669"/></marker></defs>
+   </svg>
+   <p class="text-center text-2xl font-black">W = Q₁ − Q₂</p>
+   <p class="text-center text-2xl font-black">η = W/Q₁ = 1 − Q₂/Q₁ <span class="text-slate-500 text-lg">(Carnot: 1 − T₂/T₁)</span></p>
+  </div>
+ </div>
+</section>
+
+<!-- 4 SOAL DOPPLER -->
+<section class="slide">
+ <div class="glass rounded-2xl p-7 max-w-5xl mx-auto w-full">
+  <p class="text-emerald-700 font-bold mb-1">Contoh Soal TKA 1 · Pilihan Ganda Kompleks (PGK)</p>
+  <p class="text-2xl leading-relaxed">Pengendara motor (20 m/s) dan ambulans (30 m/s) bergerak <b>saling menjauh</b>. Ambulans membunyikan sirine 600 Hz (v udara = 340 m/s). <b>Pilih SETIAP kondisi yang benar.</b></p>
+  <div class="mt-4 grid gap-3 text-xl" id="q1">
+   <div class="stm rounded-2xl bg-white p-3" onclick="this.classList.toggle('sel')">A. Frekuensi yang didengar pengendara <b>lebih kecil</b> dari 600 Hz.</div>
+   <div class="stm rounded-2xl bg-white p-3" onclick="this.classList.toggle('sel')">B. Frekuensi yang didengar pengendara sekitar <b>519 Hz</b>.</div>
+   <div class="stm rounded-2xl bg-white p-3" onclick="this.classList.toggle('sel')">C. Jika motor berhenti, frekuensi yang didengar <b>lebih besar</b> daripada saat motor melaju.</div>
+   <div class="stm rounded-2xl bg-white p-3" onclick="this.classList.toggle('sel')">D. Frekuensi yang didengar = 600 × (340 + 20)/(340 + 30) ≈ 583 Hz.</div>
+  </div>
+  <div class="mt-5 flex gap-3 flex-wrap">
+   <button onclick="tog('h1')" class="rounded-2xl bg-amber-300 hover:bg-amber-400 px-6 py-3 text-xl font-bold">💡 Petunjuk</button>
+   <button onclick="openM('m1')" class="rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 text-xl font-bold">📝 Lihat Pembahasan</button>
+  </div>
+  <div id="h1" class="hidden mt-4 rounded-2xl bg-amber-100 border-2 border-amber-300 p-4 text-xl">💡 Tentukan dulu siapa yang jadi Sumber dan Pendengar. Karena saling menjauh, <b>Pendengar (−)</b>, <b>Sumber (+)</b>.</div>
+ </div>
+</section>
+
+<!-- 5 SOAL TERMO -->
+<section class="slide">
+ <div class="glass rounded-2xl p-7 max-w-6xl mx-auto w-full">
+  <p class="text-emerald-700 font-bold mb-1">Contoh Soal TKA 2 · Matriks Benar/Salah</p>
+  <div class="grid lg:grid-cols-5 gap-5 items-center">
+   <div class="lg:col-span-2 bg-white rounded-2xl p-2">
+    <svg viewBox="0 0 400 290" class="w-full">
+     <path d="M60 20v230h310" stroke="#334155" stroke-width="3" fill="none"/>
+     <text x="25" y="22" font-weight="700">P (10⁵ Pa)</text><text x="330" y="275" font-weight="700">V (m³)</text>
+     <path d="M150 50L150 190L330 190" stroke="#059669" stroke-width="5" fill="none"/>
+     <path d="M330 190 L285 173 L240 155 L195 120 L172 82 L150 50" stroke="#7c3aed" stroke-width="5" fill="none" stroke-linejoin="round"/>
+     <path d="M150 50V250M330 190V250M60 50H150M60 190H150" stroke="#94a3b8" stroke-dasharray="5"/>
+     <g font-weight="800" font-size="20"><circle cx="150" cy="50" r="6" fill="#334155"/><text x="125" y="48">A</text><circle cx="150" cy="190" r="6" fill="#334155"/><text x="125" y="195">B</text><circle cx="330" cy="190" r="6" fill="#334155"/><text x="340" y="185">C</text></g>
+     <g font-size="14"><text x="45" y="55" text-anchor="end">3</text><text x="45" y="195" text-anchor="end">1</text><text x="150" y="268" text-anchor="middle">1</text><text x="330" y="268" text-anchor="middle">3</text></g>
+     <text x="162" y="125" font-size="13" fill="#047857" font-weight="700">A→B isokhorik</text>
+     <text x="215" y="212" font-size="13" fill="#047857" font-weight="700">B→C isobarik</text>
+     <text x="255" y="130" font-size="13" fill="#7c3aed" font-weight="700">C→A isotermal</text>
+    </svg></div>
+   <div class="lg:col-span-3 text-xl">
+    <p class="mb-3">Siklus gas ideal A→B→C→A. <b>Evaluasi 3 pernyataan berikut (Benar/Salah).</b></p>
+    <div class="grid gap-3">
+     <div class="bg-white rounded-2xl p-3 flex items-center gap-3"><div class="bs flex gap-1"><button onclick="bs(this,0)">B</button><button class="s2" onclick="bs(this,1)">S</button></div><span>Usaha pada proses A→B bernilai nol.</span></div>
+     <div class="bg-white rounded-2xl p-3 flex items-center gap-3"><div class="bs flex gap-1"><button onclick="bs(this,0)">B</button><button onclick="bs(this,1)">S</button></div><span>Usaha gas pada proses B→C sebesar 2 × 10⁵ J.</span></div>
+     <div class="bg-white rounded-2xl p-3 flex items-center gap-3"><div class="bs flex gap-1"><button onclick="bs(this,0)">B</button><button onclick="bs(this,1)">S</button></div><span>Karena ΔU satu siklus = 0, maka usaha netto siklus juga nol.</span></div>
+    </div></div>
+  </div>
+  <div class="mt-4 flex gap-3 flex-wrap">
+   <button onclick="tog('h2')" class="rounded-2xl bg-amber-300 hover:bg-amber-400 px-6 py-3 text-xl font-bold">💡 Petunjuk</button>
+   <button onclick="openM('m2')" class="rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 text-xl font-bold">📝 Lihat Pembahasan</button>
+  </div>
+  <div id="h2" class="hidden mt-3 rounded-2xl bg-amber-100 border-2 border-amber-300 p-4 text-xl">💡 Usaha (W) = Luas. Isokhorik (volume tetap) = tidak ada usaha. ΔU pada 1 siklus penuh = 0.</div>
+ </div>
+</section>
+
+<!-- MODALS -->
+<div id="m1" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm items-center justify-center p-4" onclick="if(event.target===this)closeM()">
+ <div class="glass bg-white/90 rounded-2xl p-8 max-w-3xl w-full max-h-[90vh] overflow-auto text-xl">
+  <h3 class="text-3xl font-black mb-3">📝 Pembahasan Doppler</h3>
+  <p><b>1. Peran:</b> Sumber = ambulans (v<sub>s</sub> = 30), Pendengar = motor (v<sub>p</sub> = 20). Saling menjauh → pendengar (−), sumber (+).</p>
+  <p class="mt-2"><b>2. Hitung:</b></p>
+  <p class="bg-emerald-100 rounded-2xl p-3 my-2 font-bold">f<sub>p</sub> = 600 × (340 − 20)/(340 + 30) = 600 × 320/370 ≈ <u>518,9 Hz</u></p>
+  <p><b>3. Cek pernyataan:</b></p>
+  <ul class="list-disc ml-6 space-y-1">
+   <li>A <b class="text-emerald-700">Benar</b>: 519 &lt; 600 (menjauh → turun).</li>
+   <li>B <b class="text-emerald-700">Benar</b>: ≈ 519 Hz.</li>
+   <li>C <b class="text-emerald-700">Benar</b>: motor berhenti → v<sub>p</sub> = 0 → 600 × 340/370 ≈ 551 Hz &gt; 519 Hz.</li>
+   <li>D <b class="text-rose-600">Salah</b>: memakai tanda pendengar (+); padahal menjauh harus (−).</li>
+  </ul>
+  <p class="mt-3 font-extrabold text-emerald-800">Jawaban: A, B, dan C.</p>
+  <button onclick="closeM()" class="mt-4 rounded-2xl bg-slate-800 text-white px-6 py-2 font-bold">Tutup (Esc)</button>
+ </div></div>
+
+<div id="m2" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm items-center justify-center p-4" onclick="if(event.target===this)closeM()">
+ <div class="glass bg-white/90 rounded-2xl p-8 max-w-3xl w-full max-h-[90vh] overflow-auto text-xl">
+  <h3 class="text-3xl font-black mb-3">📝 Pembahasan Termodinamika</h3>
+  <ul class="space-y-3">
+   <li><b>1. Benar.</b> A→B isokhorik: V tetap → ΔV = 0 → W = 0.</li>
+   <li><b>2. Benar.</b> B→C isobarik: W = P·ΔV = (1 × 10⁵)(3 − 1) = <b>2 × 10⁵ J</b>.</li>
+   <li><b>3. Salah.</b> ΔU = 0 benar, tetapi artinya Q netto = W netto, <i>bukan</i> W = 0. Usaha netto = luas daerah tertutup ≠ 0.
+    <p class="bg-emerald-100 rounded-2xl p-3 mt-2">W<sub>netto</sub> = W<sub>AB</sub> + W<sub>BC</sub> + W<sub>CA</sub> = 0 + 2×10⁵ + (−3,3×10⁵) ≈ −1,3×10⁵ J<br><span class="text-base">(W<sub>CA</sub> = P<sub>A</sub>V<sub>A</sub> ln(V<sub>A</sub>/V<sub>C</sub>), ln 3 ≈ 1,1. Negatif karena siklus berlawanan arah jarum jam.)</span></p></li>
+  </ul>
+  <p class="mt-3 font-extrabold text-emerald-800">Urutan jawaban: Benar – Benar – Salah.</p>
+  <button onclick="closeM()" class="mt-4 rounded-2xl bg-slate-800 text-white px-6 py-2 font-bold">Tutup (Esc)</button>
+ </div></div>
+
+<!-- NAV -->
+<div class="fixed bottom-0 inset-x-0 z-40 flex items-center justify-between px-6 py-3 bg-white/70 backdrop-blur">
+ <button onclick="go(-1)" class="rounded-2xl bg-white border border-emerald-200 px-5 py-2 font-bold">← Kembali</button>
+ <div id="dots" class="flex gap-2"></div>
+ <button onclick="go(1)" class="rounded-2xl bg-emerald-600 text-white px-5 py-2 font-bold">Lanjut →</button>
+</div>
+
+<script>
+const S=[...document.querySelectorAll('.slide')];let i=0;
+const D=document.getElementById('dots');S.forEach((_,k)=>{D.insertAdjacentHTML('beforeend','<span class="w-3 h-3 rounded-full bg-emerald-200"></span>')});
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,k)=>s.classList.toggle('on',k===i));[...D.children].forEach((d,k)=>{d.className='w-3 h-3 rounded-full '+(k===i?'bg-emerald-600':'bg-emerald-200')})}
+function go(d){closeM();show(i+d)}
+function tog(id){document.getElementById(id).classList.toggle('hidden')}
+function openM(id){closeM();const m=document.getElementById(id);m.classList.remove('hidden');m.classList.add('flex')}
+function closeM(){document.querySelectorAll('[id^=m]').forEach(m=>{if(m.id.length===2){m.classList.add('hidden');m.classList.remove('flex')}})}
+function bs(b,v){const p=b.parentElement;[...p.children].forEach(x=>x.classList.remove('sel','s'));b.classList.add('sel');if(v)b.classList.add('s')}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1);if(e.key==='Escape')closeM()});
+show(0);
+</script>
+</body></html>
