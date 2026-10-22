@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Worksheet TKA Fisika #9</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Inter',system-ui,sans-serif;background:#ecfdf5;color:#1e293b}
+.page{width:210mm;min-height:297mm;margin:12px auto;padding:14mm;background:#fff;box-shadow:0 10px 40px -12px rgba(16,94,72,.25);border-radius:16px}
+.scratch{height:105mm;border:2px dashed #6ee7b7;border-radius:16px;background-image:radial-gradient(#a7f3d0 1px,transparent 1px);background-size:6mm 6mm;position:relative}
+.scratch span{position:absolute;top:6px;left:12px;font-size:12px;color:#059669;font-weight:700}
+.bx{display:inline-block;width:5mm;height:5mm;border:2px solid #334155;border-radius:4px;vertical-align:middle;margin-right:2mm}
+.bs{display:inline-flex;gap:2mm;margin-right:3mm;vertical-align:middle}.bs i{border:2px solid #334155;border-radius:9999px;width:8mm;height:8mm;display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-weight:800;font-size:12px}
+@page{size:A4;margin:0}
+@media print{body{background:#fff}.page{margin:0;box-shadow:none;border-radius:0;page-break-after:always}}
+</style></head><body>
+
+<section class="page">
+ <div class="rounded-2xl bg-emerald-600 text-white p-5 mb-4">
+  <h1 class="text-2xl font-extrabold">Misi TKA Terakhir #9: Logika Bunyi & Termo</h1>
+  <p class="text-sm opacity-90 mt-1">Nama: ______________________ Kelas: ______ Tanggal: ____________</p>
+ </div>
+ <p class="text-sm text-emerald-800 bg-emerald-50 rounded-2xl p-3 mb-4">Ingat: f<sub>p</sub> = f<sub>s</sub> (v ± v<sub>p</sub>)/(v ± v<sub>s</sub>) · pendengar mendekat (+), sumber mendekat (−). Makin dekat, frekuensi NAIK.</p>
+ <h2 class="font-extrabold text-lg">Soal 1 · Doppler (PGK)</h2>
+ <p class="mt-1">Mobil polisi (25 m/s) dan pengendara sepeda (5 m/s) bergerak <b>saling mendekat</b>. Sirine polisi berfrekuensi 800 Hz (v udara = 340 m/s). <b>Pilih SETIAP kondisi yang benar.</b></p>
+ <div class="mt-2 space-y-1">
+  <p><span class="bx"></span>A. Frekuensi yang didengar pengendara sepeda lebih besar dari 800 Hz.</p>
+  <p><span class="bx"></span>B. Frekuensi yang didengar pengendara sepeda sekitar 876 Hz.</p>
+  <p><span class="bx"></span>C. Jika sepeda berhenti, frekuensi yang didengar lebih kecil daripada saat sepeda bergerak.</p>
+  <p><span class="bx"></span>D. Frekuensi yang didengar = 800 × (340 − 5)/(340 − 25) ≈ 851 Hz.</p>
+ </div>
+ <div class="scratch mt-4"><span>✏️ Ruang mencakar: tentukan sumber &amp; pendengar, tentukan tanda (+/−), lalu hitung.</span></div>
+ <p class="mt-3 text-sm text-slate-500">Jawaban akhir: ____________________________</p>
+</section>
+
+<section class="page">
+ <h2 class="font-extrabold text-lg">Soal 2 · Termodinamika (Matriks Benar/Salah)</h2>
+ <div class="grid grid-cols-5 gap-4 items-center mt-2">
+  <div class="col-span-2 border-2 border-emerald-200 rounded-2xl p-2">
+   <svg viewBox="0 0 300 230" class="w-full">
+    <path d="M50 15v180h235" stroke="#334155" stroke-width="2.5" fill="none"/>
+    <text x="10" y="18" font-size="11" font-weight="700">P (10⁵ Pa)</text><text x="245" y="215" font-size="11" font-weight="700">V (m³)</text>
+    <path d="M110 20H290" stroke="none"/><path d="M110 20L230 20L230 155" stroke="#059669" stroke-width="4" fill="none"/>
+    <path d="M230 155Q200 110 170 85 T110 20" stroke="#7c3aed" stroke-width="4" fill="none" stroke-linejoin="round"/>
+    <path d="M110 20V195M230 20V195M50 20H110M50 155H230" stroke="#94a3b8" stroke-dasharray="4"/>
+    <g font-weight="800" font-size="16"><circle cx="110" cy="20" r="5"/><text x="90" y="18">A</text><circle cx="230" cy="20" r="5"/><text x="238" y="18">B</text><circle cx="230" cy="155" r="5"/><text x="238" y="165">C</text></g>
+    <g font-size="11"><text x="42" y="24" text-anchor="end">4</text><text x="42" y="159" text-anchor="end">1</text><text x="110" y="209" text-anchor="middle">1</text><text x="230" y="209" text-anchor="middle">4</text></g>
+    <text x="140" y="14" font-size="9" fill="#047857" font-weight="700" transform="translate(0,-2)">A→B isobarik</text>
+    <text x="236" y="95" font-size="9" fill="#047857" font-weight="700">B→C isokhorik</text>
+    <text x="105" y="110" font-size="9" fill="#7c3aed" font-weight="700">C→A isotermal</text>
+   </svg></div>
+  <div class="col-span-3 text-[15px]">Siklus gas ideal A→B→C→A pada diagram di samping. <b>Evaluasi 3 pernyataan berikut (Benar/Salah).</b></div>
+ </div>
+ <div class="mt-3 space-y-2">
+  <p><span class="bs"><i>B</i><i>S</i></span>Usaha gas pada proses A→B sebesar 1,2 × 10⁶ J.</p>
+  <p><span class="bs"><i>B</i><i>S</i></span>Selama proses B→C, gas menyerap kalor dari lingkungan.</p>
+  <p><span class="bs"><i>B</i><i>S</i></span>Usaha netto gas dalam satu siklus bernilai positif.</p>
+ </div>
+ <div class="scratch mt-4" style="height:120mm"><span>✏️ Ruang mencakar: hitung luas/usaha tiap proses, lalu terapkan ΔU = Q − W.</span></div>
+ <p class="mt-3 text-sm text-slate-500">Alasan singkat tiap pernyataan boleh ditulis di ruang di atas. Semangat, misi hampir selesai! 💪</p>
+</section>
+</body></html>
