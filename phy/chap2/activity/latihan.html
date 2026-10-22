@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan Terpadu 60 Menit · Chapter 2 DC Circuit | SMA ABBS Surakarta</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          maroon: { DEFAULT: '#8B1515', dark: '#6A0F0F', light: '#A82A2A' },
+          gold:   { DEFAULT: '#F5A623', dark: '#C9800A', light: '#FFE7BA' },
+          cream:  '#FFFCF7', sand: '#F2EAE0', ink: '#2C1A1A'
+        },
+        fontFamily: { sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'] },
+        boxShadow: { card: '0 10px 30px -12px rgba(139, 21, 21, 0.18)' }
+      }
+    }
+  };
+</script>
+
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['[', ']']] },
+    svg: { fontCache: 'global' },
+    startup: {
+      typeset: false,
+      ready() {
+        MathJax.startup.defaultReady();
+        MathJax.startup.promise.then(() => { window.App.mathReady = true; window.App.typesetAll(); });
+      }
+    }
+  };
+</script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+  body { font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; background: #FFFCF7; }
+  mjx-container svg { display: inline !important; max-width: none; }
+  mjx-container[jax="SVG"] { display: inline-block !important; margin: 0 0.08em; line-height: 0; }
+  mjx-container[jax="SVG"][display="true"] { display: block !important; text-align: center; margin: 0.8em 0 !important; overflow-x: auto; }
+  input[type="number"] { -webkit-appearance: none; -moz-appearance: textfield; appearance: none; }
+  input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input:focus { outline: none; }
+  .answer-input:focus { border-color: #8B1515; box-shadow: 0 0 0 4px rgba(139,21,21,.15); }
+  .answer-input.is-correct { background: #E8F5E9 !important; border-color: #4CAF50 !important; color: #2E7D32; }
+  .answer-input.is-wrong { background: #FCECEC !important; border-color: #8B1515 !important; color: #8B1515; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
+  .shake { animation: shake .4s; }
+  @keyframes pop { 0%{transform:scale(.85);opacity:0} 60%{transform:scale(1.04);opacity:1} 100%{transform:scale(1)} }
+  .pop { animation: pop .45s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+  .floaty { animation: floaty 2.4s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) { .shake,.pop,.floaty { animation: none !important; } }
+  ::selection { background: #FFE7BA; }
+</style>
+</head>
+
+<body class="bg-cream text-ink antialiased min-h-screen">
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="sticky top-0 z-40 bg-maroon text-white shadow-lg">
+  <div class="max-w-4xl mx-auto px-4 pt-3 pb-3 flex items-center gap-3">
+    <div class="w-11 h-11 shrink-0 rounded-2xl bg-gold grid place-items-center text-2xl shadow-inner" aria-hidden="true">📝</div>
+    <div class="flex-1 min-w-0">
+      <p id="ui-subtitle" class="text-[10px] sm:text-xs uppercase tracking-[0.18em] text-gold font-bold">SMA ABBS Surakarta</p>
+      <h1 id="ui-title" class="text-[15px] sm:text-xl font-extrabold leading-tight truncate">Latihan Terpadu · Chapter 2</h1>
+    </div>
+    
+    <!-- Language Toggle Button -->
+    <button id="lang-toggle" class="ml-auto px-3 py-1 text-xs font-extrabold bg-white text-maroon rounded-full shadow hover:bg-sand transition">
+      EN
+    </button>
+
+    <div id="timer-pill" class="hidden shrink-0 flex items-center gap-2 rounded-full bg-maroon-dark px-4 py-2 text-sm sm:text-base font-bold tabular-nums shadow-inner">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>
+      <span id="timer">60:00</span>
+    </div>
+  </div>
+  <div id="progress-wrap" class="hidden max-w-4xl mx-auto px-4 pb-3">
+    <div class="flex justify-between text-[11px] sm:text-xs mb-1 text-white/85">
+      <span id="ui-progress-label">Progres jawaban</span>
+      <span id="progress-text" class="font-semibold tabular-nums">0/25</span>
+    </div>
+    <div class="h-2.5 bg-maroon-dark rounded-full overflow-hidden" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+      <div id="progress-bar" class="h-full bg-gold rounded-full transition-all duration-500" style="width:0%"></div>
+    </div>
+  </div>
+</header>
+
+<main id="app-main" class="max-w-4xl mx-auto px-4 py-6 sm:py-10">
+
+  <!-- ═══════════ START SCREEN ═══════════ -->
+  <section id="start-screen" class="pop">
+    <div class="bg-white rounded-[2rem] shadow-card border border-[#EADBC8] p-6 sm:p-10">
+      <div class="text-center">
+        <div class="text-6xl floaty" aria-hidden="true">🚀</div>
+        <h2 id="ui-start-title" class="mt-3 text-2xl sm:text-3xl font-extrabold text-maroon">Latihan Terpadu 60 Menit</h2>
+        <p id="ui-start-desc" class="mt-2 text-[15px] sm:text-base text-[#6B5A50] leading-relaxed max-w-xl mx-auto">
+          Semua materi <b>Chapter 2: DC Circuit</b> — dari Hukum Ohm sampai Jembatan Wheatstone.
+          25 soal, 60 menit, langsung dinilai.
+        </p>
+      </div>
+
+      <div class="mt-8 grid grid-cols-2 sm:grid-cols-5 gap-2 text-center">
+        <div class="rounded-xl bg-sand p-3"><p class="text-2xl">🔌</p><p class="text-[11px] font-bold text-maroon mt-1">Ohm & Rangkaian</p></div>
+        <div class="rounded-xl bg-sand p-3"><p class="text-2xl">⚡</p><p class="text-[11px] font-bold text-maroon mt-1">Kirchhoff I & Daya</p></div>
+        <div class="rounded-xl bg-sand p-3"><p class="text-2xl">💰</p><p class="text-[11px] font-bold text-maroon mt-1">KVL Dasar</p></div>
+        <div class="rounded-xl bg-sand p-3"><p class="text-2xl">🚀</p><p class="text-[11px] font-bold text-maroon mt-1">KVL Lanjutan</p></div>
+        <div class="rounded-xl bg-sand p-3 col-span-2 sm:col-span-1"><p class="text-2xl">🏅</p><p class="text-[11px] font-bold text-maroon mt-1">KVL Expert</p></div>
+      </div>
+
+      <div class="mt-8 space-y-4">
+        <label class="block">
+          <span id="ui-label-name" class="text-sm font-bold text-maroon ml-1">Nama Lengkap</span>
+          <input id="inp-name" type="text" autocomplete="off" placeholder="Contoh: Ahmad Fauzi"
+                 class="mt-1.5 w-full rounded-xl border-2 border-[#E5D8C8] bg-white px-4 py-3 text-base font-semibold focus:border-maroon transition">
+        </label>
+        <label class="block">
+          <span id="ui-label-class" class="text-sm font-bold text-maroon ml-1">Kelas</span>
+          <input id="inp-class" type="text" autocomplete="off" placeholder="Contoh: XI IPA 1"
+                 class="mt-1.5 w-full rounded-xl border-2 border-[#E5D8C8] bg-white px-4 py-3 text-base font-semibold focus:border-maroon transition">
+        </label>
+      </div>
+
+      <div class="mt-6 rounded-2xl bg-[#FFF6E5] border-l-4 border-gold p-4 text-sm text-[#6B4A06] leading-relaxed">
+        <p id="ui-rules-title" class="font-extrabold mb-1">📌 Aturan</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li id="ui-rule-1">Waktu <b>60 menit</b> mulai berjalan saat menekan tombol di bawah.</li>
+          <li id="ui-rule-2">Semua jawaban berupa <b>bilangan bulat</b> (boleh negatif jika perlu).</li>
+          <li id="ui-rule-3">Boleh mengubah jawaban kapan saja sebelum submit.</li>
+          <li id="ui-rule-4">Waktu habis = jawaban otomatis dikirim.</li>
+          <li id="ui-rule-5">Jangan tutup tab. Progres tersimpan otomatis di browser ini.</li>
+        </ul>
+      </div>
+
+      <button id="btn-start" type="button"
+        class="mt-8 w-full sm:w-auto mx-auto block px-10 py-4 rounded-2xl bg-maroon hover:bg-maroon-dark active:scale-95 text-white font-extrabold text-lg shadow-md transition">
+        Mulai Latihan Sekarang →
+      </button>
+
+      <p id="start-error" class="mt-3 text-center text-sm font-bold text-maroon hidden"></p>
+    </div>
+  </section>
+
+  <!-- ═══════════ PRACTICE SCREEN ═══════════ -->
+  <section id="practice-screen" class="hidden space-y-6"></section>
+
+  <!-- ═══════════ RESULT SCREEN ═══════════ -->
+  <section id="result-screen" class="hidden"></section>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════
+   CONFIG & I18N
+   ═══════════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxgo2AnpqJSqJTw3GCuIAJPcNo6jUJ5yt0rxmSjcKdKYGeQ2LG_vU_gFPTh9Teiq5i9Tg/exec',
+  DURATION_SEC: 60 * 60,
+  STORAGE_KEY: 'abbs-latihan60-session-v2'
+};
+
+let currentLang = 'id';
+
+const I18N = {
+  id: {
+    subtitle: "SMA ABBS Surakarta",
+    title: "Latihan Terpadu · Chapter 2",
+    progressLabel: "Progres jawaban",
+    startTitle: "Latihan Terpadu 60 Menit",
+    startDesc: "Semua materi <b>Chapter 2: DC Circuit</b> — dari Hukum Ohm sampai Jembatan Wheatstone. 25 soal, 60 menit, langsung dinilai.",
+    labelName: "Nama Lengkap",
+    labelClass: "Kelas",
+    rulesTitle: "📌 Aturan",
+    rule1: "Waktu <b>60 menit</b> mulai berjalan saat menekan tombol di bawah.",
+    rule2: "Semua jawaban berupa <b>bilangan bulat</b> (boleh negatif jika perlu).",
+    rule3: "Boleh mengubah jawaban kapan saja sebelum submit.",
+    rule4: "Waktu habis = jawaban otomatis dikirim.",
+    rule5: "Jangan tutup tab. Progres tersimpan otomatis di browser ini.",
+    startBtn: "Mulai Latihan Sekarang →",
+    errFill: "Nama dan Kelas wajib diisi.",
+    workingOn: "Sedang mengerjakan",
+    part: "Bagian",
+    finishedQ: "Sudah selesai mengerjakan semua soal?",
+    submitBtn: "Kirim Jawaban & Lihat Hasil →",
+    timeLeft: "Waktu tersisa:",
+    confirmSubmit: "Kamu belum mengisi semua soal. Kirim sekarang?",
+    resCorrect: "Benar",
+    resTime: "Waktu",
+    resScore: "Skor",
+    resBreakdown: "📊 Rincian per Bagian",
+    resReview: "🔍 Review Jawaban",
+    resYourAns: "Jawabanmu:",
+    resRightAns: "Jawaban benar:",
+    btnDownload: "📥 Unduh Hasil (JSON)",
+    btnNew: "🔄 Mulai Sesi Baru",
+    confirmNew: "Mulai sesi baru? Hasil sesi ini tidak akan ditampilkan lagi."
+  },
+  en: {
+    subtitle: "ABBS High School Surakarta",
+    title: "Integrated Practice · Chapter 2",
+    progressLabel: "Answer Progress",
+    startTitle: "60-Minute Integrated Practice",
+    startDesc: "All materials for <b>Chapter 2: DC Circuits</b> — from Ohm's Law to Wheatstone Bridge. 25 questions, 60 minutes, auto-graded.",
+    labelName: "Full Name",
+    labelClass: "Class / Grade",
+    rulesTitle: "📌 Rules",
+    rule1: "The <b>60-minute</b> timer starts when you click the button below.",
+    rule2: "All answers must be <b>integers</b> (negatives allowed if necessary).",
+    rule3: "You can change your answers anytime before submitting.",
+    rule4: "Time's up = answers are submitted automatically.",
+    rule5: "Do not close this tab. Progress is saved automatically in this browser.",
+    startBtn: "Start Practice Now →",
+    errFill: "Name and Class are required.",
+    workingOn: "Currently working on",
+    part: "Section",
+    finishedQ: "Finished answering all questions?",
+    submitBtn: "Submit Answers & View Results →",
+    timeLeft: "Time left:",
+    confirmSubmit: "You haven't answered all questions. Submit now?",
+    resCorrect: "Correct",
+    resTime: "Time",
+    resScore: "Score",
+    resBreakdown: "📊 Section Breakdown",
+    resReview: "🔍 Answer Review",
+    resYourAns: "Your answer:",
+    resRightAns: "Correct answer:",
+    btnDownload: "📥 Download Results (JSON)",
+    btnNew: "🔄 Start New Session",
+    confirmNew: "Start a new session? Current results will be cleared."
+  }
+};
+
+function updateUIStrings() {
+  const dict = I18N[currentLang];
+  
+  // Update Start Screen
+  document.getElementById('ui-subtitle').innerText = dict.subtitle;
+  document.getElementById('ui-title').innerText = dict.title;
+  document.getElementById('ui-progress-label').innerText = dict.progressLabel;
+  
+  if (document.getElementById('start-screen').classList.contains('hidden') === false) {
+    document.getElementById('ui-start-title').innerText = dict.startTitle;
+    document.getElementById('ui-start-desc').innerHTML = dict.startDesc;
+    document.getElementById('ui-label-name').innerText = dict.labelName;
+    document.getElementById('ui-label-class').innerText = dict.labelClass;
+    document.getElementById('ui-rules-title').innerText = dict.rulesTitle;
+    document.getElementById('ui-rule-1').innerHTML = dict.rule1;
+    document.getElementById('ui-rule-2').innerHTML = dict.rule2;
+    document.getElementById('ui-rule-3').innerText = dict.rule3;
+    document.getElementById('ui-rule-4').innerText = dict.rule4;
+    document.getElementById('ui-rule-5').innerText = dict.rule5;
+    document.getElementById('btn-start').innerText = dict.startBtn;
+  }
+  
+  // Toggle language button text
+  document.getElementById('lang-toggle').innerText = currentLang === 'id' ? 'EN' : 'ID';
+
+  // Re-render practice or result screens if active
+  if (state.sessionId) {
+    if (!state.submitted) {
+      renderPractice();
+    } else {
+      const graded = gradeAll();
+      renderResult(graded, generateSubmissionObject(graded));
+    }
+  }
+}
+
+document.getElementById('lang-toggle').addEventListener('click', () => {
+  currentLang = currentLang === 'id' ? 'en' : 'id';
+  updateUIStrings();
+});
+
+/* ═══════════════════════════════════════════════════════════════════════
+   HELPERS & SVG
+   ═══════════════════════════════════════════════════════════════════════ */
+const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const escAttr = s => String(s ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+const fmtTime = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+const NICE_PARALLEL = [ [3,6,2],[6,6,3],[4,12,3],[10,10,5],[5,20,4],[2,2,1],[4,4,2],[6,3,2],[12,4,3],[8,8,4],[6,12,4],[10,15,6],[12,12,6] ];
+
+const App = window.App = { mathReady: false, typesetAll() { typeset(document.getElementById('app-main')); } };
+let mjChain = Promise.resolve();
+function typeset(el) { if (!App.mathReady || !el) return; mjChain = mjChain.then(() => MathJax.typesetPromise([el])).catch(() => {}); }
+function clearMath(el) { if (App.mathReady && el) MathJax.typesetClear([el]); }
+
+const WIRE = '#2C1A1A', RES = '#8B1515', PLUS = '#B3261E', MINUS = '#1F4E8C';
+const svgOpen = (w, h) => `<svg viewBox="0 0 ${w} ${h}" class="w-full h-auto max-w-xl mx-auto">`;
+const ln = (x1,y1,x2,y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${WIRE}" stroke-width="4.5" stroke-linecap="round"/>`;
+const tx = (x,y,s,o={}) => { const {size=14,weight=700,fill='#2C1A1A',anchor='middle'}=o; return `<text x="${x}" y="${y}" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}">${s}</text>`; };
+function resH(x1,x2,y){const n=6,seg=(x2-x1)/n,amp=9;let d=`M${x1},${y}`;for(let k=0;k<n;k++)d+=` L${x1+seg*(k+0.5)},${y+(k%2?amp:-amp)}`;return `<path d="${d} L${x2},${y}" fill="none" stroke="${RES}" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>`;}
+function batV(x,cy,plusTop){const yP=plusTop?cy-8:cy+8,yM=plusTop?cy+8:cy-8;return `<line x1="${x-22}" y1="${yP}" x2="${x+22}" y2="${yP}" stroke="${WIRE}" stroke-width="4.5" stroke-linecap="round"/><line x1="${x-11}" y1="${yM}" x2="${x+11}" y2="${yM}" stroke="${WIRE}" stroke-width="9"/><text x="${x+30}" y="${plusTop?cy-11:cy+22}" font-size="16" fill="${PLUS}" font-weight="800">+</text><text x="${x+30}" y="${plusTop?cy+22:cy-11}" font-size="16" fill="${MINUS}" font-weight="800">−</text>`;}
+function svgLoop({leftBat, topRes, rightRes, bottomRes}) {
+  const L=100,R=340,T=50,B=210,cy=130;
+  return svgOpen(440,260) +
+    ln(L,T,R,T) + (topRes ? resH(200,260,T) + tx(230,T-22,topRes.fill) : '') +
+    ln(R,T,R,cy-8) + (rightRes ? batV(R,cy,!rightRes.plusTop) + tx(R+40,cy+5,rightRes.label,{anchor:'start'}) : '') + ln(R,cy+8,R,B) +
+    ln(L,B,R,B) + (bottomRes ? resH(200,260,B) + tx(230,B+30,bottomRes.label) : '') +
+    ln(L,T,L,cy-8) + (leftBat ? batV(L,cy,leftBat.plusTop) + tx(L-30,cy+5,leftBat.label,{anchor:'end'}) : '') + ln(L,cy+8,L,B) + '</svg>';
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   QUESTIONS
+   ═══════════════════════════════════════════════════════════════════════ */
+const SECTIONS = [
+  { id: 'A', title: 'Ohm & Rangkaian / Ohm & Circuits', icon: '🔌' },
+  { id: 'B', title: 'Kirchhoff I & Daya / Power', icon: '⚡' },
+  { id: 'C', title: 'KVL Dasar / Basic KVL', icon: '💰' },
+  { id: 'D', title: 'KVL Lanjutan / Advanced KVL', icon: '🚀' },
+  { id: 'E', title: 'KVL Expert / Expert KVL', icon: '🏅' }
+];
+
+const QUESTIONS = [
+  /* SECTION A */
+  { id: 'A1', section: 'A', type: 'number', unit: 'V',
+    gen() { const I = rand(2,8), R = rand(3,15); return { p:{I,R}, ans: I*R }; },
+    text: (p, l) => l==='en' ? `A resistor \\(${p.R}\\ \\Omega\\) has a current of \\(${p.I}\\ \\text{A}\\) flowing through it. What is the voltage across the resistor?` 
+                             : `Sebuah resistor \\(${p.R}\\ \\Omega\\) dialiri arus \\(${p.I}\\ \\text{A}\\). Berapa tegangan pada resistor tersebut?` },
+  { id: 'A2', section: 'A', type: 'number', unit: 'V',
+    gen() { const R1 = rand(2,10), R2 = rand(2,10), I = rand(1,5); return { p:{R1,R2,I}, ans: I*(R1+R2) }; },
+    text: (p, l) => l==='en' ? `Two resistors \\(R_1 = ${p.R1}\\ \\Omega\\) and \\(R_2 = ${p.R2}\\ \\Omega\\) are in <b>series</b>, with a current of \\(I = ${p.I}\\ \\text{A}\\). What is the total voltage?` 
+                             : `Dua resistor \\(R_1 = ${p.R1}\\ \\Omega\\) dan \\(R_2 = ${p.R2}\\ \\Omega\\) dirangkai <b>seri</b>, dialiri arus \\(I = ${p.I}\\ \\text{A}\\). Berapa tegangan total pada rangkaian?` },
+  { id: 'A3', section: 'A', type: 'number', unit: 'Ω',
+    gen() { const [r1,r2,rp] = pick(NICE_PARALLEL); return { p:{r1,r2}, ans: rp }; },
+    text: (p, l) => l==='en' ? `Two resistors \\(R_1 = ${p.r1}\\ \\Omega\\) and \\(R_2 = ${p.r2}\\ \\Omega\\) are in <b>parallel</b>. What is the equivalent resistance?` 
+                             : `Dua resistor \\(R_1 = ${p.r1}\\ \\Omega\\) dan \\(R_2 = ${p.r2}\\ \\Omega\\) dirangkai <b>paralel</b>. Berapa hambatan penggantinya?` },
+  { id: 'A4', section: 'A', type: 'number', unit: 'A',
+    gen() { const [r1,r2,rp] = pick(NICE_PARALLEL), I = rand(1,4); return { p:{r1,r2,V:I*rp}, ans: I }; },
+    text: (p, l) => l==='en' ? `Two resistors \\(R_1 = ${p.r1}\\ \\Omega\\) and \\(R_2 = ${p.r2}\\ \\Omega\\) are in <b>parallel</b> and connected to a \\(V = ${p.V}\\ \\text{V}\\) source. What is the total current?` 
+                             : `Dua resistor \\(R_1 = ${p.r1}\\ \\Omega\\) dan \\(R_2 = ${p.r2}\\ \\Omega\\) dirangkai <b>paralel</b> dan dihubungkan ke sumber \\(V = ${p.V}\\ \\text{V}\\). Berapa arus totalnya?` },
+  { id: 'A5', section: 'A', type: 'number', unit: 'Ω',
+    gen() { const [r1,r2,rp] = pick(NICE_PARALLEL), r3 = rand(2,8); return { p:{r1,r2,r3}, ans: rp + r3 }; },
+    text: (p, l) => l==='en' ? `Resistors \\(R_1 = ${p.r1}\\ \\Omega\\) and \\(R_2 = ${p.r2}\\ \\Omega\\) are in parallel, then connected in series with \\(R_3 = ${p.r3}\\ \\Omega\\). What is the total resistance?` 
+                             : `Resistor \\(R_1 = ${p.r1}\\ \\Omega\\) dan \\(R_2 = ${p.r2}\\ \\Omega\\) dirangkai paralel, lalu diserikan dengan \\(R_3 = ${p.r3}\\ \\Omega\\). Berapa hambatan total rangkaian?` },
+
+  /* SECTION B */
+  { id: 'B1', section: 'B', type: 'number', unit: 'A',
+    gen() { const i1 = rand(2,9), i2 = rand(2,9), i4 = rand(1, i1+i2-1); return { p:{i1,i2,i4}, ans: i1+i2-i4 }; },
+    text: (p, l) => l==='en' ? `At a junction, incoming currents are \\(I_1 = ${p.i1}\\ \\text{A}\\) and \\(I_2 = ${p.i2}\\ \\text{A}\\). One outgoing current is \\(I_4 = ${p.i4}\\ \\text{A}\\). What is the other outgoing current \\(I_3\\)?` 
+                             : `Pada titik cabang, arus masuk \\(I_1 = ${p.i1}\\ \\text{A}\\) dan \\(I_2 = ${p.i2}\\ \\text{A}\\). Arus keluar \\(I_4 = ${p.i4}\\ \\text{A}\\). Berapa arus keluar yang lain, \\(I_3\\)?` },
+  { id: 'B2', section: 'B', type: 'number', unit: 'A',
+    gen() { const i1 = rand(3,10), i2 = rand(2,8), i4 = rand(1,4); return { p:{i1,i2,i4}, ans: i1+i2-i4 }; },
+    text: (p, l) => l==='en' ? `Two incoming currents: \\(I_1 = ${p.i1}\\ \\text{A}\\) and \\(I_2 = ${p.i2}\\ \\text{A}\\). One outgoing current is \\(I_3 = ${p.i4}\\ \\text{A}\\). What is the other outgoing current \\(I_4\\)?` 
+                             : `Dua arus masuk: \\(I_1 = ${p.i1}\\ \\text{A}\\) dan \\(I_2 = ${p.i2}\\ \\text{A}\\). Satu arus keluar diketahui \\(I_3 = ${p.i4}\\ \\text{A}\\). Berapa arus keluar lainnya, \\(I_4\\)?` },
+  { id: 'B3', section: 'B', type: 'number', unit: 'W',
+    gen() { const I = rand(2,6), R = rand(3,10); return { p:{I,R}, ans: I*I*R }; },
+    text: (p, l) => l==='en' ? `A heating device with \\(R = ${p.R}\\ \\Omega\\) draws a current of \\(I = ${p.I}\\ \\text{A}\\). What is its electrical power?` 
+                             : `Sebuah alat pemanas \\(R = ${p.R}\\ \\Omega\\) dialiri arus \\(I = ${p.I}\\ \\text{A}\\). Berapa daya listriknya?` },
+  { id: 'B4', section: 'B', type: 'number', unit: 'Rp',
+    gen() { const P = rand(2,5)*50, t = rand(2,8), rate = pick([1000,1200,1500]); return { p:{P,t,rate}, ans: ((P*t*30)/1000)*rate }; },
+    text: (p, l) => l==='en' ? `A TV with a power of <b>${p.P} W</b> is used for <b>${p.t} hours/day</b>. The rate is Rp ${p.rate}/kWh. Calculate the electricity cost for 1 month (30 days)!` 
+                             : `Sebuah TV berdaya <b>${p.P} W</b> menyala <b>${p.t} jam/hari</b>. Tarif Rp ${p.rate}/kWh. Hitung biaya listrik dalam 1 bulan (30 hari) untuk TV tersebut!` },
+  { id: 'B5', section: 'B', type: 'number', unit: 'W',
+    gen() { const V = pick([6,12,18,24]), R = rand(2,12); return (V*V)%R !== 0 ? {p:{V,R:R*2}, ans:(V*V)/(R*2)} : {p:{V,R}, ans:(V*V)/R}; },
+    text: (p, l) => l==='en' ? `Resistor \\(R_2 = ${p.R}\\ \\Omega\\) is connected in parallel to a \\(V = ${p.V}\\ \\text{V}\\) source. What is the power absorbed by R₂?` 
+                             : `Resistor \\(R_2 = ${p.R}\\ \\Omega\\) dipasang paralel pada sumber \\(V = ${p.V}\\ \\text{V}\\). Berapa daya yang diserap R₂?` },
+
+  /* SECTION C */
+  { id: 'C1', section: 'C', type: 'number', unit: 'V',
+    gen() { const E = rand(6,24), V1 = rand(1,E-1); return { p:{E,V1}, ans: E-V1 }; },
+    text: (p, l) => l==='en' ? `Battery \\(\\varepsilon = ${p.E}\\ \\text{V}\\). R₁ drops \\(V_1 = ${p.V1}\\ \\text{V}\\). What is the voltage drop across R₂?` 
+                             : `Baterai \\(\\varepsilon = ${p.E}\\ \\text{V}\\). R₁ memakai \\(V_1 = ${p.V1}\\ \\text{V}\\). Berapa penurunan tegangan di R₂?`,
+    svg: p => svgLoop({ leftBat:{plusTop:true,label:`ε=${p.E}V`}, topRes:{fill:`R₁ (V₁=${p.V1}V)`}, rightRes:{plusTop:true,label:'R₂'}, bottomRes:{label:'R₂ : V₂ = ?'} }) },
+  { id: 'C2', section: 'C', type: 'number', unit: 'V',
+    gen() { const E = rand(15,30); let V1,V3; do { V1 = rand(2,E-4); V3 = rand(2,E-4); } while (E-V1-V3 < 2 || V1===V3); return { p:{E,V1,V3}, ans: E-V1-V3 }; },
+    text: (p, l) => l==='en' ? `Series circuit with 3 resistors. \\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(V_3 = ${p.V3}\\ \\text{V}\\). What is \\(V_2\\)?` 
+                             : `Rangkaian seri 3 resistor. \\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(V_3 = ${p.V3}\\ \\text{V}\\). Berapa \\(V_2\\)?` },
+  { id: 'C3', section: 'C', type: 'number', unit: 'A',
+    gen() { const I = rand(1,4), R1 = rand(1,6), R2 = rand(2,8); return { p:{E:I*(R1+R2), V1:I*R1, R2}, ans: I }; },
+    text: (p, l) => l==='en' ? `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(R_2 = ${p.R2}\\ \\Omega\\). What is the current flowing through R₂?` 
+                             : `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Berapa arus yang mengalir melalui R₂?` },
+  { id: 'C4', section: 'C', type: 'number', unit: 'A',
+    gen() { const R1 = rand(1,6), R2 = rand(1,6), I = rand(1,3), E2 = rand(2,9); return { p:{E1:E2+I*(R1+R2),E2,R1,R2}, ans: I }; },
+    text: (p, l) => l==='en' ? `Two opposing batteries: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\) and \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\). \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). What is the current?` 
+                             : `Dua baterai saling berlawanan: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\) dan \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\). \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Berapa arusnya?`,
+    svg: p => svgLoop({ leftBat:{plusTop:true,label:`ε₁=${p.E1}V`}, topRes:{fill:`R₁=${p.R1}Ω`}, rightRes:{plusTop:true,label:`ε₂=${p.E2}V`}, bottomRes:{label:`R₂=${p.R2}Ω`} }) },
+  { id: 'C5', section: 'C', type: 'number', unit: 'V',
+    gen() { const E1 = rand(10,20), E2 = rand(2,9); return { p:{E1,E2}, ans: E1-E2 }; },
+    text: (p, l) => l==='en' ? `Battery 1 = ${p.E1} V. Battery 2 is opposing = ${p.E2} V. What is the net voltage (after tax) in the loop?` 
+                             : `Baterai 1 = ${p.E1} V. Baterai 2 dipasang berlawanan = ${p.E2} V. Berapa modal bersih (setelah pajak) dalam loop?` },
+
+  /* SECTION D */
+  { id: 'D1', section: 'D', type: 'number', unit: 'A',
+    gen() { const R1 = rand(1,5), R2 = rand(1,5), I = rand(1,3), E1 = rand(2,8), E2 = rand(2,8); return { p:{E1,E2,R1,R2}, ans: (E1+E2)/(R1+R2) === Math.floor((E1+E2)/(R1+R2)) ? (E1+E2)/(R1+R2) : I }; },
+    text: (p, l) => l==='en' ? `Battery 2 is in the <b>same direction</b> as Battery 1 (bonus). \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). What is the current?` 
+                             : `Baterai 2 dipasang <b>searah</b> dengan baterai 1 (jadi bonus). \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Berapa arusnya?` },
+  { id: 'D2', section: 'D', type: 'choice',
+    optionsId: ['Arus 3 A searah tebakan', 'Arus 3 A berlawanan tebakan', 'Mustahil, pasti salah hitung', 'Rangkaian putus'],
+    optionsEn: ['Current 3 A in assumed direction', 'Current 3 A opposite to assumed direction', 'Impossible, miscalculated', 'Broken circuit'],
+    gen() { return { p:{}, ans: 1 }; },
+    text: (p, l) => l==='en' ? `The calculated current in a branch is \\(I = -3\\ \\text{A}\\). What does this mean?` 
+                             : `Hasil perhitungan arus di salah satu cabang adalah \\(I = -3\\ \\text{A}\\). Apa artinya?` },
+  { id: 'D3', section: 'D', type: 'number', unit: 'V',
+    gen() { const I = rand(1,4), R1 = rand(1,8), R2 = rand(1,8); return { p:{E:I*(R1+R2), R1, R2, I}, ans: I*R2 }; },
+    text: (p, l) => l==='en' ? `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Point P is between R₁ and R₂ (reference 0 V at negative terminal). What is the potential V_P?` 
+                             : `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Titik P berada di antara R₁ dan R₂ (acuan 0 V di kutub negatif baterai). Berapa potensial V_P?` },
+  { id: 'D4', section: 'D', type: 'number', unit: 'A',
+    gen() { const r1 = rand(1,2), r2 = rand(1,2), R = rand(2,8), I = rand(1,3), E2 = rand(2,9); return { p:{E1:E2+I*(R+r1+r2), E2, r1, r2, R}, ans: I }; },
+    text: (p, l) => l==='en' ? `Bat 1: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(r_1 = ${p.r1}\\ \\Omega\\). Bat 2 (opposing): \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(r_2 = ${p.r2}\\ \\Omega\\). External \\(R = ${p.R}\\ \\Omega\\). What is the current?` 
+                             : `Baterai 1: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(r_1 = ${p.r1}\\ \\Omega\\). Baterai 2 (berlawanan): \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(r_2 = ${p.r2}\\ \\Omega\\). Resistor luar \\(R = ${p.R}\\ \\Omega\\). Berapa arusnya?` },
+  { id: 'D5', section: 'D', type: 'number', unit: 'A',
+    gen() { const i1 = rand(2,6), i2 = -rand(1,3); return { p:{i1,i2}, ans: i1+i2 }; },
+    text: (p, l) => l==='en' ? `In a 2-loop circuit, \\(I_1 = ${p.i1}\\ \\text{A}\\) and \\(I_2 = ${p.i2}\\ \\text{A}\\) (negative = opposite real direction). What is \\(I_3 = I_1 + I_2\\)?` 
+                             : `Pada rangkaian 2 loop, \\(I_1 = ${p.i1}\\ \\text{A}\\) dan \\(I_2 = ${p.i2}\\ \\text{A}\\) (negatif = arah sebenarnya terbalik). Berapa \\(I_3 = I_1 + I_2\\)?` },
+
+  /* SECTION E */
+  { id: 'E1', section: 'E', type: 'choice',
+    optionsId: ['Pajak (modal berkurang)', 'Bonus (modal bertambah)'],
+    optionsEn: ['Tax (voltage drops)', 'Bonus (voltage adds up)'],
+    gen() { return { p:{}, ans: 0 }; },
+    text: (p, l) => l==='en' ? `In a 2-loop circuit, the middle branch battery \\(\\varepsilon_3\\) has (+) on top and (−) on bottom. Both loops go downwards in the middle branch. For both loops, ε₃ acts as...` 
+                             : `Pada rangkaian 2 loop, baterai \\(\\varepsilon_3\\) di cabang tengah memiliki garis (+) di atas dan garis (−) di bawah. Kedua loop berjalan turun di cabang tengah. Bagi kedua loop, ε₃ berperan sebagai...` },
+  { id: 'E2', section: 'E', type: 'number', unit: 'A',
+    gen() { const I1 = rand(1,3), I2 = rand(1,3), R1 = rand(1,4), R2 = rand(1,4), R3 = rand(1,3); const a = R1+R3, d = R2+R3; return { p:{N1:a*I1+R3*I2, N2:R3*I1+d*I2, a, d, I1}, ans: I2 }; },
+    text: (p, l) => l==='en' ? `Simplified loop equations: <b>\\(${p.N1} = ${p.a}\\,I_1 + R_3\\,I_2\\)</b> and <b>\\(${p.N2} = R_3\\,I_1 + ${p.d}\\,I_2\\)</b>. If \\(I_1 = ${p.I1}\\) — <i>use substitution</i>. What is \\(I_2\\)?` 
+                             : `Persamaan disederhanakan: <b>\\(${p.N1} = ${p.a}\\,I_1 + R_3\\,I_2\\)</b> dan <b>\\(${p.N2} = R_3\\,I_1 + ${p.d}\\,I_2\\)</b>. Jika \\(I_1 = ${p.I1}\\) — <i>gunakan substitusi</i>. Berapa \\(I_2\\)?` },
+  { id: 'E3', section: 'E', type: 'number', unit: 'V',
+    gen() { const I1 = rand(1,4), R1 = rand(1,5), E1 = I1*R1 + rand(2,6); return { p:{E1,I1,R1}, ans: E1 - I1*R1 }; },
+    text: (p, l) => l==='en' ? `\\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(I_1 = ${p.I1}\\ \\text{A}\\) (loop 1 current), \\(R_1 = ${p.R1}\\ \\Omega\\). Calculate \\(V_{AB}\\) via the left route: \\(V_{AB} = \\varepsilon_1 - I_1 R_1\\).` 
+                             : `\\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(I_1 = ${p.I1}\\ \\text{A}\\) (arus loop 1), \\(R_1 = ${p.R1}\\ \\Omega\\). Hitung \\(V_{AB}\\) lewat rute kiri: \\(V_{AB} = \\varepsilon_1 - I_1 R_1\\).` },
+  { id: 'E4', section: 'E', type: 'number', unit: 'Ω',
+    gen() { const R1 = rand(2,6), R2 = rand(2,6), R3 = R1*rand(2,3); const Rx = (R2*R3)/R1; return { p:{R1,R2,R3}, ans: Rx }; },
+    text: (p, l) => l==='en' ? `Wheatstone bridge is balanced. \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\), \\(R_3 = ${p.R3}\\ \\Omega\\). What is \\(R_x\\)? Use \\(R_1 R_x = R_2 R_3\\).` 
+                             : `Jembatan Wheatstone seimbang. \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\), \\(R_3 = ${p.R3}\\ \\Omega\\). Berapa \\(R_x\\)? Gunakan \\(R_1 R_x = R_2 R_3\\).` },
+  { id: 'E5', section: 'E', type: 'number', unit: 'A',
+    gen() { return { p:{}, ans: 0 }; },
+    text: (p, l) => l==='en' ? `The Wheatstone bridge is balanced. What is the current flowing through the galvanometer G in the middle? (Write the number)` 
+                             : `Jembatan Wheatstone dalam keadaan seimbang. Berapa arus yang mengalir melalui galvanometer G di tengah jembatan? (tulis angkanya)` }
+];
+
+/* ═══════════════════════════════════════════════════════════════════════
+   STATE & TIMER
+   ═══════════════════════════════════════════════════════════════════════ */
+let state = { sessionId: null, student: { name: '', class: '' }, questions: [], answers: {}, startTime: null, submitted: false, submissionStatus: null, submissionError: null };
+
+function saveState() { try { localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(state)); } catch(e){} }
+function loadState() { try { return JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)); } catch(e){ return null; } }
+function clearState() { try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch(e){} }
+
+let timerInterval = null;
+function startTimer() {
+  updateTimerDisplay();
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    updateTimerDisplay();
+    if (getElapsed() >= CONFIG.DURATION_SEC) { clearInterval(timerInterval); autoSubmit(); }
+  }, 1000);
+}
+function stopTimer() { if (timerInterval) clearInterval(timerInterval); timerInterval = null; }
+function getElapsed() { return Math.floor((Date.now() - state.startTime) / 1000); }
+function getRemaining() { return Math.max(0, CONFIG.DURATION_SEC - getElapsed()); }
+function updateTimerDisplay() {
+  const el = document.getElementById('timer'), pill = document.getElementById('timer-pill');
+  if (!el) return;
+  const remaining = getRemaining();
+  el.textContent = fmtTime(remaining);
+  if (remaining <= 300) { pill.classList.remove('bg-maroon-dark'); pill.classList.add('bg-[#B3261E]'); }
+  
+  const bottomEl = document.getElementById('timer-bottom');
+  if(bottomEl) bottomEl.textContent = fmtTime(remaining);
+}
+function autoSubmit() { if (!state.submitted) onSubmit(true); }
+
+function showScreen(id) {
+  ['start-screen', 'practice-screen', 'result-screen'].forEach(s => document.getElementById(s).classList.toggle('hidden', s !== id));
+  document.getElementById('timer-pill').classList.toggle('hidden', id !== 'practice-screen');
+  document.getElementById('progress-wrap').classList.toggle('hidden', id !== 'practice-screen');
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   RENDER PRACTICE
+   ═══════════════════════════════════════════════════════════════════════ */
+function buildQuestions() {
+  return QUESTIONS.map(q => {
+    const { p, ans } = q.gen();
+    return { ...q, params: p, answer: ans };
+  });
+}
+
+function renderPractice() {
+  const el = document.getElementById('practice-screen');
+  const dict = I18N[currentLang];
+  clearMath(el);
+
+  const bySection = {};
+  SECTIONS.forEach(s => bySection[s.id] = []);
+  state.questions.forEach((q, idx) => bySection[q.section].push({ q, idx }));
+
+  let html = `
+    <div class="rounded-2xl bg-white border-2 border-[#EADBC8] p-4 sm:p-5 flex items-start gap-3 shadow-card">
+      <div class="text-2xl" aria-hidden="true">📝</div>
+      <div class="min-w-0 flex-1">
+        <p class="text-xs uppercase tracking-wider text-maroon font-bold">${dict.workingOn}</p>
+        <p class="font-extrabold text-ink truncate">${escAttr(state.student.name)} · ${escAttr(state.student.class)}</p>
+      </div>
+    </div>`;
+
+  SECTIONS.forEach((sec, sIdx) => {
+    const items = bySection[sec.id];
+    const answeredCount = items.filter(({q}) => state.answers[q.id] !== undefined && state.answers[q.id] !== '').length;
+    html += `
+      <section class="space-y-3 mt-6">
+        <div class="rounded-2xl bg-gradient-to-r from-maroon to-maroon-light text-white p-4 sm:p-5 flex items-center justify-between gap-3 shadow-sm">
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="w-11 h-11 shrink-0 rounded-full bg-gold text-maroon-dark font-extrabold text-lg grid place-items-center shadow">${sIdx+1}</span>
+            <div class="min-w-0">
+              <p class="text-[11px] uppercase tracking-[0.18em] text-gold font-bold">${dict.part} ${sec.id} · ${sec.icon}</p>
+              <h2 class="text-base sm:text-lg font-extrabold leading-tight truncate">${sec.title.split(' / ')[currentLang==='id'?0:1] || sec.title}</h2>
+            </div>
+          </div>
+          <span class="shrink-0 text-xs font-bold px-3 py-1.5 rounded-full bg-white/15 border border-white/30 tabular-nums">${answeredCount}/${items.length}</span>
+        </div>
+        ${items.map(({q, idx}) => renderQuestion(q, idx)).join('')}
+      </section>`;
+  });
+
+  html += `
+    <div class="rounded-2xl bg-white border-2 border-gold p-5 sm:p-6 shadow-card mt-6">
+      <p class="text-center font-bold text-ink mb-3">${dict.finishedQ}</p>
+      <button id="btn-submit" type="button"
+        class="w-full sm:w-auto mx-auto block px-8 py-3.5 rounded-2xl bg-maroon hover:bg-maroon-dark active:scale-95 text-white font-extrabold text-lg shadow-md transition">
+        ${dict.submitBtn}
+      </button>
+      <p class="text-center text-xs text-[#7A675B] mt-3">${dict.timeLeft} <span id="timer-bottom" class="font-bold tabular-nums">${fmtTime(getRemaining())}</span></p>
+    </div>`;
+
+  el.innerHTML = html;
+  typeset(el);
+  updateProgress();
+
+  document.getElementById('btn-submit')?.addEventListener('click', () => onSubmit(false));
+}
+
+function renderQuestion(q, idx) {
+  const val = state.answers[q.id];
+  const sec = SECTIONS.find(s => s.id === q.section);
+  const secTitle = sec.title.split(' / ')[currentLang==='id'?0:1] || sec.title;
+
+  let inputHTML = '';
+  if (q.type === 'choice') {
+    const opts = currentLang === 'en' ? (q.optionsEn || q.optionsId) : q.optionsId;
+    inputHTML = `<div class="mt-3 space-y-2">` + opts.map((opt, i) => {
+      const checked = val === i ? 'checked' : '';
+      return `<label class="flex items-center gap-3 p-3 rounded-xl border-2 cursor-pointer transition ${checked ? 'border-maroon bg-maroon-light/30' : 'border-[#E5D8C8] bg-white hover:border-gold'}">
+        <input type="radio" name="q-${q.id}" value="${i}" ${checked} class="w-4 h-4 accent-maroon" data-qid="${q.id}">
+        <span class="text-sm sm:text-[15px] font-semibold">${opt}</span>
+      </label>`;
+    }).join('') + `</div>`;
+  } else {
+    inputHTML = `
+      <div class="mt-3 flex items-center gap-2">
+        <input type="number" inputmode="numeric" step="1" autocomplete="off"
+          data-qid="${q.id}" value="${escAttr(val ?? '')}" placeholder="0"
+          class="answer-input w-32 px-3 py-2.5 text-lg font-bold text-center rounded-xl border-2 border-[#E5D8C8] bg-white transition">
+        <span class="text-[#7A675B] font-bold">${q.unit || ''}</span>
+      </div>`;
+  }
+
+  return `
+    <div class="rounded-2xl bg-white border-2 border-[#EADBC8] p-4 sm:p-5" id="card-${q.id}">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="w-7 h-7 shrink-0 rounded-full bg-maroon text-white grid place-items-center font-extrabold text-xs">${idx+1}</span>
+        <p class="text-[11px] font-bold uppercase tracking-wider text-maroon/70">Q${idx+1} · ${secTitle}</p>
+      </div>
+      ${q.svg ? `<div class="my-3">${q.svg(q.params)}</div>` : ''}
+      <p class="text-[15px] sm:text-base leading-relaxed">${q.text(q.params, currentLang)}</p>
+      ${inputHTML}
+    </div>`;
+}
+
+function updateProgress() {
+  const total = state.questions.length;
+  let answered = 0;
+  state.questions.forEach(q => {
+    const v = state.answers[q.id];
+    if (v !== undefined && v !== '' && v !== null) answered++;
+  });
+  const pct = Math.round((answered / total) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `${answered}/${total}`;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   EVENTS & SUBMISSION
+   ═══════════════════════════════════════════════════════════════════════ */
+document.addEventListener('input', e => {
+  const inp = e.target.closest('input[data-qid]');
+  if (!inp) return;
+  state.answers[inp.dataset.qid] = inp.value;
+  saveState(); updateProgress();
+});
+
+document.addEventListener('change', e => {
+  const inp = e.target.closest('input[type="radio"][data-qid]');
+  if (!inp) return;
+  state.answers[inp.dataset.qid] = parseInt(inp.value, 10);
+  saveState(); updateProgress();
+  const card = document.getElementById('card-' + inp.dataset.qid);
+  if (card) {
+    card.querySelectorAll('label').forEach(lbl => {
+      const on = lbl.querySelector('input[type="radio"]').checked;
+      lbl.classList.toggle('border-maroon', on); lbl.classList.toggle('bg-maroon-light/30', on);
+      lbl.classList.toggle('border-[#E5D8C8]', !on); lbl.classList.toggle('bg-white', !on);
+    });
+  }
+});
+
+document.getElementById('btn-start').addEventListener('click', () => {
+  const name = document.getElementById('inp-name').value.trim();
+  const cls = document.getElementById('inp-class').value.trim();
+  const err = document.getElementById('start-error');
+  const dict = I18N[currentLang];
+
+  if (!name || !cls) { err.textContent = dict.errFill; err.classList.remove('hidden'); return; }
+  err.classList.add('hidden');
+
+  state.sessionId = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+  state.student = { name, class: cls };
+  state.questions = buildQuestions();
+  state.answers = {};
+  state.startTime = Date.now();
+  state.submitted = false;
+  saveState();
+
+  renderPractice();
+  showScreen('practice-screen');
+  startTimer();
+});
+
+function gradeAll() {
+  const results = state.questions.map(q => {
+    const raw = state.answers[q.id];
+    let isCorrect = false;
+    if (q.type === 'choice') { isCorrect = raw === q.answer; } 
+    else { const v = Number(raw); isCorrect = raw !== undefined && raw !== '' && Number.isFinite(v) && v === q.answer; }
+    return { q, given: raw, correct: isCorrect };
+  });
+  const correctCount = results.filter(r => r.correct).length;
+  const score = Math.round((correctCount / state.questions.length) * 100);
+  return { results, correctCount, score };
+}
+
+function generateSubmissionObject(graded) {
+  return {
+    sessionId: state.sessionId, name: state.student.name, class: state.student.class,
+    score: graded.score, correct: graded.correctCount, total: state.questions.length,
+    timeSpent: getElapsed(), timestamp: new Date().toISOString(),
+    perSection: SECTIONS.map(sec => {
+      const items = graded.results.filter(r => r.q.section === sec.id);
+      return { section: sec.id, title: sec.title, correct: items.filter(r => r.correct).length, total: items.length };
+    }),
+    answers: graded.results.map(r => ({ id: r.q.id, given: r.given, correct: r.q.answer, isCorrect: r.correct }))
+  };
+}
+
+async function onSubmit(auto = false) {
+  if (state.submitted) return;
+  const filled = Object.values(state.answers).filter(v => v !== '' && v !== undefined && v !== null).length;
+  if (!auto && filled < state.questions.length) {
+    if (!confirm(I18N[currentLang].confirmSubmit)) return;
+  }
+  if (!auto) stopTimer();
+
+  const graded = gradeAll();
+  const submission = generateSubmissionObject(graded);
+
+  state.submitted = true;
+  state.submissionStatus = 'sending';
+  saveState();
+  renderResult(graded, submission);
+  showScreen('result-screen');
+
+  try {
+    await submitToSheet(submission);
+    state.submissionStatus = 'sent';
+  } catch (err) {
+    state.submissionStatus = 'error';
+    state.submissionError = err.message;
+  }
+  saveState();
+  updateSubmitStatusUI();
+}
+
+function submitToSheet(data) {
+  return new Promise((resolve, reject) => {
+    if (!CONFIG.SCRIPT_URL || CONFIG.SCRIPT_URL.includes('PASTE_DEPLOYMENT_ID')) return reject(new Error('URL Apps Script belum diisi.'));
+    const name = 'iframe_' + Date.now();
+    const iframe = document.createElement('iframe'); iframe.name = name; iframe.style.display = 'none';
+    const form = document.createElement('form'); form.method = 'POST'; form.action = CONFIG.SCRIPT_URL; form.target = name; form.style.display = 'none';
+    const input = document.createElement('input'); input.type = 'hidden'; input.name = 'payload'; input.value = JSON.stringify(data);
+    form.appendChild(input); document.body.appendChild(iframe); document.body.appendChild(form);
+
+    let done = false;
+    const finish = (ok) => { if(done)return; done=true; clearTimeout(tid); try{form.remove();iframe.remove();}catch(e){} ok?resolve():reject(new Error('Timeout')); };
+    iframe.onload = () => setTimeout(() => finish(true), 400);
+    const tid = setTimeout(() => finish(false), 15000);
+    try { form.submit(); } catch(e) { finish(false); }
+  });
+}
+
+function renderResult(graded, submission) {
+  const el = document.getElementById('result-screen');
+  const dict = I18N[currentLang];
+  clearMath(el);
+
+  const score = graded.score;
+  const emoji = score >= 90 ? '🏆' : score >= 70 ? '🎉' : score >= 50 ? '👍' : '💪';
+  const title = score >= 90 ? (currentLang==='en'?'Excellent!':'Luar Biasa!') : score >= 70 ? (currentLang==='en'?'Good Job!':'Bagus!') : (currentLang==='en'?'Keep trying!':'Terus Semangat!');
+
+  let perSectionHTML = SECTIONS.map(sec => {
+    const s = submission.perSection.find(x => x.section === sec.id);
+    const pct = s.total ? Math.round((s.correct / s.total) * 100) : 0;
+    const color = pct >= 80 ? 'text-green-700' : pct >= 60 ? 'text-gold-dark' : 'text-maroon';
+    const secTitle = sec.title.split(' / ')[currentLang==='id'?0:1] || sec.title;
+    return `
+      <div class="flex items-center gap-3 py-2 border-t border-dashed border-[#EADBC8] first:border-t-0">
+        <span class="text-xl w-8 text-center">${sec.icon}</span>
+        <span class="flex-1 text-sm font-semibold">${secTitle}</span>
+        <span class="font-bold tabular-nums ${color}">${s.correct}/${s.total}</span>
+      </div>`;
+  }).join('');
+
+  let reviewHTML = graded.results.map((r, idx) => `
+    <div class="rounded-xl border-2 ${r.correct ? 'border-green-300 bg-green-50' : 'border-[#F3C9A8] bg-[#FFF1E6]'} p-3 sm:p-4">
+      <div class="flex items-center justify-between gap-3 mb-1.5">
+        <p class="text-xs font-bold uppercase tracking-wider ${r.correct ? 'text-green-700' : 'text-[#7A2E0E]'}">Q${idx+1} · ${r.q.section}${r.correct ? ' · ✅' : ' · ❌'}</p>
+        <span class="text-lg">${r.correct ? '✓' : '✗'}</span>
+      </div>
+      <p class="text-sm leading-relaxed mb-2">${r.q.text(r.q.params, currentLang)}</p>
+      <div class="text-sm space-y-1">
+        <p class="text-[#6B5A50]">${dict.resYourAns} <b class="${r.correct ? 'text-green-700' : 'text-maroon'}">${formatAnswer(r.given, r.q, currentLang)}</b></p>
+        ${r.correct ? '' : `<p class="text-[#6B5A50]">${dict.resRightAns} <b class="text-green-700">${formatAnswer(r.q.answer, r.q, currentLang)}</b></p>`}
+      </div>
+    </div>`
+  ).join('');
+
+  el.innerHTML = `
+    <div class="pop bg-white rounded-[2rem] shadow-card border border-[#EADBC8] p-6 sm:p-8 text-center">
+      <div class="text-6xl floaty" aria-hidden="true">${emoji}</div>
+      <h2 class="mt-2 text-2xl sm:text-3xl font-extrabold text-maroon">${title}</h2>
+      <p class="text-[#6B5A50] mt-1">${escAttr(state.student.name)} · ${escAttr(state.student.class)}</p>
+      <div class="mt-5 inline-flex items-baseline gap-2 rounded-2xl bg-gradient-to-br from-gold-light to-[#FFF6E5] border-2 border-gold px-8 py-4">
+        <span class="text-5xl sm:text-6xl font-black tabular-nums text-maroon">${score}</span>
+        <span class="text-2xl font-bold text-maroon/60">/100</span>
+      </div>
+      <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs sm:text-sm">
+        <div class="rounded-xl bg-washi border border-[#EADBC8] p-3">
+          <p class="text-[10px] uppercase text-[#7A675B] font-bold">${dict.resCorrect}</p>
+          <p class="text-xl font-black text-green-700 tabular-nums">${graded.correctCount}/${state.questions.length}</p>
+        </div>
+        <div class="rounded-xl bg-washi border border-[#EADBC8] p-3">
+          <p class="text-[10px] uppercase text-[#7A675B] font-bold">${dict.resTime}</p>
+          <p class="text-xl font-black text-maroon tabular-nums">${fmtTime(submission.timeSpent)}</p>
+        </div>
+        <div class="rounded-xl bg-washi border border-[#EADBC8] p-3">
+          <p class="text-[10px] uppercase text-[#7A675B] font-bold">${dict.resScore}</p>
+          <p class="text-xl font-black text-maroon tabular-nums">${score}</p>
+        </div>
+      </div>
+      <div id="submit-status" class="mt-5"></div>
+      <div class="mt-6 text-left">
+        <p class="text-sm font-extrabold uppercase tracking-wider text-maroon mb-2">${dict.resBreakdown}</p>
+        <div class="rounded-2xl bg-white border border-[#EADBC8] p-3 sm:p-4">${perSectionHTML}</div>
+      </div>
+    </div>
+    <div class="mt-6 rounded-[2rem] bg-white border border-[#EADBC8] shadow-card p-5 sm:p-6">
+      <p class="text-sm font-extrabold uppercase tracking-wider text-maroon mb-3">${dict.resReview}</p>
+      <div class="space-y-3">${reviewHTML}</div>
+    </div>
+    <div class="mt-6 text-center">
+      <button type="button" id="btn-download" class="px-5 py-3 rounded-xl bg-white border-2 border-[#E5D8C8] hover:border-gold text-sm font-bold text-maroon transition">${dict.btnDownload}</button>
+      <button type="button" id="btn-new" class="ml-2 px-5 py-3 rounded-xl bg-maroon hover:bg-maroon-dark text-sm font-bold text-white transition">${dict.btnNew}</button>
+    </div>`;
+  
+  typeset(el);
+  updateSubmitStatusUI();
+
+  document.getElementById('btn-download')?.addEventListener('click', () => downloadResult(submission));
+  document.getElementById('btn-new')?.addEventListener('click', () => {
+    if (!confirm(I18N[currentLang].confirmNew)) return;
+    clearState(); location.reload();
+  });
+}
+
+function formatAnswer(val, q, lang) {
+  if (val === undefined || val === '') return '(empty)';
+  if (q.type === 'choice') {
+    const opts = lang === 'en' ? (q.optionsEn || q.optionsId) : q.optionsId;
+    return opts[val] || '(unknown)';
+  }
+  return `${val} ${q.unit || ''}`;
+}
+
+function updateSubmitStatusUI() {
+  const el = document.getElementById('submit-status');
+  if (!el) return;
+  const t_send = currentLang === 'en' ? "Sending results to teacher..." : "Mengirim hasil ke guru…";
+  const t_sent = currentLang === 'en' ? "Results sent to Google Sheets successfully." : "Hasil berhasil dikirim ke Google Sheets.";
+  const t_err = currentLang === 'en' ? "Failed to send automatically." : "Gagal mengirim otomatis.";
+  
+  if (state.submissionStatus === 'sending') {
+    el.innerHTML = `<div class="inline-flex items-center gap-2 rounded-full bg-[#FFF6E5] border border-gold px-4 py-2 text-sm font-bold text-[#6B4A06]"><svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" opacity=".25"/><path d="M21 12a9 9 0 0 1-9 9"/></svg>${t_send}</div>`;
+  } else if (state.submissionStatus === 'sent') {
+    el.innerHTML = `<div class="inline-flex items-center gap-2 rounded-full bg-green-100 border border-green-300 px-4 py-2 text-sm font-bold text-green-800">✅ ${t_sent}</div>`;
+  } else if (state.submissionStatus === 'error') {
+    el.innerHTML = `<div class="rounded-xl bg-[#FFF1E6] border border-[#F3C9A8] p-3 text-sm text-[#7A2E0E]">⚠️ <b>${t_err}</b> ${escAttr(state.submissionError || '')}</div>`;
+  }
+}
+
+function downloadResult(submission) {
+  const blob = new Blob([JSON.stringify(submission, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `practice-${submission.name.replace(/\s+/g, '_')}-${Date.now()}.json`;
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════════════════ */
+(function init() {
+  updateUIStrings();
+  const saved = loadState();
+  if (!saved || !saved.sessionId || !saved.questions || !saved.questions.length) { showScreen('start-screen'); return; }
+  
+  Object.assign(state, saved);
+  state.questions = saved.questions.map(sq => ({ ...QUESTIONS.find(q => q.id === sq.id), params: sq.params, answer: sq.answer }));
+
+  if (state.submitted) {
+    const graded = gradeAll();
+    renderResult(graded, generateSubmissionObject(graded));
+    showScreen('result-screen');
+    return;
+  }
+  
+  if (getElapsed() >= CONFIG.DURATION_SEC) { onSubmit(true); return; }
+
+  document.getElementById('inp-name').value = state.student.name;
+  document.getElementById('inp-class').value = state.student.class;
+  renderPractice();
+  showScreen('practice-screen');
+  startTimer();
+})();
+</script>
+</body>
+</html>
