@@ -50,15 +50,11 @@
   input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   input:focus { outline: none; }
   .answer-input:focus { border-color: #8B1515; box-shadow: 0 0 0 4px rgba(139,21,21,.15); }
-  .answer-input.is-correct { background: #E8F5E9 !important; border-color: #4CAF50 !important; color: #2E7D32; }
-  .answer-input.is-wrong { background: #FCECEC !important; border-color: #8B1515 !important; color: #8B1515; }
-  @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
-  .shake { animation: shake .4s; }
   @keyframes pop { 0%{transform:scale(.85);opacity:0} 60%{transform:scale(1.04);opacity:1} 100%{transform:scale(1)} }
   .pop { animation: pop .45s cubic-bezier(.2,.8,.2,1) both; }
   @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
   .floaty { animation: floaty 2.4s ease-in-out infinite; }
-  @media (prefers-reduced-motion: reduce) { .shake,.pop,.floaty { animation: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .pop,.floaty { animation: none !important; } }
   ::selection { background: #FFE7BA; }
 </style>
 </head>
@@ -73,11 +69,8 @@
       <p id="ui-subtitle" class="text-[10px] sm:text-xs uppercase tracking-[0.18em] text-gold font-bold">SMA ABBS Surakarta</p>
       <h1 id="ui-title" class="text-[15px] sm:text-xl font-extrabold leading-tight truncate">Latihan Terpadu · Chapter 2</h1>
     </div>
-    
-    <!-- Language Toggle Button -->
-    <button id="lang-toggle" class="ml-auto px-3 py-1 text-xs font-extrabold bg-white text-maroon rounded-full shadow hover:bg-sand transition">
-      EN
-    </button>
+
+    <button id="lang-toggle" class="ml-auto px-3 py-1 text-xs font-extrabold bg-white text-maroon rounded-full shadow hover:bg-sand transition">EN</button>
 
     <div id="timer-pill" class="hidden shrink-0 flex items-center gap-2 rounded-full bg-maroon-dark px-4 py-2 text-sm sm:text-base font-bold tabular-nums shadow-inner">
       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg>
@@ -150,10 +143,7 @@
     </div>
   </section>
 
-  <!-- ═══════════ PRACTICE SCREEN ═══════════ -->
   <section id="practice-screen" class="hidden space-y-6"></section>
-
-  <!-- ═══════════ RESULT SCREEN ═══════════ -->
   <section id="result-screen" class="hidden"></section>
 
 </main>
@@ -241,12 +231,11 @@ const I18N = {
 
 function updateUIStrings() {
   const dict = I18N[currentLang];
-  
-  // Update Start Screen
+
   document.getElementById('ui-subtitle').innerText = dict.subtitle;
   document.getElementById('ui-title').innerText = dict.title;
   document.getElementById('ui-progress-label').innerText = dict.progressLabel;
-  
+
   if (document.getElementById('start-screen').classList.contains('hidden') === false) {
     document.getElementById('ui-start-title').innerText = dict.startTitle;
     document.getElementById('ui-start-desc').innerHTML = dict.startDesc;
@@ -260,11 +249,9 @@ function updateUIStrings() {
     document.getElementById('ui-rule-5').innerText = dict.rule5;
     document.getElementById('btn-start').innerText = dict.startBtn;
   }
-  
-  // Toggle language button text
+
   document.getElementById('lang-toggle').innerText = currentLang === 'id' ? 'EN' : 'ID';
 
-  // Re-render practice or result screens if active
   if (state.sessionId) {
     if (!state.submitted) {
       renderPractice();
@@ -281,7 +268,7 @@ document.getElementById('lang-toggle').addEventListener('click', () => {
 });
 
 /* ═══════════════════════════════════════════════════════════════════════
-   HELPERS & SVG
+   HELPERS
    ═══════════════════════════════════════════════════════════════════════ */
 const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
 const pick = arr => arr[Math.floor(Math.random() * arr.length)];
@@ -294,7 +281,9 @@ let mjChain = Promise.resolve();
 function typeset(el) { if (!App.mathReady || !el) return; mjChain = mjChain.then(() => MathJax.typesetPromise([el])).catch(() => {}); }
 function clearMath(el) { if (App.mathReady && el) MathJax.typesetClear([el]); }
 
-/* ═════════ ILUSTRASI RANGKAIAN (komponen berkaki, kabel berhenti di ujung komponen) ═════════ */
+/* ═══════════════════════════════════════════════════════════════════════
+   ILUSTRASI RANGKAIAN (komponen berkaki, kabel berhenti di ujung komponen)
+   ═══════════════════════════════════════════════════════════════════════ */
 const WIRE='#2C1A1A',RES='#8B1515',PLUS='#B3261E',MINUS='#1F4E8C',CUR='#F5A623';
 const HALF={R:36,B:14,A:20};
 const svgOpen=(w,h)=>`<svg viewBox="0 0 ${w} ${h}" class="w-full h-auto max-w-xl mx-auto" role="img">`;
@@ -399,6 +388,123 @@ const SECTIONS = [
   { id: 'E', title: 'KVL Expert / Expert KVL', icon: '🏅' }
 ];
 
+const QUESTIONS = [
+  /* SECTION A */
+  { id: 'A1', section: 'A', type: 'number', unit: 'V',
+    gen() { const I = rand(2,8), R = rand(3,15); return { p:{I,R}, ans: I*R }; },
+    text: (p, l) => l==='en' ? `A resistor \\(${p.R}\\ \\Omega\\) has a current of \\(${p.I}\\ \\text{A}\\) flowing through it. What is the voltage across the resistor?`
+                             : `Sebuah resistor \\(${p.R}\\ \\Omega\\) dialiri arus \\(${p.I}\\ \\text{A}\\). Berapa tegangan pada resistor tersebut?` },
+  { id: 'A2', section: 'A', type: 'number', unit: 'V',
+    gen() { const R1 = rand(2,10), R2 = rand(2,10), I = rand(1,5); return { p:{R1,R2,I}, ans: I*(R1+R2) }; },
+    text: (p, l) => l==='en' ? `Two resistors \\(R_1 = ${p.R1}\\ \\Omega\\) and \\(R_2 = ${p.R2}\\ \\Omega\\) are in <b>series</b>, with a current of \\(I = ${p.I}\\ \\text{A}\\). What is the total voltage?`
+                             : `Dua resistor \\(R_1 = ${p.R1}\\ \\Omega\\) dan \\(R_2 = ${p.R2}\\ \\Omega\\) dirangkai <b>seri</b>, dialiri arus \\(I = ${p.I}\\ \\text{A}\\). Berapa tegangan total pada rangkaian?` },
+  { id: 'A3', section: 'A', type: 'number', unit: 'Ω',
+    gen() { const [r1,r2,rp] = pick(NICE_PARALLEL); return { p:{r1,r2}, ans: rp }; },
+    text: (p, l) => l==='en' ? `Two resistors \\(R_1 = ${p.r1}\\ \\Omega\\) and \\(R_2 = ${p.r2}\\ \\Omega\\) are in <b>parallel</b>. What is the equivalent resistance?`
+                             : `Dua resistor \\(R_1 = ${p.r1}\\ \\Omega\\) dan \\(R_2 = ${p.r2}\\ \\Omega\\) dirangkai <b>paralel</b>. Berapa hambatan penggantinya?` },
+  { id: 'A4', section: 'A', type: 'number', unit: 'A',
+    gen() { const [r1,r2,rp] = pick(NICE_PARALLEL), I = rand(1,4); return { p:{r1,r2,V:I*rp}, ans: I }; },
+    text: (p, l) => l==='en' ? `Two resistors \\(R_1 = ${p.r1}\\ \\Omega\\) and \\(R_2 = ${p.r2}\\ \\Omega\\) are in <b>parallel</b> and connected to a \\(V = ${p.V}\\ \\text{V}\\) source. What is the total current?`
+                             : `Dua resistor \\(R_1 = ${p.r1}\\ \\Omega\\) dan \\(R_2 = ${p.r2}\\ \\Omega\\) dirangkai <b>paralel</b> dan dihubungkan ke sumber \\(V = ${p.V}\\ \\text{V}\\). Berapa arus totalnya?` },
+  { id: 'A5', section: 'A', type: 'number', unit: 'Ω',
+    gen() { const [r1,r2,rp] = pick(NICE_PARALLEL), r3 = rand(2,8); return { p:{r1,r2,r3}, ans: rp + r3 }; },
+    text: (p, l) => l==='en' ? `Resistors \\(R_1 = ${p.r1}\\ \\Omega\\) and \\(R_2 = ${p.r2}\\ \\Omega\\) are in parallel, then connected in series with \\(R_3 = ${p.r3}\\ \\Omega\\). What is the total resistance?`
+                             : `Resistor \\(R_1 = ${p.r1}\\ \\Omega\\) dan \\(R_2 = ${p.r2}\\ \\Omega\\) dirangkai paralel, lalu diserikan dengan \\(R_3 = ${p.r3}\\ \\Omega\\). Berapa hambatan total rangkaian?` },
+
+  /* SECTION B */
+  { id: 'B1', section: 'B', type: 'number', unit: 'A',
+    gen() { const i1 = rand(2,9), i2 = rand(2,9), i4 = rand(1, i1+i2-1); return { p:{i1,i2,i4}, ans: i1+i2-i4 }; },
+    text: (p, l) => l==='en' ? `At a junction, incoming currents are \\(I_1 = ${p.i1}\\ \\text{A}\\) and \\(I_2 = ${p.i2}\\ \\text{A}\\). One outgoing current is \\(I_4 = ${p.i4}\\ \\text{A}\\). What is the other outgoing current \\(I_3\\)?`
+                             : `Pada titik cabang, arus masuk \\(I_1 = ${p.i1}\\ \\text{A}\\) dan \\(I_2 = ${p.i2}\\ \\text{A}\\). Arus keluar \\(I_4 = ${p.i4}\\ \\text{A}\\). Berapa arus keluar yang lain, \\(I_3\\)?` },
+  { id: 'B2', section: 'B', type: 'number', unit: 'A',
+    gen() { const i1 = rand(3,10), i2 = rand(2,8), i4 = rand(1,4); return { p:{i1,i2,i4}, ans: i1+i2-i4 }; },
+    text: (p, l) => l==='en' ? `Two incoming currents: \\(I_1 = ${p.i1}\\ \\text{A}\\) and \\(I_2 = ${p.i2}\\ \\text{A}\\). One outgoing current is \\(I_3 = ${p.i4}\\ \\text{A}\\). What is the other outgoing current \\(I_4\\)?`
+                             : `Dua arus masuk: \\(I_1 = ${p.i1}\\ \\text{A}\\) dan \\(I_2 = ${p.i2}\\ \\text{A}\\). Satu arus keluar diketahui \\(I_3 = ${p.i4}\\ \\text{A}\\). Berapa arus keluar lainnya, \\(I_4\\)?` },
+  { id: 'B3', section: 'B', type: 'number', unit: 'W',
+    gen() { const I = rand(2,6), R = rand(3,10); return { p:{I,R}, ans: I*I*R }; },
+    text: (p, l) => l==='en' ? `A heating device with \\(R = ${p.R}\\ \\Omega\\) draws a current of \\(I = ${p.I}\\ \\text{A}\\). What is its electrical power?`
+                             : `Sebuah alat pemanas \\(R = ${p.R}\\ \\Omega\\) dialiri arus \\(I = ${p.I}\\ \\text{A}\\). Berapa daya listriknya?` },
+  { id: 'B4', section: 'B', type: 'number', unit: 'Rp',
+    gen() { const P = rand(2,5)*50, t = rand(2,8), rate = pick([1000,1200,1500]); return { p:{P,t,rate}, ans: ((P*t*30)/1000)*rate }; },
+    text: (p, l) => l==='en' ? `A TV with a power of <b>${p.P} W</b> is used for <b>${p.t} hours/day</b>. The rate is Rp ${p.rate}/kWh. Calculate the electricity cost for 1 month (30 days)!`
+                             : `Sebuah TV berdaya <b>${p.P} W</b> menyala <b>${p.t} jam/hari</b>. Tarif Rp ${p.rate}/kWh. Hitung biaya listrik dalam 1 bulan (30 hari) untuk TV tersebut!` },
+  { id: 'B5', section: 'B', type: 'number', unit: 'W',
+    gen() { const V = pick([6,12,18,24]), R = rand(2,12); return (V*V)%R !== 0 ? {p:{V,R:R*2}, ans:(V*V)/(R*2)} : {p:{V,R}, ans:(V*V)/R}; },
+    text: (p, l) => l==='en' ? `Resistor \\(R_2 = ${p.R}\\ \\Omega\\) is connected in parallel to a \\(V = ${p.V}\\ \\text{V}\\) source. What is the power absorbed by R₂?`
+                             : `Resistor \\(R_2 = ${p.R}\\ \\Omega\\) dipasang paralel pada sumber \\(V = ${p.V}\\ \\text{V}\\). Berapa daya yang diserap R₂?` },
+
+  /* SECTION C */
+  { id: 'C1', section: 'C', type: 'number', unit: 'V',
+    gen() { const E = rand(6,24), V1 = rand(1,E-1); return { p:{E,V1}, ans: E-V1 }; },
+    text: (p, l) => l==='en' ? `Battery \\(\\varepsilon = ${p.E}\\ \\text{V}\\). R₁ drops \\(V_1 = ${p.V1}\\ \\text{V}\\). What is the voltage drop across R₂?`
+                             : `Baterai \\(\\varepsilon = ${p.E}\\ \\text{V}\\). R₁ memakai \\(V_1 = ${p.V1}\\ \\text{V}\\). Berapa penurunan tegangan di R₂?` },
+  { id: 'C2', section: 'C', type: 'number', unit: 'V',
+    gen() { const E = rand(15,30); let V1,V3; do { V1 = rand(2,E-4); V3 = rand(2,E-4); } while (E-V1-V3 < 2 || V1===V3); return { p:{E,V1,V3}, ans: E-V1-V3 }; },
+    text: (p, l) => l==='en' ? `Series circuit with 3 resistors. \\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(V_3 = ${p.V3}\\ \\text{V}\\). What is \\(V_2\\)?`
+                             : `Rangkaian seri 3 resistor. \\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(V_3 = ${p.V3}\\ \\text{V}\\). Berapa \\(V_2\\)?` },
+  { id: 'C3', section: 'C', type: 'number', unit: 'A',
+    gen() { const I = rand(1,4), R1 = rand(1,6), R2 = rand(2,8); return { p:{E:I*(R1+R2), V1:I*R1, R2}, ans: I }; },
+    text: (p, l) => l==='en' ? `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(R_2 = ${p.R2}\\ \\Omega\\). What is the current flowing through R₂?`
+                             : `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Berapa arus yang mengalir melalui R₂?` },
+  { id: 'C4', section: 'C', type: 'number', unit: 'A',
+    gen() { const R1 = rand(1,6), R2 = rand(1,6), I = rand(1,3), E2 = rand(2,9); return { p:{E1:E2+I*(R1+R2),E2,R1,R2}, ans: I }; },
+    text: (p, l) => l==='en' ? `Two opposing batteries: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\) and \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\). \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). What is the current?`
+                             : `Dua baterai saling berlawanan: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\) dan \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\). \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Berapa arusnya?` },
+  { id: 'C5', section: 'C', type: 'number', unit: 'V',
+    gen() { const E1 = rand(10,20), E2 = rand(2,9); return { p:{E1,E2}, ans: E1-E2 }; },
+    text: (p, l) => l==='en' ? `Battery 1 = ${p.E1} V. Battery 2 is opposing = ${p.E2} V. What is the net voltage (after tax) in the loop?`
+                             : `Baterai 1 = ${p.E1} V. Baterai 2 dipasang berlawanan = ${p.E2} V. Berapa modal bersih (setelah pajak) dalam loop?` },
+
+  /* SECTION D */
+  { id: 'D1', section: 'D', type: 'number', unit: 'A',
+    gen() { const R1 = rand(1,5), R2 = rand(1,5), I = rand(1,3), tot = I*(R1+R2), E1 = rand(1,tot-1); return { p:{E1,E2:tot-E1,R1,R2}, ans: I }; },
+    text: (p, l) => l==='en' ? `Battery 2 is in the <b>same direction</b> as Battery 1 (bonus). \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). What is the current?`
+                             : `Baterai 2 dipasang <b>searah</b> dengan baterai 1 (jadi bonus). \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Berapa arusnya?` },
+  { id: 'D2', section: 'D', type: 'choice',
+    optionsId: ['Arus 3 A searah tebakan', 'Arus 3 A berlawanan tebakan', 'Mustahil, pasti salah hitung', 'Rangkaian putus'],
+    optionsEn: ['Current 3 A in assumed direction', 'Current 3 A opposite to assumed direction', 'Impossible, miscalculated', 'Broken circuit'],
+    gen() { return { p:{}, ans: 1 }; },
+    text: (p, l) => l==='en' ? `The calculated current in a branch is \\(I = -3\\ \\text{A}\\). What does this mean?`
+                             : `Hasil perhitungan arus di salah satu cabang adalah \\(I = -3\\ \\text{A}\\). Apa artinya?` },
+  { id: 'D3', section: 'D', type: 'number', unit: 'V',
+    gen() { const I = rand(1,4), R1 = rand(1,8), R2 = rand(1,8); return { p:{E:I*(R1+R2), R1, R2, I}, ans: I*R2 }; },
+    text: (p, l) => l==='en' ? `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Point P is between R₁ and R₂ (reference 0 V at negative terminal). What is the potential V_P?`
+                             : `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Titik P berada di antara R₁ dan R₂ (acuan 0 V di kutub negatif baterai). Berapa potensial V_P?` },
+  { id: 'D4', section: 'D', type: 'number', unit: 'A',
+    gen() { const r1 = rand(1,2), r2 = rand(1,2), R = rand(2,8), I = rand(1,3), E2 = rand(2,9); return { p:{E1:E2+I*(R+r1+r2), E2, r1, r2, R}, ans: I }; },
+    text: (p, l) => l==='en' ? `Bat 1: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(r_1 = ${p.r1}\\ \\Omega\\). Bat 2 (opposing): \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(r_2 = ${p.r2}\\ \\Omega\\). External \\(R = ${p.R}\\ \\Omega\\). What is the current?`
+                             : `Baterai 1: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(r_1 = ${p.r1}\\ \\Omega\\). Baterai 2 (berlawanan): \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(r_2 = ${p.r2}\\ \\Omega\\). Resistor luar \\(R = ${p.R}\\ \\Omega\\). Berapa arusnya?` },
+  { id: 'D5', section: 'D', type: 'number', unit: 'A',
+    gen() { const i1 = rand(2,6), i2 = -rand(1,3); return { p:{i1,i2}, ans: i1+i2 }; },
+    text: (p, l) => l==='en' ? `In a 2-loop circuit, \\(I_1 = ${p.i1}\\ \\text{A}\\) and \\(I_2 = ${p.i2}\\ \\text{A}\\) (negative = opposite real direction). What is \\(I_3 = I_1 + I_2\\)?`
+                             : `Pada rangkaian 2 loop, \\(I_1 = ${p.i1}\\ \\text{A}\\) dan \\(I_2 = ${p.i2}\\ \\text{A}\\) (negatif = arah sebenarnya terbalik). Berapa \\(I_3 = I_1 + I_2\\)?` },
+
+  /* SECTION E */
+  { id: 'E1', section: 'E', type: 'choice',
+    optionsId: ['Pajak (modal berkurang)', 'Bonus (modal bertambah)'],
+    optionsEn: ['Tax (voltage drops)', 'Bonus (voltage adds up)'],
+    gen() { return { p:{}, ans: 0 }; },
+    text: (p, l) => l==='en' ? `In a 2-loop circuit, the middle branch battery \\(\\varepsilon_3\\) has (+) on top and (−) on bottom. Both loops go downwards in the middle branch. For both loops, ε₃ acts as...`
+                             : `Pada rangkaian 2 loop, baterai \\(\\varepsilon_3\\) di cabang tengah memiliki garis (+) di atas dan garis (−) di bawah. Kedua loop berjalan turun di cabang tengah. Bagi kedua loop, ε₃ berperan sebagai...` },
+  { id: 'E2', section: 'E', type: 'number', unit: 'A',
+    gen() { const I1 = rand(1,3), I2 = rand(1,3), R1 = rand(1,4), R2 = rand(1,4), R3 = rand(1,3); const a = R1+R3, d = R2+R3; return { p:{N1:a*I1+R3*I2, N2:R3*I1+d*I2, a, d, I1}, ans: I2 }; },
+    text: (p, l) => l==='en' ? `Simplified loop equations: <b>\\(${p.N1} = ${p.a}\\,I_1 + R_3\\,I_2\\)</b> and <b>\\(${p.N2} = R_3\\,I_1 + ${p.d}\\,I_2\\)</b>. If \\(I_1 = ${p.I1}\\) — <i>use substitution</i>. What is \\(I_2\\)?`
+                             : `Persamaan disederhanakan: <b>\\(${p.N1} = ${p.a}\\,I_1 + R_3\\,I_2\\)</b> dan <b>\\(${p.N2} = R_3\\,I_1 + ${p.d}\\,I_2\\)</b>. Jika \\(I_1 = ${p.I1}\\) — <i>gunakan substitusi</i>. Berapa \\(I_2\\)?` },
+  { id: 'E3', section: 'E', type: 'number', unit: 'V',
+    gen() { const I1 = rand(1,4), R1 = rand(1,5), E1 = I1*R1 + rand(2,6); return { p:{E1,I1,R1}, ans: E1 - I1*R1 }; },
+    text: (p, l) => l==='en' ? `\\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(I_1 = ${p.I1}\\ \\text{A}\\) (loop 1 current), \\(R_1 = ${p.R1}\\ \\Omega\\). Calculate \\(V_{AB}\\) via the left route: \\(V_{AB} = \\varepsilon_1 - I_1 R_1\\).`
+                             : `\\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(I_1 = ${p.I1}\\ \\text{A}\\) (arus loop 1), \\(R_1 = ${p.R1}\\ \\Omega\\). Hitung \\(V_{AB}\\) lewat rute kiri: \\(V_{AB} = \\varepsilon_1 - I_1 R_1\\).` },
+  { id: 'E4', section: 'E', type: 'number', unit: 'Ω',
+    gen() { const R1 = rand(2,6), R2 = rand(2,6), R3 = R1*rand(2,3); const Rx = (R2*R3)/R1; return { p:{R1,R2,R3}, ans: Rx }; },
+    text: (p, l) => l==='en' ? `Wheatstone bridge is balanced. \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\), \\(R_3 = ${p.R3}\\ \\Omega\\). What is \\(R_x\\)? Use \\(R_1 R_x = R_2 R_3\\).`
+                             : `Jembatan Wheatstone seimbang. \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\), \\(R_3 = ${p.R3}\\ \\Omega\\). Berapa \\(R_x\\)? Gunakan \\(R_1 R_x = R_2 R_3\\).` },
+  { id: 'E5', section: 'E', type: 'number', unit: 'A',
+    gen() { return { p:{}, ans: 0 }; },
+    text: (p, l) => l==='en' ? `The Wheatstone bridge is balanced. What is the current flowing through the galvanometer G in the middle? (Write the number)`
+                             : `Jembatan Wheatstone dalam keadaan seimbang. Berapa arus yang mengalir melalui galvanometer G di tengah jembatan? (tulis angkanya)` }
+];
+
+/* ═══════════ PETA ILUSTRASI (HARUS setelah QUESTIONS didefinisikan) ═══════════ */
 const B_fwd=l=>({t:'B',drive:'fwd',label:l}), R_=l=>({t:'R',label:l});
 const ILLUS = {
   A1:p=>loop({left:[B_fwd('V sumber')],top:[R_([`R = ${p.R} Ω`,'V = ?'])],I:{label:`I = ${p.I} A`}}),
@@ -438,124 +544,6 @@ const ILLUS = {
 };
 QUESTIONS.forEach(q => { if (ILLUS[q.id]) q.svg = ILLUS[q.id]; });
 
-const QUESTIONS = [
-  /* SECTION A */
-  { id: 'A1', section: 'A', type: 'number', unit: 'V',
-    gen() { const I = rand(2,8), R = rand(3,15); return { p:{I,R}, ans: I*R }; },
-    text: (p, l) => l==='en' ? `A resistor \\(${p.R}\\ \\Omega\\) has a current of \\(${p.I}\\ \\text{A}\\) flowing through it. What is the voltage across the resistor?` 
-                             : `Sebuah resistor \\(${p.R}\\ \\Omega\\) dialiri arus \\(${p.I}\\ \\text{A}\\). Berapa tegangan pada resistor tersebut?` },
-  { id: 'A2', section: 'A', type: 'number', unit: 'V',
-    gen() { const R1 = rand(2,10), R2 = rand(2,10), I = rand(1,5); return { p:{R1,R2,I}, ans: I*(R1+R2) }; },
-    text: (p, l) => l==='en' ? `Two resistors \\(R_1 = ${p.R1}\\ \\Omega\\) and \\(R_2 = ${p.R2}\\ \\Omega\\) are in <b>series</b>, with a current of \\(I = ${p.I}\\ \\text{A}\\). What is the total voltage?` 
-                             : `Dua resistor \\(R_1 = ${p.R1}\\ \\Omega\\) dan \\(R_2 = ${p.R2}\\ \\Omega\\) dirangkai <b>seri</b>, dialiri arus \\(I = ${p.I}\\ \\text{A}\\). Berapa tegangan total pada rangkaian?` },
-  { id: 'A3', section: 'A', type: 'number', unit: 'Ω',
-    gen() { const [r1,r2,rp] = pick(NICE_PARALLEL); return { p:{r1,r2}, ans: rp }; },
-    text: (p, l) => l==='en' ? `Two resistors \\(R_1 = ${p.r1}\\ \\Omega\\) and \\(R_2 = ${p.r2}\\ \\Omega\\) are in <b>parallel</b>. What is the equivalent resistance?` 
-                             : `Dua resistor \\(R_1 = ${p.r1}\\ \\Omega\\) dan \\(R_2 = ${p.r2}\\ \\Omega\\) dirangkai <b>paralel</b>. Berapa hambatan penggantinya?` },
-  { id: 'A4', section: 'A', type: 'number', unit: 'A',
-    gen() { const [r1,r2,rp] = pick(NICE_PARALLEL), I = rand(1,4); return { p:{r1,r2,V:I*rp}, ans: I }; },
-    text: (p, l) => l==='en' ? `Two resistors \\(R_1 = ${p.r1}\\ \\Omega\\) and \\(R_2 = ${p.r2}\\ \\Omega\\) are in <b>parallel</b> and connected to a \\(V = ${p.V}\\ \\text{V}\\) source. What is the total current?` 
-                             : `Dua resistor \\(R_1 = ${p.r1}\\ \\Omega\\) dan \\(R_2 = ${p.r2}\\ \\Omega\\) dirangkai <b>paralel</b> dan dihubungkan ke sumber \\(V = ${p.V}\\ \\text{V}\\). Berapa arus totalnya?` },
-  { id: 'A5', section: 'A', type: 'number', unit: 'Ω',
-    gen() { const [r1,r2,rp] = pick(NICE_PARALLEL), r3 = rand(2,8); return { p:{r1,r2,r3}, ans: rp + r3 }; },
-    text: (p, l) => l==='en' ? `Resistors \\(R_1 = ${p.r1}\\ \\Omega\\) and \\(R_2 = ${p.r2}\\ \\Omega\\) are in parallel, then connected in series with \\(R_3 = ${p.r3}\\ \\Omega\\). What is the total resistance?` 
-                             : `Resistor \\(R_1 = ${p.r1}\\ \\Omega\\) dan \\(R_2 = ${p.r2}\\ \\Omega\\) dirangkai paralel, lalu diserikan dengan \\(R_3 = ${p.r3}\\ \\Omega\\). Berapa hambatan total rangkaian?` },
-
-  /* SECTION B */
-  { id: 'B1', section: 'B', type: 'number', unit: 'A',
-    gen() { const i1 = rand(2,9), i2 = rand(2,9), i4 = rand(1, i1+i2-1); return { p:{i1,i2,i4}, ans: i1+i2-i4 }; },
-    text: (p, l) => l==='en' ? `At a junction, incoming currents are \\(I_1 = ${p.i1}\\ \\text{A}\\) and \\(I_2 = ${p.i2}\\ \\text{A}\\). One outgoing current is \\(I_4 = ${p.i4}\\ \\text{A}\\). What is the other outgoing current \\(I_3\\)?` 
-                             : `Pada titik cabang, arus masuk \\(I_1 = ${p.i1}\\ \\text{A}\\) dan \\(I_2 = ${p.i2}\\ \\text{A}\\). Arus keluar \\(I_4 = ${p.i4}\\ \\text{A}\\). Berapa arus keluar yang lain, \\(I_3\\)?` },
-  { id: 'B2', section: 'B', type: 'number', unit: 'A',
-    gen() { const i1 = rand(3,10), i2 = rand(2,8), i4 = rand(1,4); return { p:{i1,i2,i4}, ans: i1+i2-i4 }; },
-    text: (p, l) => l==='en' ? `Two incoming currents: \\(I_1 = ${p.i1}\\ \\text{A}\\) and \\(I_2 = ${p.i2}\\ \\text{A}\\). One outgoing current is \\(I_3 = ${p.i4}\\ \\text{A}\\). What is the other outgoing current \\(I_4\\)?` 
-                             : `Dua arus masuk: \\(I_1 = ${p.i1}\\ \\text{A}\\) dan \\(I_2 = ${p.i2}\\ \\text{A}\\). Satu arus keluar diketahui \\(I_3 = ${p.i4}\\ \\text{A}\\). Berapa arus keluar lainnya, \\(I_4\\)?` },
-  { id: 'B3', section: 'B', type: 'number', unit: 'W',
-    gen() { const I = rand(2,6), R = rand(3,10); return { p:{I,R}, ans: I*I*R }; },
-    text: (p, l) => l==='en' ? `A heating device with \\(R = ${p.R}\\ \\Omega\\) draws a current of \\(I = ${p.I}\\ \\text{A}\\). What is its electrical power?` 
-                             : `Sebuah alat pemanas \\(R = ${p.R}\\ \\Omega\\) dialiri arus \\(I = ${p.I}\\ \\text{A}\\). Berapa daya listriknya?` },
-  { id: 'B4', section: 'B', type: 'number', unit: 'Rp',
-    gen() { const P = rand(2,5)*50, t = rand(2,8), rate = pick([1000,1200,1500]); return { p:{P,t,rate}, ans: ((P*t*30)/1000)*rate }; },
-    text: (p, l) => l==='en' ? `A TV with a power of <b>${p.P} W</b> is used for <b>${p.t} hours/day</b>. The rate is Rp ${p.rate}/kWh. Calculate the electricity cost for 1 month (30 days)!` 
-                             : `Sebuah TV berdaya <b>${p.P} W</b> menyala <b>${p.t} jam/hari</b>. Tarif Rp ${p.rate}/kWh. Hitung biaya listrik dalam 1 bulan (30 hari) untuk TV tersebut!` },
-  { id: 'B5', section: 'B', type: 'number', unit: 'W',
-    gen() { const V = pick([6,12,18,24]), R = rand(2,12); return (V*V)%R !== 0 ? {p:{V,R:R*2}, ans:(V*V)/(R*2)} : {p:{V,R}, ans:(V*V)/R}; },
-    text: (p, l) => l==='en' ? `Resistor \\(R_2 = ${p.R}\\ \\Omega\\) is connected in parallel to a \\(V = ${p.V}\\ \\text{V}\\) source. What is the power absorbed by R₂?` 
-                             : `Resistor \\(R_2 = ${p.R}\\ \\Omega\\) dipasang paralel pada sumber \\(V = ${p.V}\\ \\text{V}\\). Berapa daya yang diserap R₂?` },
-
-  /* SECTION C */
-  { id: 'C1', section: 'C', type: 'number', unit: 'V',
-    gen() { const E = rand(6,24), V1 = rand(1,E-1); return { p:{E,V1}, ans: E-V1 }; },
-    text: (p, l) => l==='en' ? `Battery \\(\\varepsilon = ${p.E}\\ \\text{V}\\). R₁ drops \\(V_1 = ${p.V1}\\ \\text{V}\\). What is the voltage drop across R₂?` 
-                             : `Baterai \\(\\varepsilon = ${p.E}\\ \\text{V}\\). R₁ memakai \\(V_1 = ${p.V1}\\ \\text{V}\\). Berapa penurunan tegangan di R₂?`,
-    svg: p => svgLoop({ leftBat:{plusTop:true,label:`ε=${p.E}V`}, topRes:{fill:`R₁ (V₁=${p.V1}V)`}, rightRes:{plusTop:true,label:'R₂'}, bottomRes:{label:'R₂ : V₂ = ?'} }) },
-  { id: 'C2', section: 'C', type: 'number', unit: 'V',
-    gen() { const E = rand(15,30); let V1,V3; do { V1 = rand(2,E-4); V3 = rand(2,E-4); } while (E-V1-V3 < 2 || V1===V3); return { p:{E,V1,V3}, ans: E-V1-V3 }; },
-    text: (p, l) => l==='en' ? `Series circuit with 3 resistors. \\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(V_3 = ${p.V3}\\ \\text{V}\\). What is \\(V_2\\)?` 
-                             : `Rangkaian seri 3 resistor. \\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(V_3 = ${p.V3}\\ \\text{V}\\). Berapa \\(V_2\\)?` },
-  { id: 'C3', section: 'C', type: 'number', unit: 'A',
-    gen() { const I = rand(1,4), R1 = rand(1,6), R2 = rand(2,8); return { p:{E:I*(R1+R2), V1:I*R1, R2}, ans: I }; },
-    text: (p, l) => l==='en' ? `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(R_2 = ${p.R2}\\ \\Omega\\). What is the current flowing through R₂?` 
-                             : `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(V_1 = ${p.V1}\\ \\text{V}\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Berapa arus yang mengalir melalui R₂?` },
-  { id: 'C4', section: 'C', type: 'number', unit: 'A',
-    gen() { const R1 = rand(1,6), R2 = rand(1,6), I = rand(1,3), E2 = rand(2,9); return { p:{E1:E2+I*(R1+R2),E2,R1,R2}, ans: I }; },
-    text: (p, l) => l==='en' ? `Two opposing batteries: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\) and \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\). \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). What is the current?` 
-                             : `Dua baterai saling berlawanan: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\) dan \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\). \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Berapa arusnya?`,
-    svg: p => svgLoop({ leftBat:{plusTop:true,label:`ε₁=${p.E1}V`}, topRes:{fill:`R₁=${p.R1}Ω`}, rightRes:{plusTop:true,label:`ε₂=${p.E2}V`}, bottomRes:{label:`R₂=${p.R2}Ω`} }) },
-  { id: 'C5', section: 'C', type: 'number', unit: 'V',
-    gen() { const E1 = rand(10,20), E2 = rand(2,9); return { p:{E1,E2}, ans: E1-E2 }; },
-    text: (p, l) => l==='en' ? `Battery 1 = ${p.E1} V. Battery 2 is opposing = ${p.E2} V. What is the net voltage (after tax) in the loop?` 
-                             : `Baterai 1 = ${p.E1} V. Baterai 2 dipasang berlawanan = ${p.E2} V. Berapa modal bersih (setelah pajak) dalam loop?` },
-
-  /* SECTION D */
-  { id: 'D1', section: 'D', type: 'number', unit: 'A',
-    gen() { const R1 = rand(1,5), R2 = rand(1,5), I = rand(1,3), E1 = rand(2,8), E2 = rand(2,8); return { p:{E1,E2,R1,R2}, ans: (E1+E2)/(R1+R2) === Math.floor((E1+E2)/(R1+R2)) ? (E1+E2)/(R1+R2) : I }; },
-    text: (p, l) => l==='en' ? `Battery 2 is in the <b>same direction</b> as Battery 1 (bonus). \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). What is the current?` 
-                             : `Baterai 2 dipasang <b>searah</b> dengan baterai 1 (jadi bonus). \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Berapa arusnya?` },
-  { id: 'D2', section: 'D', type: 'choice',
-    optionsId: ['Arus 3 A searah tebakan', 'Arus 3 A berlawanan tebakan', 'Mustahil, pasti salah hitung', 'Rangkaian putus'],
-    optionsEn: ['Current 3 A in assumed direction', 'Current 3 A opposite to assumed direction', 'Impossible, miscalculated', 'Broken circuit'],
-    gen() { return { p:{}, ans: 1 }; },
-    text: (p, l) => l==='en' ? `The calculated current in a branch is \\(I = -3\\ \\text{A}\\). What does this mean?` 
-                             : `Hasil perhitungan arus di salah satu cabang adalah \\(I = -3\\ \\text{A}\\). Apa artinya?` },
-  { id: 'D3', section: 'D', type: 'number', unit: 'V',
-    gen() { const I = rand(1,4), R1 = rand(1,8), R2 = rand(1,8); return { p:{E:I*(R1+R2), R1, R2, I}, ans: I*R2 }; },
-    text: (p, l) => l==='en' ? `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Point P is between R₁ and R₂ (reference 0 V at negative terminal). What is the potential V_P?` 
-                             : `\\(\\varepsilon = ${p.E}\\ \\text{V}\\), \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\). Titik P berada di antara R₁ dan R₂ (acuan 0 V di kutub negatif baterai). Berapa potensial V_P?` },
-  { id: 'D4', section: 'D', type: 'number', unit: 'A',
-    gen() { const r1 = rand(1,2), r2 = rand(1,2), R = rand(2,8), I = rand(1,3), E2 = rand(2,9); return { p:{E1:E2+I*(R+r1+r2), E2, r1, r2, R}, ans: I }; },
-    text: (p, l) => l==='en' ? `Bat 1: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(r_1 = ${p.r1}\\ \\Omega\\). Bat 2 (opposing): \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(r_2 = ${p.r2}\\ \\Omega\\). External \\(R = ${p.R}\\ \\Omega\\). What is the current?` 
-                             : `Baterai 1: \\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(r_1 = ${p.r1}\\ \\Omega\\). Baterai 2 (berlawanan): \\(\\varepsilon_2 = ${p.E2}\\ \\text{V}\\), \\(r_2 = ${p.r2}\\ \\Omega\\). Resistor luar \\(R = ${p.R}\\ \\Omega\\). Berapa arusnya?` },
-  { id: 'D5', section: 'D', type: 'number', unit: 'A',
-    gen() { const i1 = rand(2,6), i2 = -rand(1,3); return { p:{i1,i2}, ans: i1+i2 }; },
-    text: (p, l) => l==='en' ? `In a 2-loop circuit, \\(I_1 = ${p.i1}\\ \\text{A}\\) and \\(I_2 = ${p.i2}\\ \\text{A}\\) (negative = opposite real direction). What is \\(I_3 = I_1 + I_2\\)?` 
-                             : `Pada rangkaian 2 loop, \\(I_1 = ${p.i1}\\ \\text{A}\\) dan \\(I_2 = ${p.i2}\\ \\text{A}\\) (negatif = arah sebenarnya terbalik). Berapa \\(I_3 = I_1 + I_2\\)?` },
-
-  /* SECTION E */
-  { id: 'E1', section: 'E', type: 'choice',
-    optionsId: ['Pajak (modal berkurang)', 'Bonus (modal bertambah)'],
-    optionsEn: ['Tax (voltage drops)', 'Bonus (voltage adds up)'],
-    gen() { return { p:{}, ans: 0 }; },
-    text: (p, l) => l==='en' ? `In a 2-loop circuit, the middle branch battery \\(\\varepsilon_3\\) has (+) on top and (−) on bottom. Both loops go downwards in the middle branch. For both loops, ε₃ acts as...` 
-                             : `Pada rangkaian 2 loop, baterai \\(\\varepsilon_3\\) di cabang tengah memiliki garis (+) di atas dan garis (−) di bawah. Kedua loop berjalan turun di cabang tengah. Bagi kedua loop, ε₃ berperan sebagai...` },
-  { id: 'E2', section: 'E', type: 'number', unit: 'A',
-    gen() { const I1 = rand(1,3), I2 = rand(1,3), R1 = rand(1,4), R2 = rand(1,4), R3 = rand(1,3); const a = R1+R3, d = R2+R3; return { p:{N1:a*I1+R3*I2, N2:R3*I1+d*I2, a, d, I1}, ans: I2 }; },
-    text: (p, l) => l==='en' ? `Simplified loop equations: <b>\\(${p.N1} = ${p.a}\\,I_1 + R_3\\,I_2\\)</b> and <b>\\(${p.N2} = R_3\\,I_1 + ${p.d}\\,I_2\\)</b>. If \\(I_1 = ${p.I1}\\) — <i>use substitution</i>. What is \\(I_2\\)?` 
-                             : `Persamaan disederhanakan: <b>\\(${p.N1} = ${p.a}\\,I_1 + R_3\\,I_2\\)</b> dan <b>\\(${p.N2} = R_3\\,I_1 + ${p.d}\\,I_2\\)</b>. Jika \\(I_1 = ${p.I1}\\) — <i>gunakan substitusi</i>. Berapa \\(I_2\\)?` },
-  { id: 'E3', section: 'E', type: 'number', unit: 'V',
-    gen() { const I1 = rand(1,4), R1 = rand(1,5), E1 = I1*R1 + rand(2,6); return { p:{E1,I1,R1}, ans: E1 - I1*R1 }; },
-    text: (p, l) => l==='en' ? `\\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(I_1 = ${p.I1}\\ \\text{A}\\) (loop 1 current), \\(R_1 = ${p.R1}\\ \\Omega\\). Calculate \\(V_{AB}\\) via the left route: \\(V_{AB} = \\varepsilon_1 - I_1 R_1\\).` 
-                             : `\\(\\varepsilon_1 = ${p.E1}\\ \\text{V}\\), \\(I_1 = ${p.I1}\\ \\text{A}\\) (arus loop 1), \\(R_1 = ${p.R1}\\ \\Omega\\). Hitung \\(V_{AB}\\) lewat rute kiri: \\(V_{AB} = \\varepsilon_1 - I_1 R_1\\).` },
-  { id: 'E4', section: 'E', type: 'number', unit: 'Ω',
-    gen() { const R1 = rand(2,6), R2 = rand(2,6), R3 = R1*rand(2,3); const Rx = (R2*R3)/R1; return { p:{R1,R2,R3}, ans: Rx }; },
-    text: (p, l) => l==='en' ? `Wheatstone bridge is balanced. \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\), \\(R_3 = ${p.R3}\\ \\Omega\\). What is \\(R_x\\)? Use \\(R_1 R_x = R_2 R_3\\).` 
-                             : `Jembatan Wheatstone seimbang. \\(R_1 = ${p.R1}\\ \\Omega\\), \\(R_2 = ${p.R2}\\ \\Omega\\), \\(R_3 = ${p.R3}\\ \\Omega\\). Berapa \\(R_x\\)? Gunakan \\(R_1 R_x = R_2 R_3\\).` },
-  { id: 'E5', section: 'E', type: 'number', unit: 'A',
-    gen() { return { p:{}, ans: 0 }; },
-    text: (p, l) => l==='en' ? `The Wheatstone bridge is balanced. What is the current flowing through the galvanometer G in the middle? (Write the number)` 
-                             : `Jembatan Wheatstone dalam keadaan seimbang. Berapa arus yang mengalir melalui galvanometer G di tengah jembatan? (tulis angkanya)` }
-];
-
 /* ═══════════════════════════════════════════════════════════════════════
    STATE & TIMER
    ═══════════════════════════════════════════════════════════════════════ */
@@ -583,7 +571,7 @@ function updateTimerDisplay() {
   const remaining = getRemaining();
   el.textContent = fmtTime(remaining);
   if (remaining <= 300) { pill.classList.remove('bg-maroon-dark'); pill.classList.add('bg-[#B3261E]'); }
-  
+
   const bottomEl = document.getElementById('timer-bottom');
   if(bottomEl) bottomEl.textContent = fmtTime(remaining);
 }
@@ -760,7 +748,7 @@ function gradeAll() {
   const results = state.questions.map(q => {
     const raw = state.answers[q.id];
     let isCorrect = false;
-    if (q.type === 'choice') { isCorrect = raw === q.answer; } 
+    if (q.type === 'choice') { isCorrect = raw === q.answer; }
     else { const v = Number(raw); isCorrect = raw !== undefined && raw !== '' && Number.isFinite(v) && v === q.answer; }
     return { q, given: raw, correct: isCorrect };
   });
@@ -873,15 +861,15 @@ function renderResult(graded, submission) {
         <span class="text-2xl font-bold text-maroon/60">/100</span>
       </div>
       <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs sm:text-sm">
-        <div class="rounded-xl bg-washi border border-[#EADBC8] p-3">
+        <div class="rounded-xl bg-sand border border-[#EADBC8] p-3">
           <p class="text-[10px] uppercase text-[#7A675B] font-bold">${dict.resCorrect}</p>
           <p class="text-xl font-black text-green-700 tabular-nums">${graded.correctCount}/${state.questions.length}</p>
         </div>
-        <div class="rounded-xl bg-washi border border-[#EADBC8] p-3">
+        <div class="rounded-xl bg-sand border border-[#EADBC8] p-3">
           <p class="text-[10px] uppercase text-[#7A675B] font-bold">${dict.resTime}</p>
           <p class="text-xl font-black text-maroon tabular-nums">${fmtTime(submission.timeSpent)}</p>
         </div>
-        <div class="rounded-xl bg-washi border border-[#EADBC8] p-3">
+        <div class="rounded-xl bg-sand border border-[#EADBC8] p-3">
           <p class="text-[10px] uppercase text-[#7A675B] font-bold">${dict.resScore}</p>
           <p class="text-xl font-black text-maroon tabular-nums">${score}</p>
         </div>
@@ -900,7 +888,7 @@ function renderResult(graded, submission) {
       <button type="button" id="btn-download" class="px-5 py-3 rounded-xl bg-white border-2 border-[#E5D8C8] hover:border-gold text-sm font-bold text-maroon transition">${dict.btnDownload}</button>
       <button type="button" id="btn-new" class="ml-2 px-5 py-3 rounded-xl bg-maroon hover:bg-maroon-dark text-sm font-bold text-white transition">${dict.btnNew}</button>
     </div>`;
-  
+
   typeset(el);
   updateSubmitStatusUI();
 
@@ -926,7 +914,7 @@ function updateSubmitStatusUI() {
   const t_send = currentLang === 'en' ? "Sending results to teacher..." : "Mengirim hasil ke guru…";
   const t_sent = currentLang === 'en' ? "Results sent to your teacher successfully." : "Hasil berhasil dikirim ke gurumu.";
   const t_err = currentLang === 'en' ? "Failed to send automatically." : "Gagal mengirim otomatis.";
-  
+
   if (state.submissionStatus === 'sending') {
     el.innerHTML = `<div class="inline-flex items-center gap-2 rounded-full bg-[#FFF6E5] border border-gold px-4 py-2 text-sm font-bold text-[#6B4A06]"><svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9" opacity=".25"/><path d="M21 12a9 9 0 0 1-9 9"/></svg>${t_send}</div>`;
   } else if (state.submissionStatus === 'sent') {
@@ -950,7 +938,7 @@ function downloadResult(submission) {
   updateUIStrings();
   const saved = loadState();
   if (!saved || !saved.sessionId || !saved.questions || !saved.questions.length) { showScreen('start-screen'); return; }
-  
+
   Object.assign(state, saved);
   state.questions = saved.questions.map(sq => ({ ...QUESTIONS.find(q => q.id === sq.id), params: sq.params, answer: sq.answer }));
 
@@ -960,7 +948,7 @@ function downloadResult(submission) {
     showScreen('result-screen');
     return;
   }
-  
+
   if (getElapsed() >= CONFIG.DURATION_SEC) { onSubmit(true); return; }
 
   document.getElementById('inp-name').value = state.student.name;
