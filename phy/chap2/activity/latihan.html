@@ -806,7 +806,7 @@ function updateSubmitStatusUI() {
   const el = document.getElementById('submit-status');
   if (!el) return;
   const t_send = currentLang === 'en' ? "Sending results to teacher..." : "Mengirim hasil ke guru…";
-  const t_sent = currentLang === 'en' ? "Results sent to Google Sheets successfully." : "Hasil berhasil dikirim ke Google Sheets.";
+  const t_sent = currentLang === 'en' ? "Results sent to your teacher successfully." : "Hasil berhasil dikirim ke gurumu.";
   const t_err = currentLang === 'en' ? "Failed to send automatically." : "Gagal mengirim otomatis.";
   
   if (state.submissionStatus === 'sending') {
