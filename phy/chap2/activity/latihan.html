@@ -294,20 +294,99 @@ let mjChain = Promise.resolve();
 function typeset(el) { if (!App.mathReady || !el) return; mjChain = mjChain.then(() => MathJax.typesetPromise([el])).catch(() => {}); }
 function clearMath(el) { if (App.mathReady && el) MathJax.typesetClear([el]); }
 
-const WIRE = '#2C1A1A', RES = '#8B1515', PLUS = '#B3261E', MINUS = '#1F4E8C';
-const svgOpen = (w, h) => `<svg viewBox="0 0 ${w} ${h}" class="w-full h-auto max-w-xl mx-auto">`;
-const ln = (x1,y1,x2,y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${WIRE}" stroke-width="4.5" stroke-linecap="round"/>`;
-const tx = (x,y,s,o={}) => { const {size=14,weight=700,fill='#2C1A1A',anchor='middle'}=o; return `<text x="${x}" y="${y}" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}">${s}</text>`; };
-function resH(x1,x2,y){const n=6,seg=(x2-x1)/n,amp=9;let d=`M${x1},${y}`;for(let k=0;k<n;k++)d+=` L${x1+seg*(k+0.5)},${y+(k%2?amp:-amp)}`;return `<path d="${d} L${x2},${y}" fill="none" stroke="${RES}" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>`;}
-function batV(x,cy,plusTop){const yP=plusTop?cy-8:cy+8,yM=plusTop?cy+8:cy-8;return `<line x1="${x-22}" y1="${yP}" x2="${x+22}" y2="${yP}" stroke="${WIRE}" stroke-width="4.5" stroke-linecap="round"/><line x1="${x-11}" y1="${yM}" x2="${x+11}" y2="${yM}" stroke="${WIRE}" stroke-width="9"/><text x="${x+30}" y="${plusTop?cy-11:cy+22}" font-size="16" fill="${PLUS}" font-weight="800">+</text><text x="${x+30}" y="${plusTop?cy+22:cy-11}" font-size="16" fill="${MINUS}" font-weight="800">−</text>`;}
-function svgLoop({leftBat, topRes, rightRes, bottomRes}) {
-  const L=100,R=340,T=50,B=210,cy=130;
-  return svgOpen(440,260) +
-    ln(L,T,R,T) + (topRes ? resH(200,260,T) + tx(230,T-22,topRes.fill) : '') +
-    ln(R,T,R,cy-8) + (rightRes ? batV(R,cy,!rightRes.plusTop) + tx(R+40,cy+5,rightRes.label,{anchor:'start'}) : '') + ln(R,cy+8,R,B) +
-    ln(L,B,R,B) + (bottomRes ? resH(200,260,B) + tx(230,B+30,bottomRes.label) : '') +
-    ln(L,T,L,cy-8) + (leftBat ? batV(L,cy,leftBat.plusTop) + tx(L-30,cy+5,leftBat.label,{anchor:'end'}) : '') + ln(L,cy+8,L,B) + '</svg>';
+/* ═════════ ILUSTRASI RANGKAIAN (komponen berkaki, kabel berhenti di ujung komponen) ═════════ */
+const WIRE='#2C1A1A',RES='#8B1515',PLUS='#B3261E',MINUS='#1F4E8C',CUR='#F5A623';
+const HALF={R:36,B:14,A:20};
+const svgOpen=(w,h)=>`<svg viewBox="0 0 ${w} ${h}" class="w-full h-auto max-w-xl mx-auto" role="img">`;
+const ln=(x1,y1,x2,y2,c=WIRE,w=4.5,ex='')=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" ${ex}/>`;
+const dot=(x,y,r=5,f=WIRE)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}"/>`;
+const tx=(x,y,s,o={})=>{const{size=14,weight=700,fill=WIRE,anchor='middle'}=o;return `<text x="${x}" y="${y}" font-size="${size}" font-weight="${weight}" fill="${fill}" text-anchor="${anchor}" stroke="#fff" stroke-width="4" paint-order="stroke" stroke-linejoin="round">${s}</text>`;};
+const arrow=(x,y,deg)=>`<path d="M-9,-8 L9,0 L-9,8 Z" transform="translate(${x},${y}) rotate(${deg})" fill="${CUR}" stroke="${WIRE}" stroke-width="1.5" stroke-linejoin="round"/>`;
+const gnd=(x,y)=>ln(x,y,x,y+14)+ln(x-14,y+14,x+14,y+14)+ln(x-9,y+21,x+9,y+21)+ln(x-4,y+28,x+4,y+28);
+
+function part(t,x,y,deg,o={}){
+  let s='';
+  if(t==='R'){
+    let d='M-24,0';for(let k=0;k<6;k++)d+=` L${-24+8*(k+.5)},${k%2?9:-9}`;
+    s=ln(-36,0,-24,0)+ln(24,0,36,0)+`<path d="${d} L24,0" fill="none" stroke="${RES}" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+  }else if(t==='B'){
+    s=ln(-14,0,-5,0)+ln(5,0,14,0)+ln(-5,-16,-5,16)+ln(5,-9,5,9,WIRE,9);
+  }else{
+    s=ln(-20,0,-16,0)+ln(16,0,20,0)+`<circle r="16" fill="#fff" stroke="${WIRE}" stroke-width="3.5"/>`;
+  }
+  s=`<g transform="translate(${x},${y}) rotate(${deg})">${s}</g>`;
+  if(t==='A')s+=tx(x,y+5,o.letter||'A',{size:15});
+  if(t==='B'&&o.sg){const r=deg*Math.PI/180,c=Math.cos(r),n=Math.sin(r);
+    s+=tx(x-12*c+o.sg[0],y-12*n+o.sg[1]+5,'+',{size:18,fill:PLUS,weight:800})+tx(x+12*c+o.sg[0],y+12*n+o.sg[1]+5,'−',{size:18,fill:MINUS,weight:800});}
+  return s;
 }
+
+/* kabel dari (x1,y1) ke (x2,y2) dengan komponen di tengah; drive:'fwd' = arus searah jalur */
+function run(x1,y1,x2,y2,items=[],out=[0,-1]){
+  const len=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/len,uy=(y2-y1)/len,deg=Math.atan2(y2-y1,x2-x1)*180/Math.PI;
+  let s='',cur=0;
+  items.forEach((it,i)=>{
+    const c=len*(i+1)/(items.length+1),h=HALF[it.t],cx=x1+ux*c,cy=y1+uy*c;
+    s+=ln(x1+ux*cur,y1+uy*cur,x1+ux*(c-h),y1+uy*(c-h));cur=c+h;
+    s+=part(it.t,cx,cy,deg+(it.drive==='fwd'?180:0),{letter:it.letter,sg:[-out[0]*20,-out[1]*20]});
+    if(it.label){
+      const Ls=[].concat(it.label),n=Ls.length,ox=out[0],oy=out[1];
+      const y0=cy+oy*28+5+(oy<-.3?-(n-1)*16:oy>.3?0:-(n-1)*8);
+      Ls.forEach((l,k)=>s+=tx(cx+ox*30,y0+k*16,l,{anchor:ox>.3?'start':ox<-.3?'end':'middle',size:13,fill:/\?/.test(l)?RES:WIRE}));
+    }
+  });
+  return s+ln(x1+ux*cur,y1+uy*cur,x2,y2);
+}
+
+function loop(o){
+  const L=110,R=400,T=o.T||80,B=o.B||230;
+  let s=svgOpen(520,o.h||290)+run(L,T,R,T,o.top,[0,-1])+run(R,T,R,B,o.right,[1,0])+run(R,B,L,B,o.bottom,[0,1])+run(L,B,L,T,o.left,[-1,0]);
+  if(o.I){const cw=o.I.dir!=='ccw',x=L+(R-L)*.13;s+=arrow(x,T,cw?0:180)+tx(x,T-14,o.I.label,{fill:RES});}
+  return s+(o.extra||'')+'</svg>';
+}
+
+function ladder(o){
+  const T=70,B=240,X0=90,xs=[260,400];
+  let s=svgOpen(520,300)+run(X0,T,xs[0],T,o.series,[0,-1])+run(xs[0],T,xs[1],T)+run(xs[1],B,X0,B,[],[0,1]);
+  if(o.src)s+=run(X0,B,X0,T,[o.src],[-1,0]);
+  else s+=`<circle cx="${X0}" cy="${T}" r="6" fill="#fff" stroke="${WIRE}" stroke-width="3.5"/><circle cx="${X0}" cy="${B}" r="6" fill="#fff" stroke="${WIRE}" stroke-width="3.5"/>`+tx(X0-12,T+5,'a',{anchor:'end'})+tx(X0-12,B+5,'b',{anchor:'end'})+tx(X0-12,160,'R_ek = ?',{anchor:'end',fill:RES});
+  xs.forEach((x,i)=>{s+=run(x,T,x,B,o.br[i],[1,0]);if(i<xs.length-1)s+=dot(x,T)+dot(x,B);});
+  return s+'</svg>';
+}
+
+function junction(ins,outs){
+  const cx=260,cy=145,P=(a,x)=>a.map((l,i)=>[x,a.length===1?cy:(i?220:70),l]);
+  let s=svgOpen(520,290);
+  P(ins,120).forEach(([x,y,l])=>s+=ln(x,y,cx,cy)+arrow((x+cx)/2,(y+cy)/2,Math.atan2(cy-y,cx-x)*180/Math.PI)+tx(x-8,y+5,l,{anchor:'end',fill:/\?/.test(l)?RES:WIRE}));
+  P(outs,400).forEach(([x,y,l])=>s+=ln(cx,cy,x,y)+arrow((x+cx)/2,(y+cy)/2,Math.atan2(y-cy,x-cx)*180/Math.PI)+tx(x+8,y+5,l,{anchor:'start',fill:/\?/.test(l)?RES:WIRE}));
+  return s+dot(cx,cy,9,RES)+'</svg>';
+}
+
+function twoLoop(o){
+  const L=110,M=270,R=440,T=70,B=240;
+  return svgOpen(520,300)+run(L,T,M,T,o.tl,[0,-1])+run(M,T,R,T,o.tr,[0,-1])+run(R,T,R,B,o.r,[1,0])+run(R,B,M,B,[],[0,1])+run(M,B,L,B,[],[0,1])+run(L,B,L,T,o.l,[-1,0])+run(M,T,M,B,o.m,[1,0])
+    +dot(M,T,6)+dot(M,B,6)+tx(190,215,o.loop1||'Loop 1 ↻',{fill:RES,size:15})+tx(355,215,o.loop2||'Loop 2 ↺',{fill:RES,size:15})+(o.extra||'')+'</svg>';
+}
+
+function wheat(l){
+  const N=[260,50],Lf=[150,140],Rt=[370,140],Bt=[260,230];
+  return svgOpen(520,290)
+    +run(...N,...Lf,[{t:'R',label:l[0]}],[-.7,-.7])+run(...N,...Rt,[{t:'R',label:l[1]}],[.7,-.7])
+    +run(...Lf,...Bt,[{t:'R',label:l[2]}],[-.7,.7])+run(...Rt,...Bt,[{t:'R',label:l[3]}],[.7,.7])
+    +run(...Lf,...Rt,[{t:'A',letter:'G'}],[0,-1])
+    +run(260,50,60,50)+run(60,50,60,230,[{t:'B',drive:'back',label:'ε'}],[-1,0])+run(60,230,260,230)
+    +[N,Lf,Rt,Bt].map(p=>dot(p[0],p[1],6)).join('')+'</svg>';
+}
+
+const tvSvg=(p,l)=>{const en=l==='en';return svgOpen(520,230)
+  +ln(100,56,80,28,WIRE,3)+ln(130,56,150,28,WIRE,3)
+  +`<rect x="50" y="56" width="120" height="84" rx="10" fill="${WIRE}"/><rect x="60" y="66" width="100" height="64" rx="5" fill="#CFE8FF"/>`
+  +ln(80,140,75,156,WIRE,5)+ln(140,140,145,156,WIRE,5)+tx(110,104,`${p.P} W`,{size:16,fill:RES})
+  +ln(180,100,230,100)+arrow(205,100,0)
+  +`<circle cx="270" cy="100" r="34" fill="#fff" stroke="${WIRE}" stroke-width="4"/>`+ln(270,100,270,78,WIRE,4)+ln(270,100,286,110,WIRE,4)+tx(270,158,`${p.t} ${en?'hours/day':'jam/hari'}`,{size:13})
+  +ln(310,100,390,100)+arrow(350,100,0)+tx(350,84,`× 30 ${en?'days':'hari'}`,{size:12})
+  +`<rect x="400" y="64" width="90" height="72" rx="8" fill="#FFF6E5" stroke="${RES}" stroke-width="4"/>`+tx(445,92,'kWh',{size:16,fill:RES})+tx(445,120,'0 0 0 0',{size:13})+tx(445,158,`Rp ${p.rate}/kWh`,{size:13})
+  +tx(260,208,en?'Cost = kWh × rate':'Biaya = kWh × tarif',{fill:RES})+'</svg>';};
 
 /* ═══════════════════════════════════════════════════════════════════════
    QUESTIONS
@@ -319,6 +398,45 @@ const SECTIONS = [
   { id: 'D', title: 'KVL Lanjutan / Advanced KVL', icon: '🚀' },
   { id: 'E', title: 'KVL Expert / Expert KVL', icon: '🏅' }
 ];
+
+const B_fwd=l=>({t:'B',drive:'fwd',label:l}), R_=l=>({t:'R',label:l});
+const ILLUS = {
+  A1:p=>loop({left:[B_fwd('V sumber')],top:[R_([`R = ${p.R} Ω`,'V = ?'])],I:{label:`I = ${p.I} A`}}),
+  A2:p=>loop({left:[B_fwd('V = ?')],top:[R_(`R₁ = ${p.R1} Ω`),R_(`R₂ = ${p.R2} Ω`)],I:{label:`I = ${p.I} A`}}),
+  A3:p=>ladder({br:[[R_(`R₁ = ${p.r1} Ω`)],[R_(`R₂ = ${p.r2} Ω`)]]}),
+  A4:p=>ladder({src:B_fwd(`V = ${p.V} V`),series:[{t:'A',letter:'A',label:'I = ?'}],br:[[R_(`R₁ = ${p.r1} Ω`)],[R_(`R₂ = ${p.r2} Ω`)]]}),
+  A5:p=>ladder({series:[R_(`R₃ = ${p.r3} Ω`)],br:[[R_(`R₁ = ${p.r1} Ω`)],[R_(`R₂ = ${p.r2} Ω`)]]}),
+
+  B1:p=>junction([`I₁ = ${p.i1} A`,`I₂ = ${p.i2} A`],['I₃ = ?',`I₄ = ${p.i4} A`]),
+  B2:p=>junction([`I₁ = ${p.i1} A`,`I₂ = ${p.i2} A`],[`I₃ = ${p.i4} A`,'I₄ = ?']),
+  B3:p=>loop({left:[B_fwd('')],top:[R_(`R = ${p.R} Ω`)],I:{label:`I = ${p.I} A`},
+    extra:[-20,0,20].map(d=>`<path d="M${255+d},38 q6,-7 0,-13 q-6,-7 0,-13" fill="none" stroke="#E8590C" stroke-width="3.5" stroke-linecap="round"/>`).join('')}),
+  B4:(p,l)=>tvSvg(p,l),
+  B5:p=>ladder({src:B_fwd(`V = ${p.V} V`),br:[[R_('R₁')],[R_([`R₂ = ${p.R} Ω`,'P = ?'])]]}),
+
+  C1:p=>loop({left:[B_fwd(`ε = ${p.E} V`)],top:[R_(['R₁',`V₁ = ${p.V1} V`])],right:[R_(['R₂','V₂ = ?'])],I:{label:'I'}}),
+  C2:p=>loop({left:[B_fwd(`ε = ${p.E} V`)],top:[R_(['R₁',`V₁ = ${p.V1} V`])],right:[R_(['R₂','V₂ = ?'])],bottom:[R_(['R₃',`V₃ = ${p.V3} V`])],I:{label:'I'}}),
+  C3:p=>loop({left:[B_fwd(`ε = ${p.E} V`)],top:[R_(['R₁',`V₁ = ${p.V1} V`])],right:[R_(`R₂ = ${p.R2} Ω`)],I:{label:'I = ?'}}),
+  C4:p=>loop({left:[B_fwd(`ε₁ = ${p.E1} V`)],top:[R_(`R₁ = ${p.R1} Ω`)],right:[{t:'B',drive:'back',label:`ε₂ = ${p.E2} V`}],bottom:[R_(`R₂ = ${p.R2} Ω`)],I:{label:'I = ?'}}),
+  C5:p=>loop({left:[B_fwd(`ε₁ = ${p.E1} V`)],right:[{t:'B',drive:'back',label:`ε₂ = ${p.E2} V`}],extra:tx(255,160,'V_net = ?',{size:16,fill:RES})}),
+
+  D1:p=>loop({left:[B_fwd(`ε₁ = ${p.E1} V`)],top:[R_(`R₁ = ${p.R1} Ω`)],right:[B_fwd(`ε₂ = ${p.E2} V`)],bottom:[R_(`R₂ = ${p.R2} Ω`)],I:{label:'I = ?'}}),
+  D2:(p,l)=>{const en=l==='en';return svgOpen(520,250)+run(60,140,460,140,[R_('R')],[0,1])
+    +ln(180,70,340,70,'#9A8A7E',4,'stroke-dasharray="8 6"')+arrow(340,70,0)+tx(260,50,en?'Assumed direction':'Arah tebakan',{size:13})
+    +ln(180,205,340,205,CUR,5)+arrow(180,205,180)+tx(260,232,en?'Actual direction?':'Arah sebenarnya?',{size:13,fill:RES})+'</svg>';},
+  D3:p=>loop({left:[B_fwd(`ε = ${p.E} V`)],top:[R_(`R₁ = ${p.R1} Ω`)],right:[R_(`R₂ = ${p.R2} Ω`)],I:{label:'I'},
+    extra:dot(400,80,9,CUR)+tx(394,56,'P · V_P = ?',{anchor:'end',fill:RES})+gnd(110,230)+tx(136,252,'0 V',{anchor:'start'})}),
+  D4:p=>loop({T:70,B:270,h:320,left:[B_fwd(`ε₁ = ${p.E1} V`),R_(`r₁ = ${p.r1} Ω`)],top:[R_(`R = ${p.R} Ω`)],right:[{t:'B',drive:'back',label:`ε₂ = ${p.E2} V`},R_(`r₂ = ${p.r2} Ω`)],I:{label:'I = ?'}}),
+  D5:p=>junction([`I₁ = ${p.i1} A`,`I₂ = ${p.i2} A`],['I₃ = ?']),
+
+  E1:()=>twoLoop({l:[B_fwd('ε₁')],r:[B_fwd('ε₂')],m:[{t:'B',drive:'back',label:'ε₃'}],tl:[R_('R₁')],tr:[R_('R₂')]}),
+  E2:p=>twoLoop({l:[B_fwd('ε₁')],r:[B_fwd('ε₂')],m:[R_('R₃')],tl:[R_('R₁')],tr:[R_('R₂')],loop1:'I₁ ↻',loop2:'I₂ ↻'}),
+  E3:p=>twoLoop({l:[B_fwd(`ε₁ = ${p.E1} V`)],r:[B_fwd('ε₂')],m:[R_('R₃')],tl:[R_(`R₁ = ${p.R1} Ω`)],tr:[R_('R₂')],loop1:`I₁ = ${p.I1} A ↻`,loop2:'Loop 2 ↻',
+    extra:tx(282,58,'A',{anchor:'start'})+tx(282,262,'B',{anchor:'start'})+tx(270,290,'V_AB = ?',{fill:RES})}),
+  E4:p=>wheat([`R₁ = ${p.R1} Ω`,`R₂ = ${p.R2} Ω`,`R₃ = ${p.R3} Ω`,'Rₓ = ?']),
+  E5:()=>wheat(['R₁','R₂','R₃','Rₓ'])
+};
+QUESTIONS.forEach(q => { if (ILLUS[q.id]) q.svg = ILLUS[q.id]; });
 
 const QUESTIONS = [
   /* SECTION A */
@@ -573,7 +691,7 @@ function renderQuestion(q, idx) {
         <span class="w-7 h-7 shrink-0 rounded-full bg-maroon text-white grid place-items-center font-extrabold text-xs">${idx+1}</span>
         <p class="text-[11px] font-bold uppercase tracking-wider text-maroon/70">Q${idx+1} · ${secTitle}</p>
       </div>
-      ${q.svg ? `<div class="my-3">${q.svg(q.params)}</div>` : ''}
+      ${q.svg ? `<div class="my-3">${q.svg(q.params, currentLang)}</div>` : ''}
       <p class="text-[15px] sm:text-base leading-relaxed">${q.text(q.params, currentLang)}</p>
       ${inputHTML}
     </div>`;
