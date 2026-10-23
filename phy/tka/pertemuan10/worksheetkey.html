@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Pembahasan Misi TKA Terakhir #9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #ecfdf5; color: #1e293b; }
+        .page { width: 210mm; min-height: 297mm; margin: 12px auto; padding: 14mm; background: #fff; box-shadow: 0 10px 40px -12px rgba(16,94,72,.25); border-radius: 16px; }
+        
+        /* Ubah area cakar menjadi area pembahasan */
+        .pembahasan { 
+            height: 105mm; 
+            border: 2px solid #6ee7b7; 
+            border-radius: 16px; 
+            background-color: #f0fdf4; /* Hijau pastel / abu-abu terang */
+            padding: 16px;
+            position: relative;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #064e3b;
+        }
+        .pembahasan-title { font-weight: 800; color: #059669; margin-bottom: 12px; font-size: 16px; }
+        
+        /* Checkbox PGK Styling */
+        .bx { display: inline-flex; align-items: center; justify-content: center; width: 5mm; height: 5mm; border: 2px solid #334155; border-radius: 4px; vertical-align: middle; margin-right: 2mm; font-size: 12px; font-weight: bold; }
+        .bx.checked { background-color: #10b981; border-color: #10b981; color: white; }
+        .bx.checked::after { content: "✓"; }
+
+        /* B/S Option Styling */
+        .bs { display: inline-flex; gap: 2mm; margin-right: 3mm; vertical-align: middle; }
+        .bs i { border: 2px solid #334155; border-radius: 9999px; width: 8mm; height: 8mm; display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-weight: 800; font-size: 12px; transition: all 0.2s; }
+        .bs i.selected { background-color: #10b981; border-color: #10b981; color: white; }
+
+        @page { size: A4; margin: 0; }
+        @media print { body { background: #fff; } .page { margin: 0; box-shadow: none; border-radius: 0; page-break-after: always; } }
+    </style>
+</head>
+<body>
+
+<section class="page">
+    <div class="rounded-2xl bg-emerald-600 text-white p-5 mb-4">
+        <h1 class="text-2xl font-extrabold">Pembahasan Misi TKA Terakhir #9: Logika Bunyi & Termo</h1>
+        <p class="text-sm opacity-90 mt-1">Kunci Jawaban dan Langkah Penyelesaian</p>
+    </div>
+    
+    <p class="text-sm text-emerald-800 bg-emerald-50 rounded-2xl p-3 mb-4">
+        Ingat: f<sub>p</sub> = f<sub>s</sub> (v ± v<sub>p</sub>)/(v ± v<sub>s</sub>) · pendengar mendekat (+), sumber mendekat (−). Makin dekat, frekuensi NAIK.
+    </p>
+    
+    <h2 class="font-extrabold text-lg text-emerald-900">Soal 1 · Doppler (PGK)</h2>
+    <p class="mt-1">Mobil polisi (25 m/s) dan pengendara sepeda (5 m/s) bergerak <b>saling mendekat</b>. Sirine polisi berfrekuensi 800 Hz (v udara = 340 m/s). <b>Pilih SETIAP kondisi yang benar.</b></p>
+    
+    <div class="mt-2 space-y-1">
+        <p class="font-medium text-emerald-700 bg-emerald-50 rounded px-2 py-1"><span class="bx checked"></span>A. Frekuensi yang didengar pengendara sepeda lebih besar dari 800 Hz.</p>
+        <p class="font-medium text-emerald-700 bg-emerald-50 rounded px-2 py-1"><span class="bx checked"></span>B. Frekuensi yang didengar pengendara sepeda sekitar 876 Hz.</p>
+        <p class="font-medium text-emerald-700 bg-emerald-50 rounded px-2 py-1"><span class="bx checked"></span>C. Jika sepeda berhenti, frekuensi yang didengar lebih kecil daripada saat sepeda bergerak.</p>
+        <p class="text-slate-500 px-2 py-1"><span class="bx"></span>D. Frekuensi yang didengar = 800 × (340 − 5)/(340 − 25) ≈ 851 Hz.</p>
+    </div>
+    
+    <div class="pembahasan mt-4">
+        <div class="pembahasan-title">💡 Pembahasan Soal 1</div>
+        <p class="mb-2"><b>Diketahui:</b><br>
+        v = 340 m/s, f<sub>s</sub> = 800 Hz.<br>
+        Sumber (Polisi) mendekat: v<sub>s</sub> = 25 m/s (tanda negatif di bawah).<br>
+        Pendengar (Sepeda) mendekat: v<sub>p</sub> = 5 m/s (tanda positif di atas).</p>
+        
+        <p class="mb-2"><b>Perhitungan Frekuensi Pendengar (f<sub>p</sub>):</b><br>
+        f<sub>p</sub> = f<sub>s</sub> × [ (v + v<sub>p</sub>) / (v - v<sub>s</sub>) ]<br>
+        f<sub>p</sub> = 800 × [ (340 + 5) / (340 - 25) ]<br>
+        f<sub>p</sub> = 800 × ( 345 / 315 )<br>
+        f<sub>p</sub> = 876,19 Hz.</p>
+        
+        <ul class="list-disc ml-5 space-y-1 mt-2">
+            <li><b>Opsi A (Benar):</b> Karena saling mendekat, frekuensi akan selalu naik. Jadi f<sub>p</sub> > f<sub>s</sub> (876 > 800).</li>
+            <li><b>Opsi B (Benar):</b> Hasil perhitungan f<sub>p</sub> adalah 876,19 Hz (~876 Hz).</li>
+            <li><b>Opsi C (Benar):</b> Jika sepeda berhenti (v<sub>p</sub> = 0), maka pembilang menjadi lebih kecil (340 bukannya 345), sehingga f<sub>p</sub> akhir pasti lebih kecil.</li>
+            <li><b>Opsi D (Salah):</b> Kesalahan tanda pada v<sub>p</sub>. Karena pendengar mendekat, seharusnya dijumlah (340 + 5), bukan dikurang.</li>
+        </ul>
+    </div>
+    <p class="mt-3 text-sm font-bold text-emerald-700">Jawaban akhir: A, B, dan C</p>
+</section>
+
+<section class="page">
+    <h2 class="font-extrabold text-lg text-emerald-900">Soal 2 · Termodinamika (Matriks Benar/Salah)</h2>
+    <div class="grid grid-cols-5 gap-4 items-center mt-2">
+        <div class="col-span-2 border-2 border-emerald-200 rounded-2xl p-2 bg-white">
+            <svg viewBox="0 0 300 230" class="w-full">
+                <path d="M50 15v180h235" stroke="#334155" stroke-width="2.5" fill="none"/>
+                <text x="10" y="18" font-size="11" font-weight="700">P (10⁵ Pa)</text><text x="245" y="215" font-size="11" font-weight="700">V (m³)</text>
+                <path d="M110 20H290" stroke="none"/><path d="M110 20L230 20L230 155" stroke="#059669" stroke-width="4" fill="none"/>
+                <path d="M230 155Q200 110 170 85 T110 20" stroke="#7c3aed" stroke-width="4" fill="none" stroke-linejoin="round"/>
+                <path d="M110 20V195M230 20V195M50 20H110M50 155H230" stroke="#94a3b8" stroke-dasharray="4"/>
+                <g font-weight="800" font-size="16"><circle cx="110" cy="20" r="5"/><text x="90" y="18">A</text><circle cx="230" cy="20" r="5"/><text x="238" y="18">B</text><circle cx="230" cy="155" r="5"/><text x="238" y="165">C</text></g>
+                <g font-size="11"><text x="42" y="24" text-anchor="end">4</text><text x="42" y="159" text-anchor="end">1</text><text x="110" y="209" text-anchor="middle">1</text><text x="230" y="209" text-anchor="middle">4</text></g>
+                <text x="140" y="14" font-size="9" fill="#047857" font-weight="700" transform="translate(0,-2)">A→B isobarik</text>
+                <text x="236" y="95" font-size="9" fill="#047857" font-weight="700">B→C isokhorik</text>
+                <text x="105" y="110" font-size="9" fill="#7c3aed" font-weight="700">C→A isotermal</text>
+            </svg>
+        </div>
+        <div class="col-span-3 text-[15px]">Siklus gas ideal A→B→C→A pada diagram di samping. <b>Evaluasi 3 pernyataan berikut (Benar/Salah).</b></div>
+    </div>
+    
+    <div class="mt-3 space-y-2">
+        <p class="flex items-center"><span class="bs"><i class="selected">B</i><i>S</i></span> <span>Usaha gas pada proses A→B sebesar 1,2 × 10⁶ J.</span></p>
+        <p class="flex items-center"><span class="bs"><i>B</i><i class="selected">S</i></span> <span>Selama proses B→C, gas menyerap kalor dari lingkungan.</span></p>
+        <p class="flex items-center"><span class="bs"><i class="selected">B</i><i>S</i></span> <span>Usaha netto gas dalam satu siklus bernilai positif.</span></p>
+    </div>
+    
+    <div class="pembahasan mt-4" style="height: 125mm;">
+        <div class="pembahasan-title">💡 Pembahasan Soal 2</div>
+        
+        <div class="mb-4">
+            <b>1. Usaha pada proses A→B (Isobarik): BENAR</b>
+            <p class="mt-1">Proses A→B berlangsung pada tekanan konstan (Isobarik). Luas di bawah kurva A→B membentuk persegi panjang.</p>
+            <p>W<sub>AB</sub> = P × ΔV</p>
+            <p>W<sub>AB</sub> = 4 × 10<sup>5</sup> Pa × (4 - 1) m<sup>3</sup></p>
+            <p>W<sub>AB</sub> = 4 × 10<sup>5</sup> × 3 = 12 × 10<sup>5</sup> = <b>1,2 × 10<sup>6</sup> Joule</b>.</p>
+        </div>
+
+        <div class="mb-4">
+            <b>2. Proses B→C (Gas menyerap kalor?): SALAH</b>
+            <p class="mt-1">Proses B→C adalah proses Isokhorik (Volume tetap), sehingga usaha (W) = 0.</p>
+            <p>Pada proses ini tekanan turun (dari 4 ke 1), maka suhu juga akan ikut turun (T<sub>C</sub> < T<sub>B</sub>). Karena suhu turun, perubahan energi dalam (ΔU) bernilai negatif.</p>
+            <p>Berdasarkan Hukum I Termodinamika: <b>Q = ΔU + W</b></p>
+            <p>Q = (-) + 0 = Negatif. Karena nilai Q negatif, ini berarti gas <b>melepaskan kalor</b>, bukan menyerap kalor.</p>
+        </div>
+
+        <div>
+            <b>3. Usaha netto gas bernilai positif: BENAR</b>
+            <p class="mt-1">Pada grafik siklus P-V (Tekanan-Volume), arah siklus menentukan nilai usaha netto total (W<sub>netto</sub>):</p>
+            <ul class="list-disc ml-5">
+                <li>Jika siklus berputar <b>searah jarum jam</b>, luas siklus merepresentasikan usaha netto yang bernilai <b>positif</b> (W > 0).</li>
+                <li>Jika siklus berputar <b>berlawanan jarum jam</b>, bernilai <b>negatif</b> (W < 0).</li>
+            </ul>
+            <p class="mt-1">Karena siklus A→B→C→A bergerak searah putaran jarum jam, maka usahanya dipastikan positif (Gas melakukan kerja pada lingkungan).</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
