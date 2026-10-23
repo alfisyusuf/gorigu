@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Worksheet Pemantapan TKA #9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #ecfdf5; color: #1e293b; }
+        .page { width: 210mm; min-height: 297mm; margin: 12px auto; padding: 14mm; background: #fff; box-shadow: 0 10px 40px -12px rgba(16,94,72,.25); border-radius: 16px; }
+        .scratch { height: 105mm; border: 2px dashed #6ee7b7; border-radius: 16px; background-image: radial-gradient(#a7f3d0 1px, transparent 1px); background-size: 6mm 6mm; position: relative; }
+        .scratch span { position: absolute; top: 6px; left: 12px; font-size: 12px; color: #059669; font-weight: 700; }
+        .bx { display: inline-block; width: 5mm; height: 5mm; border: 2px solid #334155; border-radius: 4px; vertical-align: middle; margin-right: 2mm; }
+        .bs { display: inline-flex; gap: 2mm; margin-right: 3mm; vertical-align: middle; }
+        .bs i { border: 2px solid #334155; border-radius: 9999px; width: 8mm; height: 8mm; display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-weight: 800; font-size: 12px; }
+        @page { size: A4; margin: 0; }
+        @media print { body { background: #fff; } .page { margin: 0; box-shadow: none; border-radius: 0; page-break-after: always; } }
+    </style>
+</head>
+<body>
+
+<section class="page">
+    <div class="rounded-2xl bg-emerald-600 text-white p-5 mb-4">
+        <h1 class="text-2xl font-extrabold">Misi Pemantapan TKA #9: Bunyi & Termo</h1>
+        <p class="text-sm opacity-90 mt-1">Nama: ______________________ Kelas: ______ Tanggal: ____________</p>
+    </div>
+    
+    <div class="rounded-2xl bg-emerald-100 text-emerald-800 p-4 mb-4 border-2 border-emerald-200">
+        <h3 class="font-bold">Pemantapan Pola Soal 🚀</h3>
+        <p class="text-sm">Soal di bawah ini bentuknya SAMA PERSIS dengan sebelumnya. Buktikan kalian tidak jatuh ke lubang (jebakan) yang sama!</p>
+    </div>
+
+    <!-- SOAL 1 PEMANTAPAN (DOPPLER) -->
+    <h2 class="font-extrabold text-lg mt-4 text-emerald-900">Soal 1 · Doppler Tipe 2 (PGK)</h2>
+    <p class="mt-1">Sebuah kereta api melaju dengan kecepatan 30 m/s di belakang sebuah mobil. Mobil tersebut melaju searah dengan kecepatan 20 m/s (berusaha menjauh dari kereta). Masinis membunyikan klakson dengan frekuensi 900 Hz. (Cepat rambat bunyi di udara = 340 m/s). <b>Pilih SETIAP kondisi yang logis dan benar.</b></p>
+    
+    <div class="mt-3 space-y-2">
+        <p><span class="bx"></span>A. Frekuensi klakson yang didengar oleh sopir mobil lebih besar dari 900 Hz.</p>
+        <p><span class="bx"></span>B. Jika mobil tiba-tiba mengerem hingga berhenti, frekuensi yang didengarnya akan semakin membesar.</p>
+        <p><span class="bx"></span>C. Rumus perhitungan frekuensi yang tepat adalah: f<sub>p</sub> = 900 × (340 + 20) / (340 - 30).</p>
+        <p><span class="bx"></span>D. Karena kereta bergerak lebih cepat, mobil tersebut pada akhirnya akan tersusul.</p>
+    </div>
+    
+    <div class="scratch mt-4" style="height: 60mm;">
+        <span>✏️ Ruang mencakar: Ingat aturan tanda. Sumber mendekat = (-), Pendengar menjauh = (?).</span>
+    </div>
+
+    <!-- SOAL 2 PEMANTAPAN (TERMO) -->
+    <h2 class="font-extrabold text-lg mt-8 text-emerald-900">Soal 2 · Termodinamika Tipe 2 (Matriks Benar/Salah)</h2>
+    
+    <div class="grid grid-cols-5 gap-4 items-center mt-2">
+        <div class="col-span-2 border-2 border-emerald-200 rounded-2xl p-2 bg-white">
+            <svg viewBox="0 0 300 230" class="w-full">
+                <!-- Axes -->
+                <path d="M50 15v180h235" stroke="#334155" stroke-width="2.5" fill="none"/>
+                <text x="10" y="18" font-size="11" font-weight="700">P (10⁵ Pa)</text><text x="245" y="215" font-size="11" font-weight="700">V (m³)</text>
+                
+                <!-- Path -->
+                <path d="M100 75H220" stroke="#059669" stroke-width="4" fill="none"/> <!-- K to L (Isobarik) -->
+                <path d="M220 75V155" stroke="#0ea5e9" stroke-width="4" fill="none"/> <!-- L to M (Isokhorik) -->
+                <path d="M220 155Q160 155 100 75" stroke="#7c3aed" stroke-width="4" fill="none" stroke-dasharray="6,4"/> <!-- M to K (Isotermal/Kurva) -->
+                
+                <!-- Guidelines -->
+                <path d="M100 75V195M220 75V195M50 75H100M50 155H220" stroke="#94a3b8" stroke-dasharray="4"/>
+                
+                <!-- Points and Labels -->
+                <g font-weight="800" font-size="16">
+                    <circle cx="100" cy="75" r="5"/><text x="80" y="70">K</text>
+                    <circle cx="220" cy="75" r="5"/><text x="230" y="70">L</text>
+                    <circle cx="220" cy="155" r="5"/><text x="230" y="165">M</text>
+                </g>
+                <g font-size="11">
+                    <text x="42" y="79" text-anchor="end">3</text>
+                    <text x="42" y="159" text-anchor="end">1</text>
+                    <text x="100" y="209" text-anchor="middle">2</text>
+                    <text x="220" y="209" text-anchor="middle">5</text>
+                </g>
+            </svg>
+        </div>
+        <div class="col-span-3 text-[15px]">Diagram P-V di samping menunjukkan siklus gas ideal <b>K→L→M→K</b>. <b>Evaluasi 3 pernyataan berikut.</b></div>
+    </div>
+    
+    <div class="mt-3 space-y-2">
+        <p class="flex items-center"><span class="bs"><i>B</i><i>S</i></span> <span>Kondisi A: Usaha gas pada proses K→L adalah 9 × 10⁵ Joule.</span></p>
+        <p class="flex items-center"><span class="bs"><i>B</i><i>S</i></span> <span>Kondisi B: Pada proses L→M, sistem gas ideal melakukan usaha karena tekanan menurun.</span></p>
+        <p class="flex items-center"><span class="bs"><i>B</i><i>S</i></span> <span>Kondisi C: Karena siklus kembali ke titik K, total usaha netto pada grafik dipastikan bernilai nol.</span></p>
+    </div>
+    
+    <div class="scratch mt-4" style="height: 60mm;">
+        <span>✏️ Ruang mencakar: Hitung luas K→L. Ingat syarat ada tidaknya usaha (W).</span>
+    </div>
+</section>
+
+</body>
+</html>
