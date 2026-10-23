@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Pembahasan Pemantapan TKA #9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background: #ecfdf5; color: #1e293b; }
+        .page { width: 210mm; min-height: 297mm; margin: 12px auto; padding: 14mm; background: #fff; box-shadow: 0 10px 40px -12px rgba(16,94,72,.25); border-radius: 16px; }
+        
+        /* Kotak Pembahasan (menggantikan scratch) */
+        .pembahasan { 
+            border: 2px solid #6ee7b7; 
+            border-radius: 16px; 
+            background-color: #f0fdf4; 
+            padding: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #064e3b;
+        }
+        .pembahasan-title { font-weight: 800; color: #059669; margin-bottom: 8px; font-size: 15px; }
+        
+        /* Checkbox PGK Styling */
+        .bx { display: inline-flex; align-items: center; justify-content: center; width: 5mm; height: 5mm; border: 2px solid #334155; border-radius: 4px; vertical-align: middle; margin-right: 2mm; font-size: 12px; font-weight: bold; }
+        .bx.checked { background-color: #10b981; border-color: #10b981; color: white; }
+        .bx.checked::after { content: "✓"; }
+        .bx.wrong { background-color: #ef4444; border-color: #ef4444; color: white; }
+        .bx.wrong::after { content: "✗"; }
+
+        /* B/S Option Styling */
+        .bs { display: inline-flex; gap: 2mm; margin-right: 3mm; vertical-align: middle; }
+        .bs i { border: 2px solid #334155; border-radius: 9999px; width: 8mm; height: 8mm; display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-weight: 800; font-size: 12px; transition: all 0.2s; }
+        .bs i.selected { background-color: #10b981; border-color: #10b981; color: white; }
+
+        @page { size: A4; margin: 0; }
+        @media print { body { background: #fff; } .page { margin: 0; box-shadow: none; border-radius: 0; page-break-after: always; } }
+    </style>
+</head>
+<body>
+
+<section class="page">
+    <div class="rounded-2xl bg-emerald-600 text-white p-5 mb-4 shadow-md">
+        <h1 class="text-2xl font-extrabold">KUNCI JAWABAN & PEMBAHASAN: Pemantapan TKA #9</h1>
+        <p class="text-sm opacity-90 mt-1">Materi: Bunyi & Termodinamika</p>
+    </div>
+    
+    <div class="rounded-2xl bg-emerald-100 text-emerald-800 p-4 mb-4 border-2 border-emerald-200">
+        <h3 class="font-bold">Pemantapan Pola Soal 🚀</h3>
+        <p class="text-sm">Silakan pelajari langkah-langkah di bawah agar tidak terjebak pada kondisi yang serupa di ujian sebenarnya!</p>
+    </div>
+
+    <!-- SOAL 1 PEMBAHASAN (DOPPLER) -->
+    <h2 class="font-extrabold text-lg mt-4 text-emerald-900">Soal 1 · Doppler Tipe 2 (PGK)</h2>
+    <p class="mt-1 text-[15px]">Sebuah kereta api melaju dengan kecepatan 30 m/s di belakang sebuah mobil. Mobil tersebut melaju searah dengan kecepatan 20 m/s (berusaha menjauh dari kereta). Masinis membunyikan klakson dengan frekuensi 900 Hz. (Cepat rambat bunyi di udara = 340 m/s). <b>Pilih SETIAP kondisi yang logis dan benar.</b></p>
+    
+    <div class="mt-3 space-y-1">
+        <p class="font-medium text-emerald-700 bg-emerald-50 rounded-lg px-2 py-1.5"><span class="bx checked"></span>A. Frekuensi klakson yang didengar oleh sopir mobil lebih besar dari 900 Hz.</p>
+        <p class="font-medium text-emerald-700 bg-emerald-50 rounded-lg px-2 py-1.5"><span class="bx checked"></span>B. Jika mobil tiba-tiba mengerem hingga berhenti, frekuensi yang didengarnya akan semakin membesar.</p>
+        <p class="text-red-500 bg-red-50 rounded-lg px-2 py-1.5 line-through decoration-red-400"><span class="bx wrong"></span>C. Rumus perhitungan frekuensi yang tepat adalah: f<sub>p</sub> = 900 × (340 + 20) / (340 - 30).</p>
+        <p class="font-medium text-emerald-700 bg-emerald-50 rounded-lg px-2 py-1.5"><span class="bx checked"></span>D. Karena kereta bergerak lebih cepat, mobil tersebut pada akhirnya akan tersusul.</p>
+    </div>
+    
+    <div class="pembahasan mt-3">
+        <div class="pembahasan-title">💡 Pembahasan Soal 1</div>
+        <p class="mb-1"><b>Analisis Variabel:</b><br>
+        • Sumber (Kereta) <b>mendekati</b> pendengar: v<sub>s</sub> = 30 m/s (Tanda Negatif)<br>
+        • Pendengar (Mobil) <b>menjauhi</b> sumber: v<sub>p</sub> = 20 m/s (Tanda Negatif)<br>
+        • v = 340 m/s, f<sub>s</sub> = 900 Hz.</p>
+        
+        <p class="mb-1 mt-2"><b>Perhitungan f<sub>p</sub>:</b><br>
+        f<sub>p</sub> = f<sub>s</sub> × [ (v - v<sub>p</sub>) / (v - v<sub>s</sub>) ]<br>
+        f<sub>p</sub> = 900 × [ (340 - 20) / (340 - 30) ] = 900 × (320 / 310) ≈ <b>929 Hz</b>.</p>
+        
+        <ul class="list-disc ml-5 mt-2 space-y-1 text-sm">
+            <li><b>Opsi A (BENAR):</b> 929 Hz > 900 Hz. (Kecepatan relatif kereta mendekat lebih kuat dari mobil menjauh).</li>
+            <li><b>Opsi B (BENAR):</b> Jika mobil berhenti (v<sub>p</sub> = 0), maka f<sub>p</sub> = 900 × (340 / 310) ≈ <b>987 Hz</b>. Frekuensinya makin besar.</li>
+            <li><b>Opsi C (SALAH):</b> Rumusnya salah. Pendengar menjauh harusnya <b>dikurang (340 - 20)</b>, bukan dijumlah.</li>
+            <li><b>Opsi D (BENAR):</b> Logika gerak lurus (v<sub>kereta</sub> > v<sub>mobil</sub>), suatu saat pasti saling menyusul/bertemu.</li>
+        </ul>
+    </div>
+
+    <!-- SOAL 2 PEMBAHASAN (TERMO) -->
+    <h2 class="font-extrabold text-lg mt-6 text-emerald-900">Soal 2 · Termodinamika Tipe 2 (Matriks Benar/Salah)</h2>
+    
+    <div class="grid grid-cols-5 gap-4 items-center mt-2">
+        <div class="col-span-2 border-2 border-emerald-200 rounded-2xl p-2 bg-white">
+            <svg viewBox="0 0 300 230" class="w-full">
+                <!-- Axes -->
+                <path d="M50 15v180h235" stroke="#334155" stroke-width="2.5" fill="none"/>
+                <text x="10" y="18" font-size="11" font-weight="700">P (10⁵ Pa)</text><text x="245" y="215" font-size="11" font-weight="700">V (m³)</text>
+                
+                <!-- Path -->
+                <path d="M100 75H220" stroke="#059669" stroke-width="4" fill="none"/> <!-- K to L (Isobarik) -->
+                <path d="M220 75V155" stroke="#0ea5e9" stroke-width="4" fill="none"/> <!-- L to M (Isokhorik) -->
+                <path d="M220 155Q160 155 100 75" stroke="#7c3aed" stroke-width="4" fill="none" stroke-dasharray="6,4"/> <!-- M to K (Isotermal/Kurva) -->
+                
+                <!-- Guidelines -->
+                <path d="M100 75V195M220 75V195M50 75H100M50 155H220" stroke="#94a3b8" stroke-dasharray="4"/>
+                
+                <!-- Points and Labels -->
+                <g font-weight="800" font-size="16">
+                    <circle cx="100" cy="75" r="5"/><text x="80" y="70">K</text>
+                    <circle cx="220" cy="75" r="5"/><text x="230" y="70">L</text>
+                    <circle cx="220" cy="155" r="5"/><text x="230" y="165">M</text>
+                </g>
+                <g font-size="11">
+                    <text x="42" y="79" text-anchor="end">3</text>
+                    <text x="42" y="159" text-anchor="end">1</text>
+                    <text x="100" y="209" text-anchor="middle">2</text>
+                    <text x="220" y="209" text-anchor="middle">5</text>
+                </g>
+            </svg>
+        </div>
+        <div class="col-span-3 text-[15px]">Diagram P-V di samping menunjukkan siklus gas ideal <b>K→L→M→K</b>. <b>Evaluasi 3 pernyataan berikut.</b></div>
+    </div>
+    
+    <div class="mt-3 space-y-2">
+        <p class="flex items-center"><span class="bs"><i class="selected">B</i><i>S</i></span> <span class="font-medium text-emerald-800">Kondisi A: Usaha gas pada proses K→L adalah 9 × 10⁵ Joule.</span></p>
+        <p class="flex items-center"><span class="bs"><i>B</i><i class="selected">S</i></span> <span class="text-red-700">Kondisi B: Pada proses L→M, sistem gas ideal melakukan usaha karena tekanan menurun.</span></p>
+        <p class="flex items-center"><span class="bs"><i>B</i><i class="selected">S</i></span> <span class="text-red-700">Kondisi C: Karena siklus kembali ke titik K, total usaha netto pada grafik dipastikan bernilai nol.</span></p>
+    </div>
+    
+    <div class="pembahasan mt-4">
+        <div class="pembahasan-title">💡 Pembahasan Soal 2</div>
+        <ul class="list-none space-y-3 text-sm">
+            <li><b>1. Kondisi A (BENAR):</b><br>
+                Proses K→L adalah Isobarik (Tekanan tetap pada 3 × 10⁵ Pa).<br>
+                W<sub>KL</sub> = P × ΔV = 3 × 10⁵ × (5 - 2) m³ = 3 × 10⁵ × 3 = <b>9 × 10⁵ Joule</b>.
+            </li>
+            <li><b>2. Kondisi B (SALAH):</b><br>
+                Proses L→M bergerak tegak lurus ke bawah, artinya volumenya <b>tetap</b> pada angka 5 m³ (Isokhorik). Karena tidak ada perubahan volume (ΔV = 0), maka sistem <b>TIDAK melakukan usaha (W = 0)</b>. Penurunan tekanan menyebabkan suhu (energi dalam) turun, bukan melakukan usaha.
+            </li>
+            <li><b>3. Kondisi C (SALAH):</b><br>
+                Total usaha netto (W<sub>netto</sub>) dalam sebuah <b>siklus tertutup P-V tidaklah nol</b>. Usaha netto sama dengan <b>luas area di dalam kurva siklus</b> tersebut. Pada gambar ini, terdapat luasan yang dibatasi jalur K-L-M-K, sehingga usaha netto-nya memiliki nilai.
+            </li>
+        </ul>
+    </div>
+</section>
+
+</body>
+</html>
