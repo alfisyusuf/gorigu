@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simulasi TKA Fisika</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+:root{--ease:cubic-bezier(.2,.8,.2,1)}
+body{font-family:'Plus Jakarta Sans',Inter,system-ui,sans-serif;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+.glass{background:rgba(255,255,255,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.hint{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease),opacity .3s ease;opacity:0}
+.hint.open{grid-template-rows:1fr;opacity:1}
+.hint>div{overflow:hidden}
+.nav::-webkit-scrollbar{display:none}
+.nav{scrollbar-width:none;-ms-overflow-style:none}
+summary::-webkit-details-marker{display:none}
+summary{list-style:none}
+@keyframes pop{0%{transform:scale(.92);opacity:0}100%{transform:scale(1);opacity:1}}
+.pop{animation:pop .55s var(--ease) both}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.9}}
+.conf{position:fixed;top:-20px;width:8px;height:12px;border-radius:2px;animation:fall linear forwards;z-index:60}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .45s var(--ease) both}
+.btn-icon{display:inline-flex;align-items:center;justify-content:center;gap:.5rem}
+.btn-icon svg{flex-shrink:0}
+@media (prefers-reduced-motion:reduce){.hint,.pop,.conf,.fade-up{animation:none;transition:none}}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen antialiased">
+
+<!-- START -->
+<section id="start" class="min-h-screen flex items-center justify-center p-5 relative overflow-hidden">
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.08),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(56,189,248,0.07),transparent_55%)]"></div>
+  <div class="max-w-md w-full text-center fade-up">
+    <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white shadow-xl shadow-emerald-500/25 mb-6">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10">
+        <circle cx="12" cy="12" r="1.4" fill="currentColor"/>
+        <ellipse cx="12" cy="12" rx="10" ry="4.2"/>
+        <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/>
+        <ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/>
+      </svg>
+    </div>
+    <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Simulasi TKA Fisika</h1>
+    <p class="mt-3 text-slate-500 leading-relaxed">12 soal, 90 menit, level nalar tingkat 3. Ada petunjuk berjenjang kalau kamu mentok, santai aja.</p>
+
+    <div class="mt-6 bg-white rounded-2xl border border-slate-200/80 p-5 text-left text-sm space-y-3.5 shadow-sm">
+      <div class="flex gap-3 items-start">
+        <span class="shrink-0 w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M9 6h11"/><path d="M9 12h11"/><path d="M9 18h11"/><path d="m3 6 1 1 2-2"/><path d="m3 12 1 1 2-2"/><path d="m3 18 1 1 2-2"/></svg>
+        </span>
+        <p class="text-slate-600 leading-relaxed"><b class="text-slate-800 font-semibold">Pilihan Ganda Kompleks:</b> centang semua yang benar (harus persis sesuai kunci).</p>
+      </div>
+      <div class="flex gap-3 items-start">
+        <span class="shrink-0 w-8 h-8 rounded-lg bg-violet-50 text-violet-600 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+        </span>
+        <p class="text-slate-600 leading-relaxed"><b class="text-slate-800 font-semibold">Benar/Salah:</b> tiap pernyataan dinilai sendiri-sendiri.</p>
+      </div>
+      <div class="flex gap-3 items-start">
+        <span class="shrink-0 w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M4 22V4"/><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/></svg>
+        </span>
+        <p class="text-slate-600 leading-relaxed"><b class="text-slate-800 font-semibold">Tandai ragu:</b> tekan tombol bendera, nomor soal jadi kuning.</p>
+      </div>
+    </div>
+
+    <button onclick="startExam()" class="btn-icon mt-7 w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[.98] transition text-white font-bold py-4 rounded-2xl shadow-lg shadow-emerald-600/25">
+      <span>Mulai Gladi Tempur</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+  </div>
+</section>
+
+<!-- EXAM -->
+<section id="exam" class="hidden pb-36 lg:pb-10">
+  <header class="sticky top-0 z-30 glass border-b border-slate-200/70" style="padding-top:env(safe-area-inset-top,0px)">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <div class="min-w-0">
+        <h2 class="font-extrabold text-base sm:text-lg leading-tight truncate">Simulasi TKA Fisika</h2>
+        <p id="progress" class="text-xs text-slate-500 truncate mt-0.5"></p>
+      </div>
+      <div id="timer" class="btn-icon font-bold tabular-nums bg-emerald-50 text-emerald-700 px-3.5 py-2 rounded-xl text-sm ring-1 ring-emerald-100">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+        <span class="timer-val">90:00</span>
+      </div>
+    </div>
+    <div class="h-1 bg-slate-100 overflow-hidden">
+      <div id="progBar" class="h-full bg-emerald-500 transition-all duration-500 ease-out" style="width:0%"></div>
+    </div>
+  </header>
+
+  <div class="max-w-5xl mx-auto px-4 pt-5 lg:grid lg:grid-cols-[1fr_280px] lg:gap-6">
+    <main>
+      <article class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sm:p-7">
+        <div class="flex items-start justify-between gap-2 mb-5">
+          <div class="min-w-0 flex flex-wrap items-center gap-2">
+            <span id="qNum" class="bg-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg tracking-wide"></span>
+            <span id="qTopic" class="bg-slate-100 text-slate-600 text-xs font-semibold px-3 py-1.5 rounded-lg"></span>
+            <span id="qType" class="bg-sky-50 text-sky-700 text-xs font-semibold px-3 py-1.5 rounded-lg ring-1 ring-sky-100"></span>
+          </div>
+          <button id="flagBtn" onclick="toggleFlag()" class="shrink-0 btn-icon text-xs sm:text-sm font-semibold px-3 py-2 rounded-xl border transition"></button>
+        </div>
+
+        <p id="qCtx" class="text-[15px] sm:text-base leading-relaxed text-slate-700"></p>
+        <p id="qInstr" class="mt-4 text-[11px] font-bold text-slate-400 uppercase tracking-wider"></p>
+        <div id="qBody" class="mt-3 space-y-2.5"></div>
+
+        <div class="mt-7 rounded-2xl bg-amber-50/60 border border-amber-100 p-4">
+          <p class="text-sm font-bold text-amber-800 mb-3 flex items-center gap-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>
+            Bantuan Berjenjang
+          </p>
+          <div id="hintBox" class="space-y-2"></div>
+          <div id="hintBtn" class="mt-3"></div>
+        </div>
+      </article>
+
+      <div class="mt-4 flex gap-3">
+        <button onclick="go(-1)" id="prev" class="btn-icon flex-1 bg-white border border-slate-200 font-semibold py-3 rounded-2xl active:scale-[.98] transition disabled:opacity-40 disabled:active:scale-100 hover:bg-slate-50">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span>Sebelumnya</span>
+        </button>
+        <button onclick="go(1)" id="next" class="btn-icon flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-2xl active:scale-[.98] transition disabled:opacity-40 disabled:active:scale-100">
+          <span>Lanjut</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </main>
+
+    <!-- Desktop sidebar -->
+    <aside class="hidden lg:block">
+      <div class="sticky top-24 bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm">
+        <p class="font-bold mb-3 text-slate-900">Navigasi Soal</p>
+        <div id="navDesk" class="grid grid-cols-4 gap-2"></div>
+        <div class="mt-4 text-xs text-slate-500 space-y-1.5">
+          <p class="flex items-center gap-2"><span class="inline-block w-3 h-3 rounded bg-emerald-500"></span>Sudah dijawab</p>
+          <p class="flex items-center gap-2"><span class="inline-block w-3 h-3 rounded bg-amber-400"></span>Ragu-ragu</p>
+          <p class="flex items-center gap-2"><span class="inline-block w-3 h-3 rounded bg-slate-200"></span>Belum dijawab</p>
+        </div>
+        <button onclick="confirmSubmit()" class="btn-icon mt-5 w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-2xl active:scale-[.98] transition">
+          <span>Kumpulkan Misi</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Mobile bottom sheet -->
+  <div class="lg:hidden fixed bottom-0 inset-x-0 z-40 glass border-t border-slate-200/70 rounded-t-3xl shadow-2xl" style="padding-bottom:env(safe-area-inset-bottom,0px)">
+    <div class="w-10 h-1 bg-slate-300 rounded-full mx-auto mt-2"></div>
+    <div id="navMob" class="nav flex gap-2 overflow-x-auto px-4 py-3 snap-x"></div>
+    <div class="px-4 pb-3">
+      <button onclick="confirmSubmit()" class="btn-icon w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-2xl active:scale-[.98] transition">
+        <span>Kumpulkan Misi</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- CONFIRM -->
+<div id="modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm items-center justify-center p-5">
+  <div class="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl pop">
+    <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-slate-100 text-slate-600 mb-4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <h3 class="font-extrabold text-lg text-slate-900">Yakin mau dikumpulkan?</h3>
+    <p id="modalMsg" class="text-sm text-slate-500 mt-2 leading-relaxed"></p>
+    <div class="mt-5 flex gap-3">
+      <button onclick="closeModal()" class="flex-1 border border-slate-200 font-semibold py-3 rounded-2xl hover:bg-slate-50 active:scale-[.98] transition">Cek lagi</button>
+      <button onclick="finish()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-2xl active:scale-[.98] transition">Kumpulkan</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<section id="result" class="hidden min-h-screen p-5">
+  <div class="max-w-2xl mx-auto pt-6 pb-16">
+    <div class="pop relative overflow-hidden text-center bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 text-white rounded-3xl p-8 shadow-2xl shadow-emerald-600/30">
+      <div class="absolute -top-12 -right-10 w-44 h-44 rounded-full bg-white/10"></div>
+      <div class="absolute -bottom-14 -left-10 w-48 h-48 rounded-full bg-white/10"></div>
+      <div class="relative">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/15 ring-1 ring-white/25 mb-4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        </div>
+        <p class="text-emerald-100/90 text-xs font-bold uppercase tracking-widest">Skor akhirmu</p>
+        <p id="scoreBig" class="text-6xl font-extrabold tabular-nums leading-none mt-2"></p>
+        <p id="scoreSub" class="mt-3 text-emerald-50/90 text-sm"></p>
+        <p class="mt-4 font-bold text-emerald-50">Kerja bagus! Mari kita bedah logikamu.</p>
+      </div>
+    </div>
+    <h3 class="mt-8 mb-3 font-extrabold text-lg text-slate-900">Bedah per soal</h3>
+    <div id="review" class="space-y-3"></div>
+    <button onclick="location.reload()" class="btn-icon mt-6 w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-2xl active:scale-[.98] transition">
+      <span>Gladi lagi</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
+    </button>
+  </div>
+</section>
+
+<script>
+const T=(c,t,k,h)=>({topic:t,type:'PGK',ctx:c,items:k.map(x=>x[0]),key:k.map(x=>x[1]),hints:h});
+const M=(c,t,k,h)=>({topic:t,type:'MAT',ctx:c,items:k.map(x=>x[0]),key:k.map(x=>x[1]),hints:h});
+const Q=[
+T('Mobil A melaju konstan 15 m/s. Mobil B di belakangnya melaju 25 m/s. Saat jarak 40 meter, B otomatis mengerem konstan -2 m/s².','Kinematika',[
+['Mobil B membutuhkan waktu 5 detik untuk menyamakan kecepatannya dengan Mobil A.',1],
+['Jarak tempuh Mobil B sejak mengerem hingga kecepatannya sama dengan Mobil A adalah 100 meter.',1],
+['Kedua mobil dipastikan akan bertabrakan sebelum kecepatan Mobil B turun menjadi 15 m/s.',0],
+['Grafik v-t Mobil B berbentuk garis lurus menurun dengan kemiringan negatif.',1],
+['Jarak minimal yang dibutuhkan Mobil B agar tidak menabrak Mobil A sama sekali adalah 25 meter.',1]],
+['Jarak mereka akan terus menyusut selama kecepatan B masih lebih besar dari A.','Cari waktu (t) saat kecepatan B turun menjadi 15 m/s pakai rumus Vt = V0 + at.','t = 5 detik. Hitung jarak A (S = v.t) dan jarak B (S = v0.t + ½.a.t²) selama 5 detik itu, lalu cek selisihnya apakah melebihi 40 meter.']),
+M('Mesin pelontar menembak bola tenis dengan sudut 45°. Di dalam mesin, roda (flywheel) berputar dengan ω konstan.','Kinematika',[
+['Jika kecepatan awal bola dilipatgandakan, jarak jatuh mendatar bola akan menjadi dua kali lipat lebih jauh.',0],
+['Saat bola tenis berada di titik tertinggi lintasannya, kecepatan total bola bernilai nol.',0],
+['Jika jari-jari roda pemutar adalah R, percepatan sentripetal di tepi roda adalah ω²R.',1]],
+['Titik tertinggi parabola bukan berarti bola diam total. Dan ingat rumus Xmax ada kuadratnya!','Di titik tertinggi, gravitasi cuma mematikan kecepatan vertikal (Vy), tapi kecepatan horizontal (Vx) tetap ada.','Xmax berbanding lurus dengan V0 kuadrat. Jadi kalau V0 dikali 2, jaraknya bakal dikali 4!']),
+T('Crane mengangkat beban pakai katrol silinder pejal (massa M, jari-jari R). Beban m ditarik naik dengan percepatan a.','Dinamika',[
+['Tegangan tali yang ditarik mesin lebih besar dari tegangan tali yang terikat ke beban.',1],
+['Momen inersia katrol berbanding terbalik dengan kuadrat jari-jarinya.',0],
+['Jika massa katrol (M) diabaikan, percepatan naik beban (a) akan menjadi lebih besar.',1],
+['Torsi total pada katrol bernilai nol karena katrol berputar di tempatnya.',0],
+['Percepatan linear tali sama dengan percepatan sudut katrol dikalikan jari-jarinya (a = αR).',1]],
+['Katrolnya bermassa dan ikut berputar, artinya butuh "jatah" gaya buat muterin dia.','Tali penarik harus lebih kuat dari tali beban biar ada selisih gaya (torsi) untuk merotasikan katrol.','Kalau M katrol nol, nggak ada energi yang terbuang jadi energi kinetik rotasi, otomatis tarikan full buat narik beban m (percepatan naik).']),
+M('Mobil 1500 kg melaju 20 m/s menabrak tembok beton dan berhenti dalam 0,1 detik. Tembok tidak bergeser atau hancur.','Dinamika',[
+['Impuls dari tembok ke mobil besarnya sama dengan momentum awal mobil.',1],
+['Gaya rata-rata yang dialami mobil saat menabrak tembok adalah 30.000 Newton.',0],
+['Tumbukan ini adalah lenting sempurna karena tembok tidak hancur.',0]],
+['Lenting sempurna itu kalau mobilnya mantul balik dengan kecepatan utuh.','Impuls = perubahan momentum (Δp). Gaya rata-rata = Δp dibagi waktu sentuh (Δt).','Momentum awal = 30.000. Berhenti berarti akhir = 0. Δp = 30.000. Gaya = 30.000 / 0,1 detik = 300.000 N!']),
+T('Sayap pesawat saat take-off. V1 (kecepatan udara atas), V2 (bawah). P1 (tekanan atas), P2 (tekanan bawah).','Fluida',[
+['Desain sayap membuat aliran udara merapat di atas, sehingga V1 > V2.',1],
+['Berdasarkan Bernoulli, karena V1 > V2, maka P1 > P2.',0],
+['Gaya angkat terjadi murni karena gaya dorong vertikal mesin jet.',0],
+['Selisih tekanan (P2 − P1) dikalikan luas penampang sayap menghasilkan gaya angkat ke atas.',1],
+['Jika pesawat diam di landasan, tidak ada gaya angkat aerodinamis dari sayap.',1]],
+['Asas Bernoulli itu unik: makin cepat aliran udara, tekanannya malah makin KECIL.','Pesawat butuh tekanan dari BAWAH lebih kuat daripada dari ATAS biar bisa terangkat.','Udara di atas meluncur cepat (V1 tinggi) → tekanan drop (P1 rendah). Bawah sayap V2 lambat → P2 tinggi. P2 mendorong lebih kuat dari P1.']),
+M('Kapal selam mengisi tangki air hingga massa jenis rata-ratanya sama persis dengan massa jenis air laut di kedalamannya saat ini.','Fluida',[
+['Kapal selam dalam keadaan melayang dan gaya apung sama besar dengan berat total kapal.',1],
+['Jika kapal selam menyelam lebih dalam, tekanan hidrostatis dinding kapal akan berkurang.',0],
+['Gaya apung (Archimedes) yang dialami kapal bertambah besar jika kapal berada makin dalam.',0]],
+['Hukum Archimedes bergantung pada "berapa banyak volume air yang digeser", bukan kedalaman.','Melayang artinya gaya angkat air seimbang dengan gaya berat kapal. Tekanan hidrostatis (Ph) berbanding lurus dengan kedalaman (h).','Kedalaman bertambah → Ph naik (dinding bisa pecah). Tapi gaya apung tetap konstan karena volume kapal tidak berubah.']),
+T('Palang kereta diam membunyikan sirine 700 Hz. Kereta A mendekat (30 m/s), Kereta B menjauh (20 m/s) dari palang.','Gelombang',[
+['Masinis kereta A mendengar sirine dengan frekuensi lebih dari 700 Hz.',1],
+['Penumpang kereta B mendengar frekuensi yang perlahan membesar seiring menjauhnya kereta.',0],
+['Selisih frekuensi di A dan B murni akibat arah gerak relatif pendengar terhadap sumber suara.',1],
+['Jika kecepatan Kereta A ditambah, frekuensi yang didengar masinis A makin kecil.',0],
+['Taraf intensitas bunyi sirine diukur dalam gerbong kereta A terus bertambah selama kereta mendekat.',1]],
+['Logika Doppler: jarak makin dekat = gelombang makin rapat (frekuensi NAIK / tinggi).','Kereta B menjauh, berarti frekuensinya harus di bawah 700 Hz. Intensitas (kenyaringan) beda dengan frekuensi (nada).','A mendekat (frekuensi > 700). Makin dekat sumber bunyi, energi suara makin besar (intensitas naik).']),
+M('Penderita cacat mata kombinasi (titik dekat 50 cm, titik jauh 2 m) memakai kacamata bifokal.','Optik',[
+['Lensa bagian bawah kacamata harus lensa cembung (positif) untuk membaca dekat.',1],
+['Lensa bagian atas untuk melihat jauh memiliki kekuatan −0,5 Dioptri.',1],
+['Bayangan akhir oleh lensa kacamata agar terlihat jelas bersifat nyata dan terbalik.',0]],
+['Rabun dekat pakai (+). Rabun jauh pakai (−). Lensa kacamata menciptakan bayangan di "titik rusak" mata.','Rumus lensa jauh: P = −100 / PR (PR = titik jauh dalam cm).','P = −100/200 = −0,5 D. Semua kacamata menghasilkan bayangan MAYA dan TEGAK di depan mata agar bisa dibaca retina.']),
+T('Tembaga 500 g (200°C) masuk ke campuran tertutup 200 g air dan 50 g es (0°C).','Termodinamika',[
+['Jika es mencair semua, suhu akhir pasti di atas 0°C.',0],
+['Es adalah pihak penyerap kalor, sedangkan air (0°C) tidak melepaskan atau menyerap kalor dari es.',1],
+['Energi tembaga digunakan terlebih dahulu untuk proses meleburkan es (kalor laten).',1],
+['Pada proses perubahan wujud es menjadi air, energi kinetik molekul H₂O tidak meningkat.',1],
+['Asas Black menyatakan total kalor lepas = total kalor terima.',1]],
+['Air 0°C dan es 0°C itu damai (suhunya sama), tidak ada transfer panas di antara mereka. Tembaga yang agresif bagi-bagi panas.','Panas dari tembaga harus "bayar utang" buat nyairin es (Q = mL) dulu. Suhu nggak naik kalau utangnya belum lunas.','Saat mencair (garis lurus di grafik), energi dipakai buat merusak ikatan molekul (energi potensial bertambah), bukan menaikkan suhu (energi kinetik tetap).']),
+M('Grafik P-V gas ideal tertutup: X→Y isobarik memuai, Y→Z isokhorik tekanan turun, Z→X isotermal menyusut.','Termodinamika',[
+['Pada proses X→Y, gas melakukan usaha positif terhadap lingkungan.',1],
+['Pada proses Y→Z, gas menyerap kalor dari lingkungan.',0],
+['Perubahan energi dalam (ΔU) total untuk 1 siklus penuh X→Y→Z→X bernilai nol.',1]],
+['Memuai (volume ke kanan) = usaha (+). Siklus yang balik ke titik awal selalu mereset energi dalamnya!','Y→Z isokhorik (volume tetap, W = 0). Tekanan turun, pasti suhu turun. Suhu turun, energi dalam berkurang.','Hukum I Termo (Q = ΔU + W). Untuk Y→Z: Q = (−) + 0. Karena Q negatif, gas MELEPAS kalor, bukan menyerap.']),
+T('3 lampu identik (R). L1 dirangkai seri dengan baterai, lalu arusnya bercabang paralel ke L2 dan L3.','Kelistrikan',[
+['Lampu L1 menyala paling terang dibandingkan L2 dan L3.',1],
+['Jika L2 putus, maka L3 akan ikut padam.',0],
+['Arus listrik yang mengalir di L1 sama dengan jumlah arus di L2 dan L3.',1],
+['Hambatan total ekivalen dari rangkaian tersebut adalah 1,5 R.',1],
+['Tegangan listrik (Volt) yang terukur pada ujung lampu L2 dan L3 sama besar.',1]],
+['Hukum Arus Kirchhoff: air yang masuk cabang sama dengan air yang pecah ke cabang-cabang.','L1 dapat 100% arus dari baterai. L2 dan L3 paralel, jadi arusnya dibagi dua (hambatannya sama).','Daya (terang) P = I²R. Arus di L1 paling besar, jadi L1 paling terang. R paralel = R/2. Total = R + 0,5R = 1,5R.']),
+M('Partikel debu bermuatan (−) masuk ke tengah-tengah dua pelat logam. Pelat A (+), Pelat B (−).','Kelistrikan',[
+['Arah medan listrik statis di antara kedua pelat adalah dari Pelat B menuju Pelat A.',0],
+['Partikel debu akan mengalami gaya Coulomb dengan arah menuju Pelat A.',1],
+['Jika jarak pelat dijauhkan tanpa mencabut baterai, kuat medan listrik di antara pelat membesar.',0]],
+['Muatan sejenis tolak-menolak, beda jenis tarik-menarik. Garis medan listrik berawal dari (+) ke (−).','Debu (−) pasti ditarik oleh Pelat A (+). Medan listrik rumusnya E = V / d (tegangan dibagi jarak).','Garis medan dari A(+) ke B(−). Kalau jarak (d) dijauhkan, pembaginya makin besar, otomatis medan listrik (E) makin mengecil.'])
+];
+
+const ans=Q.map(q=>q.type==='PGK'?[]:q.items.map(()=>null));
+const flags=Q.map(()=>false), hintLv=Q.map(()=>0);
+let cur=0,left=90*60,tm=null,done=false;
+const $=id=>document.getElementById(id);
+const L='ABCDE';
+
+const SVG={
+  flagOutline:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M4 22V4"/><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/></svg>',
+  flagFill:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M4 22V4"/><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/></svg>',
+  checkCircle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"/><polyline points="16 9 10.5 14.5 8 12"/></svg>',
+  xCircle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+  lightbulb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>',
+  checkSmall:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><polyline points="20 6 9 17 4 12"/></svg>'
+};
+const HINT_ICONS=[SVG.lightbulb,SVG.search,SVG.book];
+
+function startExam(){
+  $('start').classList.add('hidden');$('exam').classList.remove('hidden');
+  render();tick();tm=setInterval(tick,1000);window.scrollTo(0,0);
+}
+function tick(){
+  if(done)return;
+  const m=Math.floor(left/60),s=left%60;
+  const el=$('timer');
+  el.querySelector('.timer-val').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  const urgent=left<=300;
+  el.className='btn-icon font-bold tabular-nums px-3.5 py-2 rounded-xl text-sm ring-1 transition '+(urgent?'bg-rose-50 text-rose-600 ring-rose-100':'bg-emerald-50 text-emerald-700 ring-emerald-100');
+  if(left<=0){finish();return}
+  left--;
+}
+function answered(i){
+  const q=Q[i];
+  return q.type==='PGK'?ans[i].length>0:ans[i].every(v=>v!==null);
+}
+function startedQ(i){return Q[i].type==='PGK'?ans[i].length>0:ans[i].some(v=>v!==null)}
+function navHTML(){
+  return Q.map((q,i)=>{
+    let c='bg-slate-100 text-slate-500 border border-slate-200';
+    if(flags[i])c='bg-amber-400 text-white border border-amber-400';
+    else if(startedQ(i))c='bg-emerald-500 text-white border border-emerald-500';
+    const ring=i===cur?' ring-2 ring-slate-900 ring-offset-2 ring-offset-white':'';
+    return `<button onclick="jump(${i})" data-i="${i}" class="shrink-0 w-11 h-11 rounded-xl font-bold text-sm snap-center transition-all ${c}${ring}">${i+1}</button>`;
+  }).join('');
+}
+function renderNav(){
+  $('navDesk').innerHTML=navHTML();
+  $('navMob').innerHTML=navHTML();
+  const a=$('navMob').querySelector(`[data-i="${cur}"]`);
+  if(a)$('navMob').scrollTo({left:a.offsetLeft-$('navMob').clientWidth/2+22,behavior:'smooth'});
+}
+function renderFlag(){
+  const fb=$('flagBtn');
+  fb.innerHTML=flags[cur]
+    ? SVG.flagFill+'<span>Ragu-ragu</span>'
+    : SVG.flagOutline+'<span>Tandai ragu</span>';
+  fb.className='shrink-0 btn-icon text-xs sm:text-sm font-semibold px-3 py-2 rounded-xl border transition '+(flags[cur]?'bg-amber-100 border-amber-300 text-amber-800':'bg-white border-slate-200 text-slate-600 hover:bg-slate-50');
+}
+function render(){
+  const q=Q[cur];
+  $('qNum').textContent='Soal '+(cur+1)+' / '+Q.length;
+  $('qTopic').textContent=q.topic;
+  $('qType').textContent=q.type==='PGK'?'Pilihan Ganda Kompleks':'Benar / Salah';
+  $('qCtx').textContent=q.ctx;
+  $('qInstr').textContent=q.type==='PGK'?'Centang semua pernyataan yang benar.':'Tentukan Benar atau Salah untuk tiap pernyataan.';
+  renderFlag();
+
+  let h='';
+  if(q.type==='PGK'){
+    h=q.items.map((t,j)=>{
+      const on=ans[cur].includes(j);
+      return `<label class="flex gap-3 items-start p-4 rounded-2xl border-2 cursor-pointer transition-all ${on?'border-emerald-500 bg-emerald-50/60 shadow-sm':'border-slate-200 hover:border-slate-300 hover:bg-slate-50/50'}">
+      <span class="shrink-0 mt-0.5 w-5 h-5 rounded-md border-2 flex items-center justify-center transition-colors ${on?'bg-emerald-500 border-emerald-500 text-white':'border-slate-300 bg-white text-transparent'}">${SVG.checkSmall}</span>
+      <input type="checkbox" class="sr-only" ${on?'checked':''} onchange="pick(${j})">
+      <span class="text-[15px] leading-relaxed"><b class="text-slate-400 mr-1.5">${L[j]}.</b>${t}</span></label>`}).join('');
+  }else{
+    h=q.items.map((t,j)=>{
+      const v=ans[cur][j];
+      const b=(val,lab)=>`<label class="flex-1 text-center py-2.5 rounded-xl border-2 font-semibold text-sm cursor-pointer transition-all ${v===val?(val?'border-emerald-500 bg-emerald-500 text-white shadow-sm':'border-rose-500 bg-rose-500 text-white shadow-sm'):'border-slate-200 bg-white text-slate-600 hover:border-slate-300'}">
+        <input type="radio" name="r${j}" class="sr-only" ${v===val?'checked':''} onchange="pickR(${j},${val})">${lab}</label>`;
+      return `<div class="p-4 rounded-2xl border border-slate-200 bg-slate-50/50">
+      <p class="text-[15px] leading-relaxed mb-3"><b class="text-slate-400 mr-1.5">${j+1}.</b>${t}</p>
+      <div class="flex gap-2">${b(true,'Benar')}${b(false,'Salah')}</div></div>`}).join('');
+  }
+  $('qBody').innerHTML=h;
+  renderHints(false);
+  $('prev').disabled=cur===0;$('next').disabled=cur===Q.length-1;
+  const cnt=Q.filter((_,i)=>answered(i)).length;
+  $('progress').textContent=cnt+' dari '+Q.length+' soal terjawab';
+  $('progBar').style.width=(cnt/Q.length*100)+'%';
+  renderNav();
+}
+function renderHints(anim){
+  const lv=hintLv[cur],hs=Q[cur].hints;
+  const cols=['bg-emerald-50 border-emerald-200 text-emerald-900','bg-sky-50 border-sky-200 text-sky-900','bg-violet-50 border-violet-200 text-violet-900'];
+  $('hintBox').innerHTML=hs.map((t,i)=>`<div class="hint ${i<lv?'open':''}" id="h${i}"><div><div class="rounded-xl border p-3 text-sm leading-relaxed ${cols[i]}"><b class="font-bold">Clue ${i+1}:</b> ${t}</div></div></div>`).join('');
+  if(anim&&lv>0){const e=$('h'+(lv-1));e.classList.remove('open');requestAnimationFrame(()=>requestAnimationFrame(()=>e.classList.add('open')))}
+  const lab=['Mentok? Buka Clue','Masih bingung?','Spill cara mikirnya dong!'];
+  $('hintBtn').innerHTML=lv<3?`<button onclick="openHint()" class="btn-icon w-full sm:w-auto bg-white border border-amber-300 text-amber-800 font-semibold text-sm px-4 py-2.5 rounded-xl active:scale-[.98] transition hover:bg-amber-50">${HINT_ICONS[lv]}<span>${lab[lv]}</span></button>`:'<p class="text-xs text-amber-700 font-medium">Semua clue sudah terbuka. Semangat!</p>';
+}
+function openHint(){if(hintLv[cur]<3){hintLv[cur]++;renderHints(true)}}
+function pick(j){
+  const a=ans[cur],k=a.indexOf(j);
+  k>-1?a.splice(k,1):a.push(j);
+  render();
+}
+function pickR(j,v){ans[cur][j]=v;render()}
+function toggleFlag(){flags[cur]=!flags[cur];render()}
+function go(d){jump(Math.min(Q.length-1,Math.max(0,cur+d)))}
+function jump(i){cur=i;render();window.scrollTo({top:0,behavior:'smooth'})}
+
+function confirmSubmit(){
+  const n=Q.filter((_,i)=>answered(i)).length,f=flags.filter(Boolean).length;
+  let m=`Kamu menjawab ${n} dari ${Q.length} soal.`;
+  if(n<Q.length)m+=` Masih ada ${Q.length-n} soal belum tuntas.`;
+  if(f)m+=` ${f} soal masih ditandai ragu.`;
+  $('modalMsg').textContent=m;
+  $('modal').classList.remove('hidden');$('modal').classList.add('flex');
+}
+function closeModal(){$('modal').classList.add('hidden');$('modal').classList.remove('flex')}
+
+function score(i){
+  const q=Q[i];
+  if(q.type==='PGK'){
+    const ok=q.key.every((k,j)=>!!k===ans[i].includes(j))&&true;
+    return {got:ok?1:0,max:1};
+  }
+  let g=0;q.key.forEach((k,j)=>{if(ans[i][j]!==null&&ans[i][j]===!!k)g++});
+  return {got:g,max:q.key.length};
+}
+function finish(){
+  if(done)return;done=true;clearInterval(tm);closeModal();
+  $('exam').classList.add('hidden');$('result').classList.remove('hidden');
+  let g=0,m=0;
+  const rows=Q.map((q,i)=>{
+    const s=score(i);g+=s.got;m+=s.max;
+    const full=s.got===s.max;
+    const det=q.items.map((t,j)=>{
+      const k=!!q.key[j];let u,ok,extra;
+      if(q.type==='PGK'){
+        u=ans[i].includes(j);ok=u===k;
+        extra=`Kunci: ${k?'Benar (dicentang)':'Salah (tidak dicentang)'} · Kamu: ${u?'dicentang':'tidak dicentang'}`;
+        return `<li class="flex gap-2.5 text-sm py-2"><span class="shrink-0 mt-0.5 ${ok?'text-emerald-500':'text-rose-500'}">${ok?SVG.checkCircle:SVG.xCircle}</span><span class="leading-relaxed"><b>${L[j]}.</b> ${t}<br><span class="text-xs text-slate-500">${extra}</span></span></li>`;
+      }
+      u=ans[i][j];ok=u===k;
+      extra=`Kunci: ${k?'Benar':'Salah'} · Kamu: ${u===null?'kosong':(u?'Benar':'Salah')}`;
+      return `<li class="flex gap-2.5 text-sm py-2"><span class="shrink-0 mt-0.5 ${ok?'text-emerald-500':'text-rose-500'}">${ok?SVG.checkCircle:SVG.xCircle}</span><span class="leading-relaxed">${j+1}. ${t}<br><span class="text-xs text-slate-500">${extra}</span></span></li>`;
+    }).join('');
+    const label=q.type==='PGK'?(full?'Benar':'Salah'):`${s.got}/${s.max} baris`;
+    return `<details class="group bg-white rounded-2xl border border-slate-200/80 p-4 open:shadow-sm transition-shadow">
+      <summary class="cursor-pointer flex items-center justify-between gap-2 font-semibold">
+        <span class="text-slate-800">Soal ${i+1} <span class="text-slate-400 font-normal text-sm">${q.topic}</span></span>
+        <span class="flex items-center gap-2 shrink-0">
+          <span class="text-xs px-3 py-1 rounded-full font-semibold ${full?'bg-emerald-100 text-emerald-700':(s.got>0?'bg-amber-100 text-amber-700':'bg-rose-100 text-rose-700')}">${label}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+      </summary>
+      <ul class="mt-2 divide-y divide-slate-100">${det}</ul>
+      <div class="mt-3 rounded-xl bg-emerald-50 border border-emerald-100 p-3 text-sm leading-relaxed text-slate-700"><b class="text-emerald-700">Bedah logika:</b> ${q.hints[2]}</div></details>`;
+  }).join('');
+  const pct=Math.round(g/m*100);
+  $('scoreBig').textContent=pct;
+  $('scoreSub').textContent=`${g} dari ${m} poin (PGK: 1 poin per soal, Benar/Salah: 1 poin per baris)`;
+  $('review').innerHTML=rows;
+  window.scrollTo(0,0);
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+    const cols=['#10b981','#14b8a6','#fbbf24','#38bdf8','#a78bfa'];
+    for(let i=0;i<50;i++){
+      const c=document.createElement('i');c.className='conf';
+      c.style.left=Math.random()*100+'vw';c.style.background=cols[i%5];
+      c.style.animationDuration=(2+Math.random()*2.5)+'s';c.style.animationDelay=Math.random()*.8+'s';
+      document.body.appendChild(c);setTimeout(()=>c.remove(),6000);
+    }
+  }
+}
+</script>
+</body>
+</html>
