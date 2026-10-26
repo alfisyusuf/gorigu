@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pembahasan Lengkap — Simulasi TKA Fisika</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+:root{--ease:cubic-bezier(.2,.8,.2,1)}
+body{font-family:'Plus Jakarta Sans',Inter,system-ui,sans-serif;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+.glass{background:rgba(255,255,255,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.nav::-webkit-scrollbar{display:none}
+.nav{scrollbar-width:none;-ms-overflow-style:none}
+.chip{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border-radius:9999px;font-size:.78rem;font-weight:700;white-space:nowrap;border:1px solid #e2e8f0;background:#fff;color:#475569;transition:all .2s var(--ease);cursor:pointer}
+.chip:hover{border-color:#cbd5e1;background:#f8fafc}
+.chip.active{background:#0f172a;color:#fff;border-color:#0f172a;box-shadow:0 6px 16px -6px rgba(15,23,42,.4)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .45s var(--ease) both}
+@media (prefers-reduced-motion:reduce){.fade-up{animation:none}}
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen antialiased">
+
+<!-- HEADER -->
+<header class="sticky top-0 z-30 glass border-b border-slate-200/70" style="padding-top:env(safe-area-inset-top,0px)">
+  <div class="max-w-3xl mx-auto px-4 py-3">
+    <div class="flex items-center gap-3">
+      <div class="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center shadow-md shadow-emerald-600/20">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+      </div>
+      <div class="min-w-0">
+        <h1 class="font-extrabold text-base sm:text-lg leading-tight truncate text-slate-900">Pembahasan Lengkap</h1>
+        <p class="text-xs text-slate-500 truncate">Simulasi TKA Fisika · <span id="counter">12 soal</span></p>
+      </div>
+    </div>
+  </div>
+  <div id="filters" class="nav max-w-3xl mx-auto px-4 pb-3 flex gap-2 overflow-x-auto"></div>
+</header>
+
+<!-- LEGEND -->
+<div class="max-w-3xl mx-auto px-4 pt-4">
+  <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-slate-500">
+    <span class="flex items-center gap-1.5">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Pernyataan benar (untuk PGK: harus dicentang)
+    </span>
+    <span class="flex items-center gap-1.5">
+      <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Pernyataan salah (untuk PGK: tidak dicentang)
+    </span>
+  </div>
+</div>
+
+<!-- LIST -->
+<main class="max-w-3xl mx-auto px-4 pt-4 pb-24 space-y-4" id="list"></main>
+
+<!-- BACK TO TOP -->
+<button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-5 right-5 z-40 w-11 h-11 rounded-full bg-slate-900 text-white shadow-lg shadow-slate-900/30 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+</button>
+
+<script>
+/* ============ IKON SVG ============ */
+const ICON = {
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><polyline points="20 6 9 17 4 12"/></svg>',
+  cross:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+  book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>'
+};
+
+/* ============ DATA SOAL + PEMBAHASAN ============ */
+const DATA = [
+  {
+    topic:'Kinematika', type:'PGK',
+    ctx:`Mobil A melaju konstan 15 m/s. Mobil B di belakangnya melaju 25 m/s. Saat jarak 40 meter, B otomatis mengerem konstan -2 m/s².`,
+    items:[
+      {t:`Mobil B membutuhkan waktu 5 detik untuk menyamakan kecepatannya dengan Mobil A.`,key:1},
+      {t:`Jarak tempuh Mobil B sejak mengerem hingga kecepatannya sama dengan Mobil A adalah 100 meter.`,key:1},
+      {t:`Kedua mobil dipastikan akan bertabrakan sebelum kecepatan Mobil B turun menjadi 15 m/s.`,key:0},
+      {t:`Grafik v-t Mobil B berbentuk garis lurus menurun dengan kemiringan negatif.`,key:1},
+      {t:`Jarak minimal yang dibutuhkan Mobil B agar tidak menabrak Mobil A sama sekali adalah 25 meter.`,key:1}
+    ],
+    concept:`Mobil A bergerak lurus beraturan (GLB), Mobil B bergerak lurus berubah beraturan (GLBB) diperlambat. Kunci analisis ada pada waktu penyamaan kecepatan dan jarak relatif.`,
+    steps:[
+      `Kecepatan B menyamai A saat v<sub>t</sub> = v<sub>0</sub> + at → 15 = 25 + (−2)t → t = 5 s. Pernyataan 1 <b>benar</b>.`,
+      `Jarak B selama 5 s: s<sub>B</sub> = v<sub>0</sub>t + ½at² = 25(5) + ½(−2)(5²) = 125 − 25 = 100 m. Pernyataan 2 <b>benar</b>.`,
+      `Jarak A selama 5 s: s<sub>A</sub> = 15 × 5 = 75 m. Posisi awal A 40 m di depan B, jadi posisi A = 40 + 75 = 115 m, sedangkan B = 100 m. B masih 15 m di belakang A → belum bertabrakan. Pernyataan 3 <b>salah</b>.`,
+      `Grafik v-t B: garis lurus dari 25 m/s turun ke 15 m/s dengan kemiringan = a = −2 m/s² (negatif). Pernyataan 4 <b>benar</b>.`,
+      `Jarak minimal agar tidak menabrak = jarak relatif saat kecepatan relatif nol. v<sub>rel</sub> = 25 − 15 = 10 m/s, a<sub>rel</sub> = 2 m/s². s<sub>rel</sub> = v<sub>rel</sub>²/(2a<sub>rel</sub>) = 100/4 = 25 m. Karena jarak awal 40 m > 25 m, B masih aman. Pernyataan 5 <b>benar</b>.`
+    ]
+  },
+  {
+    topic:'Kinematika', type:'MAT',
+    ctx:`Mesin pelontar menembak bola tenis dengan sudut 45°. Di dalam mesin, roda (flywheel) berputar dengan ω konstan.`,
+    items:[
+      {t:`Jika kecepatan awal bola dilipatgandakan, jarak jatuh mendatar bola akan menjadi dua kali lipat lebih jauh.`,key:0},
+      {t:`Saat bola tenis berada di titik tertinggi lintasannya, kecepatan total bola bernilai nol.`,key:0},
+      {t:`Jika jari-jari roda pemutar adalah R, percepatan sentripetal di tepi roda adalah ω²R.`,key:1}
+    ],
+    concept:`Gerak parabola: sumbu X GLB, sumbu Y GLBB. Komponen kecepatan: v<sub>x</sub> = v₀ cos θ (tetap), v<sub>y</sub> = v₀ sin θ − gt. Jangkauan X<sub>max</sub> = v₀² sin 2θ / g.`,
+    steps:[
+      `Jangkauan parabola X<sub>max</sub> = v₀² sin 2θ / g. Karena sebanding dengan v₀², jika v₀ dikali 2 maka X<sub>max</sub> dikali 4 (bukan 2). Pernyataan 1 <b>salah</b>.`,
+      `Di titik tertinggi, komponen vertikal v<sub>y</sub> = 0, tetapi komponen horizontal v<sub>x</sub> = v₀ cos θ tetap. Jadi v<sub>total</sub> = v<sub>x</sub> ≠ 0. Pernyataan 2 <b>salah</b>.`,
+      `Percepatan sentripetal a<sub>s</sub> = v²/R = (ωR)²/R = ω²R. Pernyataan 3 <b>benar</b>.`
+    ]
+  },
+  {
+    topic:'Dinamika', type:'PGK',
+    ctx:`Crane mengangkat beban pakai katrol silinder pejal (massa M, jari-jari R). Beban m ditarik naik dengan percepatan a.`,
+    items:[
+      {t:`Tegangan tali yang ditarik mesin lebih besar dari tegangan tali yang terikat ke beban.`,key:1},
+      {t:`Momen inersia katrol berbanding terbalik dengan kuadrat jari-jarinya.`,key:0},
+      {t:`Jika massa katrol (M) diabaikan, percepatan naik beban (a) akan menjadi lebih besar.`,key:1},
+      {t:`Torsi total pada katrol bernilai nol karena katrol berputar di tempatnya.`,key:0},
+      {t:`Percepatan linear tali sama dengan percepatan sudut katrol dikalikan jari-jarinya (a = αR).`,key:1}
+    ],
+    concept:`Katrol pejal bermassa memiliki momen inersia I = ½MR². Hukum Newton rotasi: τ = Iα. Syarat tali tidak slip: a = αR. Tegangan tali di kedua sisi katrol berbeda karena sebagian gaya dipakai memutar katrol.`,
+    steps:[
+      `Katrol pejal: I = ½MR². Torsi: (T<sub>mesin</sub> − T<sub>beban</sub>)R = Iα. Karena I > 0 dan α > 0, maka T<sub>mesin</sub> > T<sub>beban</sub>. Pernyataan 1 <b>benar</b>.`,
+      `I = ½MR² → berbanding lurus dengan R², bukan berbanding terbalik. Pernyataan 2 <b>salah</b>.`,
+      `Jika M diabaikan (M → 0), maka I → 0. Tidak ada gaya yang "dibuang" untuk memutar katrol, seluruh tarikan efektif untuk mengangkat beban → percepatan a membesar. Pernyataan 3 <b>benar</b>.`,
+      `Katrol berotasi dengan percepatan sudut α ≠ 0, sehingga τ<sub>total</sub> = Iα ≠ 0. Pernyataan 4 <b>salah</b>.`,
+      `Tali tidak slip → a = αR. Pernyataan 5 <b>benar</b>.`
+    ]
+  },
+  {
+    topic:'Dinamika', type:'MAT',
+    ctx:`Mobil 1500 kg melaju 20 m/s menabrak tembok beton dan berhenti dalam 0,1 detik. Tembok tidak bergeser atau hancur.`,
+    items:[
+      {t:`Impuls dari tembok ke mobil besarnya sama dengan momentum awal mobil.`,key:1},
+      {t:`Gaya rata-rata yang dialami mobil saat menabrak tembok adalah 30.000 Newton.`,key:0},
+      {t:`Tumbukan ini adalah lenting sempurna karena tembok tidak hancur.`,key:0}
+    ],
+    concept:`Impuls = perubahan momentum: I = Δp = m(v₂ − v₁). Gaya rata-rata F = Δp/Δt. Koefisien restitusi e = −(v₂′ − v₁′)/(v₂ − v₁).`,
+    steps:[
+      `Momentum awal p = mv = 1500 × 20 = 30.000 kg·m/s. Mobil berhenti → p akhir = 0. Impuls = Δp = 30.000 N·s, besarnya sama dengan momentum awal. Pernyataan 1 <b>benar</b>.`,
+      `Gaya rata-rata F = Δp/Δt = 30.000 / 0,1 = 300.000 N, bukan 30.000 N. Pernyataan 2 <b>salah</b>.`,
+      `Mobil berhenti dan tembok tidak bergerak → e = 0 → tumbukan tidak lenting sama sekali, bukan lenting sempurna. Pernyataan 3 <b>salah</b>.`
+    ]
+  },
+  {
+    topic:'Fluida', type:'PGK',
+    ctx:`Sayap pesawat saat take-off. V1 (kecepatan udara atas), V2 (bawah). P1 (tekanan atas), P2 (tekanan bawah).`,
+    items:[
+      {t:`Desain sayap membuat aliran udara merapat di atas, sehingga V1 > V2.`,key:1},
+      {t:`Berdasarkan Bernoulli, karena V1 > V2, maka P1 > P2.`,key:0},
+      {t:`Gaya angkat terjadi murni karena gaya dorong vertikal mesin jet.`,key:0},
+      {t:`Selisih tekanan (P2 − P1) dikalikan luas penampang sayap menghasilkan gaya angkat ke atas.`,key:1},
+      {t:`Jika pesawat diam di landasan, tidak ada gaya angkat aerodinamis dari sayap.`,key:1}
+    ],
+    concept:`Asas Bernoulli: P + ½ρv² + ρgh = konstan. Untuk ketinggian sama: P + ½ρv² = konstan. Aliran cepat → tekanan kecil.`,
+    steps:[
+      `Sayap pesawat dirancang agar udara di atas mengalir lebih cepat: V₁ > V₂. Pernyataan 1 <b>benar</b>.`,
+      `Bernoulli: P + ½ρV² = konstan. Karena V₁ > V₂, maka P₁ < P₂ (bukan P₁ > P₂). Pernyataan 2 <b>salah</b>.`,
+      `Gaya angkat berasal dari selisih tekanan udara, bukan dorongan vertikal mesin jet. Pernyataan 3 <b>salah</b>.`,
+      `Gaya angkat F = (P₂ − P₁) × A. Pernyataan 4 <b>benar</b>.`,
+      `Saat pesawat diam, V₁ = V₂ = 0 → P₁ = P₂ → tidak ada gaya angkat aerodinamis. Pernyataan 5 <b>benar</b>.`
+    ]
+  },
+  {
+    topic:'Fluida', type:'MAT',
+    ctx:`Kapal selam mengisi tangki air hingga massa jenis rata-ratanya sama persis dengan massa jenis air laut di kedalamannya saat ini.`,
+    items:[
+      {t:`Kapal selam dalam keadaan melayang dan gaya apung sama besar dengan berat total kapal.`,key:1},
+      {t:`Jika kapal selam menyelam lebih dalam, tekanan hidrostatis dinding kapal akan berkurang.`,key:0},
+      {t:`Gaya apung (Archimedes) yang dialami kapal bertambah besar jika kapal berada makin dalam.`,key:0}
+    ],
+    concept:`Hukum Archimedes: Fa = ρ<sub>fluida</sub> · V<sub>tercelup</sub> · g. Terapung: ρ<sub>benda</sub> < ρ<sub>fluida</sub>. Melayang: ρ<sub>benda</sub> = ρ<sub>fluida</sub>. Tenggelam: ρ<sub>benda</sub> > ρ<sub>fluida</sub>. Tekanan hidrostatis: Ph = ρgh.`,
+    steps:[
+      `Massa jenis rata-rata = massa jenis air laut → kapal melayang → gaya apung Fa = berat W. Pernyataan 1 <b>benar</b>.`,
+      `Tekanan hidrostatis Ph = ρgh. Makin dalam (h besar), Ph makin besar, bukan berkurang. Pernyataan 2 <b>salah</b>.`,
+      `Gaya apung Fa = ρ<sub>fluida</sub> · V<sub>tercelup</sub> · g. Hanya bergantung volume tercelup, bukan kedalaman. Pernyataan 3 <b>salah</b>.`
+    ]
+  },
+  {
+    topic:'Gelombang', type:'PGK',
+    ctx:`Palang kereta diam membunyikan sirine 700 Hz. Kereta A mendekat (30 m/s), Kereta B menjauh (20 m/s) dari palang.`,
+    items:[
+      {t:`Masinis kereta A mendengar sirine dengan frekuensi lebih dari 700 Hz.`,key:1},
+      {t:`Penumpang kereta B mendengar frekuensi yang perlahan membesar seiring menjauhnya kereta.`,key:0},
+      {t:`Selisih frekuensi di A dan B murni akibat arah gerak relatif pendengar terhadap sumber suara.`,key:1},
+      {t:`Jika kecepatan Kereta A ditambah, frekuensi yang didengar masinis A makin kecil.`,key:0},
+      {t:`Taraf intensitas bunyi sirine diukur dalam gerbong kereta A terus bertambah selama kereta mendekat.`,key:1}
+    ],
+    concept:`Efek Doppler: f′ = f · (v ± v<sub>p</sub>)/(v ∓ v<sub>s</sub>). Mendekat → f′ > f. Menjauh → f′ < f. Intensitas bunyi I = P/(4πr²), taraf intensitas TI = 10 log(I/I₀).`,
+    steps:[
+      `Kereta A mendekat → frekuensi yang didengar lebih tinggi dari 700 Hz. Pernyataan 1 <b>benar</b>.`,
+      `Kereta B menjauh → frekuensi yang didengar lebih rendah dari 700 Hz dan terus mengecil, bukan membesar. Pernyataan 2 <b>salah</b>.`,
+      `Selisih frekuensi murni akibat gerak relatif pendengar terhadap sumber (efek Doppler). Pernyataan 3 <b>benar</b>.`,
+      `Jika kecepatan A ditambah, pendengar makin cepat mendekat → frekuensi makin besar, bukan makin kecil. Pernyataan 4 <b>salah</b>.`,
+      `Intensitas I = P/(4πr²). Makin dekat sumber, intensitas makin besar → taraf intensitas naik. Pernyataan 5 <b>benar</b>.`
+    ]
+  },
+  {
+    topic:'Optik', type:'MAT',
+    ctx:`Penderita cacat mata kombinasi (titik dekat 50 cm, titik jauh 2 m) memakai kacamata bifokal.`,
+    items:[
+      {t:`Lensa bagian bawah kacamata harus lensa cembung (positif) untuk membaca dekat.`,key:1},
+      {t:`Lensa bagian atas untuk melihat jauh memiliki kekuatan −0,5 Dioptri.`,key:1},
+      {t:`Bayangan akhir oleh lensa kacamata agar terlihat jelas bersifat nyata dan terbalik.`,key:0}
+    ],
+    concept:`Cacat mata: miopi (rabun jauh) dikoreksi lensa cekung (−), hipermetropi (rabun dekat) dikoreksi lensa cembung (+). Kekuatan lensa P = 100/f (cm) atau P = −100/PR untuk miopi.`,
+    steps:[
+      `Rabun dekat (hipermetropi) dikoreksi lensa cembung (positif). Pernyataan 1 <b>benar</b>.`,
+      `Kekuatan lensa untuk titik jauh PR = 200 cm: P = −100/PR = −100/200 = −0,5 D. Pernyataan 2 <b>benar</b>.`,
+      `Lensa kacamata menghasilkan bayangan maya dan tegak di titik dekat/jauh mata, bukan nyata dan terbalik. Pernyataan 3 <b>salah</b>.`
+    ]
+  },
+  {
+    topic:'Termodinamika', type:'PGK',
+    ctx:`Tembaga 500 g (200°C) masuk ke campuran tertutup 200 g air dan 50 g es (0°C).`,
+    items:[
+      {t:`Jika es mencair semua, suhu akhir pasti di atas 0°C.`,key:0},
+      {t:`Es adalah pihak penyerap kalor, sedangkan air (0°C) tidak melepaskan atau menyerap kalor dari es.`,key:1},
+      {t:`Energi tembaga digunakan terlebih dahulu untuk proses meleburkan es (kalor laten).`,key:1},
+      {t:`Pada proses perubahan wujud es menjadi air, energi kinetik molekul H₂O tidak meningkat.`,key:1},
+      {t:`Asas Black menyatakan total kalor lepas = total kalor terima.`,key:1}
+    ],
+    concept:`Asas Black: Q<sub>lepas</sub> = Q<sub>terima</sub>. Kalor jenis Q = mcΔT. Kalor lebur Q = mL. Saat berubah wujud, suhu tetap.`,
+    steps:[
+      `Suhu akhir bisa tepat 0°C jika kalor tembaga pas untuk melebur semua es. Jadi tidak "pasti di atas 0°C". Pernyataan 1 <b>salah</b>.`,
+      `Air 0°C dan es 0°C suhunya sama → tidak ada transfer kalor di antara keduanya. Pernyataan 2 <b>benar</b>.`,
+      `Kalor dari tembaga dipakai untuk melebur es lebih dulu (Q = mL). Pernyataan 3 <b>benar</b>.`,
+      `Saat melebur, suhu tetap 0°C → energi kinetik rata-rata molekul tetap; kalor menjadi energi potensial untuk memutus ikatan. Pernyataan 4 <b>benar</b>.`,
+      `Asas Black: Q<sub>lepas</sub> = Q<sub>terima</sub>. Pernyataan 5 <b>benar</b>.`
+    ]
+  },
+  {
+    topic:'Termodinamika', type:'MAT',
+    ctx:`Grafik P-V gas ideal tertutup: X→Y isobarik memuai, Y→Z isokhorik tekanan turun, Z→X isotermal menyusut.`,
+    items:[
+      {t:`Pada proses X→Y, gas melakukan usaha positif terhadap lingkungan.`,key:1},
+      {t:`Pada proses Y→Z, gas menyerap kalor dari lingkungan.`,key:0},
+      {t:`Perubahan energi dalam (ΔU) total untuk 1 siklus penuh X→Y→Z→X bernilai nol.`,key:1}
+    ],
+    concept:`Hukum I Termodinamika: Q = ΔU + W. Usaha gas = luas di bawah grafik P-V. Isobarik: W = PΔV. Isokhorik: W = 0. Siklus: ΔU total = 0.`,
+    steps:[
+      `X→Y isobarik memuai: W = PΔV > 0 → gas melakukan usaha. Pernyataan 1 <b>benar</b>.`,
+      `Y→Z isokhorik: W = 0. Tekanan turun → suhu turun → ΔU < 0 → Q = ΔU + W < 0 → gas melepas kalor. Pernyataan 2 <b>salah</b>.`,
+      `Siklus penuh kembali ke keadaan awal → ΔU total = 0. Pernyataan 3 <b>benar</b>.`
+    ]
+  },
+  {
+    topic:'Kelistrikan', type:'PGK',
+    ctx:`3 lampu identik (R). L1 dirangkai seri dengan baterai, lalu arusnya bercabang paralel ke L2 dan L3.`,
+    items:[
+      {t:`Lampu L1 menyala paling terang dibandingkan L2 dan L3.`,key:1},
+      {t:`Jika L2 putus, maka L3 akan ikut padam.`,key:0},
+      {t:`Arus listrik yang mengalir di L1 sama dengan jumlah arus di L2 dan L3.`,key:1},
+      {t:`Hambatan total ekivalen dari rangkaian tersebut adalah 1,5 R.`,key:1},
+      {t:`Tegangan listrik (Volt) yang terukur pada ujung lampu L2 dan L3 sama besar.`,key:1}
+    ],
+    concept:`Rangkaian seri: arus sama, tegangan terbagi. Paralel: tegangan sama, arus terbagi. Hambatan paralel: 1/Rp = 1/R₁ + 1/R₂. Daya: P = I²R = V²/R.`,
+    steps:[
+      `L1 seri dengan sumber → arus penuh. L2 dan L3 paralel → arus terbagi. Daya P = I²R → L1 paling terang. Pernyataan 1 <b>benar</b>.`,
+      `L2 dan L3 paralel → jika L2 putus, L3 tetap nyala. Pernyataan 2 <b>salah</b>.`,
+      `Hukum Kirchhoff: I<sub>L1</sub> = I<sub>L2</sub> + I<sub>L3</sub>. Pernyataan 3 <b>benar</b>.`,
+      `R paralel = R/2. R total = R + R/2 = 1,5R. Pernyataan 4 <b>benar</b>.`,
+      `Paralel → tegangan sama pada L2 dan L3. Pernyataan 5 <b>benar</b>.`
+    ]
+  },
+  {
+    topic:'Kelistrikan', type:'MAT',
+    ctx:`Partikel debu bermuatan (−) masuk ke tengah-tengah dua pelat logam. Pelat A (+), Pelat B (−).`,
+    items:[
+      {t:`Arah medan listrik statis di antara kedua pelat adalah dari Pelat B menuju Pelat A.`,key:0},
+      {t:`Partikel debu akan mengalami gaya Coulomb dengan arah menuju Pelat A.`,key:1},
+      {t:`Jika jarak pelat dijauhkan tanpa mencabut baterai, kuat medan listrik di antara pelat membesar.`,key:0}
+    ],
+    concept:`Medan listrik E = V/d, arah dari (+) ke (−). Gaya Coulomb F = qE. Muatan (−) mengalami gaya berlawanan arah medan.`,
+    steps:[
+      `Medan listrik arahnya dari (+) ke (−) = dari Pelat A ke Pelat B, bukan sebaliknya. Pernyataan 1 <b>salah</b>.`,
+      `Debu bermuatan (−) ditarik oleh Pelat A (+). Pernyataan 2 <b>benar</b>.`,
+      `E = V/d. Jika d diperbesar, E mengecil, bukan membesar. Pernyataan 3 <b>salah</b>.`
+    ]
+  }
+];
+
+/* ============ RENDER ============ */
+const LETTER = 'ABCDE';
+let currentFilter = 'Semua';
+
+function verdict(key){
+  return key
+    ? '<span class="shrink-0 text-[11px] font-bold px-2 py-1 rounded-md bg-emerald-100 text-emerald-700">Benar</span>'
+    : '<span class="shrink-0 text-[11px] font-bold px-2 py-1 rounded-md bg-rose-100 text-rose-600">Salah</span>';
+}
+
+function keyChip(label, key){
+  const cls = key ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-600';
+  const ic = key ? ICON.check : ICON.cross;
+  return `<span class="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-1 rounded-md ${cls}">${label}${ic}</span>`;
+}
+
+function card(d, idx){
+  const isPGK = d.type === 'PGK';
+  const typeLabel = isPGK ? 'Pilihan Ganda Kompleks' : 'Benar / Salah';
+
+  const itemsHTML = d.items.map((it, j) => {
+    const letter = isPGK ? LETTER[j] : (j + 1);
+    return `<li class="flex items-start gap-3 p-3 rounded-xl border border-slate-200 bg-white">
+      <span class="shrink-0 w-6 h-6 rounded-md bg-slate-100 text-slate-500 text-xs font-bold flex items-center justify-center">${letter}</span>
+      <span class="flex-1 text-sm leading-relaxed text-slate-700">${it.t}</span>
+      ${verdict(it.key)}
+    </li>`;
+  }).join('');
+
+  const stepsHTML = d.steps.map((s, i) => `
+    <li class="flex gap-2.5">
+      <span class="shrink-0 w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-bold flex items-center justify-center mt-0.5">${i + 1}</span>
+      <span class="text-sm text-slate-700 leading-relaxed">${s}</span>
+    </li>`).join('');
+
+  const chipsHTML = d.items.map((it, j) => keyChip(isPGK ? LETTER[j] : (j + 1), it.key)).join('');
+
+  return `<article class="fade-up bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden" data-topic="${d.topic}">
+    <div class="p-4 sm:p-6">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="w-9 h-9 rounded-xl bg-slate-900 text-white font-bold flex items-center justify-center text-sm">${idx + 1}</span>
+        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-slate-100 text-slate-600">${d.topic}</span>
+        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-sky-50 text-sky-700 ring-1 ring-sky-100">${typeLabel}</span>
+      </div>
+      <p class="text-[15px] leading-relaxed text-slate-700">${d.ctx}</p>
+      <p class="mt-4 mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">Pernyataan &amp; Kunci</p>
+      <ul class="space-y-2">${itemsHTML}</ul>
+    </div>
+    <div class="bg-emerald-50/50 border-t border-emerald-100 p-4 sm:p-6">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center">${ICON.book}</span>
+        <h4 class="font-bold text-emerald-900 text-sm">Pembahasan Lengkap</h4>
+      </div>
+      <p class="text-sm text-slate-600 leading-relaxed mb-3"><b class="text-slate-800">Konsep:</b> ${d.concept}</p>
+      <ol class="space-y-2.5">${stepsHTML}</ol>
+      <div class="mt-4 pt-3 border-t border-emerald-200/60">
+        <p class="text-[11px] font-bold uppercase tracking-wider text-emerald-700/70 mb-2">Kunci ringkas</p>
+        <div class="flex flex-wrap gap-1.5">${chipsHTML}</div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function render(){
+  document.getElementById('list').innerHTML = DATA.map(card).join('');
+}
+
+function renderFilters(){
+  const topics = ['Semua', ...new Set(DATA.map(d => d.topic))];
+  document.getElementById('filters').innerHTML = topics.map(t =>
+    `<button class="chip${t === currentFilter ? ' active' : ''}" data-chip="${t}" onclick="setFilter('${t}')">${t}</button>`
+  ).join('');
+}
+
+function setFilter(t){
+  currentFilter = t;
+  renderFilters();
+  let visible = 0;
+  document.querySelectorAll('#list article[data-topic]').forEach(a => {
+    const show = (t === 'Semua' || a.dataset.topic === t);
+    a.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('counter').textContent = visible + ' soal';
+}
+
+/* ============ BACK TO TOP ============ */
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  const show = window.scrollY > 400;
+  toTop.classList.toggle('opacity-0', !show);
+  toTop.classList.toggle('pointer-events-none', !show);
+}, { passive: true });
+
+/* ============ INIT ============ */
+render();
+renderFilters();
+</script>
+</body>
+</html>
