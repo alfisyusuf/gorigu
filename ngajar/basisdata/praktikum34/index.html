@@ -1,0 +1,206 @@
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Praktikum SQL Server (Mac M1)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        /* Custom scrollbar for code blocks */
+        pre::-webkit-scrollbar {
+            height: 8px;
+        }
+        pre::-webkit-scrollbar-track {
+            background: #1e293b; 
+            border-radius: 4px;
+        }
+        pre::-webkit-scrollbar-thumb {
+            background: #475569; 
+            border-radius: 4px;
+        }
+        pre::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased leading-relaxed">
+
+    <!-- Header Section -->
+    <header class="bg-blue-600 text-white py-12 shadow-lg">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+            <h1 class="text-3xl md:text-4xl font-bold mb-3">Panduan Praktikum SQL Server</h1>
+            <p class="text-blue-100 text-lg md:text-xl font-medium">Khusus Pengguna MacBook (Apple Silicon M1/M2/M3)</p>
+            <p class="text-blue-200 mt-2 text-sm md:text-base">Alternatif SSMS menggunakan <strong>Docker</strong> dan <strong>DBeaver</strong> untuk Modul 3 & 4.</p>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="max-w-4xl mx-auto px-6 lg:px-8 py-10 space-y-8">
+
+        <!-- Intro -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+            <p class="text-slate-600">
+                Halo! Karena <em>SQL Server Management Studio (SSMS)</em> hanya tersedia untuk OS Windows, pengguna Mac M1 tidak bisa menginstalnya secara langsung. 
+                Sebagai solusinya, kita akan menggunakan <strong>Azure SQL Edge</strong> (SQL Server versi teringan yang jalan di Mac) via <strong>Docker</strong>, 
+                dan menggunakan <strong>DBeaver</strong> sebagai GUI (pengganti SSMS). Ikuti langkah-langkah di bawah ini secara berurutan.
+            </p>
+        </div>
+
+        <!-- Step 1 -->
+        <section class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden relative">
+            <div class="bg-blue-50 border-b border-slate-200 px-6 py-4 flex items-center gap-4">
+                <span class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-lg shrink-0">1</span>
+                <h2 class="text-xl font-bold text-slate-800">Menjalankan SQL Server di Mac M1</h2>
+            </div>
+            <div class="p-6 md:p-8 space-y-4">
+                <p class="text-slate-600">Buka aplikasi <strong>Terminal</strong> di Mac kamu. Salin dan jalankan perintah Docker di bawah ini. Perintah ini akan mengunduh dan menyalakan SQL Server di latar belakang.</p>
+                
+                <div class="relative group">
+                    <pre class="bg-slate-900 text-green-400 p-4 rounded-lg overflow-x-auto text-sm md:text-base font-mono leading-relaxed" id="docker-command">docker run --cap-add SYS_PTRACE -e 'ACCEPT_EULA=1' -e 'MSSQL_SA_PASSWORD=sa12345' -p 1433:1433 --name sql_server_m1 -d mcr.microsoft.com/azure-sql-edge</pre>
+                    <button onclick="copyToClipboard()" class="absolute top-3 right-3 bg-white/10 hover:bg-white/20 text-white text-xs py-1.5 px-3 rounded border border-white/20 transition-colors" id="copy-btn">
+                        Salin Kode
+                    </button>
+                </div>
+                <ul class="list-disc list-inside text-sm text-slate-600 mt-2 space-y-1">
+                    <li>Pastikan aplikasi <strong>Docker Desktop</strong> sudah dalam keadaan terbuka/berjalan.</li>
+                    <li>Password disetel ke <code class="bg-slate-100 text-pink-600 px-1.5 py-0.5 rounded font-mono text-sm">sa12345</code> agar sesuai dengan modul praktikum.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Step 2 -->
+        <section class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+            <div class="bg-indigo-50 border-b border-slate-200 px-6 py-4 flex items-center gap-4">
+                <span class="flex items-center justify-center w-10 h-10 rounded-full bg-indigo-600 text-white font-bold text-lg shrink-0">2</span>
+                <h2 class="text-xl font-bold text-slate-800">Mengonfigurasi Koneksi DBeaver</h2>
+            </div>
+            <div class="p-6 md:p-8 space-y-4">
+                <p class="text-slate-600">Buka aplikasi <strong>DBeaver</strong>. Kita akan menghubungkannya ke database yang baru saja dinyalakan di Step 1.</p>
+                <ol class="list-decimal list-inside space-y-3 text-slate-700 ml-2">
+                    <li>Klik icon steker 🔌 (New Database Connection) di kiri atas, pilih <strong>SQL Server</strong>.</li>
+                    <li>Pada tab <em>Main</em>, isi pengaturan berikut:
+                        <ul class="list-disc list-inside ml-6 mt-2 space-y-1 text-slate-600">
+                            <li>Host: <code class="bg-slate-100 text-pink-600 px-1.5 py-0.5 rounded font-mono text-sm">localhost</code></li>
+                            <li>Port: <code class="bg-slate-100 text-pink-600 px-1.5 py-0.5 rounded font-mono text-sm">1433</code></li>
+                            <li>Username: <code class="bg-slate-100 text-pink-600 px-1.5 py-0.5 rounded font-mono text-sm">sa</code></li>
+                            <li>Password: <code class="bg-slate-100 text-pink-600 px-1.5 py-0.5 rounded font-mono text-sm">sa12345</code></li>
+                        </ul>
+                    </li>
+                    <li>Pindah ke tab <strong>Driver Properties</strong> (ini sangat penting!).</li>
+                    <li>Cari pengaturan bernama <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono text-sm">TrustServerCertificate</code>, ubah nilainya menjadi <code class="bg-slate-100 text-pink-600 px-1.5 py-0.5 rounded font-mono text-sm">true</code>. <br><em>(Ini adalah pengganti langkah <code>Encrypt=False</code> di modul SSMS).</em></li>
+                    <li>Klik <strong>Finish</strong>. Jika muncul prompt untuk <em>Download Driver</em>, klik Download.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Step 3 -->
+        <section class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+            <div class="bg-emerald-50 border-b border-slate-200 px-6 py-4 flex items-center gap-4">
+                <span class="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-600 text-white font-bold text-lg shrink-0">3</span>
+                <h2 class="text-xl font-bold text-slate-800">Penyesuaian Modul 3: DDL & Backup/Restore</h2>
+            </div>
+            <div class="p-6 md:p-8 space-y-6">
+                
+                <div>
+                    <h3 class="font-semibold text-lg text-emerald-800 mb-2">Membuat "New Query" (Editor SQL)</h3>
+                    <p class="text-slate-600">
+                        Di modul tertulis klik ikon "New Query". Di DBeaver, caranya: <strong>Klik Kanan pada koneksi server di panel kiri -> pilih SQL Editor -> New SQL Script</strong> (atau tekan F3). Gunakan jendela ini untuk menjalankan skrip <code class="bg-slate-100 text-pink-600 px-1 rounded font-mono text-sm">CREATE DATABASE</code>, <code class="bg-slate-100 text-pink-600 px-1 rounded font-mono text-sm">CREATE TABLE</code>, dan <code class="bg-slate-100 text-pink-600 px-1 rounded font-mono text-sm">ALTER TABLE</code>. 
+                        Untuk mengeksekusi script, blok kode lalu klik tombol "Play" oranye (Ctrl+Enter / Cmd+Enter).
+                    </p>
+                </div>
+
+                <div class="bg-orange-50 border-l-4 border-orange-400 p-4 rounded-r">
+                    <h3 class="font-semibold text-orange-800 mb-1">Catatan Backup / Restore (GUI)</h3>
+                    <p class="text-sm text-orange-700">
+                        Di modul, backup disimpan di <code>C:\Program Files\...</code> (Path Windows). Karena kamu pakai Mac, ini tidak akan berhasil. 
+                        <br><br>
+                        <strong>Cara DBeaver:</strong> Klik kanan pada Database yang ingin di-backup -> pilih <strong>Tools</strong> -> <strong>Backup</strong>. Simpan file <code>.bak</code> di folder Documents atau Desktop kamu. Untuk Restore, gunakan menu <strong>Tools</strong> -> <strong>Restore</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4 -->
+        <section class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+            <div class="bg-purple-50 border-b border-slate-200 px-6 py-4 flex items-center gap-4">
+                <span class="flex items-center justify-center w-10 h-10 rounded-full bg-purple-600 text-white font-bold text-lg shrink-0">4</span>
+                <h2 class="text-xl font-bold text-slate-800">Penyesuaian Modul 4: DML (Manipulasi Data)</h2>
+            </div>
+            <div class="p-6 md:p-8 space-y-6">
+                
+                <div>
+                    <h3 class="font-semibold text-lg text-purple-800 mb-2">Mengganti "Edit Top 200 Rows"</h3>
+                    <p class="text-slate-600">
+                        Modul menyuruh klik kanan tabel lalu <em>"Edit Top 200 Rows"</em>. Di DBeaver, fiturnya jauh lebih mudah:
+                    </p>
+                    <ol class="list-decimal list-inside mt-2 space-y-2 text-slate-600 ml-2">
+                        <li>Buka panel kiri, masuk ke <em>Databases -> (Nama DB kamu) -> Schemas -> dbo -> Tables</em>.</li>
+                        <li><strong>Klik Ganda (Double-click)</strong> pada nama tabel (misal: Mahasiswa).</li>
+                        <li>Di sebelah kanan, pilih tab <strong>Data</strong> (di sebelah tab Properties).</li>
+                        <li>Untuk <strong>menambah data</strong>, klik tombol <strong>+</strong> di bagian bawah (Add new row).</li>
+                        <li>Untuk <strong>mengubah data</strong>, klik ganda pada sel yang ingin diedit, lalu ketik nilai barunya.</li>
+                        <li>Untuk <strong>menghapus data</strong>, klik kanan pada baris -> Delete.</li>
+                        <li>Setelah selesai edit/tambah/hapus, <strong>WAJIB</strong> klik ikon Disket (Save) di bawah untuk menyimpan perubahan ke database.</li>
+                    </ol>
+                </div>
+
+                <div>
+                    <h3 class="font-semibold text-lg text-purple-800 mb-2">Eksekusi Script DML (SELECT, UPDATE, DELETE)</h3>
+                    <p class="text-slate-600">
+                        Sama seperti Step 3. Buka <strong>SQL Editor</strong>, ketik atau copas script dari modul (contoh: <code class="bg-slate-100 px-1 rounded font-mono text-sm">SELECT * FROM Mahasiswa</code>). Klik ikon Play oranye di sebelah kiri editor untuk melihat hasil query di panel bawah.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-slate-400 py-6 text-sm">
+            Semangat praktikumnya! Jangan lupa screenshot tugasnya ya. 🚀
+        </footer>
+
+    </main>
+
+    <script>
+        function copyToClipboard() {
+            const codeEl = document.getElementById('docker-command');
+            const btn = document.getElementById('copy-btn');
+            const textToCopy = codeEl.innerText;
+            
+            // Clipboard API (modern approach)
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                btn.innerText = "Tersalin!";
+                btn.classList.add("bg-green-600/80", "border-green-500");
+                
+                setTimeout(() => {
+                    btn.innerText = "Salin Kode";
+                    btn.classList.remove("bg-green-600/80", "border-green-500");
+                }, 2000);
+            }).catch(err => {
+                // Fallback method just in case clipboard API fails due to permissions/iframe
+                const textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    btn.innerText = "Tersalin!";
+                    setTimeout(() => btn.innerText = "Salin Kode", 2000);
+                } catch (ex) {
+                    console.error('Copy failed', ex);
+                }
+                document.body.removeChild(textArea);
+            });
+        }
+    </script>
+</body>
+</html>
+```
