@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TKA Fisika: Final Mindset</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html,body{height:100%;margin:0;overflow:hidden}
+  body{font-family:'Nunito','Quicksand',sans-serif;background:linear-gradient(180deg,#e0f2fe 0%,#f0f9ff 45%,#fff1e6 100%)}
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4rem 6rem;opacity:0;visibility:hidden;transition:opacity .7s ease}
+  .slide.on{opacity:1;visibility:visible}
+  .sun{position:absolute;bottom:-14vh;left:50%;transform:translateX(-50%);width:60vh;height:60vh;border-radius:9999px;background:radial-gradient(circle,#fde7c8 0%,#fbd9d3 45%,rgba(224,231,255,0) 70%);pointer-events:none}
+  .breathe{animation:b 6s ease-in-out infinite}
+  @keyframes b{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  @media (prefers-reduced-motion:reduce){.breathe{animation:none}.slide{transition:none}}
+  .nav{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.75rem;align-items:center;z-index:10}
+  .dot{width:.6rem;height:.6rem;border-radius:9999px;background:#c7d2fe}
+  .dot.on{background:#818cf8;width:1.6rem}
+  button{font-family:inherit}
+</style>
+</head>
+<body class="text-slate-700">
+<div class="sun breathe"></div>
+
+<section class="slide on text-center">
+  <div class="text-7xl mb-6">🌅</div>
+  <h1 class="text-6xl font-extrabold text-slate-700 leading-tight">TKA Fisika:<br>Kemenangan di Depan Mata</h1>
+  <p class="mt-8 text-3xl font-semibold text-indigo-400">Tarik napas. Kalian sudah siap.</p>
+</section>
+
+<section class="slide">
+  <h2 class="text-5xl font-extrabold mb-12 text-slate-700">Aturan Main Hari H</h2>
+  <div class="space-y-6 max-w-4xl w-full">
+    <div class="flex items-center gap-6 bg-white/80 rounded-3xl p-7 shadow-sm">
+      <span class="text-5xl">🧭</span>
+      <p class="text-3xl font-semibold">Skip yang susah. Waktu kalian berharga.</p>
+    </div>
+    <div class="flex items-center gap-6 bg-white/80 rounded-3xl p-7 shadow-sm">
+      <span class="text-5xl">🔍</span>
+      <p class="text-3xl font-semibold">Di soal Matriks B/S, cari 1 pernyataan yang kalian <span class="text-indigo-500">YAKIN 100% salah</span> untuk eliminasi keraguan.</p>
+    </div>
+    <div class="flex items-center gap-6 bg-white/80 rounded-3xl p-7 shadow-sm">
+      <span class="text-5xl">🌿</span>
+      <p class="text-3xl font-semibold">Jangan panik lihat rumus panjang, biasanya cuma butuh logika perbandingan.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2 class="text-5xl font-extrabold mb-4 text-slate-700">Tiga Jebakan yang Perlu Diingat</h2>
+  <p class="text-2xl text-slate-500 mb-10">Cukup diingat pelan-pelan, tidak perlu dihafal mati.</p>
+  <div class="grid grid-cols-3 gap-8 max-w-6xl w-full">
+    <div class="bg-sky-100/90 rounded-3xl p-8 text-center shadow-sm">
+      <div class="text-6xl mb-4">🔧</div>
+      <h3 class="text-3xl font-extrabold mb-3">Torsi</h3>
+      <p class="text-2xl">Gaya harus <b class="text-indigo-500">TEGAK LURUS</b> lengan.</p>
+    </div>
+    <div class="bg-indigo-100/90 rounded-3xl p-8 text-center shadow-sm">
+      <div class="text-6xl mb-4">🧊</div>
+      <h3 class="text-3xl font-extrabold mb-3">Es mencair</h3>
+      <p class="text-2xl">Suhunya <b class="text-indigo-500">diam</b>, energinya dipakai merusak es (mL).</p>
+    </div>
+    <div class="bg-orange-100/80 rounded-3xl p-8 text-center shadow-sm">
+      <div class="text-6xl mb-4">💨</div>
+      <h3 class="text-3xl font-extrabold mb-3">Bernoulli</h3>
+      <p class="text-2xl">Udara ngebut, tekanan <b class="text-indigo-500">DROP</b>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide text-center">
+  <p class="text-5xl font-extrabold leading-snug max-w-5xl text-slate-700">Bapak bangga melihat perjuangan kalian 4 minggu ini.</p>
+  <p class="text-4xl font-semibold leading-snug max-w-5xl mt-8 text-slate-600">Fisika itu bukan tentang angka, tapi cara kalian bernalar.</p>
+  <p class="text-5xl font-extrabold mt-10 text-indigo-400">Selamat berjuang! 💙</p>
+</section>
+
+<div class="nav">
+  <button id="prev" class="px-5 py-2 rounded-full bg-white/80 text-indigo-400 font-bold shadow-sm hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300" aria-label="Sebelumnya">‹</button>
+  <div id="dots" class="flex gap-2 items-center"></div>
+  <button id="next" class="px-5 py-2 rounded-full bg-white/80 text-indigo-400 font-bold shadow-sm hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300" aria-label="Berikutnya">›</button>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const dots=document.getElementById('dots');
+  let i=0;
+  slides.forEach(()=>{const d=document.createElement('span');d.className='dot';dots.appendChild(d)});
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+    [...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i));
+  }
+  document.getElementById('next').onclick=()=>show(i+1);
+  document.getElementById('prev').onclick=()=>show(i-1);
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();show(i+1)}
+    if(['ArrowLeft','PageUp'].includes(e.key)){show(i-1)}
+  });
+  show(0);
+</script>
+</body>
+</html>
