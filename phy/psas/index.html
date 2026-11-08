@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan PSAS Fisika - SMA ABBS Surakarta</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script>
+    MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+    };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+    :root {
+        --primary: #2563eb;
+        --primary-hover: #1d4ed8;
+        --primary-soft: #eff6ff;
+        --bg: #f6f8fb;
+        --card-bg: #ffffff;
+        --text: #1e293b;
+        --text-soft: #475569;
+        --muted: #64748b;
+        --border: #e5eaf1;
+        --correct: #059669;
+        --correct-bg: #ecfdf5;
+        --correct-border: #a7f3d0;
+        --wrong: #dc2626;
+        --wrong-bg: #fef2f2;
+        --wrong-border: #fecaca;
+        --radius: 16px;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    [hidden] { display: none !important; }
+
+    body {
+        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        padding: 28px 16px 56px;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    .header {
+        margin-bottom: 26px;
+    }
+
+    .header .eyebrow {
+        font-size: .72rem;
+        font-weight: 600;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: var(--primary);
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: -.015em;
+        line-height: 1.3;
+        margin-top: 6px;
+    }
+
+    .header p {
+        color: var(--muted);
+        font-size: .875rem;
+        margin-top: 2px;
+    }
+
+    .progress {
+        margin-top: 20px;
+    }
+
+    .progress-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        font-size: .78rem;
+        color: var(--muted);
+        margin-bottom: 7px;
+    }
+
+    .progress-row strong {
+        color: var(--text-soft);
+        font-weight: 600;
+    }
+
+    .progress-track {
+        height: 8px;
+        background: #e4eaf3;
+        border-radius: 999px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        width: 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #60a5fa, #2563eb);
+        transition: width .4s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, .04),
+                    0 12px 28px -20px rgba(15, 23, 42, .25);
+    }
+
+    .question-number {
+        display: inline-block;
+        background: var(--primary-soft);
+        color: var(--primary);
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: .72rem;
+        font-weight: 600;
+        letter-spacing: .03em;
+        margin-bottom: 14px;
+    }
+
+    .question-text {
+        font-size: .975rem;
+        color: var(--text);
+        line-height: 1.7;
+    }
+
+    .svg-container {
+        margin: 18px 0 22px;
+        padding: 14px;
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        text-align: center;
+    }
+
+    .svg-container svg {
+        width: 100%;
+        max-width: 380px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .options-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .option {
+        position: relative;
+    }
+
+    .option input {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+        pointer-events: none;
+    }
+
+    .option label {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        padding: 13px 16px;
+        background: #fff;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: .925rem;
+        font-weight: 500;
+        color: var(--text);
+        transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
+    .option label:hover {
+        border-color: #bfd3f7;
+        background: #fafcff;
+    }
+
+    .opt-label {
+        flex: 0 0 auto;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #f1f5f9;
+        border: 1px solid var(--border);
+        font-size: .78rem;
+        font-weight: 600;
+        color: var(--muted);
+        transition: background .18s ease, color .18s ease, border-color .18s ease;
+    }
+
+    .opt-text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    :where(.option) input:checked + label {
+        border-color: var(--primary);
+        background: var(--primary-soft);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, .1);
+    }
+
+    :where(.option) input:checked + label .opt-label {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #fff;
+    }
+
+    .option input:focus-visible + label {
+        outline: 3px solid rgba(37, 99, 235, .35);
+        outline-offset: 2px;
+    }
+
+    .option label::after {
+        margin-left: auto;
+        font-weight: 700;
+        font-size: 1rem;
+        line-height: 1;
+        flex: 0 0 auto;
+    }
+
+    .card.is-done .option label { pointer-events: none; }
+
+    .option.is-correct label {
+        border-color: var(--correct-border);
+        background: var(--correct-bg);
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, .08);
+    }
+    .option.is-correct .opt-label {
+        background: var(--correct);
+        border-color: var(--correct);
+        color: #fff;
+    }
+    .option.is-correct label::after { content: '✓'; color: var(--correct); }
+
+    .option.is-wrong label {
+        border-color: var(--wrong-border);
+        background: var(--wrong-bg);
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, .08);
+    }
+    .option.is-wrong .opt-label {
+        background: var(--wrong);
+        border-color: var(--wrong);
+        color: #fff;
+    }
+    .option.is-wrong label::after { content: '✕'; color: var(--wrong); }
+
+    .btn-check,
+    .btn-retry {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        font-family: inherit;
+        font-size: .925rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background .18s ease, transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .btn-check {
+        border: none;
+        color: #fff;
+        background: var(--primary);
+        box-shadow: 0 8px 18px -10px rgba(37, 99, 235, .85);
+    }
+
+    .btn-check:hover:not(:disabled) {
+        background: var(--primary-hover);
+        transform: translateY(-1px);
+    }
+
+    .btn-check:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    .btn-check:disabled {
+        background: #e2e8f0;
+        color: #94a3b8;
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+
+    .btn-retry {
+        border: 1.5px solid #c7d7f5;
+        background: #fff;
+        color: var(--primary);
+    }
+
+    .btn-retry:hover {
+        background: var(--primary-soft);
+        border-color: var(--primary);
+    }
+
+    .explanation {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        animation: fadeIn .3s ease;
+    }
+
+    .explanation.show { display: block; }
+    .explanation.is-right { border-left: 4px solid var(--correct); }
+    .explanation.is-wrong { border-left: 4px solid var(--wrong); }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-6px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .status-text {
+        display: none;
+        align-items: center;
+        gap: 6px;
+        font-size: .8rem;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 999px;
+        margin-bottom: 14px;
+    }
+
+    .status-text.is-right {
+        display: inline-flex;
+        color: var(--correct);
+        background: var(--correct-bg);
+    }
+
+    .status-text.is-wrong {
+        display: inline-flex;
+        color: var(--wrong);
+        background: var(--wrong-bg);
+    }
+
+    .explanation h3 {
+        font-size: .9rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 10px;
+    }
+
+    .explanation p {
+        font-size: .9rem;
+        color: var(--text-soft);
+        margin-bottom: 8px;
+    }
+
+    .explanation p:last-child { margin-bottom: 0; }
+
+    .formula {
+        margin: 12px 0;
+        padding: 12px;
+        text-align: center;
+        font-size: 1rem;
+        line-height: 2;
+        background: #fff;
+        border: 1px dashed #dbe4f0;
+        border-radius: 10px;
+    }
+
+    .answer-note {
+        margin-top: 14px !important;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+        color: var(--text) !important;
+    }
+
+    .result-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px 24px;
+        text-align: center;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, .04),
+                    0 12px 28px -20px rgba(15, 23, 42, .25);
+        animation: fadeIn .35s ease;
+    }
+
+    .result-card .result-icon {
+        font-size: 1.75rem;
+        line-height: 1;
+        margin-bottom: 10px;
+    }
+
+    .result-card h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .result-score {
+        font-size: .95rem;
+        color: var(--text-soft);
+    }
+
+    .result-score strong {
+        color: var(--primary);
+        font-size: 1.15rem;
+    }
+
+    .result-msg {
+        font-size: .85rem;
+        color: var(--muted);
+        margin: 6px 0 18px;
+    }
+
+    .result-card .btn-retry {
+        max-width: 280px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    @media (min-width: 768px) {
+        body { padding: 48px 24px 72px; }
+        .header h1 { font-size: 1.75rem; }
+        .card { padding: 28px; }
+        .question-text { font-size: 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: .01ms !important;
+            transition-duration: .01ms !important;
+        }
+    }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3"
+                orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#ef4444" />
+        </marker>
+    </defs>
+</svg>
+
+<div class="container">
+
+    <header class="header">
+        <div class="eyebrow">SMA ABBS Surakarta</div>
+        <h1>Latihan PSAS Fisika Kelas 12</h1>
+        <p>Materi: Rangkaian Arus Searah (DC) &middot; 3 soal pilihan ganda</p>
+
+        <div class="progress">
+            <div class="progress-row">
+                <span>Progres pengerjaan</span>
+                <span><strong id="progressText">0 / 3 soal</strong></span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= SOAL 1: MENCARI TEGANGAN (V) ================= -->
+    <article class="card" id="q1" data-correct="C">
+        <span class="question-number">Soal 1</span>
+        <p class="question-text">
+            Sebuah resistor dengan hambatan $R = 10\ \Omega$ dialiri arus listrik sebesar $I = 2\text{ A}$. Berapakah besar tegangan sumber ($V$) pada rangkaian tersebut?
+        </p>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Rangkaian tertutup dengan satu resistor 10 ohm, sumber tegangan V yang belum diketahui, dan arus 2 ampere mengalir searah jarum jam">
+                <!-- Top-left wire -->
+                <line x1="60" y1="68" x2="160" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Resistor zigzag -->
+                <polyline points="160,68 170,68 176,50 188,86 200,50 212,86 224,50 230,68 240,68"
+                          fill="none" stroke="#1e293b" stroke-width="2.5"
+                          stroke-linejoin="round" stroke-linecap="round"/>
+                <!-- Top-right wire -->
+                <line x1="240" y1="68" x2="340" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Right wire -->
+                <line x1="340" y1="68" x2="340" y2="188" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Bottom wire -->
+                <line x1="340" y1="188" x2="60" y2="188" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Left wire (bottom) -->
+                <line x1="60" y1="188" x2="60" y2="138" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Battery: negative plate (short, thick) -->
+                <line x1="48" y1="138" x2="72" y2="138" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round"/>
+                <!-- Battery: positive plate (long, thin) -->
+                <line x1="40" y1="118" x2="80" y2="118" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Left wire (top) -->
+                <line x1="60" y1="118" x2="60" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Polarity labels -->
+                <text x="88" y="124" text-anchor="middle" font-weight="600" font-size="17" fill="#ef4444">+</text>
+                <text x="88" y="145" text-anchor="middle" font-weight="600" font-size="19" fill="#1e293b">−</text>
+
+                <!-- Source voltage label -->
+                <text x="130" y="134" text-anchor="middle" font-weight="600" font-size="16" fill="#2563eb">V = ?</text>
+
+                <!-- Resistor label -->
+                <text x="200" y="34" text-anchor="middle" font-weight="600" font-size="17" fill="#1e293b">R = 10 Ω</text>
+
+                <!-- Current arrow -->
+                <line x1="95" y1="68" x2="140" y2="68" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+                <text x="117" y="54" text-anchor="middle" font-weight="600" font-size="14" fill="#ef4444">I = 2 A</text>
+            </svg>
+        </figure>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 1">
+            <li class="option">
+                <input type="radio" name="q1" id="q1-a" value="A">
+                <label for="q1-a"><span class="opt-label">A</span><span class="opt-text">10 Volt</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q1" id="q1-b" value="B">
+                <label for="q1-b"><span class="opt-label">B</span><span class="opt-text">12 Volt</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q1" id="q1-c" value="C">
+                <label for="q1-c"><span class="opt-label">C</span><span class="opt-text">20 Volt</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q1" id="q1-d" value="D">
+                <label for="q1-d"><span class="opt-label">D</span><span class="opt-text">24 Volt</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q1" id="q1-e" value="E">
+                <label for="q1-e"><span class="opt-label">E</span><span class="opt-text">40 Volt</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q1')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q1')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Diketahui: $R = 10\ \Omega$, $I = 2\text{ A}$</p>
+            <p>Berdasarkan Hukum Ohm, tegangan sumber adalah hasil kali kuat arus dengan hambatan:</p>
+            <div class="formula">
+                $V = I \times R$<br>
+                $V = 2 \times 10 = \mathbf{20\text{ Volt}}$
+            </div>
+            <p class="answer-note"><strong>Jawaban yang benar: C (20 Volt)</strong></p>
+        </div>
+    </article>
+
+    <!-- ================= SOAL 2: MENCARI KUAT ARUS (I) ================= -->
+    <article class="card" id="q2" data-correct="B">
+        <span class="question-number">Soal 2</span>
+        <p class="question-text">
+            Sebuah resistor dengan hambatan $R = 8\ \Omega$ dihubungkan dengan sumber tegangan sebesar $24\text{ Volt}$. Berapakah kuat arus listrik ($I$) yang mengalir pada rangkaian?
+        </p>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Rangkaian tertutup dengan satu resistor 8 ohm, sumber tegangan 24 volt, dan kuat arus yang belum diketahui">
+                <line x1="60" y1="68" x2="160" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <polyline points="160,68 170,68 176,50 188,86 200,50 212,86 224,50 230,68 240,68"
+                          fill="none" stroke="#1e293b" stroke-width="2.5"
+                          stroke-linejoin="round" stroke-linecap="round"/>
+                <line x1="240" y1="68" x2="340" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="340" y1="68" x2="340" y2="188" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="340" y1="188" x2="60" y2="188" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="60" y1="188" x2="60" y2="138" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="48" y1="138" x2="72" y2="138" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round"/>
+                <line x1="40" y1="118" x2="80" y2="118" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="60" y1="118" x2="60" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <text x="88" y="124" text-anchor="middle" font-weight="600" font-size="17" fill="#ef4444">+</text>
+                <text x="88" y="145" text-anchor="middle" font-weight="600" font-size="19" fill="#1e293b">−</text>
+
+                <text x="130" y="134" text-anchor="middle" font-weight="600" font-size="16" fill="#2563eb">V = 24 V</text>
+
+                <text x="200" y="34" text-anchor="middle" font-weight="600" font-size="17" fill="#1e293b">R = 8 Ω</text>
+
+                <line x1="95" y1="68" x2="140" y2="68" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+                <text x="117" y="54" text-anchor="middle" font-weight="600" font-size="14" fill="#ef4444">I = ?</text>
+            </svg>
+        </figure>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 2">
+            <li class="option">
+                <input type="radio" name="q2" id="q2-a" value="A">
+                <label for="q2-a"><span class="opt-label">A</span><span class="opt-text">2 A</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q2" id="q2-b" value="B">
+                <label for="q2-b"><span class="opt-label">B</span><span class="opt-text">3 A</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q2" id="q2-c" value="C">
+                <label for="q2-c"><span class="opt-label">C</span><span class="opt-text">4 A</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q2" id="q2-d" value="D">
+                <label for="q2-d"><span class="opt-label">D</span><span class="opt-text">6 A</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q2" id="q2-e" value="E">
+                <label for="q2-e"><span class="opt-label">E</span><span class="opt-text">8 A</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q2')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q2')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Diketahui: $V = 24\text{ V}$, $R = 8\ \Omega$</p>
+            <p>Gunakan Hukum Ohm untuk mencari kuat arus listrik:</p>
+            <div class="formula">
+                $I = \dfrac{V}{R} = \dfrac{24}{8} = \mathbf{3\text{ A}}$
+            </div>
+            <p class="answer-note"><strong>Jawaban yang benar: B (3 A)</strong></p>
+        </div>
+    </article>
+
+    <!-- ================= SOAL 3: MENCARI HAMBATAN (R) ================= -->
+    <article class="card" id="q3" data-correct="D">
+        <span class="question-number">Soal 3</span>
+        <p class="question-text">
+            Pada rangkaian di bawah ini, mengalir arus sebesar $2\text{ A}$ dari sumber tegangan $12\text{ Volt}$ melalui sebuah resistor. Berapakah nilai hambatan resistor tersebut?
+        </p>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" role="img"
+                 aria-label="Rangkaian tertutup dengan satu resistor yang belum diketahui, sumber tegangan 12 volt, dan arus 2 ampere">
+                <line x1="60" y1="68" x2="160" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <polyline points="160,68 170,68 176,50 188,86 200,50 212,86 224,50 230,68 240,68"
+                          fill="none" stroke="#1e293b" stroke-width="2.5"
+                          stroke-linejoin="round" stroke-linecap="round"/>
+                <line x1="240" y1="68" x2="340" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="340" y1="68" x2="340" y2="188" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="340" y1="188" x2="60" y2="188" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="60" y1="188" x2="60" y2="138" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="48" y1="138" x2="72" y2="138" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round"/>
+                <line x1="40" y1="118" x2="80" y2="118" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="60" y1="118" x2="60" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <text x="88" y="124" text-anchor="middle" font-weight="600" font-size="17" fill="#ef4444">+</text>
+                <text x="88" y="145" text-anchor="middle" font-weight="600" font-size="19" fill="#1e293b">−</text>
+
+                <text x="130" y="134" text-anchor="middle" font-weight="600" font-size="16" fill="#2563eb">V = 12 V</text>
+
+                <text x="200" y="34" text-anchor="middle" font-weight="600" font-size="17" fill="#1e293b">R = ?</text>
+
+                <line x1="95" y1="68" x2="140" y2="68" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+                <text x="117" y="54" text-anchor="middle" font-weight="600" font-size="14" fill="#ef4444">I = 2 A</text>
+            </svg>
+        </figure>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 3">
+            <li class="option">
+                <input type="radio" name="q3" id="q3-a" value="A">
+                <label for="q3-a"><span class="opt-label">A</span><span class="opt-text">2 $\Omega$</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q3" id="q3-b" value="B">
+                <label for="q3-b"><span class="opt-label">B</span><span class="opt-text">4 $\Omega$</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q3" id="q3-c" value="C">
+                <label for="q3-c"><span class="opt-label">C</span><span class="opt-text">5 $\Omega$</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q3" id="q3-d" value="D">
+                <label for="q3-d"><span class="opt-label">D</span><span class="opt-text">6 $\Omega$</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q3" id="q3-e" value="E">
+                <label for="q3-e"><span class="opt-label">E</span><span class="opt-text">8 $\Omega$</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q3')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q3')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Diketahui: $V = 12\text{ V}$, $I = 2\text{ A}$</p>
+            <p>Gunakan Hukum Ohm untuk mencari hambatan:</p>
+            <div class="formula">
+                $R = \dfrac{V}{I} = \dfrac{12}{2} = \mathbf{6\ \Omega}$
+            </div>
+            <p class="answer-note"><strong>Jawaban yang benar: D (6 Ω)</strong></p>
+        </div>
+    </article>
+    <!-- ================= SOAL 4: HAMBATAN TOTAL SERI ================= -->
+    <article class="card" id="q4" data-correct="D">
+        <span class="question-number">Soal 4</span>
+        <p class="question-text">
+            Perhatikan rangkaian baterai dengan dua resistor yang disusun seri di bawah ini.
+            Jika $R_1 = 4\ \Omega$ dan $R_2 = 8\ \Omega$, berapakah hambatan total rangkaian tersebut?
+        </p>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg" role="img"
+                aria-label="Rangkaian baterai dengan dua resistor seri, R1 4 ohm dan R2 8 ohm">
+                <!-- Kabel atas kiri -->
+                <line x1="60" y1="70" x2="120" y2="70"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Resistor 1 -->
+                <polyline points="120,70 130,70 136,52 148,88 160,52 172,88 184,52 190,70 200,70"
+                        fill="none" stroke="#1e293b" stroke-width="2.5"
+                        stroke-linejoin="round" stroke-linecap="round"/>
+
+                <!-- Kabel tengah -->
+                <line x1="200" y1="70" x2="230" y2="70"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Resistor 2 -->
+                <polyline points="230,70 240,70 246,52 258,88 270,52 282,88 294,52 300,70 310,70"
+                        fill="none" stroke="#1e293b" stroke-width="2.5"
+                        stroke-linejoin="round" stroke-linecap="round"/>
+
+                <!-- Kabel atas kanan -->
+                <line x1="310" y1="70" x2="360" y2="70"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Kabel kanan -->
+                <line x1="360" y1="70" x2="360" y2="190"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Kabel bawah -->
+                <line x1="360" y1="190" x2="60" y2="190"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Kabel kiri bawah -->
+                <line x1="60" y1="190" x2="60" y2="148"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Baterai: kutub negatif (pendek, tebal) -->
+                <line x1="48" y1="148" x2="72" y2="148"
+                    stroke="#1e293b" stroke-width="4.5" stroke-linecap="round"/>
+
+                <!-- Baterai: kutub positif (panjang, tipis) -->
+                <line x1="40" y1="112" x2="80" y2="112"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Kabel kiri atas -->
+                <line x1="60" y1="112" x2="60" y2="70"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Label polaritas baterai -->
+                <text x="88" y="118" text-anchor="middle" font-weight="600" font-size="17" fill="#ef4444">+</text>
+                <text x="88" y="155" text-anchor="middle" font-weight="600" font-size="19" fill="#1e293b">−</text>
+
+                <!-- Label baterai -->
+                <text x="110" y="134" text-anchor="middle" font-weight="600" font-size="14" fill="#2563eb">Baterai</text>
+
+                <!-- Label resistor -->
+                <text x="160" y="34" text-anchor="middle" font-weight="600" font-size="16" fill="#1e293b">R₁ = 4 Ω</text>
+                <text x="270" y="34" text-anchor="middle" font-weight="600" font-size="16" fill="#1e293b">R₂ = 8 Ω</text>
+
+                <!-- Keterangan seri -->
+                <text x="210" y="222" text-anchor="middle" font-weight="500" font-size="13" fill="#64748b">
+                    Dua resistor disusun seri
+                </text>
+            </svg>
+        </figure>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 4">
+            <li class="option">
+                <input type="radio" name="q4" id="q4-a" value="A">
+                <label for="q4-a"><span class="opt-label">A</span><span class="opt-text">2 $\Omega$</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q4" id="q4-b" value="B">
+                <label for="q4-b"><span class="opt-label">B</span><span class="opt-text">4 $\Omega$</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q4" id="q4-c" value="C">
+                <label for="q4-c"><span class="opt-label">C</span><span class="opt-text">8 $\Omega$</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q4" id="q4-d" value="D">
+                <label for="q4-d"><span class="opt-label">D</span><span class="opt-text">12 $\Omega$</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q4" id="q4-e" value="E">
+                <label for="q4-e"><span class="opt-label">E</span><span class="opt-text">16 $\Omega$</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q4')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q4')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Diketahui: $R_1 = 4\ \Omega$ dan $R_2 = 8\ \Omega$</p>
+            <p>Pada rangkaian seri, hambatan total adalah jumlah dari semua hambatan:</p>
+            <div class="formula">
+                $R_{total} = R_1 + R_2$<br>
+                $R_{total} = 4 + 8 = \mathbf{12\ \Omega}$
+            </div>
+            <p class="answer-note"><strong>Jawaban yang benar: D (12 Ω)</strong></p>
+        </div>
+    </article>
+    <!-- ================= SOAL 5: TEGANGAN PADA DUA RESISTOR SERI ================= -->
+    <article class="card" id="q5" data-correct="C">
+        <span class="question-number">Soal 5</span>
+        <p class="question-text">
+            Perhatikan rangkaian baterai dengan dua resistor yang disusun seri di bawah ini.
+            Jika arus yang mengalir sebesar $I = 2\text{ A}$, $R_1 = 5\ \Omega$, dan $R_2 = 7\ \Omega$,
+            berapakah besar tegangan sumber ($V$) pada baterai tersebut?
+        </p>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg" role="img"
+                aria-label="Rangkaian baterai dengan dua resistor seri, R1 5 ohm dan R2 7 ohm, arus 2 ampere, mencari tegangan V">
+                <!-- Kabel atas kiri -->
+                <line x1="60" y1="70" x2="120" y2="70"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Resistor 1 -->
+                <polyline points="120,70 130,70 136,52 148,88 160,52 172,88 184,52 190,70 200,70"
+                        fill="none" stroke="#1e293b" stroke-width="2.5"
+                        stroke-linejoin="round" stroke-linecap="round"/>
+
+                <!-- Kabel tengah -->
+                <line x1="200" y1="70" x2="230" y2="70"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Resistor 2 -->
+                <polyline points="230,70 240,70 246,52 258,88 270,52 282,88 294,52 300,70 310,70"
+                        fill="none" stroke="#1e293b" stroke-width="2.5"
+                        stroke-linejoin="round" stroke-linecap="round"/>
+
+                <!-- Kabel atas kanan -->
+                <line x1="310" y1="70" x2="360" y2="70"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Kabel kanan -->
+                <line x1="360" y1="70" x2="360" y2="190"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Kabel bawah -->
+                <line x1="360" y1="190" x2="60" y2="190"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Kabel kiri bawah -->
+                <line x1="60" y1="190" x2="60" y2="148"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Baterai: kutub negatif (pendek, tebal) -->
+                <line x1="48" y1="148" x2="72" y2="148"
+                    stroke="#1e293b" stroke-width="4.5" stroke-linecap="round"/>
+
+                <!-- Baterai: kutub positif (panjang, tipis) -->
+                <line x1="40" y1="112" x2="80" y2="112"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Kabel kiri atas -->
+                <line x1="60" y1="112" x2="60" y2="70"
+                    stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                <!-- Label polaritas baterai -->
+                <text x="88" y="118" text-anchor="middle" font-weight="600" font-size="17" fill="#ef4444">+</text>
+                <text x="88" y="155" text-anchor="middle" font-weight="600" font-size="19" fill="#1e293b">−</text>
+
+                <!-- Label tegangan sumber -->
+                <text x="118" y="134" text-anchor="middle" font-weight="600" font-size="15" fill="#2563eb">V = ?</text>
+
+                <!-- Label resistor -->
+                <text x="160" y="34" text-anchor="middle" font-weight="600" font-size="16" fill="#1e293b">R₁ = 5 Ω</text>
+                <text x="270" y="34" text-anchor="middle" font-weight="600" font-size="16" fill="#1e293b">R₂ = 7 Ω</text>
+
+                <!-- Panah arus -->
+                <line x1="85" y1="70" x2="115" y2="70"
+                    stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"
+                    marker-end="url(#arrow)"/>
+                <text x="100" y="56" text-anchor="middle" font-weight="600" font-size="14" fill="#ef4444">I = 2 A</text>
+
+                <!-- Keterangan seri -->
+                <text x="210" y="222" text-anchor="middle" font-weight="500" font-size="13" fill="#64748b">
+                    Dua resistor disusun seri
+                </text>
+            </svg>
+        </figure>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 5">
+            <li class="option">
+                <input type="radio" name="q5" id="q5-a" value="A">
+                <label for="q5-a"><span class="opt-label">A</span><span class="opt-text">12 Volt</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q5" id="q5-b" value="B">
+                <label for="q5-b"><span class="opt-label">B</span><span class="opt-text">20 Volt</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q5" id="q5-c" value="C">
+                <label for="q5-c"><span class="opt-label">C</span><span class="opt-text">24 Volt</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q5" id="q5-d" value="D">
+                <label for="q5-d"><span class="opt-label">D</span><span class="opt-text">30 Volt</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q5" id="q5-e" value="E">
+                <label for="q5-e"><span class="opt-label">E</span><span class="opt-text">34 Volt</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q5')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q5')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Diketahui: $I = 2\text{ A}$, $R_1 = 5\ \Omega$, $R_2 = 7\ \Omega$</p>
+            <p>Pertama, hitung hambatan total rangkaian seri:</p>
+            <div class="formula">
+                $R_{total} = R_1 + R_2 = 5 + 7 = 12\ \Omega$
+            </div>
+            <p>Selanjutnya, gunakan Hukum Ohm untuk mencari tegangan sumber:</p>
+            <div class="formula">
+                $V = I \times R_{total}$<br>
+                $V = 2 \times 12 = \mathbf{24\text{ Volt}}$
+            </div>
+            <p class="answer-note"><strong>Jawaban yang benar: C (24 Volt)</strong></p>
+        </div>
+    </article>
+    <!-- ================= HASIL ================= -->
+    <section class="result-card" id="resultCard" hidden>
+        <div class="result-icon">🎯</div>
+        <h2>Latihan selesai</h2>
+        <p class="result-score">Skor kamu <strong id="scoreNum">0</strong> / <span id="scoreTotal">3</span></p>
+        <p class="result-msg" id="scoreMsg"></p>
+        <button class="btn-retry" onclick="resetAll()">Ulangi semua soal</button>
+    </section>
+
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    const cards = Array.from(document.querySelectorAll('.card[data-correct]'));
+    const progressText = document.getElementById('progressText');
+    const progressFill = document.getElementById('progressFill');
+    const resultCard = document.getElementById('resultCard');
+
+    cards.forEach(card => {
+        card.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.addEventListener('change', () => {
+                if (card.classList.contains('is-done')) return;
+                card.dataset.selected = input.value;
+                card.querySelector('.btn-check').disabled = false;
+            });
+        });
+    });
+
+    window.checkAnswer = function (qid) {
+        const card = document.getElementById(qid);
+        const selected = card.dataset.selected;
+        const correct = card.dataset.correct;
+        if (!selected || card.classList.contains('is-done')) return;
+
+        const isRight = selected === correct;
+        card.classList.add('is-done');
+
+        card.querySelectorAll('.option').forEach(opt => {
+            const input = opt.querySelector('input');
+            const val = input.value;
+            input.disabled = true;
+            if (val === correct) opt.classList.add('is-correct');
+            if (val === selected && !isRight) opt.classList.add('is-wrong');
+        });
+
+        const status = card.querySelector('.status-text');
+        status.textContent = isRight ? 'Jawabanmu benar' : 'Jawabanmu kurang tepat';
+        status.classList.add(isRight ? 'is-right' : 'is-wrong');
+
+        const exp = card.querySelector('.explanation');
+        exp.classList.add('show', isRight ? 'is-right' : 'is-wrong');
+
+        card.querySelector('.btn-check').hidden = true;
+        card.querySelector('.btn-retry').hidden = false;
+
+        updateProgress();
+
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise([exp]).catch(() => {});
+        }
+    };
+
+    window.resetQuestion = function (qid) {
+        const card = document.getElementById(qid);
+
+        card.classList.remove('is-done');
+        delete card.dataset.selected;
+
+        card.querySelectorAll('input[type="radio"]').forEach(input => {
+            input.disabled = false;
+            input.checked = false;
+        });
+
+        card.querySelectorAll('.option').forEach(opt => {
+            opt.classList.remove('is-correct', 'is-wrong');
+        });
+
+        const status = card.querySelector('.status-text');
+        status.textContent = '';
+        status.classList.remove('is-right', 'is-wrong');
+
+        const exp = card.querySelector('.explanation');
+        exp.classList.remove('show', 'is-right', 'is-wrong');
+
+        const btn = card.querySelector('.btn-check');
+        btn.hidden = false;
+        btn.disabled = true;
+
+        card.querySelector('.btn-retry').hidden = true;
+
+        updateProgress();
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+
+    window.resetAll = function () {
+        cards.forEach(card => window.resetQuestion(card.id));
+        resultCard.hidden = true;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    function updateProgress() {
+        const total = cards.length;
+        const done = cards.filter(c => c.classList.contains('is-done')).length;
+
+        progressText.textContent = done + ' / ' + total + ' soal';
+        progressFill.style.width = (done / total * 100) + '%';
+
+        if (done === total) {
+            showResult();
+        } else {
+            resultCard.hidden = true;
+        }
+    }
+
+    function showResult() {
+        const total = cards.length;
+        const score = cards.filter(c => c.dataset.selected === c.dataset.correct).length;
+
+        document.getElementById('scoreNum').textContent = score;
+        document.getElementById('scoreTotal').textContent = total;
+
+        let msg;
+        if (score === total) {
+            msg = 'Sempurna! Semua jawaban benar. Pertahankan ya.';
+        } else if (score >= Math.ceil(total * 0.6)) {
+            msg = 'Sudah bagus. Pelajari kembali soal yang masih keliru, ya.';
+        } else {
+            msg = 'Jangan menyerah — baca ulang pembahasannya lalu coba lagi.';
+        }
+        document.getElementById('scoreMsg').textContent = msg;
+
+        resultCard.hidden = false;
+        resultCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    updateProgress();
+})();
+</script>
+
+</body>
+</html>
