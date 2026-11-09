@@ -2592,6 +2592,306 @@
             <p class="answer-note"><strong>Jawaban yang benar: B (4 V)</strong></p>
         </div>
     </article>
+    <!-- ================= SOAL 21: DUA BATERAI BERLAWANAN DENGAN HAMBATAN DALAM ================= -->
+    <article class="card" id="q21" data-correct="C">
+        <span class="question-number">Soal 21</span>
+        <p class="question-text">
+            Perhatikan gambar rangkaian listrik tertutup di bawah ini. Dua baterai dengan polaritas saling berlawanan (saling melemahkan) dihubungkan dengan sebuah resistor. Jika $\varepsilon_1 = 24\text{ V}$, $\varepsilon_2 = 6\text{ V}$, $r_1 = 1\ \Omega$, $r_2 = 1\ \Omega$, dan $R = 4\ \Omega$, berapakah kuat arus listrik ($I$) yang mengalir pada rangkaian tersebut?
+        </p>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 480 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rangkaian tertutup dengan dua baterai berlawanan, masing-masing memiliki ggl ε dan hambatan dalam r (dalam kotak putus-putus), serta satu resistor luar R" font-family="system-ui, -apple-system, sans-serif">
+
+                <!-- Definisi Mata Panah -->
+                <defs>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+                    </marker>
+                </defs>
+
+                <!-- ===== Kotak putus-putus: sumber (ε + r) ===== -->
+                <rect x="55" y="84" width="155" height="140" rx="10" fill="#eff6ff" fill-opacity="0.5" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="7 5" />
+                <text x="132" y="78" text-anchor="middle" font-weight="600" font-size="12" fill="#2563eb">Baterai 1</text>
+
+                <rect x="270" y="84" width="175" height="140" rx="10" fill="#eff6ff" fill-opacity="0.5" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="7 5" />
+                <text x="357" y="78" text-anchor="middle" font-weight="600" font-size="12" fill="#2563eb">Baterai 2</text>
+
+                <!-- Kabel Bawah -->
+                <line x1="100" y1="240" x2="380" y2="240" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Kabel Kiri -->
+                <line x1="100" y1="60" x2="100" y2="100" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="100" y1="120" x2="100" y2="155" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="100" y1="185" x2="100" y2="240" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Kabel Kanan -->
+                <line x1="380" y1="60" x2="380" y2="100" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="380" y1="120" x2="380" y2="155" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="380" y1="185" x2="380" y2="240" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Kabel Atas & Resistor luar R (zigzag) -->
+                <line x1="100" y1="60" x2="180" y2="60" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <polyline points="180,60 190,60 196,42 208,78 220,42 232,78 244,42 250,60 260,60" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+                <line x1="260" y1="60" x2="380" y2="60" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Baterai 1 (Kiri) -->
+                <line x1="75" y1="100" x2="125" y2="100" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" /> <!-- Positif -->
+                <line x1="85" y1="120" x2="115" y2="120" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round" /> <!-- Negatif -->
+
+                <!-- Hambatan Dalam r1 (kotak oranye) -->
+                <rect x="91" y="155" width="18" height="30" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5" rx="2" />
+
+                <!-- Baterai 2 (Kanan) -->
+                <line x1="355" y1="100" x2="405" y2="100" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" /> <!-- Positif -->
+                <line x1="365" y1="120" x2="395" y2="120" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round" /> <!-- Negatif -->
+
+                <!-- Hambatan Dalam r2 (kotak oranye) -->
+                <rect x="371" y="155" width="18" height="30" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5" rx="2" />
+
+                <!-- Label Polaritas Baterai -->
+                <text x="135" y="105" text-anchor="start" font-weight="700" font-size="18" fill="#ef4444">+</text>
+                <text x="135" y="125" text-anchor="start" font-weight="700" font-size="22" fill="#1e293b">−</text>
+
+                <text x="420" y="105" text-anchor="start" font-weight="700" font-size="18" fill="#ef4444">+</text>
+                <text x="420" y="125" text-anchor="start" font-weight="700" font-size="22" fill="#1e293b">−</text>
+
+                <!-- Label ε dan r (Baterai 1) -->
+                <text x="122" y="168" text-anchor="start" font-weight="600" font-size="14" fill="#2563eb">ε₁ = 24 V</text>
+                <text x="122" y="188" text-anchor="start" font-weight="600" font-size="14" fill="#ea580c">r₁ = 1 Ω</text>
+
+                <!-- Label ε dan r (Baterai 2) -->
+                <text x="358" y="168" text-anchor="end" font-weight="600" font-size="14" fill="#2563eb">ε₂ = 6 V</text>
+                <text x="358" y="188" text-anchor="end" font-weight="600" font-size="14" fill="#ea580c">r₂ = 1 Ω</text>
+
+                <!-- Label Resistor luar R -->
+                <text x="220" y="32" text-anchor="middle" font-weight="600" font-size="16" fill="#1e293b">R = 4 Ω</text>
+
+                <!-- Panah Arus Total (I): ε₁ > ε₂, arus searah jarum jam -->
+                <line x1="280" y1="60" x2="320" y2="60" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)" />
+                <text x="300" y="48" text-anchor="middle" font-weight="600" font-size="16" fill="#dc2626">I = ?</text>
+
+                <!-- Keterangan Bawah -->
+                <text x="240" y="285" text-anchor="middle" font-weight="500" font-size="14" fill="#64748b">
+                    Dua baterai saling berlawanan (opposing)
+                </text>
+                <text x="240" y="306" text-anchor="middle" font-weight="500" font-size="12" fill="#64748b">
+                    Kotak putus-putus = sumber (ε dan hambatan dalam r)
+                </text>
+            </svg>
+        </figure>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 21">
+            <li class="option">
+                <input type="radio" name="q21" id="q21-a" value="A">
+                <label for="q21-a"><span class="opt-label">A</span><span class="opt-text">1,5 A</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q21" id="q21-b" value="B">
+                <label for="q21-b"><span class="opt-label">B</span><span class="opt-text">2 A</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q21" id="q21-c" value="C">
+                <label for="q21-c"><span class="opt-label">C</span><span class="opt-text">3 A</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q21" id="q21-d" value="D">
+                <label for="q21-d"><span class="opt-label">D</span><span class="opt-text">4,5 A</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q21" id="q21-e" value="E">
+                <label for="q21-e"><span class="opt-label">E</span><span class="opt-text">6 A</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q21')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q21')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Diketahui: $\varepsilon_1 = 24\text{ V}$, $\varepsilon_2 = 6\text{ V}$, $r_1 = 1\ \Omega$, $r_2 = 1\ \Omega$, dan $R = 4\ \Omega$</p>
+
+            <p><strong>Langkah 1:</strong> Hitung Gaya Gerak Listrik (GGL) total. Karena kedua baterai saling berlawanan, GGL total adalah selisih keduanya:</p>
+            <div class="formula">
+                $\varepsilon_{total} = \varepsilon_1 - \varepsilon_2$<br>
+                $\varepsilon_{total} = 24 - 6 = 18\text{ V}$
+            </div>
+
+            <p><strong>Langkah 2:</strong> Hitung hambatan total rangkaian. Hambatan total adalah jumlah dari resistor luar dan semua hambatan dalam baterai:</p>
+            <div class="formula">
+                $R_{total} = R + r_1 + r_2$<br>
+                $R_{total} = 4 + 1 + 1 = 6\ \Omega$
+            </div>
+
+            <p><strong>Langkah 3:</strong> Hitung kuat arus listrik menggunakan Hukum Ohm untuk rangkaian tertutup:</p>
+            <div class="formula">
+                $I = \dfrac{\varepsilon_{total}}{R_{total}}$<br>
+                $I = \dfrac{18}{6} = \mathbf{3\text{ A}}$
+            </div>
+
+            <p class="answer-note"><strong>Jawaban yang benar: C (3 A)</strong></p>
+        </div>
+    </article>
+    <!-- ================= SOAL 22: TEGANGAN JEPIT BATERAI 1 ================= -->
+    <article class="card" id="q22" data-correct="C">
+        <span class="question-number">Soal 22</span>
+        <p class="question-text">
+            Perhatikan gambar rangkaian listrik tertutup di bawah ini. Dua baterai dengan polaritas saling berlawanan dihubungkan dengan sebuah resistor. Jika $\varepsilon_1 = 20\text{ V}$, $\varepsilon_2 = 8\text{ V}$, $r_1 = 2\ \Omega$, $r_2 = 1\ \Omega$, dan $R = 3\ \Omega$, berapakah besar tegangan jepit pada baterai 1 ($V_{jepit1}$)?
+        </p>
+
+        <figure class="svg-container">
+            <!-- viewBox diperlebar ke kiri (-40) agar teks V_jepit tidak terpotong -->
+            <svg viewBox="-40 0 520 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rangkaian tertutup dengan dua baterai berlawanan, mencari tegangan jepit baterai 1" font-family="system-ui, -apple-system, sans-serif">
+
+                <!-- Definisi Mata Panah -->
+                <defs>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+                    </marker>
+                </defs>
+
+                <!-- ===== Kotak putus-putus: sumber (ε + r) ===== -->
+                <rect x="55" y="84" width="155" height="140" rx="10" fill="#eff6ff" fill-opacity="0.5" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="7 5" />
+                <text x="132" y="78" text-anchor="middle" font-weight="600" font-size="12" fill="#2563eb">Baterai 1</text>
+
+                <rect x="270" y="84" width="175" height="140" rx="10" fill="#eff6ff" fill-opacity="0.5" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="7 5" />
+                <text x="357" y="78" text-anchor="middle" font-weight="600" font-size="12" fill="#2563eb">Baterai 2</text>
+
+                <!-- Kabel Bawah -->
+                <line x1="100" y1="240" x2="380" y2="240" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Kabel Kiri -->
+                <line x1="100" y1="60" x2="100" y2="100" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="100" y1="120" x2="100" y2="155" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="100" y1="185" x2="100" y2="240" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Kabel Kanan -->
+                <line x1="380" y1="60" x2="380" y2="100" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="380" y1="120" x2="380" y2="155" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="380" y1="185" x2="380" y2="240" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Kabel Atas & Resistor luar R (zigzag) -->
+                <line x1="100" y1="60" x2="180" y2="60" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <polyline points="180,60 190,60 196,42 208,78 220,42 232,78 244,42 250,60 260,60" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+                <line x1="260" y1="60" x2="380" y2="60" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Baterai 1 (Kiri) -->
+                <line x1="75" y1="100" x2="125" y2="100" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" /> <!-- Positif -->
+                <line x1="85" y1="120" x2="115" y2="120" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round" /> <!-- Negatif -->
+
+                <!-- Hambatan Dalam r1 -->
+                <rect x="91" y="155" width="18" height="30" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5" rx="2" />
+
+                <!-- Baterai 2 (Kanan) -->
+                <line x1="355" y1="100" x2="405" y2="100" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" /> <!-- Positif -->
+                <line x1="365" y1="120" x2="395" y2="120" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round" /> <!-- Negatif -->
+
+                <!-- Hambatan Dalam r2 -->
+                <rect x="371" y="155" width="18" height="30" fill="#fff7ed" stroke="#ea580c" stroke-width="2.5" rx="2" />
+
+                <!-- Label Polaritas Baterai -->
+                <text x="135" y="105" text-anchor="start" font-weight="700" font-size="18" fill="#ef4444">+</text>
+                <text x="135" y="125" text-anchor="start" font-weight="700" font-size="22" fill="#1e293b">−</text>
+
+                <text x="420" y="105" text-anchor="start" font-weight="700" font-size="18" fill="#ef4444">+</text>
+                <text x="420" y="125" text-anchor="start" font-weight="700" font-size="22" fill="#1e293b">−</text>
+
+                <!-- Label ε dan r (Baterai 1) -->
+                <text x="122" y="168" text-anchor="start" font-weight="600" font-size="14" fill="#2563eb">
+                    <tspan font-style="italic">ε</tspan><tspan dy="3" font-size="10" font-style="normal">1</tspan><tspan dy="-3" font-style="normal"> = 20 V</tspan>
+                </text>
+                <text x="122" y="188" text-anchor="start" font-weight="600" font-size="14" fill="#ea580c">
+                    r<tspan dy="3" font-size="10">1</tspan><tspan dy="-3"> = 2 Ω</tspan>
+                </text>
+
+                <!-- Label ε dan r (Baterai 2) -->
+                <text x="358" y="168" text-anchor="end" font-weight="600" font-size="14" fill="#2563eb">
+                    <tspan font-style="italic">ε</tspan><tspan dy="3" font-size="10" font-style="normal">2</tspan><tspan dy="-3" font-style="normal"> = 8 V</tspan>
+                </text>
+                <text x="358" y="188" text-anchor="end" font-weight="600" font-size="14" fill="#ea580c">
+                    r<tspan dy="3" font-size="10">2</tspan><tspan dy="-3"> = 1 Ω</tspan>
+                </text>
+
+                <!-- Label Resistor luar R -->
+                <text x="220" y="32" text-anchor="middle" font-weight="600" font-size="16" fill="#1e293b">R = 3 Ω</text>
+
+                <!-- Panah Arus Total (I): ε₁ > ε₂, arus searah jarum jam -->
+                <line x1="280" y1="60" x2="320" y2="60" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)" />
+                
+                <!-- Label Tegangan Jepit yang dicari pada Baterai 1 -->
+                <text x="45" y="168" text-anchor="end" font-weight="600" font-size="15" fill="#dc2626">
+                    V<tspan dy="4" font-size="11">jepit1</tspan><tspan dy="-4"> = ?</tspan>
+                </text>
+
+                <!-- Keterangan Bawah -->
+                <text x="240" y="285" text-anchor="middle" font-weight="500" font-size="14" fill="#64748b">
+                    Dua baterai saling berlawanan (opposing)
+                </text>
+                <text x="240" y="306" text-anchor="middle" font-weight="500" font-size="12" fill="#64748b">
+                    Kotak putus-putus = sumber (ε dan hambatan dalam r)
+                </text>
+            </svg>
+        </figure>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 22">
+            <li class="option">
+                <input type="radio" name="q22" id="q22-a" value="A">
+                <label for="q22-a"><span class="opt-label">A</span><span class="opt-text">12 V</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q22" id="q22-b" value="B">
+                <label for="q22-b"><span class="opt-label">B</span><span class="opt-text">14 V</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q22" id="q22-c" value="C">
+                <label for="q22-c"><span class="opt-label">C</span><span class="opt-text">16 V</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q22" id="q22-d" value="D">
+                <label for="q22-d"><span class="opt-label">D</span><span class="opt-text">18 V</span></label>
+            </li>
+            <li class="option">
+                <input type="radio" name="q22" id="q22-e" value="E">
+                <label for="q22-e"><span class="opt-label">E</span><span class="opt-text">20 V</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q22')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q22')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Diketahui: $\varepsilon_1 = 20\text{ V}$, $\varepsilon_2 = 8\text{ V}$, $r_1 = 2\ \Omega$, $r_2 = 1\ \Omega$, dan $R = 3\ \Omega$</p>
+            
+            <p><strong>Langkah 1:</strong> Hitung GGL total. Karena kedua baterai saling berlawanan, GGL total adalah selisih keduanya:</p>
+            <div class="formula">
+                $\varepsilon_{total} = \varepsilon_1 - \varepsilon_2$<br>
+                $\varepsilon_{total} = 20 - 8 = 12\text{ V}$
+            </div>
+            
+            <p><strong>Langkah 2:</strong> Hitung hambatan total rangkaian seri:</p>
+            <div class="formula">
+                $R_{total} = R + r_1 + r_2$<br>
+                $R_{total} = 3 + 2 + 1 = 6\ \Omega$
+            </div>
+
+            <p><strong>Langkah 3:</strong> Hitung kuat arus listrik yang mengalir pada rangkaian:</p>
+            <div class="formula">
+                $I = \dfrac{\varepsilon_{total}}{R_{total}}$<br>
+                $I = \dfrac{12}{6} = 2\text{ A}$
+            </div>
+
+            <p><strong>Langkah 4:</strong> Hitung tegangan jepit pada baterai 1. Karena baterai 1 bertindak sebagai sumber arus (mengalami *discharging*), tegangan jepitnya adalah GGL dikurangi penurunan tegangan pada hambatan dalamnya:</p>
+            <div class="formula">
+                $V_{jepit1} = \varepsilon_1 - (I \times r_1)$<br>
+                $V_{jepit1} = 20 - (2 \times 2)$<br>
+                $V_{jepit1} = 20 - 4 = \mathbf{16\text{ V}}$
+            </div>
+            
+            <p class="answer-note"><strong>Jawaban yang benar: C (16 V)</strong></p>
+        </div>
+    </article>
     <!-- ================= HASIL ================= -->
     <section class="result-card" id="resultCard" hidden>
         <div class="result-icon">🎯</div>
