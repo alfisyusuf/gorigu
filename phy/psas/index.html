@@ -3768,8 +3768,6 @@
             <p class="answer-note"><strong>Jawaban yang benar: B (1 A)</strong></p>
         </div>
     </article>
-
-
     <!-- ================= SOAL 28: KIRCHHOFF I, CARI HAMBATAN ================= -->
     <article class="card" id="q28" data-correct="D">
         <span class="question-number">Soal 28</span>
@@ -3881,8 +3879,6 @@
             <p class="answer-note"><strong>Jawaban yang benar: D (12 Ω)</strong></p>
         </div>
     </article>
-
-
     <!-- ================= SOAL 29: KIRCHHOFF I & II, BATERAI DIISI ================= -->
     <article class="card" id="q29" data-correct="A">
         <span class="question-number">Soal 29</span>
@@ -4012,8 +4008,6 @@
             <p class="answer-note"><strong>Jawaban yang benar: A (1 A, mengalir ke bawah)</strong></p>
         </div>
     </article>
-
-
     <!-- ================= SOAL 30: SERI-PARALEL, PEMBAGIAN ARUS SAMA ================= -->
     <article class="card" id="q30" data-correct="C">
         <span class="question-number">Soal 30</span>
@@ -4134,6 +4128,1236 @@
             <p>Pengecekan (Kirchhoff I): $I_2 = 9/6 = 1{,}5\text{ A}$, dan $I_2 + I_4 = 3\text{ A}$ sama dengan arus total.</p>
 
             <p class="answer-note"><strong>Jawaban yang benar: C (1,5 A)</strong></p>
+        </div>
+    </article>
+    <!-- ================= SOAL 31: LITERASI RESISTIVITAS (MCMA) ================= -->
+    <article class="card" id="q31" data-correct="A,C" data-type="multi">
+        <span class="question-number">Soal 31</span>
+
+        <div class="passage" style="background:#f8fafc; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.95rem; line-height:1.65; color:#1e293b;">
+            <p style="margin:0 0 8px; font-weight:700; color:#2563eb;">Mengapa Kawat Bisa Menghambat Arus?</p>
+            <p style="margin:0 0 10px;">
+                Di dalam kawat logam terdapat banyak elektron bebas. Ketika kawat dihubungkan ke baterai, elektron-elektron ini bergerak. Namun, elektron tidak bisa melaju mulus. Sepanjang jalannya ada atom-atom logam yang diam di tempatnya. Elektron sering menabrak atom, kehilangan sebagian geraknya, lalu didorong lagi oleh baterai. <strong>Tabrakan inilah yang kita sebut hambatan listrik.</strong>
+            </p>
+            <p style="margin:0 0 10px;">
+                Bayangkan sekelompok orang berjalan melewati lorong yang penuh pilar. Makin <strong>panjang</strong> lorongnya, makin banyak pilar yang harus dilewati, sehingga makin sulit. Makin <strong>lebar</strong> lorongnya, makin banyak jalur yang bisa dipakai bersamaan, sehingga orang lebih leluasa lewat. Lorong dengan pilar yang rapat juga lebih sulit dilewati daripada lorong dengan pilar yang jarang. "Kerapatan pilar" ini bergantung pada <strong>jenis bahan</strong>, dan para ilmuwan menyebutnya <strong>hambatan jenis (resistivitas)</strong>. Bahan yang berbeda memiliki hambatan jenis yang berbeda.
+            </p>
+            <p style="margin:0;">
+                Seorang siswa menguji empat kawat tembaga. Kawat Q dua kali lebih panjang dari kawat P. Kawat R memiliki luas penampang dua kali kawat P. Kawat S dua kali lebih panjang <em>sekaligus</em> memiliki luas penampang dua kali kawat P. Hambatan P, Q, dan R sudah diukur, sedangkan S belum.
+            </p>
+        </div>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 680 355" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Empat kawat tembaga. Kawat P: panjang L, luas A, hambatan 2 ohm. Kawat Q: panjang 2L, luas A, hambatan 4 ohm. Kawat R: panjang L, luas 2A, hambatan 1 ohm. Kawat S: panjang 2L, luas 2A, hambatan belum diketahui." font-family="system-ui, -apple-system, sans-serif">
+                <defs>
+                    <pattern id="q31-atom" width="20" height="14" patternUnits="userSpaceOnUse">
+                        <circle cx="10" cy="7" r="3.2" fill="#94a3b8" />
+                    </pattern>
+                    <marker id="arrow-q31" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb" />
+                    </marker>
+                </defs>
+
+                <rect x="6" y="6" width="668" height="343" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+
+                <!-- Judul kolom -->
+                <g font-weight="600" font-size="12.5" fill="#64748b">
+                    <text x="24" y="34">Kawat</text>
+                    <text x="150" y="34">Tampak samping (tembaga)</text>
+                    <text x="450" y="34" text-anchor="middle">Penampang</text>
+                    <text x="545" y="34">Hambatan terukur</text>
+                </g>
+
+                <!-- ===== Kawat P ===== -->
+                <text x="24" y="66" font-weight="800" font-size="17" fill="#1e293b">Kawat P</text>
+                <text x="24" y="84" font-weight="500" font-size="13" fill="#64748b">panjang L · luas A</text>
+                <rect x="150" y="55" width="120" height="30" rx="6" fill="#fde7c7" stroke="#c2410c" stroke-width="2" />
+                <rect x="150" y="55" width="120" height="30" rx="6" fill="url(#q31-atom)" />
+                <g fill="#2563eb" stroke="#ffffff" stroke-width="1.2">
+                    <circle cx="172" cy="64" r="4" /><circle cx="212" cy="76" r="4" /><circle cx="248" cy="67" r="4" />
+                </g>
+                <circle cx="450" cy="70" r="15" fill="#fde7c7" stroke="#c2410c" stroke-width="2" />
+                <text x="478" y="75" font-weight="700" font-size="15" fill="#334155">A</text>
+                <text x="545" y="76" font-weight="800" font-size="17" fill="#334155">R = 2 Ω</text>
+
+                <!-- ===== Kawat Q ===== -->
+                <text x="24" y="136" font-weight="800" font-size="17" fill="#1e293b">Kawat Q</text>
+                <text x="24" y="154" font-weight="500" font-size="13" fill="#64748b">panjang 2L · luas A</text>
+                <rect x="150" y="125" width="240" height="30" rx="6" fill="#fde7c7" stroke="#c2410c" stroke-width="2" />
+                <rect x="150" y="125" width="240" height="30" rx="6" fill="url(#q31-atom)" />
+                <g fill="#2563eb" stroke="#ffffff" stroke-width="1.2">
+                    <circle cx="172" cy="134" r="4" /><circle cx="232" cy="146" r="4" /><circle cx="292" cy="137" r="4" /><circle cx="352" cy="147" r="4" />
+                </g>
+                <circle cx="450" cy="140" r="15" fill="#fde7c7" stroke="#c2410c" stroke-width="2" />
+                <text x="478" y="145" font-weight="700" font-size="15" fill="#334155">A</text>
+                <text x="545" y="146" font-weight="800" font-size="17" fill="#334155">R = 4 Ω</text>
+
+                <!-- ===== Kawat R ===== -->
+                <text x="24" y="206" font-weight="800" font-size="17" fill="#1e293b">Kawat R</text>
+                <text x="24" y="224" font-weight="500" font-size="13" fill="#64748b">panjang L · luas 2A</text>
+                <rect x="150" y="189" width="120" height="42" rx="7" fill="#fde7c7" stroke="#c2410c" stroke-width="2" />
+                <rect x="150" y="189" width="120" height="42" rx="7" fill="url(#q31-atom)" />
+                <g fill="#2563eb" stroke="#ffffff" stroke-width="1.2">
+                    <circle cx="172" cy="200" r="4" /><circle cx="214" cy="218" r="4" /><circle cx="250" cy="205" r="4" />
+                </g>
+                <circle cx="450" cy="210" r="21" fill="#fde7c7" stroke="#c2410c" stroke-width="2" />
+                <text x="478" y="215" font-weight="700" font-size="15" fill="#334155">2A</text>
+                <text x="545" y="216" font-weight="800" font-size="17" fill="#334155">R = 1 Ω</text>
+
+                <!-- ===== Kawat S ===== -->
+                <text x="24" y="276" font-weight="800" font-size="17" fill="#ea580c">Kawat S</text>
+                <text x="24" y="294" font-weight="500" font-size="13" fill="#64748b">panjang 2L · luas 2A</text>
+                <rect x="150" y="259" width="240" height="42" rx="7" fill="#fde7c7" stroke="#ea580c" stroke-width="3" />
+                <rect x="150" y="259" width="240" height="42" rx="7" fill="url(#q31-atom)" />
+                <g fill="#2563eb" stroke="#ffffff" stroke-width="1.2">
+                    <circle cx="172" cy="270" r="4" /><circle cx="232" cy="289" r="4" /><circle cx="292" cy="276" r="4" /><circle cx="352" cy="291" r="4" />
+                </g>
+                <circle cx="450" cy="280" r="21" fill="#fde7c7" stroke="#ea580c" stroke-width="3" />
+                <text x="478" y="285" font-weight="700" font-size="15" fill="#334155">2A</text>
+                <text x="545" y="286" font-weight="800" font-size="17" fill="#ea580c">R = ?</text>
+
+                <!-- Legenda -->
+                <g font-weight="500" font-size="12.5" fill="#64748b">
+                    <circle cx="150" cy="330" r="3.2" fill="#94a3b8" />
+                    <text x="160" y="334">atom tembaga (diam)</text>
+                    <circle cx="295" cy="330" r="4" fill="#2563eb" stroke="#ffffff" stroke-width="1.2" />
+                    <text x="305" y="334">elektron bebas</text>
+                    <text x="415" y="334">Gambar tidak digambar sesuai skala atom</text>
+                </g>
+            </svg>
+        </figure>
+
+        <p class="question-text">
+            Berdasarkan bacaan dan gambar, tentukan <strong>dua pernyataan yang benar</strong>!
+            <br><em style="font-size:0.9rem;">(Pilih 2 jawaban.)</em>
+        </p>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 31 (pilih dua)">
+            <li class="option">
+                <input type="checkbox" name="q31" id="q31-a" value="A">
+                <label for="q31-a"><span class="opt-label">A</span><span class="opt-text">Kawat yang lebih panjang memiliki hambatan lebih besar, karena elektron harus melewati lebih banyak atom penghalang.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q31" id="q31-b" value="B">
+                <label for="q31-b"><span class="opt-label">B</span><span class="opt-text">Kawat yang lebih tebal memiliki hambatan lebih besar, karena elektron menjadi berdesakan di dalamnya.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q31" id="q31-c" value="C">
+                <label for="q31-c"><span class="opt-label">C</span><span class="opt-text">Hambatan kawat S adalah 2 Ω.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q31" id="q31-d" value="D">
+                <label for="q31-d"><span class="opt-label">D</span><span class="opt-text">Kawat tembaga dan kawat besi yang ukurannya sama persis pasti memiliki hambatan yang sama.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q31" id="q31-e" value="E">
+                <label for="q31-e"><span class="opt-label">E</span><span class="opt-text">Ketebalan kawat tidak memengaruhi hambatan; hanya panjang kawat yang menentukan.</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q31')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q31')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Dari bacaan, hambatan dipengaruhi oleh tiga hal: <strong>panjang</strong> (makin panjang, hambatan makin besar), <strong>luas penampang</strong> (makin lebar, hambatan makin kecil), dan <strong>jenis bahan</strong> (hambatan jenis). Hubungan ini dapat ditulis:</p>
+            <div class="formula">
+                $R = \rho \dfrac{L}{A}$
+            </div>
+            <p>dengan $\rho$ adalah hambatan jenis bahan. Kawat P, Q, R, dan S sama-sama dari tembaga, jadi $\rho$ sama dan bisa diabaikan saat membandingkan.</p>
+
+            <p><strong>Membaca data pada gambar:</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>P → Q:</strong> panjang menjadi 2 kali, hambatan menjadi 2 kali ($2 \to 4\ \Omega$). Hambatan <em>sebanding</em> dengan panjang.</li>
+                <li><strong>P → R:</strong> luas menjadi 2 kali, hambatan menjadi setengahnya ($2 \to 1\ \Omega$). Hambatan <em>berbanding terbalik</em> dengan luas penampang.</li>
+                <li><strong>P → S:</strong> panjang 2 kali (hambatan ×2) dan luas 2 kali (hambatan ×½), sehingga efeknya saling meniadakan.</li>
+            </ul>
+            <div class="formula">
+                $R_S = 2\ \Omega \times 2 \times \dfrac{1}{2} = \mathbf{2\ \Omega}$
+            </div>
+
+            <p><strong>Pemeriksaan tiap pernyataan:</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>A (benar):</strong> sesuai bacaan dan data P → Q.</li>
+                <li><strong>B (salah):</strong> kawat yang lebih tebal justru memberi lebih banyak jalur, sehingga hambatannya lebih kecil (R = 1 Ω lebih kecil dari P = 2 Ω).</li>
+                <li><strong>C (benar):</strong> hasil perhitungan di atas.</li>
+                <li><strong>D (salah):</strong> bahan yang berbeda memiliki hambatan jenis yang berbeda, sehingga hambatannya berbeda walau ukurannya sama.</li>
+                <li><strong>E (salah):</strong> data P dan R menunjukkan bahwa luas penampang ikut menentukan hambatan.</li>
+            </ul>
+
+            <p class="answer-note"><strong>Jawaban yang benar: A dan C</strong></p>
+        </div>
+    </article>
+    <!-- ================= SOAL 32: BENAR / SALAH (BATERAI SEARAH vs BERLAWANAN) ================= -->
+    <article class="card" id="q32" data-correct="B,S,B" data-type="truefalse">
+        <span class="question-number">Soal 32</span>
+
+        <div class="passage" style="background:#f8fafc; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.95rem; line-height:1.65; color:#1e293b;">
+            <p style="margin:0 0 8px; font-weight:700; color:#2563eb;">Rahasia Baterai di Dalam Senter</p>
+            <p style="margin:0 0 10px;">
+                Pernahkah kamu memasang baterai senter terbalik, lalu senternya tidak menyala? Itu terjadi karena baterai punya dua kutub: kutub <strong>positif (+)</strong> dan kutub <strong>negatif (−)</strong>. Pada gambar rangkaian, kutub + digambar sebagai <strong>garis panjang</strong>, sedangkan kutub − sebagai <strong>garis pendek yang tebal</strong>.
+            </p>
+            <p style="margin:0 0 10px;">
+                Setiap baterai "mendorong" arus dengan kekuatan <strong>1,5 V</strong>. Jika beberapa baterai disusun berderet dalam satu jalur, dorongannya digabung dengan aturan berikut:
+            </p>
+            <ul style="margin:0 0 10px 20px; padding:0;">
+                <li><strong>Searah</strong> (garis panjang semuanya menghadap sisi yang sama): dorongan <strong>dijumlahkan</strong>.</li>
+                <li><strong>Berlawanan</strong> (garis panjangnya menghadap sisi berbeda): baterai saling melawan, sehingga satu baterai <strong>mengurangi</strong> dorongan baterai lainnya.</li>
+            </ul>
+            <p style="margin:0 0 10px;">
+                Dorongan bersih inilah yang sampai ke lampu. Semua lampu pada soal ini identik, dan keadaannya ditentukan seperti berikut:
+            </p>
+            <table style="border-collapse:collapse; margin:0 0 10px; font-size:0.9rem;">
+                <tr style="background:#e2e8f0;"><th style="border:1px solid #cbd5e1; padding:6px 12px;">Dorongan bersih</th><th style="border:1px solid #cbd5e1; padding:6px 12px;">Keadaan lampu</th></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">3 V</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">Menyala terang</td></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">1,5 V</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">Menyala redup</td></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">0 V</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">Padam</td></tr>
+            </table>
+            <p style="margin:0;">
+                Satu hal lagi: lampu hanya bisa menyala jika jalurnya <strong>tertutup</strong> dari ujung ke ujung. Saklar yang terbuka sama saja dengan kabel yang terputus.
+            </p>
+        </div>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 680 385" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Empat susunan baterai dan lampu. Susunan 1: tiga baterai, dua searah dan satu berlawanan. Susunan 2: empat baterai, tiga searah dan satu berlawanan. Susunan 3: dua baterai berlawanan. Susunan 4: dua baterai searah dengan saklar terbuka." font-family="system-ui, -apple-system, sans-serif">
+                <defs>
+                    <!-- Baterai: garis panjang (+) di kiri, garis pendek tebal (−) di kanan -->
+                    <g id="q32-bp" stroke="#1e293b" stroke-linecap="round" fill="none">
+                        <line x1="-14" y1="0" x2="-4" y2="0" stroke-width="2.5" />
+                        <line x1="-4" y1="-13" x2="-4" y2="13" stroke-width="2.5" />
+                        <line x1="4" y1="-7" x2="4" y2="7" stroke-width="5.5" />
+                        <line x1="4" y1="0" x2="14" y2="0" stroke-width="2.5" />
+                    </g>
+                    <!-- Rangka: kabel kiri, kabel bawah, lampu -->
+                    <g id="q32-frame" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" fill="none">
+                        <line x1="20" y1="40" x2="20" y2="120" />
+                        <line x1="20" y1="120" x2="151" y2="120" />
+                        <line x1="179" y1="120" x2="310" y2="120" />
+                        <circle cx="165" cy="120" r="14" fill="#fef9c3" stroke="#ca8a04" />
+                        <line x1="155" y1="110" x2="175" y2="130" stroke="#ca8a04" stroke-width="2" />
+                        <line x1="175" y1="110" x2="155" y2="130" stroke="#ca8a04" stroke-width="2" />
+                    </g>
+                </defs>
+
+                <rect x="6" y="6" width="668" height="373" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+
+                <!-- ============ SUSUNAN 1: 3 baterai (2 searah, 1 berlawanan) ============ -->
+                <g transform="translate(10,10)">
+                    <use href="#q32-frame" />
+                    <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="20" y1="40" x2="111" y2="40" />
+                        <line x1="139" y1="40" x2="151" y2="40" />
+                        <line x1="179" y1="40" x2="191" y2="40" />
+                        <line x1="219" y1="40" x2="310" y2="40" />
+                        <line x1="310" y1="40" x2="310" y2="120" />
+                    </g>
+                    <use href="#q32-bp" x="125" y="40" />
+                    <use href="#q32-bp" x="165" y="40" />
+                    <use href="#q32-bp" transform="translate(205,40) scale(-1,1)" />
+                    <text x="20" y="20" font-weight="800" font-size="16" fill="#2563eb">Susunan 1</text>
+                    <text x="165" y="156" text-anchor="middle" font-weight="500" font-size="12.5" fill="#64748b">3 baterai</text>
+                </g>
+
+                <!-- ============ SUSUNAN 2: 4 baterai (3 searah, 1 berlawanan) ============ -->
+                <g transform="translate(345,10)">
+                    <use href="#q32-frame" />
+                    <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="20" y1="40" x2="91" y2="40" />
+                        <line x1="119" y1="40" x2="131" y2="40" />
+                        <line x1="159" y1="40" x2="171" y2="40" />
+                        <line x1="199" y1="40" x2="211" y2="40" />
+                        <line x1="239" y1="40" x2="310" y2="40" />
+                        <line x1="310" y1="40" x2="310" y2="120" />
+                    </g>
+                    <use href="#q32-bp" x="105" y="40" />
+                    <use href="#q32-bp" x="145" y="40" />
+                    <use href="#q32-bp" x="185" y="40" />
+                    <use href="#q32-bp" transform="translate(225,40) scale(-1,1)" />
+                    <text x="20" y="20" font-weight="800" font-size="16" fill="#2563eb">Susunan 2</text>
+                    <text x="165" y="156" text-anchor="middle" font-weight="500" font-size="12.5" fill="#64748b">4 baterai</text>
+                </g>
+
+                <!-- ============ SUSUNAN 3: 2 baterai berlawanan ============ -->
+                <g transform="translate(10,185)">
+                    <use href="#q32-frame" />
+                    <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="20" y1="40" x2="131" y2="40" />
+                        <line x1="159" y1="40" x2="171" y2="40" />
+                        <line x1="199" y1="40" x2="310" y2="40" />
+                        <line x1="310" y1="40" x2="310" y2="120" />
+                    </g>
+                    <use href="#q32-bp" x="145" y="40" />
+                    <use href="#q32-bp" transform="translate(185,40) scale(-1,1)" />
+                    <text x="20" y="20" font-weight="800" font-size="16" fill="#2563eb">Susunan 3</text>
+                    <text x="165" y="156" text-anchor="middle" font-weight="500" font-size="12.5" fill="#64748b">2 baterai</text>
+                </g>
+
+                <!-- ============ SUSUNAN 4: 2 searah + saklar terbuka ============ -->
+                <g transform="translate(345,185)">
+                    <use href="#q32-frame" />
+                    <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="20" y1="40" x2="131" y2="40" />
+                        <line x1="159" y1="40" x2="171" y2="40" />
+                        <line x1="199" y1="40" x2="310" y2="40" />
+                        <line x1="310" y1="40" x2="310" y2="66" />
+                        <line x1="310" y1="102" x2="310" y2="120" />
+                    </g>
+                    <use href="#q32-bp" x="145" y="40" />
+                    <use href="#q32-bp" x="185" y="40" />
+                    <!-- saklar terbuka -->
+                    <circle cx="310" cy="70" r="4.5" fill="#fff" stroke="#1e293b" stroke-width="2.5" />
+                    <circle cx="310" cy="98" r="4.5" fill="#fff" stroke="#1e293b" stroke-width="2.5" />
+                    <line x1="310" y1="94" x2="290" y2="72" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" />
+                    <text x="272" y="88" text-anchor="end" font-weight="700" font-size="13" fill="#7c3aed">saklar S</text>
+                    <text x="20" y="20" font-weight="800" font-size="16" fill="#2563eb">Susunan 4</text>
+                    <text x="165" y="156" text-anchor="middle" font-weight="500" font-size="12.5" fill="#64748b">2 baterai</text>
+                </g>
+
+                <!-- Legenda (dipisah garis, tidak menimpa gambar) -->
+                <line x1="30" y1="352" x2="650" y2="352" stroke="#e2e8f0" stroke-width="1.5" />
+                <text x="340" y="370" text-anchor="middle" font-weight="500" font-size="12" fill="#64748b">Garis panjang = kutub + · Garis pendek tebal = kutub − · Semua baterai 1,5 V, semua lampu identik</text>
+            </svg>
+        </figure>
+
+        <p class="question-text">
+            Berdasarkan bacaan dan gambar, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>!
+        </p>
+
+        <div style="overflow-x:auto;">
+            <table class="category-table" style="width:100%; border-collapse:collapse; font-size:0.95rem;">
+                <thead>
+                    <tr style="background:#e2e8f0;">
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:left;">Pernyataan</th>
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:center; width:80px;">Benar</th>
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:center; width:80px;">Salah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">1. Lampu pada <strong>Susunan 2</strong> menyala lebih terang daripada lampu pada <strong>Susunan 1</strong>.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q32-r1" id="q32-r1-B" value="B" aria-label="Pernyataan 1: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q32-r1" id="q32-r1-S" value="S" aria-label="Pernyataan 1: salah"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">2. Lampu pada <strong>Susunan 1</strong> menyala terang karena memakai tiga baterai.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q32-r2" id="q32-r2-B" value="B" aria-label="Pernyataan 2: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q32-r2" id="q32-r2-S" value="S" aria-label="Pernyataan 2: salah"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">3. Lampu pada <strong>Susunan 3</strong> dan lampu pada <strong>Susunan 4</strong> sama-sama padam.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q32-r3" id="q32-r3-B" value="B" aria-label="Pernyataan 3: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q32-r3" id="q32-r3-S" value="S" aria-label="Pernyataan 3: salah"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn-check" onclick="checkAnswer('q32')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q32')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Cara menjawab: pada setiap susunan, hitung dulu dorongan bersih. Baterai yang searah <strong>ditambah</strong>, baterai yang berlawanan arah <strong>dikurangi</strong>. Lalu periksa apakah jalurnya tertutup. Ini sesuai Hukum Kirchhoff II: jumlah aljabar tegangan dalam satu loop sama dengan nol.</p>
+
+            <table style="border-collapse:collapse; margin:8px 0 12px; font-size:0.9rem; width:100%;">
+                <tr style="background:#e2e8f0;">
+                    <th style="border:1px solid #cbd5e1; padding:6px 10px;">Susunan</th>
+                    <th style="border:1px solid #cbd5e1; padding:6px 10px;">Perhitungan dorongan bersih</th>
+                    <th style="border:1px solid #cbd5e1; padding:6px 10px;">Keadaan lampu</th>
+                </tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 10px;">1</td><td style="border:1px solid #cbd5e1; padding:6px 10px;">$1{,}5 + 1{,}5 - 1{,}5 = 1{,}5\text{ V}$</td><td style="border:1px solid #cbd5e1; padding:6px 10px;"><strong>Redup</strong></td></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 10px;">2</td><td style="border:1px solid #cbd5e1; padding:6px 10px;">$1{,}5 + 1{,}5 + 1{,}5 - 1{,}5 = 3\text{ V}$</td><td style="border:1px solid #cbd5e1; padding:6px 10px;"><strong>Terang</strong></td></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 10px;">3</td><td style="border:1px solid #cbd5e1; padding:6px 10px;">$1{,}5 - 1{,}5 = 0\text{ V}$</td><td style="border:1px solid #cbd5e1; padding:6px 10px;"><strong>Padam</strong></td></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 10px;">4</td><td style="border:1px solid #cbd5e1; padding:6px 10px;">Dorongan 3 V, tetapi saklar terbuka sehingga jalur tidak tertutup</td><td style="border:1px solid #cbd5e1; padding:6px 10px;"><strong>Padam</strong></td></tr>
+            </table>
+
+            <p><strong>Pemeriksaan tiap pernyataan:</strong></p>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>Pernyataan 1 (Benar):</strong> Susunan 2 menghasilkan 3 V (terang), sedangkan Susunan 1 hanya 1,5 V (redup).</li>
+                <li><strong>Pernyataan 2 (Salah):</strong> Susunan 1 memang memakai tiga baterai, tetapi satu baterai berlawanan arah dan mengurangi dorongan. Dorongan bersihnya hanya 1,5 V, sehingga lampu hanya redup. Banyaknya baterai tidak menentukan terang atau redupnya lampu. Yang menentukan adalah selisih baterai searah dan berlawanan.</li>
+                <li><strong>Pernyataan 3 (Benar):</strong> Susunan 3 padam karena dorongan bersihnya 0 V. Susunan 4 padam karena saklar terbuka, walaupun dorongannya 3 V. Penyebabnya berbeda, tetapi hasilnya sama-sama padam.</li>
+            </ul>
+
+            <p class="answer-note"><strong>Kunci jawaban: 1 Benar, 2 Salah, 3 Benar</strong></p>
+        </div>
+    </article>
+    <!-- ================= SOAL 33: MCMA — SEKERING COLOKAN TERMINAL ================= -->
+    <article class="card" id="q33" data-correct="A,D" data-type="multi">
+        <span class="question-number">Soal 33</span>
+
+        <div class="passage" style="background:#f8fafc; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.95rem; line-height:1.65; color:#1e293b;">
+            <p style="margin:0 0 8px; font-weight:700; color:#2563eb;">Penjaga Pintu di Colokan Terminal</p>
+            <p style="margin:0 0 10px;">
+                Colokan terminal punya komponen kecil bernama <strong>sekering</strong>. Bayangkan sekering sebagai penjaga pintu gedung: ia mengukur seberapa banyak arus listrik yang <em>masuk sekaligus</em>. Jika arus yang lewat <strong>melebihi batasnya</strong>, sekering putus dan semua alat berhenti, sehingga kabel tidak terlalu panas.
+            </p>
+            <p style="margin:0 0 10px;">
+                Semua alat yang dicolokkan ke terminal mendapat jalurnya sendiri-sendiri, tetapi seluruh arus mereka <strong>harus lewat sekering lebih dulu</strong>. Karena itu, arus yang melewati sekering adalah <strong>jumlah arus semua alat yang sedang menyala</strong>. Alat yang tidak menyala tidak ikut dihitung.
+            </p>
+            <p style="margin:0 0 10px;">Terminal di sebuah rumah memiliki sekering dengan batas <strong>10 A</strong>. Tepat 10 A masih aman, sedangkan lebih dari 10 A membuat sekering putus. Arus tiap alat saat menyala:</p>
+            <table style="border-collapse:collapse; margin:0; font-size:0.9rem;">
+                <tr style="background:#e2e8f0;"><th style="border:1px solid #cbd5e1; padding:6px 12px;">Alat</th><th style="border:1px solid #cbd5e1; padding:6px 12px;">Arus saat menyala</th></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">Pemanas air</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">5 A</td></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">Setrika</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">3 A</td></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">Televisi</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">2 A</td></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">Kipas</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">1 A</td></tr>
+            </table>
+        </div>
+
+        <p class="question-text">
+            Berdasarkan bacaan, tentukan <strong>dua pernyataan yang benar</strong>!
+            <br><em style="font-size:0.9rem;">(Pilih 2 jawaban.)</em>
+        </p>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 33 (pilih dua)">
+            <li class="option">
+                <input type="checkbox" name="q33" id="q33-a" value="A">
+                <label for="q33-a"><span class="opt-label">A</span><span class="opt-text">Pemanas air dan setrika boleh menyala bersamaan tanpa memutuskan sekering.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q33" id="q33-b" value="B">
+                <label for="q33-b"><span class="opt-label">B</span><span class="opt-text">Keempat alat boleh menyala bersamaan tanpa memutuskan sekering.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q33" id="q33-c" value="C">
+                <label for="q33-c"><span class="opt-label">C</span><span class="opt-text">Arus yang melewati sekering sama dengan arus alat yang paling besar.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q33" id="q33-d" value="D">
+                <label for="q33-d"><span class="opt-label">D</span><span class="opt-text">Pemanas air, setrika, dan kipas yang menyala bersamaan masih aman, tetapi menambah televisi yang menyala akan memutuskan sekering.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q33" id="q33-e" value="E">
+                <label for="q33-e"><span class="opt-label">E</span><span class="opt-text">Alat berarus kecil seperti kipas tidak ikut dihitung oleh sekering.</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q33')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q33')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Menurut bacaan, arus di sekering adalah <strong>jumlah</strong> arus semua alat yang menyala (Kirchhoff I pada percabangan). Batas aman adalah 10 A.</p>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>A (benar):</strong> $5 + 3 = 8\text{ A}$, di bawah 10 A.</li>
+                <li><strong>B (salah):</strong> $5 + 3 + 2 + 1 = 11\text{ A}$, melebihi 10 A.</li>
+                <li><strong>C (salah):</strong> arus sekering adalah jumlah, bukan arus terbesar.</li>
+                <li><strong>D (benar):</strong> $5 + 3 + 1 = 9\text{ A}$ aman. Ditambah televisi menjadi $9 + 2 = 11\text{ A}$, sekering putus.</li>
+                <li><strong>E (salah):</strong> setiap alat yang menyala ikut dijumlahkan, sekecil apa pun arusnya.</li>
+            </ul>
+            <p class="answer-note"><strong>Jawaban yang benar: A dan D</strong></p>
+        </div>
+    </article>
+
+
+    <!-- ================= SOAL 34: MCMA — KECERAHAN LAMPU SERI vs PARALEL ================= -->
+    <article class="card" id="q34" data-correct="B,D" data-type="multi">
+        <span class="question-number">Soal 34</span>
+
+        <div class="passage" style="background:#f8fafc; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.95rem; line-height:1.65; color:#1e293b;">
+            <p style="margin:0 0 8px; font-weight:700; color:#2563eb;">Mengapa Lampu Bisa Terang atau Redup?</p>
+            <p style="margin:0 0 10px;">
+                Lampu menyala makin terang jika <strong>tegangan yang diterimanya makin besar</strong>. Dua lampu yang identik dan menerima tegangan sama akan sama terang.
+            </p>
+            <p style="margin:0 0 10px;">Ada dua cara menyusun lampu:</p>
+            <ul style="margin:0 0 10px 20px; padding:0;">
+                <li><strong>Berderet dalam satu jalur (seri).</strong> Tegangan baterai <strong>dibagi rata</strong> kepada lampu-lampu identik. Jalur ini hanya satu, jadi jika satu lampu dilepas, jalurnya terputus dan semua lampu padam.</li>
+                <li><strong>Di jalur bercabang (paralel).</strong> Setiap lampu menempati jalurnya sendiri dan menerima <strong>tegangan penuh</strong> baterai. Melepas satu lampu tidak memutus jalur lampu lainnya.</li>
+            </ul>
+            <p style="margin:0;">Pada gambar, baterai 6 V dan semua lampu identik.</p>
+        </div>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 680 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tiga rangkaian. Rangkaian X: satu baterai 6 V dan satu lampu. Rangkaian Y: baterai 6 V dengan dua lampu seri. Rangkaian Z: baterai 6 V dengan dua lampu paralel." font-family="system-ui, -apple-system, sans-serif">
+                <defs>
+                    <g id="q34-bp" stroke="#1e293b" stroke-linecap="round" fill="none">
+                        <line x1="-14" y1="0" x2="-4" y2="0" stroke-width="2.5" />
+                        <line x1="-4" y1="-13" x2="-4" y2="13" stroke-width="2.5" />
+                        <line x1="4" y1="-7" x2="4" y2="7" stroke-width="5.5" />
+                        <line x1="4" y1="0" x2="14" y2="0" stroke-width="2.5" />
+                    </g>
+                    <g id="q34-lamp">
+                        <circle r="14" fill="#fef9c3" stroke="#ca8a04" stroke-width="2.5" />
+                        <line x1="-7" y1="-7" x2="7" y2="7" stroke="#ca8a04" stroke-width="2" />
+                        <line x1="7" y1="-7" x2="-7" y2="7" stroke="#ca8a04" stroke-width="2" />
+                    </g>
+                </defs>
+                <rect x="6" y="6" width="668" height="198" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+
+                <!-- Rangkaian X -->
+                <g transform="translate(10,30)">
+                    <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" fill="none">
+                        <line x1="20" y1="40" x2="86" y2="40" /><line x1="114" y1="40" x2="180" y2="40" />
+                        <line x1="180" y1="40" x2="180" y2="120" />
+                        <line x1="180" y1="120" x2="114" y2="120" /><line x1="86" y1="120" x2="20" y2="120" />
+                        <line x1="20" y1="120" x2="20" y2="40" />
+                    </g>
+                    <use href="#q34-bp" x="100" y="40" />
+                    <use href="#q34-lamp" x="100" y="120" />
+                    <text x="100" y="22" text-anchor="middle" font-weight="700" font-size="13" fill="#2563eb">6 V</text>
+                    <text x="20" y="-8" font-weight="800" font-size="16" fill="#2563eb">Rangkaian X</text>
+                    <text x="100" y="152" text-anchor="middle" font-weight="500" font-size="12.5" fill="#64748b">1 lampu</text>
+                </g>
+
+                <!-- Rangkaian Y: dua lampu seri -->
+                <g transform="translate(232,30)">
+                    <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" fill="none">
+                        <line x1="20" y1="40" x2="86" y2="40" /><line x1="114" y1="40" x2="180" y2="40" />
+                        <line x1="180" y1="40" x2="180" y2="120" />
+                        <line x1="180" y1="120" x2="149" y2="120" /><line x1="121" y1="120" x2="79" y2="120" /><line x1="51" y1="120" x2="20" y2="120" />
+                        <line x1="20" y1="120" x2="20" y2="40" />
+                    </g>
+                    <use href="#q34-bp" x="100" y="40" />
+                    <use href="#q34-lamp" x="65" y="120" />
+                    <use href="#q34-lamp" x="135" y="120" />
+                    <text x="100" y="22" text-anchor="middle" font-weight="700" font-size="13" fill="#2563eb">6 V</text>
+                    <text x="20" y="-8" font-weight="800" font-size="16" fill="#2563eb">Rangkaian Y</text>
+                    <text x="100" y="152" text-anchor="middle" font-weight="500" font-size="12.5" fill="#64748b">2 lampu berderet</text>
+                </g>
+
+                <!-- Rangkaian Z: dua lampu paralel -->
+                <g transform="translate(454,30)">
+                    <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" fill="none">
+                        <line x1="20" y1="40" x2="46" y2="40" /><line x1="74" y1="40" x2="170" y2="40" />
+                        <line x1="20" y1="120" x2="170" y2="120" />
+                        <line x1="20" y1="120" x2="20" y2="40" />
+                        <line x1="110" y1="40" x2="110" y2="66" /><line x1="110" y1="94" x2="110" y2="120" />
+                        <line x1="170" y1="40" x2="170" y2="66" /><line x1="170" y1="94" x2="170" y2="120" />
+                    </g>
+                    <use href="#q34-bp" x="60" y="40" />
+                    <use href="#q34-lamp" x="110" y="80" />
+                    <use href="#q34-lamp" x="170" y="80" />
+                    <g fill="#1e293b"><circle cx="110" cy="40" r="4.5" /><circle cx="110" cy="120" r="4.5" /></g>
+                    <text x="60" y="22" text-anchor="middle" font-weight="700" font-size="13" fill="#2563eb">6 V</text>
+                    <text x="20" y="-8" font-weight="800" font-size="16" fill="#2563eb">Rangkaian Z</text>
+                    <text x="95" y="152" text-anchor="middle" font-weight="500" font-size="12.5" fill="#64748b">2 lampu bercabang</text>
+                </g>
+
+                <line x1="30" y1="184" x2="650" y2="184" stroke="#e2e8f0" stroke-width="1.5" />
+                <text x="340" y="199" text-anchor="middle" font-weight="500" font-size="12" fill="#64748b">Garis panjang = kutub + · Garis pendek tebal = kutub − · Semua lampu identik</text>
+            </svg>
+        </figure>
+
+        <p class="question-text">
+            Berdasarkan bacaan dan gambar, tentukan <strong>dua pernyataan yang benar</strong>!
+            <br><em style="font-size:0.9rem;">(Pilih 2 jawaban.)</em>
+        </p>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 34 (pilih dua)">
+            <li class="option">
+                <input type="checkbox" name="q34" id="q34-a" value="A">
+                <label for="q34-a"><span class="opt-label">A</span><span class="opt-text">Lampu pada rangkaian Z lebih terang daripada lampu pada rangkaian X.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q34" id="q34-b" value="B">
+                <label for="q34-b"><span class="opt-label">B</span><span class="opt-text">Lampu pada rangkaian Y lebih redup daripada lampu pada rangkaian X.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q34" id="q34-c" value="C">
+                <label for="q34-c"><span class="opt-label">C</span><span class="opt-text">Lampu pada rangkaian Y sama terang dengan lampu pada rangkaian Z.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q34" id="q34-d" value="D">
+                <label for="q34-d"><span class="opt-label">D</span><span class="opt-text">Lampu pada rangkaian Z sama terang dengan lampu pada rangkaian X.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q34" id="q34-e" value="E">
+                <label for="q34-e"><span class="opt-label">E</span><span class="opt-text">Jika satu lampu pada rangkaian Y dilepas, lampu yang satunya tetap menyala.</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q34')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q34')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Tegangan yang diterima tiap lampu menentukan terangnya:</p>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>X:</strong> satu lampu menerima seluruh tegangan, yaitu 6 V.</li>
+                <li><strong>Y (seri):</strong> 6 V dibagi rata untuk dua lampu identik, sehingga tiap lampu 3 V.</li>
+                <li><strong>Z (paralel):</strong> tiap lampu menerima tegangan penuh, yaitu 6 V.</li>
+            </ul>
+            <p>Pemeriksaan pernyataan:</p>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>A (salah):</strong> Z dan X sama-sama 6 V, jadi sama terang.</li>
+                <li><strong>B (benar):</strong> 3 V lebih kecil daripada 6 V.</li>
+                <li><strong>C (salah):</strong> Y hanya 3 V, sedangkan Z 6 V.</li>
+                <li><strong>D (benar):</strong> keduanya 6 V.</li>
+                <li><strong>E (salah):</strong> pada rangkaian seri jalurnya hanya satu, sehingga melepas satu lampu membuat semuanya padam.</li>
+            </ul>
+            <p class="answer-note"><strong>Jawaban yang benar: B dan D</strong></p>
+        </div>
+    </article>
+
+
+    <!-- ================= SOAL 35: MCMA — ARUS DI PERCABANGAN (KIRCHHOFF I) ================= -->
+    <article class="card" id="q35" data-correct="A,E" data-type="multi">
+        <span class="question-number">Soal 35</span>
+
+        <div class="passage" style="background:#f8fafc; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.95rem; line-height:1.65; color:#1e293b;">
+            <p style="margin:0 0 8px; font-weight:700; color:#2563eb;">Arus Listrik Seperti Air dalam Pipa</p>
+            <p style="margin:0 0 10px;">
+                Bayangkan air mengalir di pipa yang bercabang. Titik percabangan <strong>tidak menyimpan air</strong> dan tidak menghasilkan air baru. Jadi air yang masuk ke titik itu pasti sama banyaknya dengan air yang keluar darinya.
+            </p>
+            <p style="margin:0 0 10px;">
+                Arus listrik dalam kawat berperilaku sama. Pada setiap titik percabangan, <strong>jumlah arus yang masuk sama dengan jumlah arus yang keluar</strong>. Satuan arus adalah ampere (A). Anak panah pada gambar menunjukkan arah arus.
+            </p>
+            <p style="margin:0;">
+                Gambar di bawah menunjukkan kawat bercabang. Arus masuk di titik P adalah 10 A. Di titik Q, arus pada jalur bawah bercabang lagi. Semua jalur akhirnya bertemu di titik R.
+            </p>
+        </div>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jaringan kawat. Arus 10 A masuk di titik P. Dari P, jalur atas membawa 4 A ke titik R. Jalur bawah membawa arus b menuju titik Q, lalu bercabang menjadi c sebesar 2,5 A dan d yang belum diketahui. Semua bertemu di R dan keluar dengan arus yang dicari." font-family="system-ui, -apple-system, sans-serif">
+                <defs>
+                    <marker id="q35-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#dc2626" />
+                    </marker>
+                </defs>
+                <rect x="6" y="6" width="688" height="288" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+
+                <!-- Kabel -->
+                <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                    <line x1="20" y1="130" x2="60" y2="130" />
+                    <polyline points="60,130 60,50 600,50 600,210" />
+                    <polyline points="60,130 60,210 200,210" />
+                    <line x1="200" y1="210" x2="600" y2="210" />
+                    <polyline points="200,210 200,260 600,260 600,210" />
+                    <line x1="600" y1="210" x2="660" y2="210" />
+                </g>
+
+                <!-- Panah arus -->
+                <g stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" fill="none">
+                    <line x1="22" y1="130" x2="50" y2="130" marker-end="url(#q35-arrow)" />
+                    <line x1="300" y1="50" x2="350" y2="50" marker-end="url(#q35-arrow)" />
+                    <line x1="60" y1="150" x2="60" y2="190" marker-end="url(#q35-arrow)" />
+                    <line x1="350" y1="210" x2="400" y2="210" marker-end="url(#q35-arrow)" />
+                    <line x1="350" y1="260" x2="400" y2="260" marker-end="url(#q35-arrow)" />
+                    <line x1="612" y1="210" x2="650" y2="210" marker-end="url(#q35-arrow)" />
+                </g>
+
+                <!-- Label arus -->
+                <g font-weight="700" font-size="15" fill="#dc2626">
+                    <text x="20" y="116" text-anchor="start">masuk = 10 A</text>
+                    <text x="325" y="38" text-anchor="middle">a = 4 A</text>
+                    <text x="78" y="176" text-anchor="start" fill="#ea580c">b = ?</text>
+                    <text x="375" y="198" text-anchor="middle" fill="#ea580c">d = ?</text>
+                    <text x="375" y="250" text-anchor="middle">c = 2,5 A</text>
+                    <text x="632" y="196" text-anchor="middle" fill="#ea580c">keluar = ?</text>
+                </g>
+
+                <!-- Titik -->
+                <g fill="#ffffff" stroke="#1e293b" stroke-width="3">
+                    <circle cx="60" cy="130" r="6" /><circle cx="200" cy="210" r="6" /><circle cx="600" cy="210" r="6" />
+                </g>
+                <g font-weight="800" font-size="17" fill="#1e293b">
+                    <text x="42" y="150" text-anchor="end">P</text>
+                    <text x="200" y="192" text-anchor="middle">Q</text>
+                    <text x="584" y="232" text-anchor="end">R</text>
+                </g>
+            </svg>
+        </figure>
+
+        <p class="question-text">
+            Berdasarkan bacaan dan gambar, tentukan <strong>dua pernyataan yang benar</strong>!
+            <br><em style="font-size:0.9rem;">(Pilih 2 jawaban.)</em>
+        </p>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 35 (pilih dua)">
+            <li class="option">
+                <input type="checkbox" name="q35" id="q35-a" value="A">
+                <label for="q35-a"><span class="opt-label">A</span><span class="opt-text">Arus pada jalur b adalah 6 A.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q35" id="q35-b" value="B">
+                <label for="q35-b"><span class="opt-label">B</span><span class="opt-text">Arus pada jalur d adalah 2 A.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q35" id="q35-c" value="C">
+                <label for="q35-c"><span class="opt-label">C</span><span class="opt-text">Arus yang keluar dari titik R lebih kecil daripada 10 A, karena sebagian arus terpakai di jalur-jalur.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q35" id="q35-d" value="D">
+                <label for="q35-d"><span class="opt-label">D</span><span class="opt-text">Arus pada jalur c lebih besar daripada arus pada jalur d.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q35" id="q35-e" value="E">
+                <label for="q35-e"><span class="opt-label">E</span><span class="opt-text">Arus yang keluar dari titik R adalah 10 A.</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q35')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q35')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Pakai aturan: arus masuk = arus keluar di setiap titik percabangan (Kirchhoff I).</p>
+            <div class="formula">
+                Titik P: $10 = a + b = 4 + b \implies b = 6\text{ A}$<br>
+                Titik Q: $b = c + d \implies 6 = 2{,}5 + d \implies d = 3{,}5\text{ A}$<br>
+                Titik R: $a + c + d = 4 + 2{,}5 + 3{,}5 = 10\text{ A}$
+            </div>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>A (benar):</strong> $b = 6\text{ A}$.</li>
+                <li><strong>B (salah):</strong> $d = 3{,}5\text{ A}$, bukan 2 A.</li>
+                <li><strong>C (salah):</strong> arus tidak "terpakai" di percabangan. Semua yang masuk akan keluar.</li>
+                <li><strong>D (salah):</strong> $c = 2{,}5\text{ A}$ lebih kecil daripada $d = 3{,}5\text{ A}$.</li>
+                <li><strong>E (benar):</strong> arus keluar sama dengan arus masuk, yaitu 10 A.</li>
+            </ul>
+            <p class="answer-note"><strong>Jawaban yang benar: A dan E</strong></p>
+        </div>
+    </article>
+
+
+    <!-- ================= SOAL 36: MCMA — MEMBACA GRAFIK V–I ================= -->
+    <article class="card" id="q36" data-correct="B,C" data-type="multi">
+        <span class="question-number">Soal 36</span>
+
+        <div class="passage" style="background:#f8fafc; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.95rem; line-height:1.65; color:#1e293b;">
+            <p style="margin:0 0 8px; font-weight:700; color:#2563eb;">Menguji Tiga Resistor</p>
+            <p style="margin:0 0 10px;">
+                Resistor adalah komponen yang "menghambat" arus. Makin besar hambatannya, makin sedikit arus yang bisa lewat pada tegangan yang sama. Besar hambatan dihitung dengan aturan:
+            </p>
+            <p style="margin:0 0 10px; text-align:center; font-weight:700;">Hambatan (Ω) = Tegangan (V) ÷ Arus (A)</p>
+            <p style="margin:0;">
+                Seorang siswa mengukur arus pada tiga resistor P, Q, dan S dengan tegangan yang diubah-ubah. Hasilnya digambar sebagai grafik. Setiap titik pada sebuah garis menunjukkan pasangan tegangan dan arus untuk resistor itu.
+            </p>
+        </div>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 540 315" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Grafik arus terhadap tegangan untuk tiga resistor. Garis P melalui titik 6 volt 3 ampere. Garis Q melalui 6 volt 1,5 ampere. Garis S melalui 6 volt 1 ampere." font-family="system-ui, -apple-system, sans-serif">
+                <rect x="6" y="6" width="528" height="303" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+
+                <!-- Grid -->
+                <g stroke="#e2e8f0" stroke-width="1">
+                    <line x1="130" y1="30" x2="130" y2="260" /><line x1="190" y1="30" x2="190" y2="260" />
+                    <line x1="250" y1="30" x2="250" y2="260" /><line x1="310" y1="30" x2="310" y2="260" />
+                    <line x1="370" y1="30" x2="370" y2="260" /><line x1="430" y1="30" x2="430" y2="260" />
+                    <line x1="70" y1="180" x2="430" y2="180" /><line x1="70" y1="100" x2="430" y2="100" /><line x1="70" y1="20" x2="430" y2="20" />
+                    <line x1="70" y1="220" x2="430" y2="220" /><line x1="70" y1="140" x2="430" y2="140" /><line x1="70" y1="60" x2="430" y2="60" />
+                </g>
+
+                <!-- Sumbu -->
+                <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="70" y1="260" x2="445" y2="260" />
+                    <line x1="70" y1="260" x2="70" y2="12" />
+                </g>
+
+                <!-- Tick -->
+                <g font-size="13" fill="#475569" text-anchor="middle">
+                    <text x="70" y="278">0</text><text x="130" y="278">1</text><text x="190" y="278">2</text>
+                    <text x="250" y="278">3</text><text x="310" y="278">4</text><text x="370" y="278">5</text><text x="430" y="278">6</text>
+                </g>
+                <g font-size="13" fill="#475569" text-anchor="end">
+                    <text x="60" y="264">0</text><text x="60" y="184">1</text><text x="60" y="104">2</text><text x="60" y="24">3</text>
+                </g>
+                <text x="250" y="300" text-anchor="middle" font-weight="600" font-size="13" fill="#334155">Tegangan (V)</text>
+                <text x="22" y="140" text-anchor="middle" font-weight="600" font-size="13" fill="#334155" transform="rotate(-90 22 140)">Arus (A)</text>
+
+                <!-- Garis -->
+                <g stroke-width="3" stroke-linecap="round" fill="none">
+                    <line x1="70" y1="260" x2="430" y2="20" stroke="#2563eb" />
+                    <line x1="70" y1="260" x2="430" y2="140" stroke="#ea580c" />
+                    <line x1="70" y1="260" x2="430" y2="180" stroke="#16a34a" />
+                </g>
+                <g>
+                    <circle cx="430" cy="20" r="5" fill="#2563eb" /><circle cx="430" cy="140" r="5" fill="#ea580c" /><circle cx="430" cy="180" r="5" fill="#16a34a" />
+                </g>
+                <g font-weight="800" font-size="16">
+                    <text x="442" y="24" fill="#2563eb">P</text>
+                    <text x="442" y="144" fill="#ea580c">Q</text>
+                    <text x="442" y="184" fill="#16a34a">S</text>
+                </g>
+            </svg>
+        </figure>
+
+        <p class="question-text">
+            Berdasarkan bacaan dan grafik, tentukan <strong>dua pernyataan yang benar</strong>!
+            <br><em style="font-size:0.9rem;">(Pilih 2 jawaban.)</em>
+        </p>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 36 (pilih dua)">
+            <li class="option">
+                <input type="checkbox" name="q36" id="q36-a" value="A">
+                <label for="q36-a"><span class="opt-label">A</span><span class="opt-text">Hambatan resistor Q lebih kecil daripada hambatan resistor P.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q36" id="q36-b" value="B">
+                <label for="q36-b"><span class="opt-label">B</span><span class="opt-text">Hambatan resistor S adalah 6 Ω.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q36" id="q36-c" value="C">
+                <label for="q36-c"><span class="opt-label">C</span><span class="opt-text">Pada tegangan 3 V, arus pada resistor P adalah 1,5 A.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q36" id="q36-d" value="D">
+                <label for="q36-d"><span class="opt-label">D</span><span class="opt-text">Pada tegangan 6 V, resistor S dialiri arus paling besar di antara ketiganya.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q36" id="q36-e" value="E">
+                <label for="q36-e"><span class="opt-label">E</span><span class="opt-text">Garis yang lebih curam pada grafik menunjukkan resistor dengan hambatan lebih besar.</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q36')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q36')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Baca satu titik pada tiap garis, misalnya saat tegangan 6 V, lalu hitung hambatan dengan aturan di bacaan:</p>
+            <div class="formula">
+                P: $6 \div 3 = 2\ \Omega$ &nbsp;|&nbsp; Q: $6 \div 1{,}5 = 4\ \Omega$ &nbsp;|&nbsp; S: $6 \div 1 = 6\ \Omega$
+            </div>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>A (salah):</strong> Q (4 Ω) lebih besar daripada P (2 Ω).</li>
+                <li><strong>B (benar):</strong> $R_S = 6\ \Omega$.</li>
+                <li><strong>C (benar):</strong> $R_P = 2\ \Omega$, sehingga pada 3 V arusnya $3 \div 2 = 1{,}5\text{ A}$. Ini juga terbaca langsung dari grafik.</li>
+                <li><strong>D (salah):</strong> pada 6 V arus S hanya 1 A, paling kecil. Arus terbesar dimiliki P (3 A).</li>
+                <li><strong>E (salah):</strong> garis paling curam (P) justru dimiliki resistor dengan hambatan paling kecil.</li>
+            </ul>
+            <p class="answer-note"><strong>Jawaban yang benar: B dan C</strong></p>
+        </div>
+    </article>
+
+
+    <!-- ================= SOAL 37: MCMA — TEGANGAN DALAM SATU LOOP (KIRCHHOFF II) ================= -->
+    <article class="card" id="q37" data-correct="C,E" data-type="multi">
+        <span class="question-number">Soal 37</span>
+
+        <div class="passage" style="background:#f8fafc; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.95rem; line-height:1.65; color:#1e293b;">
+            <p style="margin:0 0 8px; font-weight:700; color:#2563eb;">Naik dan Turun dalam Satu Putaran</p>
+            <p style="margin:0 0 10px;">
+                Bayangkan kereta luncur yang berputar di lintasan tertutup. Setelah satu putaran penuh, kereta kembali ke ketinggian awal. Jadi total <strong>tanjakan</strong> yang dilalui pasti sama dengan total <strong>turunan</strong>.
+            </p>
+            <p style="margin:0 0 10px;">
+                Dalam rangkaian tertutup, baterai berperan sebagai <strong>tanjakan</strong> (memberi tegangan), sedangkan komponen lain (resistor) berperan sebagai <strong>turunan</strong> (menggunakan tegangan). Dalam satu putaran penuh, <strong>total tegangan baterai (bersih) sama dengan total tegangan pada semua komponen penerima</strong>.
+            </p>
+            <p style="margin:0;">
+                Jika dua baterai dipasang <strong>berlawanan</strong>, tegangan keduanya saling mengurangi. Tegangan bersihnya adalah selisih keduanya. Pada gambar, kotak menunjukkan komponen penerima beserta tegangannya.
+            </p>
+        </div>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 680 215" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dua loop. Loop 1: baterai 12 V, komponen K1 5 V, K2 yang dicari, dan K3 4 V. Loop 2: baterai 9 V dan baterai 3 V yang saling berlawanan, komponen M1 2 V, dan M2 yang dicari." font-family="system-ui, -apple-system, sans-serif">
+                <defs>
+                    <g id="q37-bp" stroke="#1e293b" stroke-linecap="round" fill="none">
+                        <line x1="-14" y1="0" x2="-4" y2="0" stroke-width="2.5" />
+                        <line x1="-4" y1="-13" x2="-4" y2="13" stroke-width="2.5" />
+                        <line x1="4" y1="-7" x2="4" y2="7" stroke-width="5.5" />
+                        <line x1="4" y1="0" x2="14" y2="0" stroke-width="2.5" />
+                    </g>
+                </defs>
+                <rect x="6" y="6" width="668" height="203" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+
+                <!-- Loop 1 -->
+                <g transform="translate(10,10)">
+                    <rect x="20" y="50" width="270" height="90" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round" />
+                    <rect x="52" y="36" width="36" height="28" fill="#f8fafc" />
+                    <use href="#q37-bp" x="70" y="50" />
+                    <text x="70" y="26" text-anchor="middle" font-weight="700" font-size="13" fill="#2563eb">ε = 12 V</text>
+                    <rect x="135" y="37" width="70" height="26" rx="4" fill="#ffffff" stroke="#1e293b" stroke-width="2.2" />
+                    <text x="170" y="55" text-anchor="middle" font-weight="700" font-size="13" fill="#334155">K₁ = 5 V</text>
+                    <rect x="165" y="127" width="70" height="26" rx="4" fill="#ffffff" stroke="#ea580c" stroke-width="2.8" />
+                    <text x="200" y="145" text-anchor="middle" font-weight="800" font-size="13" fill="#ea580c">K₂ = ?</text>
+                    <rect x="55" y="127" width="70" height="26" rx="4" fill="#ffffff" stroke="#1e293b" stroke-width="2.2" />
+                    <text x="90" y="145" text-anchor="middle" font-weight="700" font-size="13" fill="#334155">K₃ = 4 V</text>
+                    <text x="155" y="178" text-anchor="middle" font-weight="800" font-size="15" fill="#2563eb">Loop 1</text>
+                </g>
+
+                <!-- Loop 2 -->
+                <g transform="translate(350,10)">
+                    <rect x="20" y="50" width="270" height="90" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round" />
+                    <rect x="42" y="36" width="36" height="28" fill="#f8fafc" />
+                    <use href="#q37-bp" x="60" y="50" />
+                    <text x="60" y="26" text-anchor="middle" font-weight="700" font-size="13" fill="#2563eb">ε = 9 V</text>
+                    <rect x="102" y="36" width="36" height="28" fill="#f8fafc" />
+                    <use href="#q37-bp" transform="translate(120,50) scale(-1,1)" />
+                    <text x="120" y="26" text-anchor="middle" font-weight="700" font-size="13" fill="#2563eb">ε = 3 V</text>
+                    <rect x="185" y="37" width="70" height="26" rx="4" fill="#ffffff" stroke="#1e293b" stroke-width="2.2" />
+                    <text x="220" y="55" text-anchor="middle" font-weight="700" font-size="13" fill="#334155">M₁ = 2 V</text>
+                    <rect x="120" y="127" width="70" height="26" rx="4" fill="#ffffff" stroke="#ea580c" stroke-width="2.8" />
+                    <text x="155" y="145" text-anchor="middle" font-weight="800" font-size="13" fill="#ea580c">M₂ = ?</text>
+                    <text x="155" y="178" text-anchor="middle" font-weight="800" font-size="15" fill="#2563eb">Loop 2</text>
+                </g>
+
+                <text x="340" y="203" text-anchor="middle" font-weight="500" font-size="11.5" fill="#64748b">Garis panjang = kutub + · Garis pendek tebal = kutub −</text>
+            </svg>
+        </figure>
+
+        <p class="question-text">
+            Berdasarkan bacaan dan gambar, tentukan <strong>dua pernyataan yang benar</strong>!
+            <br><em style="font-size:0.9rem;">(Pilih 2 jawaban.)</em>
+        </p>
+
+        <ul class="options-list" aria-label="Pilihan jawaban soal 37 (pilih dua)">
+            <li class="option">
+                <input type="checkbox" name="q37" id="q37-a" value="A">
+                <label for="q37-a"><span class="opt-label">A</span><span class="opt-text">Tegangan pada K₂ adalah 4 V.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q37" id="q37-b" value="B">
+                <label for="q37-b"><span class="opt-label">B</span><span class="opt-text">Tegangan pada M₂ adalah 6 V.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q37" id="q37-c" value="C">
+                <label for="q37-c"><span class="opt-label">C</span><span class="opt-text">Tegangan pada K₂ adalah 3 V.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q37" id="q37-d" value="D">
+                <label for="q37-d"><span class="opt-label">D</span><span class="opt-text">Pada Loop 2, jumlah tegangan pada M₁ dan M₂ adalah 12 V.</span></label>
+            </li>
+            <li class="option">
+                <input type="checkbox" name="q37" id="q37-e" value="E">
+                <label for="q37-e"><span class="opt-label">E</span><span class="opt-text">Tegangan pada M₂ adalah 4 V.</span></label>
+            </li>
+        </ul>
+
+        <button class="btn-check" onclick="checkAnswer('q37')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q37')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Total tegangan baterai (bersih) sama dengan total tegangan komponen penerima (Kirchhoff II).</p>
+            <div class="formula">
+                Loop 1: $12 = 5 + K_2 + 4 \implies K_2 = 3\text{ V}$<br>
+                Loop 2: tegangan bersih $= 9 - 3 = 6\text{ V}$, sehingga $6 = 2 + M_2 \implies M_2 = 4\text{ V}$
+            </div>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>A (salah):</strong> $K_2 = 3\text{ V}$, bukan 4 V.</li>
+                <li><strong>B (salah):</strong> 6 V adalah tegangan bersih baterai, bukan tegangan M₂.</li>
+                <li><strong>C (benar):</strong> $K_2 = 3\text{ V}$.</li>
+                <li><strong>D (salah):</strong> jumlah tegangan M₁ dan M₂ adalah $2 + 4 = 6\text{ V}$, sama dengan tegangan bersih baterai.</li>
+                <li><strong>E (benar):</strong> $M_2 = 4\text{ V}$.</li>
+            </ul>
+            <p class="answer-note"><strong>Jawaban yang benar: C dan E</strong></p>
+        </div>
+    </article>
+
+
+    <!-- ================= SOAL 38: BENAR/SALAH — SAKLAR TANGGA ================= -->
+    <article class="card" id="q38" data-correct="B,S,S" data-type="truefalse">
+        <span class="question-number">Soal 38</span>
+
+        <div class="passage" style="background:#f8fafc; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.95rem; line-height:1.65; color:#1e293b;">
+            <p style="margin:0 0 8px; font-weight:700; color:#2563eb;">Satu Lampu, Dua Saklar</p>
+            <p style="margin:0 0 10px;">
+                Di tangga rumah bertingkat, lampu sering bisa dinyalakan dari lantai atas maupun lantai bawah. Caranya memakai dua saklar, yaitu S₁ dan S₂. Tuas tiap saklar hanya bisa menyentuh <strong>satu</strong> dari dua kontaknya: kontak <strong>atas</strong> atau kontak <strong>bawah</strong>.
+            </p>
+            <p style="margin:0 0 10px;">
+                Dua kabel menghubungkan kedua saklar. <strong>Kabel atas</strong> menghubungkan kontak atas S₁ dengan kontak atas S₂. <strong>Kabel bawah</strong> menghubungkan kontak bawah S₁ dengan kontak bawah S₂. Arus dari baterai masuk ke tuas S₁, lewat kontak yang disentuh, lalu menyusuri kabel yang bersesuaian.
+            </p>
+            <p style="margin:0;">
+                Lampu menyala hanya jika terbentuk <strong>jalur tertutup</strong> dari baterai ke lampu dan kembali ke baterai. Artinya, arus yang tiba di ujung kabel harus bisa masuk ke tuas S₂, dan itu hanya terjadi jika S₂ menyentuh kontak di ujung kabel yang sama.
+            </p>
+        </div>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 560 345" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rangkaian saklar tangga. Baterai terhubung ke tuas S1. Kontak atas S1 dihubungkan kabel atas ke kontak atas S2. Kontak bawah S1 dihubungkan kabel bawah ke kontak bawah S2. Tuas S2 terhubung ke lampu lalu kembali ke baterai." font-family="system-ui, -apple-system, sans-serif">
+                <rect x="6" y="6" width="548" height="333" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+
+                <!-- Kabel -->
+                <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                    <line x1="140" y1="160" x2="60" y2="160" />
+                    <line x1="60" y1="160" x2="60" y2="200" />
+                    <line x1="60" y1="212" x2="60" y2="290" />
+                    <line x1="60" y1="290" x2="480" y2="290" />
+                    <line x1="480" y1="290" x2="480" y2="234" />
+                    <line x1="480" y1="206" x2="480" y2="160" />
+                    <line x1="480" y1="160" x2="400" y2="160" />
+                    <line x1="200" y1="110" x2="340" y2="110" />
+                    <line x1="200" y1="210" x2="340" y2="210" />
+                </g>
+
+                <!-- Baterai -->
+                <line x1="46" y1="200" x2="74" y2="200" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+                <line x1="51" y1="212" x2="69" y2="212" stroke="#1e293b" stroke-width="5.5" stroke-linecap="round" />
+                <text x="88" y="211" font-weight="600" font-size="13" fill="#2563eb">baterai</text>
+
+                <!-- Lampu -->
+                <circle cx="480" cy="220" r="14" fill="#fef9c3" stroke="#ca8a04" stroke-width="2.5" />
+                <line x1="473" y1="213" x2="487" y2="227" stroke="#ca8a04" stroke-width="2" />
+                <line x1="487" y1="213" x2="473" y2="227" stroke="#ca8a04" stroke-width="2" />
+                <text x="502" y="225" font-weight="600" font-size="13" fill="#64748b">lampu</text>
+
+                <!-- Kemungkinan posisi tuas -->
+                <g stroke="#94a3b8" stroke-width="3" stroke-dasharray="6 5" stroke-linecap="round">
+                    <line x1="140" y1="160" x2="200" y2="110" />
+                    <line x1="140" y1="160" x2="200" y2="210" />
+                    <line x1="400" y1="160" x2="340" y2="110" />
+                    <line x1="400" y1="160" x2="340" y2="210" />
+                </g>
+
+                <!-- Kontak & pivot -->
+                <g fill="#ffffff" stroke="#1e293b" stroke-width="2.5">
+                    <circle cx="200" cy="110" r="5" /><circle cx="200" cy="210" r="5" />
+                    <circle cx="340" cy="110" r="5" /><circle cx="340" cy="210" r="5" />
+                </g>
+                <g fill="#7c3aed">
+                    <circle cx="140" cy="160" r="6" /><circle cx="400" cy="160" r="6" />
+                </g>
+
+                <!-- Label -->
+                <g font-weight="800" font-size="17" fill="#7c3aed">
+                    <text x="125" y="186" text-anchor="end">S₁</text>
+                    <text x="415" y="186" text-anchor="start">S₂</text>
+                </g>
+                <g font-weight="500" font-size="12.5" fill="#64748b" text-anchor="middle">
+                    <text x="200" y="97">kontak atas</text><text x="340" y="97">kontak atas</text>
+                    <text x="200" y="232">kontak bawah</text><text x="340" y="232">kontak bawah</text>
+                </g>
+                <g font-weight="700" font-size="13" fill="#334155" text-anchor="middle">
+                    <text x="270" y="102">kabel atas</text>
+                    <text x="270" y="204">kabel bawah</text>
+                </g>
+
+                <line x1="30" y1="312" x2="530" y2="312" stroke="#e2e8f0" stroke-width="1.5" />
+                <text x="280" y="329" text-anchor="middle" font-weight="500" font-size="12" fill="#64748b">Garis putus-putus = kemungkinan posisi tuas. Tuas hanya menyentuh satu kontak.</text>
+            </svg>
+        </figure>
+
+        <p class="question-text">
+            Berdasarkan bacaan dan gambar, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>!
+        </p>
+
+        <div style="overflow-x:auto;">
+            <table class="category-table" style="width:100%; border-collapse:collapse; font-size:0.95rem;">
+                <thead>
+                    <tr style="background:#e2e8f0;">
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:left;">Pernyataan</th>
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:center; width:80px;">Benar</th>
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:center; width:80px;">Salah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">1. Lampu menyala jika S₁ menyentuh kontak atas dan S₂ juga menyentuh kontak atas.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q38-r1" id="q38-r1-B" value="B" aria-label="Pernyataan 1: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q38-r1" id="q38-r1-S" value="S" aria-label="Pernyataan 1: salah"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">2. Lampu menyala jika S₁ menyentuh kontak atas dan S₂ menyentuh kontak bawah.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q38-r2" id="q38-r2-B" value="B" aria-label="Pernyataan 2: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q38-r2" id="q38-r2-S" value="S" aria-label="Pernyataan 2: salah"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">3. Lampu sedang menyala. Jika S₁ dan S₂ keduanya sama-sama dipindahkan ke kontak yang satunya, lampu akan padam.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q38-r3" id="q38-r3-B" value="B" aria-label="Pernyataan 3: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q38-r3" id="q38-r3-S" value="S" aria-label="Pernyataan 3: salah"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn-check" onclick="checkAnswer('q38')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q38')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Lampu menyala jika kedua tuas menyentuh kontak di ujung kabel yang sama (keduanya atas atau keduanya bawah). Jika berbeda, arus tiba di ujung kabel yang tidak disentuh tuas S₂, sehingga jalurnya terputus.</p>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>Pernyataan 1 (Benar):</strong> arus lewat kontak atas S₁, kabel atas, lalu masuk ke tuas S₂ yang menyentuh kontak atas. Jalur tertutup.</li>
+                <li><strong>Pernyataan 2 (Salah):</strong> arus mengalir lewat kabel atas, tetapi tuas S₂ menyentuh kontak bawah. Jalur terputus, lampu padam.</li>
+                <li><strong>Pernyataan 3 (Salah):</strong> lampu menyala berarti kedua tuas ada di sisi yang sama. Jika keduanya dipindah ke sisi lain, keduanya masih di sisi yang sama, sehingga lampu tetap menyala. Lampu baru padam jika hanya satu saklar yang dipindah.</li>
+            </ul>
+            <p class="answer-note"><strong>Kunci jawaban: 1 Benar, 2 Salah, 3 Salah</strong></p>
+        </div>
+    </article>
+
+
+    <!-- ================= SOAL 39: BENAR/SALAH — KIPAS PENDINGIN OTOMATIS ================= -->
+    <article class="card" id="q39" data-correct="B,S,B" data-type="truefalse">
+        <span class="question-number">Soal 39</span>
+
+        <div class="passage" style="background:#f8fafc; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.95rem; line-height:1.65; color:#1e293b;">
+            <p style="margin:0 0 8px; font-weight:700; color:#2563eb;">Kipas yang Menyala Sendiri</p>
+            <p style="margin:0 0 10px;">
+                Pada sebuah komputer, kipas pendingin hanya berputar saat suhunya tinggi. Rahasianya adalah <strong>sensor suhu</strong> yang dipasang <strong>seri</strong> dengan kipas dan sebuah baterai 12 V. Sensor ini adalah resistor yang <strong>hambatannya mengecil saat suhu naik</strong>.
+            </p>
+            <p style="margin:0 0 10px;">
+                Pada rangkaian seri, tegangan baterai dibagi untuk semua komponen. <strong>Jumlah tegangan sensor dan kipas selalu sama dengan tegangan baterai (12 V).</strong> Komponen yang hambatannya lebih besar mendapat bagian tegangan lebih besar.
+            </p>
+            <p style="margin:0 0 10px;">
+                Kipas hanya berputar jika tegangan yang diterimanya <strong>6 V atau lebih</strong>. Hasil pengukuran pada tiga suhu disajikan dalam tabel:
+            </p>
+            <table style="border-collapse:collapse; margin:0; font-size:0.9rem;">
+                <tr style="background:#e2e8f0;">
+                    <th style="border:1px solid #cbd5e1; padding:6px 12px;">Suhu</th>
+                    <th style="border:1px solid #cbd5e1; padding:6px 12px;">Hambatan sensor</th>
+                    <th style="border:1px solid #cbd5e1; padding:6px 12px;">Tegangan pada kipas</th>
+                </tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">25 °C</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">Besar</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">2 V</td></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">40 °C</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">Sedang</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">5 V</td></tr>
+                <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">60 °C</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">Kecil</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">10 V</td></tr>
+            </table>
+        </div>
+
+        <p class="question-text">
+            Berdasarkan bacaan dan tabel, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>!
+        </p>
+
+        <div style="overflow-x:auto;">
+            <table class="category-table" style="width:100%; border-collapse:collapse; font-size:0.95rem;">
+                <thead>
+                    <tr style="background:#e2e8f0;">
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:left;">Pernyataan</th>
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:center; width:80px;">Benar</th>
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:center; width:80px;">Salah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">1. Pada suhu 25 °C, tegangan pada sensor adalah 10 V.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q39-r1" id="q39-r1-B" value="B" aria-label="Pernyataan 1: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q39-r1" id="q39-r1-S" value="S" aria-label="Pernyataan 1: salah"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">2. Pada suhu 40 °C, kipas sudah berputar.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q39-r2" id="q39-r2-B" value="B" aria-label="Pernyataan 2: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q39-r2" id="q39-r2-S" value="S" aria-label="Pernyataan 2: salah"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">3. Makin tinggi suhu, makin besar tegangan yang diterima kipas.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q39-r3" id="q39-r3-B" value="B" aria-label="Pernyataan 3: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q39-r3" id="q39-r3-S" value="S" aria-label="Pernyataan 3: salah"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn-check" onclick="checkAnswer('q39')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q39')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>Pernyataan 1 (Benar):</strong> tegangan sensor ditambah tegangan kipas = 12 V. Pada 25 °C kipas menerima 2 V, sehingga sensor menerima $12 - 2 = 10\text{ V}$. Ini cocok dengan bacaan: sensor berhambatan besar mendapat bagian tegangan besar.</li>
+                <li><strong>Pernyataan 2 (Salah):</strong> pada 40 °C kipas hanya menerima 5 V, kurang dari batas 6 V, sehingga belum berputar.</li>
+                <li><strong>Pernyataan 3 (Benar):</strong> tegangan kipas naik dari 2 V, ke 5 V, lalu 10 V seiring naiknya suhu. Penyebabnya, hambatan sensor mengecil sehingga bagian tegangan sensor ikut mengecil dan bagian kipas membesar.</li>
+            </ul>
+            <p class="answer-note"><strong>Kunci jawaban: 1 Benar, 2 Salah, 3 Benar</strong></p>
+        </div>
+    </article>
+
+
+    <!-- ================= SOAL 40: BENAR/SALAH — MENAMBAH RESISTOR ================= -->
+    <article class="card" id="q40" data-correct="B,B,S" data-type="truefalse">
+        <span class="question-number">Soal 40</span>
+
+        <div class="passage" style="background:#f8fafc; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.95rem; line-height:1.65; color:#1e293b;">
+            <p style="margin:0 0 8px; font-weight:700; color:#2563eb;">Jalan Makin Sempit atau Makin Lebar?</p>
+            <p style="margin:0 0 10px;">
+                Bayangkan arus listrik sebagai kendaraan di jalan. Resistor adalah <strong>hambatan di jalan</strong> seperti portal atau jalan sempit. Hambatan total sebuah rangkaian dapat dihitung dari data baterai dan arus:
+            </p>
+            <p style="margin:0 0 10px; text-align:center; font-weight:700;">Hambatan total (Ω) = Tegangan baterai (V) ÷ Arus total (A)</p>
+            <p style="margin:0 0 10px;">
+                Seorang siswa memakai satu baterai 12 V dan tiga susunan resistor identik. Susunan A memakai satu resistor. Susunan B menambah satu resistor lagi <strong>pada jalur yang sama</strong> (berderet). Susunan C menambah satu resistor lagi <strong>pada jalur tambahan</strong> (bercabang). Resistor tambahan memiliki hambatan sama dengan resistor pertama.
+            </p>
+        </div>
+
+        <figure class="svg-container">
+            <svg viewBox="0 0 640 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tiga susunan resistor. A: satu resistor. B: dua resistor berderet. C: dua resistor bercabang." font-family="system-ui, -apple-system, sans-serif">
+                <rect x="6" y="6" width="628" height="128" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+                <g stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                    <!-- A -->
+                    <g transform="translate(30,25)">
+                        <line x1="0" y1="40" x2="45" y2="40" /><line x1="85" y1="40" x2="130" y2="40" />
+                        <rect x="45" y="27" width="40" height="26" rx="4" fill="#ffffff" />
+                    </g>
+                    <!-- B -->
+                    <g transform="translate(245,25)">
+                        <line x1="0" y1="40" x2="20" y2="40" /><line x1="60" y1="40" x2="80" y2="40" /><line x1="120" y1="40" x2="140" y2="40" />
+                        <rect x="20" y="27" width="40" height="26" rx="4" fill="#ffffff" />
+                        <rect x="80" y="27" width="40" height="26" rx="4" fill="#ffffff" />
+                    </g>
+                    <!-- C -->
+                    <g transform="translate(470,25)">
+                        <line x1="0" y1="40" x2="20" y2="40" />
+                        <line x1="20" y1="10" x2="20" y2="70" /><line x1="100" y1="10" x2="100" y2="70" />
+                        <line x1="20" y1="10" x2="30" y2="10" /><line x1="70" y1="10" x2="100" y2="10" />
+                        <line x1="20" y1="70" x2="30" y2="70" /><line x1="70" y1="70" x2="100" y2="70" />
+                        <line x1="100" y1="40" x2="120" y2="40" />
+                        <rect x="30" y="-3" width="40" height="26" rx="4" fill="#ffffff" />
+                        <rect x="30" y="57" width="40" height="26" rx="4" fill="#ffffff" />
+                    </g>
+                </g>
+                <g font-weight="800" font-size="15" fill="#2563eb" text-anchor="middle">
+                    <text x="95" y="118">Susunan A</text><text x="315" y="118">Susunan B</text><text x="530" y="118">Susunan C</text>
+                </g>
+                <g font-weight="700" font-size="13" fill="#334155" text-anchor="middle">
+                    <text x="95" y="44">R</text><text x="295" y="64">R</text><text x="355" y="64">R</text>
+                    <text x="520" y="44">R</text><text x="520" y="104">R</text>
+                </g>
+            </svg>
+        </figure>
+
+        <p class="question-text" style="margin-bottom:8px;">Data hasil pengukuran arus total dari baterai:</p>
+        <table style="border-collapse:collapse; margin:0 0 14px; font-size:0.9rem;">
+            <tr style="background:#e2e8f0;">
+                <th style="border:1px solid #cbd5e1; padding:6px 12px;">Susunan</th>
+                <th style="border:1px solid #cbd5e1; padding:6px 12px;">Arus total</th>
+            </tr>
+            <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">A</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">2 A</td></tr>
+            <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">B</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">1 A</td></tr>
+            <tr><td style="border:1px solid #cbd5e1; padding:6px 12px;">C</td><td style="border:1px solid #cbd5e1; padding:6px 12px;">4 A</td></tr>
+        </table>
+
+        <p class="question-text">
+            Berdasarkan bacaan, gambar, dan tabel, tentukan apakah setiap pernyataan berikut <strong>Benar</strong> atau <strong>Salah</strong>!
+        </p>
+
+        <div style="overflow-x:auto;">
+            <table class="category-table" style="width:100%; border-collapse:collapse; font-size:0.95rem;">
+                <thead>
+                    <tr style="background:#e2e8f0;">
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:left;">Pernyataan</th>
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:center; width:80px;">Benar</th>
+                        <th style="border:1px solid #cbd5e1; padding:8px 10px; text-align:center; width:80px;">Salah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">1. Hambatan total susunan C lebih kecil daripada hambatan total susunan A.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q40-r1" id="q40-r1-B" value="B" aria-label="Pernyataan 1: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q40-r1" id="q40-r1-S" value="S" aria-label="Pernyataan 1: salah"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">2. Hambatan total susunan B adalah 12 Ω.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q40-r2" id="q40-r2-B" value="B" aria-label="Pernyataan 2: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q40-r2" id="q40-r2-S" value="S" aria-label="Pernyataan 2: salah"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:1px solid #cbd5e1; padding:8px 10px;">3. Menambah resistor pada jalur tambahan (bercabang) membuat arus total dari baterai menjadi lebih kecil.</td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q40-r3" id="q40-r3-B" value="B" aria-label="Pernyataan 3: benar"></td>
+                        <td style="border:1px solid #cbd5e1; text-align:center;"><input type="radio" name="q40-r3" id="q40-r3-S" value="S" aria-label="Pernyataan 3: salah"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn-check" onclick="checkAnswer('q40')" disabled>Cek Jawaban</button>
+        <button class="btn-retry" onclick="resetQuestion('q40')" hidden>Ulangi soal ini</button>
+
+        <div class="explanation">
+            <div class="status-text"></div>
+            <h3>Pembahasan</h3>
+            <p>Hitung hambatan total tiap susunan dengan aturan di bacaan:</p>
+            <div class="formula">
+                A: $12 \div 2 = 6\ \Omega$ &nbsp;|&nbsp; B: $12 \div 1 = 12\ \Omega$ &nbsp;|&nbsp; C: $12 \div 4 = 3\ \Omega$
+            </div>
+            <ul style="margin-left: 20px; margin-bottom: 10px; font-size: 0.9rem;">
+                <li><strong>Pernyataan 1 (Benar):</strong> hambatan C adalah 3 Ω, lebih kecil daripada A yang 6 Ω. Jalur tambahan membuat jalan lebih lega.</li>
+                <li><strong>Pernyataan 2 (Benar):</strong> $12 \div 1 = 12\ \Omega$.</li>
+                <li><strong>Pernyataan 3 (Salah):</strong> pada susunan C arus total justru naik dari 2 A menjadi 4 A. Resistor yang berderet (B) yang membuat arus turun.</li>
+            </ul>
+            <p class="answer-note"><strong>Kunci jawaban: 1 Benar, 2 Benar, 3 Salah</strong></p>
         </div>
     </article>
     <!-- ================= HASIL ================= -->
