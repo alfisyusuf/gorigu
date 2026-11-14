@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Physics_XII_Final Test 1 2026-2027</title>
+<!-- MathJax untuk render LaTeX -->
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+    /* Styling dasar untuk cetak (Print) ukuran F4 */
+    @page {
+        size: 215mm 330mm;
+        margin: 30mm 20mm 20mm 30mm; /* Atas 3cm, Kanan 2cm, Bawah 2cm, Kiri 3cm */
+    }
+    body {
+        font-family: 'Cambria', 'Times New Roman', serif;
+        font-size: 11pt;
+        line-height: 1.25; /* Setara spasi 1.0 - 1.15 Word, nyaman untuk rumus & teks */
+        color: black;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    
+    table { border-collapse: collapse; }
+    
+    .header-table { width: 100%; border-bottom: 3px solid black; margin-bottom: 10px; padding-bottom: 10px; }
+    .info-table { width: 100%; border-bottom: 3px solid black; margin-bottom: 15px; padding-bottom: 10px; }
+    .info-table td { padding: 3px 0; }
+    
+    /* Mencegah soal terpotong antar halaman */
+    .question-table, .question-table-flowing { 
+        width: 100%; 
+        margin-bottom: 14px; 
+        page-break-inside: avoid; 
+        break-inside: avoid; 
+    }
+    
+    /* Spasi opsi pilihan ganda A-E */
+    .options-table {
+        width: 100%;
+        margin-top: 6px;
+    }
+    .options-table td {
+        padding: 2px 0;
+    }
+    
+    .tf-table { 
+        width: 95%; 
+        margin-left: 5%; 
+        border-collapse: collapse; 
+        margin-top: 8px; 
+        margin-bottom: 12px; 
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    .tf-table th, .tf-table td { border: 1px solid black; padding: 6px; }
+    
+    /* Tombol Print untuk tampilan layar */
+    .print-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 14pt;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    .print-btn:hover { background-color: #1d4ed8; }
+
+    /* Pengaturan tampilan layar (simulasi kertas F4) */
+    @media screen {
+        body {
+            background-color: #f3f4f6;
+            padding: 20px;
+        }
+        .page-container {
+            background-color: white;
+            width: 215mm;
+            min-height: 330mm;
+            margin: 0 auto;
+            padding: 30mm 20mm 20mm 30mm;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+    }
+
+    /* Pengaturan khusus saat dicetak */
+    @media print {
+        .print-btn { display: none !important; }
+        body { background-color: white; padding: 0; }
+        .page-container {
+            box-shadow: none;
+            padding: 0;
+            width: auto;
+            min-height: auto;
+            max-width: none;
+            margin: 0;
+        }
+    }
+</style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">🖨️ Print Soal</button>
+    <div class="page-container">
+        <table class="header-table">
+            <tr>
+                <td style="width: 15%; text-align: left; vertical-align: middle;">
+                    <img src="https://ku-link-siswa.pages.dev/logo.png" style="width: 90px;" alt="Logo SMA ABBS">
+                </td>
+                <td style="width: 85%; text-align: center; vertical-align: middle; line-height: 1.2;">
+                    <div style="font-weight: bold; font-size: 13pt;">SEKOLAH MENENGAH ATAS<br>
+                    AL ABIDIN BILINGUAL BOARDING SCHOOL (ABBS) SURAKARTA<br>
+                    TERAKREDITASI : A (Amat Baik)</div>
+                    <div style="font-size: 9.5pt; margin-top: 5px;">
+                        Jalan Tarumanegara III, Banyuanyar, Banjarsari, Surakarta, 57137<br>
+                        Telepon: 0271 – 7882145 Laman: www.abbs.alabidin.sch.id Surat elektronik: abbs@alabidin.sch.id
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align: center; font-weight: bold; font-size: 12pt; margin-bottom: 14px; line-height: 1.2;">
+            FINAL TEST 1 OF 1<sup>st</sup> SEMESTER<br>
+            ACADEMIC YEAR OF 2026/2027
+        </div>
+
+        <table class="info-table">
+            <tr>
+                <td style="width: 15%;">Subject</td>
+                <td style="width: 85%;">: Physics</td>
+            </tr>
+            <tr>
+                <td>Day, date</td>
+                <td>: Friday, 18<sup>th</sup> September 2026</td>
+            </tr>
+            <tr>
+                <td>Time</td>
+                <td>: 07.15 - 09.05 WIB</td>
+            </tr>
+            <tr>
+                <td>Grade</td>
+                <td>: XII.MIPA</td>
+            </tr>
+            <tr>
+                <td>Duration</td>
+                <td>: 110 minutes</td>
+            </tr>
+        </table>
+
+        <div style="font-weight: bold; margin-bottom: 16px;">
+            Mark (X) on A, B, C, D, or E for the correct answer.
+        </div>
+
+        <!-- ================= QUESTION 1: FINDING VOLTAGE (V) ================= -->
+        <table class="question-table">
+            <tr>
+                <td style="vertical-align: top; width: 25px;">1.</td>
+                <td style="vertical-align: top;">
+                    A resistor with a resistance of \( R = 10\ \Omega \) carries an electric current of \( I = 2\text{ A} \). The voltage of the power source (\( V \)) in this circuit is ....
+                    <div style="text-align: center; margin: 10px 0;">
+                        <svg width="260" height="145" viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" role="img"
+                             aria-label="Closed circuit with one 10 ohm resistor, unknown voltage source V, and a 2 ampere current flowing clockwise">
+                            <defs>
+                                <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5"
+                                        markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#ef4444"/>
+                                </marker>
+                            </defs>
+                            <!-- Top-left wire -->
+                            <line x1="60" y1="68" x2="160" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Resistor zigzag -->
+                            <polyline points="160,68 170,68 176,50 188,86 200,50 212,86 224,50 230,68 240,68"
+                                      fill="none" stroke="#1e293b" stroke-width="2.5"
+                                      stroke-linejoin="round" stroke-linecap="round"/>
+                            <!-- Top-right wire -->
+                            <line x1="240" y1="68" x2="340" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Right wire -->
+                            <line x1="340" y1="68" x2="340" y2="188" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Bottom wire -->
+                            <line x1="340" y1="188" x2="60" y2="188" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Left wire (bottom) -->
+                            <line x1="60" y1="188" x2="60" y2="138" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Battery: negative plate (short, thick) -->
+                            <line x1="48" y1="138" x2="72" y2="138" stroke="#1e293b" stroke-width="4.5" stroke-linecap="round"/>
+                            <!-- Battery: positive plate (long, thin) -->
+                            <line x1="40" y1="118" x2="80" y2="118" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Left wire (top) -->
+                            <line x1="60" y1="118" x2="60" y2="68" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round"/>
+
+                            <!-- Polarity labels -->
+                            <text x="88" y="124" text-anchor="middle" font-weight="600" font-size="17" fill="#ef4444">+</text>
+                            <text x="88" y="145" text-anchor="middle" font-weight="600" font-size="19" fill="#1e293b">−</text>
+
+                            <!-- Source voltage label -->
+                            <text x="130" y="134" text-anchor="middle" font-weight="600" font-size="16" fill="#2563eb">V = ?</text>
+
+                            <!-- Resistor label -->
+                            <text x="200" y="34" text-anchor="middle" font-weight="600" font-size="17" fill="#1e293b">R = 10 Ω</text>
+
+                            <!-- Current arrow -->
+                            <line x1="95" y1="68" x2="140" y2="68" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" marker-end="url(#arrow)"/>
+                            <text x="117" y="54" text-anchor="middle" font-weight="600" font-size="14" fill="#ef4444">I = 2 A</text>
+                        </svg>
+                    </div>
+                    <table class="options-table">
+                        <tr><td style="width: 25px; vertical-align: top;">A.</td><td>10 V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">B.</td><td>12 V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">C.</td><td>20 V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">D.</td><td>24 V</td></tr>
+                        <tr><td style="width: 25px; vertical-align: top;">E.</td><td>40 V</td></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>
