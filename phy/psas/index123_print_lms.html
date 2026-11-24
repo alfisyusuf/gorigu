@@ -3387,7 +3387,7 @@
     }
     var tf = td.querySelector(':scope > table:has(thead)');
     if (tf) {
-      tf.querySelectorAll('tbody tr').forEach(function (tr, i) {
+      Array.prototype.forEach.call(tf.tBodies[0].rows, function (tr, i) {
         out.push({ label: String(i + 1), text: clean(tr.children[0].textContent).replace(/^\d+\.\s*/, '') });
       });
     }
