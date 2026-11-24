@@ -3499,7 +3499,7 @@
     }
     var tf = td.querySelector(':scope > table:has(thead)');
     if (tf && TF[no]) {
-      tf.querySelectorAll('tbody tr').forEach(function (tr, i) {
+      Array.prototype.forEach.call(tf.tBodies[0].rows, function (tr, i) {
         var col = TF[no][i] === 'T' ? 1 : 2;
         tr.children[col].classList.add('key-hit');
         tr.children[col].innerHTML = '&#9745;';
