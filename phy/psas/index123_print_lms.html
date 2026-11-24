@@ -3467,5 +3467,61 @@
   });
 })();
 </script>
+<script>
+(function () {
+  var PG = 'CBDDC BDCBC CDCCD CCCCB CCCCC CCCCB CDCCC'.replace(/ /g, '');
+  // Urutan: soal 1-30. (dicek: panjang string = 30)
+  var KEY = {};
+  for (var i = 0; i < 30; i++) KEY[i + 1] = PG[i].split('');
+  KEY[31] = ['A','C']; KEY[33] = ['A','D']; KEY[34] = ['B','D'];
+  KEY[35] = ['A','E']; KEY[36] = ['B','C']; KEY[37] = ['C','E'];
+  var TF = { 32: ['T','F','T'], 38: ['T','F','F'], 39: ['T','F','T'], 40: ['T','T','F'] };
+
+  var css = document.createElement('style');
+  css.textContent =
+    '.key-hit td{background:#bbf7d0!important;font-weight:700}' +
+    '.key-badge{display:inline-block;background:#16a34a;color:#fff;font:700 12px Arial,sans-serif;padding:2px 10px;border-radius:12px;margin:0 0 6px}' +
+    'body.hide-key .key-hit td{background:transparent!important;font-weight:inherit}' +
+    'body.hide-key .key-badge{display:none}' +
+    '#key-toggle{position:fixed;bottom:20px;left:20px;padding:10px 16px;background:#16a34a;color:#fff;border:0;border-radius:5px;font-size:13pt;cursor:pointer;z-index:1000}' +
+    '@media print{.key-badge,#key-toggle{display:none!important}.key-hit td{background:transparent!important;font-weight:inherit!important}}';
+  document.head.appendChild(css);
+
+  document.querySelectorAll('table.question-table').forEach(function (qt, idx) {
+    var no = idx + 1, td = qt.querySelector('tr > td:nth-child(2)'), label = '';
+    var opt = td.querySelector(':scope > .options-table');
+    if (opt && KEY[no]) {
+      opt.querySelectorAll('tr').forEach(function (tr) {
+        var m = tr.children[0].textContent.match(/[A-E]/);
+        if (m && KEY[no].indexOf(m[0]) > -1) tr.classList.add('key-hit');
+      });
+      label = KEY[no].join(', ');
+    }
+    var tf = td.querySelector(':scope > table:has(thead)');
+    if (tf && TF[no]) {
+      tf.querySelectorAll('tbody tr').forEach(function (tr, i) {
+        var col = TF[no][i] === 'T' ? 1 : 2;
+        tr.children[col].classList.add('key-hit');
+        tr.children[col].innerHTML = '&#9745;';
+        tr.children[col].style.background = '#bbf7d0';
+      });
+      label = TF[no].map(function (x, i) { return (i + 1) + '=' + (x === 'T' ? 'Benar' : 'Salah'); }).join(' · ');
+    }
+    if (label) {
+      var b = document.createElement('div');
+      b.className = 'key-badge'; b.textContent = '🔑 Kunci: ' + label;
+      td.insertBefore(b, td.firstChild);
+    }
+  });
+
+  var t = document.createElement('button');
+  t.id = 'key-toggle'; t.textContent = 'Sembunyikan kunci';
+  t.onclick = function () {
+    var h = document.body.classList.toggle('hide-key');
+    t.textContent = h ? 'Tampilkan kunci' : 'Sembunyikan kunci';
+  };
+  document.body.appendChild(t);
+})();
+</script>
 </body>
 </html>
