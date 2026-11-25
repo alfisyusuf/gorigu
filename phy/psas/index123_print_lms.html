@@ -3465,6 +3465,35 @@
     if (q.opts.length) add('Semua opsi', function (b) { copy(q.opts.map(function (o) { return o.text; }).join('\n'), b); });
     q.td.insertBefore(bar, q.td.firstChild);
   });
+    function toPng(svgStr) {
+    return new Promise(function (res) {
+        var vb = svgStr.match(/viewBox="[\d.\s-]*?([\d.]+)\s+([\d.]+)"/), w = +vb[1], h = +vb[2], k = 2;
+        var img = new Image();
+        img.onload = function () {
+        var cv = document.createElement('canvas'); cv.width = w * k; cv.height = h * k;
+        var cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height);
+        cx.drawImage(img, 0, 0, cv.width, cv.height);
+        res(cv.toDataURL('image/png').split(',')[1]);
+        };
+        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
+    });
+    }
+    var ex = document.createElement('button');
+    ex.textContent = 'Export soal.json';
+    ex.style.cssText = 'position:fixed;bottom:70px;right:20px;padding:10px 20px;z-index:1000;cursor:pointer';
+    ex.onclick = async function () {
+    ex.textContent = 'Memproses...';
+    var data = [];
+    for (var i = 0; i < items.length; i++) {
+        var q = items[i];
+        data.push({ no: q.no, text: q.text, opts: q.opts, img: q.svgs.length ? await toPng(q.svgs[0]) : null });
+    }
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: 'application/json' }));
+    a.download = 'soal.json'; a.click();
+    ex.textContent = 'Selesai ✔';
+    };
+    document.body.appendChild(ex);
 })();
 </script>
 <script>
