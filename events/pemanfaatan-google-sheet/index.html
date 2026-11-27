@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Sheets dan Apps Script untuk Asesmen Siswa – Gorigu Studio</title>
+<meta name="description" content="Webinar Gorigu Studio, 27 Oktober 2026: membangun asesmen siswa otomatis dengan Google Sheets dan Apps Script.">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>
+:root{
+  --navy:#070C1B; --navy-2:#0D1526;
+  --indigo:#4F46E5; --indigo-light:#818CF8;
+  --cyan:#06B6D4; --gold:#C8A84B;
+  --sheet:#10B981; /* aksen Google Sheets, hanya di halaman event */
+}
+html{scroll-padding-top:80px}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:#E2E8F0;min-height:100vh}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:8px}
+
+.dot-grid{background-image:radial-gradient(rgba(99,102,241,.18) 1px,transparent 1px);background-size:28px 28px}
+.hero-glow{background:
+  radial-gradient(ellipse 70% 60% at 85% 10%,rgba(79,70,229,.28),transparent 70%),
+  radial-gradient(ellipse 40% 40% at 10% 90%,rgba(16,185,129,.10),transparent 70%)}
+.glass{background:rgba(255,255,255,.04);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08)}
+
+/* Header */
+.site-nav{position:sticky;top:0;z-index:50;background:rgba(7,12,27,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
+
+/* Verification banner (muncul jika ada ?nama=) */
+#verify-banner{display:none;background:linear-gradient(90deg,#064E3B,#065F46)}
+#verify-banner.show{display:block}
+
+/* Spreadsheet mockup */
+.sheet{background:var(--navy-2);border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(79,70,229,.5)}
+.sheet table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+.sheet th,.sheet td{border:1px solid rgba(255,255,255,.07);padding:8px 12px;white-space:nowrap}
+.sheet .colhead th{background:rgba(255,255,255,.04);color:#64748B;font-weight:500;font-size:11px;text-align:center}
+.sheet .rowhead{background:rgba(255,255,255,.04);color:#64748B;text-align:center;width:34px;font-size:11px}
+.sheet .hdr td{background:rgba(16,185,129,.12);color:#6EE7B7;font-weight:600}
+.sheet td.num{text-align:right}
+.sheet tbody td{transition:background .7s}
+.sheet tr.flash td{background:rgba(6,182,212,.14);transition:none}
+.tag{display:inline-block;padding:1px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.tag.ok{background:rgba(16,185,129,.16);color:#6EE7B7}
+.tag.rem{background:rgba(200,168,75,.16);color:#E3C873}
+.run-btn{display:inline-flex;align-items:center;gap:6px;background:var(--sheet);color:#04231A;font-weight:600;font-size:12px;padding:6px 12px;border-radius:8px;transition:filter .2s}
+.run-btn:hover:not(:disabled){filter:brightness(1.1)}
+.run-btn:disabled{opacity:.6;cursor:wait}
+
+/* Code */
+.code{font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;color:#CBD5E1;overflow-x:auto}
+.code .k{color:#A5B4FC}.code .s{color:#6EE7B7}.code .n{color:#E3C873}.code .c{color:#64748B}.code .f{color:#67E8F9}
+
+/* Timeline */
+.timeline{position:relative;padding-left:44px}
+.timeline::before{content:'';position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--indigo),var(--cyan),var(--sheet))}
+.step{position:relative;padding-bottom:36px}
+.step:last-child{padding-bottom:0}
+.step .dot{position:absolute;left:-44px;top:0;width:32px;height:32px;border-radius:50%;background:var(--navy);border:2px solid var(--indigo-light);display:flex;align-items:center;justify-content:center;font:600 13px 'Space Grotesk',sans-serif;color:#C7D2FE}
+
+/* Hasil list */
+.outcome{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:#94A3B8}
+.outcome i{color:var(--sheet);flex-shrink:0;margin-top:2px}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.sheet tbody td{transition:none}}
+</style>
+</head>
+<body>
+
+<!-- Banner verifikasi -->
+<div id="verify-banner">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="w-8 h-8 rounded-full bg-emerald-400/20 flex items-center justify-center shrink-0"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i></div>
+      <p class="text-sm text-emerald-100 min-w-0">
+        <span class="font-semibold">Partisipasi terverifikasi:</span>
+        <span id="banner-name" class="font-bold text-white break-words"></span>
+        <span class="text-emerald-200/80">mengikuti webinar 27 Oktober 2026 di Gorigu Studio.</span>
+      </p>
+    </div>
+    <button type="button" aria-label="Tutup" onclick="document.getElementById('verify-banner').classList.remove('show')" class="text-emerald-300/70 hover:text-emerald-100 transition shrink-0"><i data-lucide="x" class="w-4 h-4"></i></button>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="site-nav">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+    <a href="#" class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm text-white" style="background:linear-gradient(135deg,#4F46E5,#06B6D4)">GS</div>
+      <span class="font-semibold text-white tracking-tight display">Gorigu Studio</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+      <a href="#materi" class="hover:text-white transition">Materi</a>
+      <a href="#sertifikat" class="hover:text-white transition">Sertifikat</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="dot-grid hero-glow">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-14 items-center">
+
+    <div>
+      <p class="inline-flex items-center gap-2 text-sm text-emerald-300 rounded-full px-3 py-1 mb-6" style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25)">
+        <i data-lucide="table-2" class="w-4 h-4"></i> Webinar Gorigu Studio
+      </p>
+      <h1 class="text-4xl sm:text-5xl font-bold leading-[1.1] text-white mb-6" style="letter-spacing:-.025em">
+        Google Sheets dan Apps Script untuk Asesmen Siswa
+      </h1>
+      <p class="text-slate-400 text-lg leading-relaxed mb-8 max-w-xl">
+        Ubah lembar nilai menjadi alat asesmen yang menghitung, merekap, dan mengirim hasil sendiri, cukup dengan akun Google yang sudah Anda punya.
+      </p>
+
+      <dl class="grid grid-cols-2 gap-x-6 gap-y-5 mb-9 max-w-md">
+        <div class="flex gap-3"><i data-lucide="calendar" class="w-5 h-5 mt-0.5 text-indigo-300 shrink-0"></i><div><dt class="text-xs text-slate-500">Tanggal</dt><dd class="text-white font-semibold display">27 Oktober 2026</dd></div></div>
+        <div class="flex gap-3"><i data-lucide="video" class="w-5 h-5 mt-0.5 text-cyan-400 shrink-0"></i><div><dt class="text-xs text-slate-500">Format</dt><dd class="text-white font-semibold display">Webinar daring</dd></div></div>
+        <div class="flex gap-3"><i data-lucide="map-pin" class="w-5 h-5 mt-0.5 text-indigo-300 shrink-0"></i><div><dt class="text-xs text-slate-500">Kota</dt><dd class="text-white font-semibold display">Surakarta</dd></div></div>
+        <div class="flex gap-3"><i data-lucide="building-2" class="w-5 h-5 mt-0.5 text-cyan-400 shrink-0"></i><div><dt class="text-xs text-slate-500">Penyelenggara</dt><dd class="text-white font-semibold display">Gorigu Studio</dd></div></div>
+      </dl>
+
+      <div class="flex flex-wrap gap-3">
+        <a href="#materi" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition hover:brightness-110" style="background:linear-gradient(135deg,#4F46E5,#4338CA);box-shadow:0 4px 24px rgba(79,70,229,.4)"><i data-lucide="book-open" class="w-4 h-4"></i> Lihat materi</a>
+        <a href="#sertifikat" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-slate-200 transition glass hover:bg-white/10"><i data-lucide="award" class="w-4 h-4 text-cyan-400"></i> Minta sertifikat</a>
+      </div>
+    </div>
+
+    <!-- Lembar nilai interaktif -->
+    <div>
+      <div class="sheet" role="group" aria-label="Contoh lembar nilai yang dihitung otomatis oleh Apps Script">
+        <div class="flex items-center gap-2.5 px-4 py-3 border-b border-white/[.08]">
+          <div class="w-6 h-6 rounded bg-emerald-500 flex items-center justify-center"><i data-lucide="table-2" class="w-3.5 h-3.5 text-emerald-950"></i></div>
+          <span class="text-sm font-medium text-white">Asesmen Kelas 8A</span>
+        </div>
+        <div class="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-white/[.08] bg-white/[.02]">
+          <div class="flex items-center gap-2 text-xs min-w-0">
+            <span class="text-slate-500">Apps Script</span>
+            <code class="text-cyan-300 truncate" style="font-family:'JetBrains Mono',monospace">hitungNilai()</code>
+          </div>
+          <button id="run" type="button" class="run-btn"><i data-lucide="play" class="w-3.5 h-3.5"></i><span>Jalankan skrip</span></button>
+        </div>
+        <div class="overflow-x-auto"><table id="grid"></table></div>
+      </div>
+      <p class="text-xs text-slate-500 mt-3">Bobot: tugas 30%, UTS 30%, UAS 40%. Nilai minimal untuk tuntas: 75.</p>
+    </div>
+
+  </div>
+</header>
+
+<!-- Materi -->
+<section id="materi" class="border-t border-white/[.06] py-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mb-14">
+      <h2 class="text-3xl font-bold text-white mb-4" style="letter-spacing:-.02em">Empat sesi, dari lembar kosong sampai dasbor hasil belajar</h2>
+      <p class="text-slate-400 leading-relaxed">Untuk guru, dosen, dan pengembang pendidikan yang ingin mengurangi kerja manual saat menilai. Tidak perlu pengalaman pemrograman.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-[1.1fr_1fr] gap-12 items-start">
+      <ol class="timeline list-none m-0">
+        <li class="step">
+          <span class="dot">1</span>
+          <h3 class="text-lg font-semibold text-white mb-2">Menyusun lembar nilai yang rapi</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-3">Struktur kolom untuk data siswa, validasi input agar nilai tidak salah ketik, dan rumus dasar untuk rata-rata, predikat, dan ketuntasan.</p>
+          <p class="outcome"><i data-lucide="check" class="w-4 h-4"></i>Lembar nilai yang siap dipakai satu kelas.</p>
+        </li>
+        <li class="step">
+          <span class="dot">2</span>
+          <h3 class="text-lg font-semibold text-white mb-2">Mengenal Apps Script</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-3">Membuka editor skrip, menulis fungsi pertama dalam JavaScript, memberi izin akses, dan menjalankannya dari menu atau tombol.</p>
+          <p class="outcome"><i data-lucide="check" class="w-4 h-4"></i>Fungsi pertama yang membaca dan menulis ke Sheets.</p>
+        </li>
+        <li class="step">
+          <span class="dot">3</span>
+          <h3 class="text-lg font-semibold text-white mb-2">Mengotomasi penilaian</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-3">Menghitung nilai akhir, menentukan status tuntas atau remedial, merekap per kelas, dan mengirim hasil ke siswa lewat email.</p>
+          <p class="outcome"><i data-lucide="check" class="w-4 h-4"></i>Satu klik untuk menilai dan mengirim hasil.</p>
+        </li>
+        <li class="step">
+          <span class="dot">4</span>
+          <h3 class="text-lg font-semibold text-white mb-2">Google Forms dan dasbor hasil belajar</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-3">Menyambungkan kuis di Forms ke Sheets, memicu penilaian otomatis saat siswa mengirim jawaban, dan menampilkan grafik ketuntasan.</p>
+          <p class="outcome"><i data-lucide="check" class="w-4 h-4"></i>Alur kuis sampai laporan tanpa input manual.</p>
+        </li>
+      </ol>
+
+      <!-- Kode contoh -->
+      <aside class="lg:sticky lg:top-24 rounded-2xl overflow-hidden" style="background:#0A1020;border:1px solid rgba(255,255,255,.08)" aria-label="Contoh skrip dari sesi 3">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-white/[.08]">
+          <span class="text-sm text-slate-300" style="font-family:'JetBrains Mono',monospace">hitungNilai.gs</span>
+          <span class="text-xs text-slate-500">Contoh dari sesi 3</span>
+        </div>
+<pre class="code p-5 m-0"><span class="k">function</span> <span class="f">hitungNilai</span>() {
+  <span class="k">const</span> sh = SpreadsheetApp.<span class="f">getActiveSheet</span>();
+  <span class="c">// kolom B-D: tugas, UTS, UAS</span>
+  <span class="k">const</span> baris = sh.<span class="f">getRange</span>(<span class="n">2</span>, <span class="n">2</span>, sh.<span class="f">getLastRow</span>() - <span class="n">1</span>, <span class="n">3</span>).<span class="f">getValues</span>();
+
+  <span class="k">const</span> hasil = baris.<span class="f">map</span>(([t, uts, uas]) =&gt; {
+    <span class="k">const</span> nilai = t * <span class="n">0.3</span> + uts * <span class="n">0.3</span> + uas * <span class="n">0.4</span>;
+    <span class="k">return</span> [<span class="f">Number</span>(nilai.<span class="f">toFixed</span>(<span class="n">1</span>)),
+            nilai &gt;= <span class="n">75</span> ? <span class="s">'Tuntas'</span> : <span class="s">'Remedial'</span>];
+  });
+
+  <span class="c">// tulis ke kolom E-F</span>
+  sh.<span class="f">getRange</span>(<span class="n">2</span>, <span class="n">5</span>, hasil.length, <span class="n">2</span>).<span class="f">setValues</span>(hasil);
+}</pre>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- Sertifikat -->
+<section id="sertifikat" class="border-t border-white/[.06] py-20">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="glass rounded-2xl p-8 sm:p-12 text-center" style="background:linear-gradient(135deg,rgba(79,70,229,.08),rgba(6,182,212,.05))">
+      <i data-lucide="award" class="w-10 h-10 mx-auto mb-5" style="color:#C8A84B"></i>
+      <h2 class="text-2xl font-bold text-white mb-3">Ingin mendapatkan sertifikat?</h2>
+      <p class="text-slate-400 mb-8 max-w-lg mx-auto leading-relaxed">Sertifikat partisipasi diterbitkan langsung oleh panitia. Hubungi kami dan sertakan nama lengkap beserta gelar Anda.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto">
+        <a href="https://wa.me/6285713697219" target="_blank" rel="noopener" class="flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-xl font-semibold text-sm text-white transition hover:brightness-110" style="background:#075E54;box-shadow:0 4px 16px rgba(7,94,84,.4)">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp panitia
+        </a>
+        <a href="mailto:gorigu.info@gmail.com?subject=Permohonan%20Sertifikat%20Webinar" class="flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-xl font-semibold text-sm text-slate-200 transition glass hover:bg-white/10">
+          <i data-lucide="mail" class="w-4 h-4 text-indigo-300"></i> Kirim email
+        </a>
+      </div>
+
+      <p class="text-slate-500 text-xs mt-6 inline-flex items-center gap-1.5"><i data-lucide="clock" class="w-3 h-3"></i> Sertifikat dikirim dalam 1–2 hari kerja</p>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-white/[.06] py-8 text-center text-[13px] text-slate-500">
+  <p>© 2026 Gorigu Studio. Surakarta, Indonesia.</p>
+</footer>
+
+<script>
+lucide.createIcons();
+
+/* Verifikasi dari QR (?nama=...). URLSearchParams sudah men-decode, jadi tidak perlu decode lagi. */
+const nama = (new URLSearchParams(location.search).get('nama') || '').trim().slice(0, 120);
+if (nama) {
+  document.getElementById('banner-name').textContent = nama;
+  document.getElementById('verify-banner').classList.add('show');
+}
+
+/* Lembar nilai interaktif */
+const siswa = [
+  ['Ani Lestari', 80, 78, 85],
+  ['Budi Santoso', 70, 65, 72],
+  ['Citra Dewi', 90, 88, 92],
+  ['Dimas Prakoso', 75, 80, 70],
+  ['Eka Putri', 85, 82, 78]
+];
+const KKM = 75;
+const grid = document.getElementById('grid');
+const runBtn = document.getElementById('run');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+let html = '<thead><tr class="colhead"><th class="rowhead"></th>' + 'ABCDEF'.split('').map(c => `<th>${c}</th>`).join('') + '</tr></thead><tbody>';
+html += '<tr class="hdr"><td class="rowhead">1</td><td>Nama</td><td class="num">Tugas</td><td class="num">UTS</td><td class="num">UAS</td><td class="num">Nilai akhir</td><td>Status</td></tr>';
+siswa.forEach((s, i) => {
+  html += `<tr id="r${i}"><td class="rowhead">${i + 2}</td><td>${s[0]}</td><td class="num">${s[1]}</td><td class="num">${s[2]}</td><td class="num">${s[3]}</td><td class="num" data-c="nilai"></td><td data-c="status"></td></tr>`;
+});
+grid.innerHTML = html + '</tbody>';
+
+function fillRow(i) {
+  const [, t, uts, uas] = siswa[i];
+  const nilai = t * 0.3 + uts * 0.3 + uas * 0.4;
+  const row = document.getElementById('r' + i);
+  row.querySelector('[data-c=nilai]').textContent = nilai.toFixed(1);
+  row.querySelector('[data-c=status]').innerHTML = nilai >= KKM ? '<span class="tag ok">Tuntas</span>' : '<span class="tag rem">Remedial</span>';
+  if (!reduced) {
+    row.classList.add('flash');
+    setTimeout(() => row.classList.remove('flash'), 120);
+  }
+}
+
+function clearResults() {
+  grid.querySelectorAll('[data-c]').forEach(td => td.textContent = '');
+}
+
+function runScript() {
+  runBtn.disabled = true;
+  runBtn.querySelector('span').textContent = 'Menjalankan…';
+  clearResults();
+  const step = reduced ? 0 : 260;
+  siswa.forEach((_, i) => setTimeout(() => fillRow(i), 300 + i * step));
+  setTimeout(() => {
+    runBtn.disabled = false;
+    runBtn.querySelector('span').textContent = 'Jalankan ulang';
+  }, 300 + siswa.length * step + 100);
+}
+
+runBtn.addEventListener('click', runScript);
+setTimeout(runScript, 500);
+</script>
+</body>
+</html>

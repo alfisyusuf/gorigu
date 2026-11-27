@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sertifikat Partisipasi – Gorigu Studio</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>
+:root{--navy:#070C1B;--indigo:#4F46E5;--cyan:#06B6D4;--gold:#B8860B}
+*{box-sizing:border-box}
+body{font-family:'Inter',sans-serif;min-height:100vh;background:linear-gradient(160deg,#EEF2FF 0%,#F0F4F8 40%,#E8F4F8 100%)}
+.grotesk{font-family:'Space Grotesk',sans-serif}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
+
+/* Panel form */
+.form-card{background:#fff;border-radius:20px;box-shadow:0 4px 40px rgba(0,0,0,.08),0 1px 3px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.06)}
+.input-field{width:100%;padding:14px 16px;border-radius:12px;border:1.5px solid #E2E8F0;background:#F8FAFC;font:15px 'Inter',sans-serif;color:#1E293B;outline:none;transition:border-color .2s,background .2s,box-shadow .2s}
+.input-field:focus{border-color:var(--indigo);background:#fff;box-shadow:0 0 0 3px rgba(79,70,229,.1)}
+.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:#EEF2FF;color:var(--indigo);border:2px solid #C7D2FE;flex-shrink:0}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:999px;font-size:12px;font-weight:600}
+
+/* Sertifikat: 1122 x 793 px ≈ A4 landscape */
+#stage{width:100%;overflow:hidden}
+#cert-scale{width:1122px;height:793px;transform-origin:top left}
+#cert{font-family:'Inter',sans-serif;background:#fff;width:1122px;height:793px;position:relative;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);border-radius:16px}
+.corner{position:absolute;width:64px;height:64px;border:0 solid var(--gold)}
+.c-tl{top:34px;left:40px;border-top-width:3px;border-left-width:3px}
+.c-tr{top:34px;right:34px;border-top-width:3px;border-right-width:3px}
+.c-bl{bottom:34px;left:40px;border-bottom-width:3px;border-left-width:3px}
+.c-br{bottom:34px;right:34px;border-bottom-width:3px;border-right-width:3px}
+.rule{height:1px;background:linear-gradient(90deg,#B8860B40,#B8860B,#B8860B40)}
+#displayName{font-family:'Cormorant Garamond',serif;font-weight:700;line-height:1.2;display:inline-block;padding-bottom:10px;border-bottom:2px dashed #C7D2FE;min-width:420px;max-width:860px;word-break:break-word;color:#1E1B5E;font-size:48px}
+#displayName.empty{color:#94A3B8}
+
+@media print{
+  @page{size:297mm 210mm;margin:0}
+  html,body{background:#fff!important;margin:0!important;padding:0!important}
+  .no-print{display:none!important}
+  .pr{padding:0!important;margin:0!important;max-width:none!important;display:block!important;width:auto!important;height:auto!important;overflow:visible!important}
+  #cert-scale{transform:none!important}
+  #cert{box-shadow:none!important;border-radius:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header class="no-print fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/60">
+  <div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <a href="index.html" class="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition text-sm font-medium">
+      <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke halaman event
+    </a>
+    <div class="flex items-center gap-2">
+      <div class="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs text-white" style="background:linear-gradient(135deg,#4F46E5,#06B6D4)">GS</div>
+      <span class="font-semibold text-slate-900 text-sm grotesk">Gorigu Studio</span>
+    </div>
+  </div>
+</header>
+
+<main class="pr pt-20 pb-16 px-4">
+
+  <div class="no-print text-center mb-10">
+    <div class="pill mb-4 text-indigo-600" style="background:#EEF2FF;border:1px solid #C7D2FE"><i data-lucide="award" class="w-3 h-3"></i> E-sertifikat</div>
+    <h1 class="text-3xl font-bold text-slate-900 mb-2 grotesk">Sertifikat partisipasi</h1>
+    <p class="text-slate-500 text-sm">Webinar "Pemanfaatan Google Sheets dan Apps Script untuk Asesmen Siswa" · 27 Oktober 2026</p>
+  </div>
+
+  <div class="pr max-w-6xl mx-auto">
+    <div class="pr flex flex-col xl:flex-row gap-8 items-start">
+
+      <!-- Form -->
+      <div class="no-print form-card p-8 w-full xl:w-96 xl:shrink-0 xl:sticky xl:top-20">
+        <div class="flex items-start gap-3 mb-6">
+          <div class="step-dot">1</div>
+          <div>
+            <h2 class="font-semibold text-slate-900">Masukkan nama</h2>
+            <p class="text-slate-500 text-xs mt-0.5">Pratinjau sertifikat berubah otomatis</p>
+          </div>
+        </div>
+
+        <label class="block text-sm font-medium text-slate-700 mb-2" for="inputName">Nama lengkap beserta gelar</label>
+        <input type="text" id="inputName" class="input-field" placeholder="Cth: Dr. Budi Santoso, M.Pd" maxlength="80" autocomplete="name">
+        <p class="text-xs text-slate-400 mt-2 flex gap-1.5"><i data-lucide="info" class="w-3 h-3 mt-0.5 shrink-0"></i> Nama tampil di sertifikat persis seperti yang Anda ketik.</p>
+
+        <div class="border-t border-slate-100 pt-5 mt-6">
+          <div class="flex items-start gap-3 mb-4">
+            <div class="step-dot">2</div>
+            <div>
+              <h2 class="font-semibold text-slate-900">Simpan sertifikat</h2>
+              <p class="text-slate-500 text-xs mt-0.5">Cetak atau ekspor sebagai PDF</p>
+            </div>
+          </div>
+          <button id="printBtn" type="button" disabled class="w-full flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl font-semibold text-sm transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed text-white" style="background:linear-gradient(135deg,#4F46E5,#4338CA);box-shadow:0 4px 16px rgba(79,70,229,.3)">
+            <i data-lucide="printer" class="w-4 h-4"></i>
+            <span id="printLabel">Isi nama dulu</span>
+          </button>
+          <p class="text-center text-xs text-slate-400 mt-3">Pilih "Save as PDF" di dialog cetak. Ukuran kertas: A4 landscape, margin none.</p>
+        </div>
+
+        <div class="mt-6 rounded-xl p-4 text-xs text-slate-500 bg-slate-50 border border-slate-200 flex gap-2">
+          <i data-lucide="qr-code" class="w-4 h-4 text-indigo-500 shrink-0 mt-0.5"></i>
+          <div>
+            <p class="font-medium text-slate-600 mb-1">QR code verifikasi</p>
+            <p>QR di sertifikat membuka halaman event Gorigu Studio dengan nama peserta di bagian atas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pratinjau -->
+      <div class="pr flex-1 min-w-0 w-full">
+        <p class="no-print text-sm text-slate-400 mb-3 font-medium flex items-center gap-2"><i data-lucide="eye" class="w-4 h-4"></i> Pratinjau (A4 landscape)</p>
+
+        <div id="stage" class="pr">
+          <div id="cert-scale">
+            <div id="cert">
+
+              <div style="position:absolute;top:0;right:0;width:420px;height:420px;background:radial-gradient(circle at top right,#EEF2FF,transparent 70%);opacity:.8"></div>
+              <div style="position:absolute;bottom:0;left:0;width:320px;height:320px;background:radial-gradient(circle at bottom left,#ECFDF5,transparent 70%);opacity:.7"></div>
+              <div style="position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,#4F46E5,#06B6D4)"></div>
+              <div style="position:absolute;inset:22px 22px 22px 28px;border:1px solid #B8860B40"></div>
+              <div class="corner c-tl"></div><div class="corner c-tr"></div><div class="corner c-bl"></div><div class="corner c-br"></div>
+
+              <div style="position:relative;z-index:10;height:100%;display:flex;flex-direction:column;padding:56px 84px 48px 94px">
+
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px">
+                  <div>
+                    <div class="grotesk" style="font-weight:700;font-size:18px;color:#0D1526;letter-spacing:-.02em">GORIGU STUDIO</div>
+                    <div style="font-size:11px;color:#94A3B8;margin-top:2px">Surakarta, Indonesia</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:8px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:8px 14px">
+                    <div style="width:8px;height:8px;border-radius:50%;background:#10B981"></div>
+                    <span style="font-size:11px;font-weight:600;color:#374151">Sertifikat resmi</span>
+                  </div>
+                </div>
+
+                <div class="rule" style="margin-bottom:18px"></div>
+
+                <div style="flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center">
+                  <div style="font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#6366F1;margin-bottom:8px">Sertifikat Partisipasi</div>
+                  <h1 style="font-family:'Cormorant Garamond',serif;font-size:62px;font-weight:700;color:#0D1526;line-height:1.1;margin:0 0 16px;letter-spacing:-.01em">Certificate of Participation</h1>
+                  <div style="width:80px;height:2px;background:linear-gradient(90deg,#4F46E5,#06B6D4);margin:0 auto 18px"></div>
+
+                  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:#64748B;margin:0 0 10px">Diberikan dengan bangga kepada</p>
+
+                  <div style="margin-bottom:16px;padding:8px 40px">
+                    <h2 id="displayName" class="empty">Nama Peserta</h2>
+                  </div>
+
+                  <p style="font-size:14px;color:#475569;line-height:1.75;max-width:740px;margin:0 auto">
+                    Telah mengikuti dan berpartisipasi aktif dalam kegiatan webinar<br>
+                    <strong style="color:#1E293B;font-size:15px">"Pemanfaatan Google Sheets dan Apps Script untuk Asesmen Siswa"</strong><br>
+                    yang diselenggarakan secara daring pada <strong style="color:#1E293B">27 Oktober 2026</strong>
+                  </p>
+                </div>
+
+                <div class="rule" style="margin-bottom:18px"></div>
+
+                <div style="display:flex;justify-content:space-between;align-items:flex-end">
+                  <div style="text-align:center;min-width:200px">
+                    <div style="margin-bottom:34px"><span style="font-size:11px;color:#94A3B8;letter-spacing:.06em">Surakarta, 27 Oktober 2026</span></div>
+                    <div style="width:200px;height:1px;background:#1E293B;margin-bottom:8px"></div>
+                    <p class="grotesk" style="font-weight:700;font-size:14px;color:#0D1526;margin:0">Gorigu Studio</p>
+                    <p style="font-size:12px;color:#94A3B8;margin:2px 0 0">Penyelenggara</p>
+                  </div>
+
+                  <!-- Segel -->
+                  <svg width="92" height="92" viewBox="0 0 92 92" aria-hidden="true" style="margin-bottom:4px">
+                    <circle cx="46" cy="46" r="44" fill="none" stroke="#B8860B" stroke-width="1" stroke-dasharray="2 3"/>
+                    <circle cx="46" cy="46" r="36" fill="#FBF3DC" stroke="#B8860B" stroke-width="2"/>
+                    <circle cx="46" cy="46" r="29" fill="none" stroke="#B8860B" stroke-width="1"/>
+                    <path d="M33 47.5l9 9 17-19" fill="none" stroke="#B8860B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+
+                  <div style="display:flex;align-items:flex-end;gap:16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:14px;padding:14px 16px">
+                    <div style="text-align:right">
+                      <p class="grotesk" style="font-weight:700;font-size:12px;color:#374151;margin:0 0 4px">Verifikasi sertifikat</p>
+                      <p style="font-size:10px;color:#94A3B8;margin:0 0 6px">Scan QR untuk membuka halaman event</p>
+                      <p style="font-size:10px;font-weight:600;color:#4F46E5;font-family:monospace;margin:0">gorigu.my.id/events</p>
+                    </div>
+                    <img id="qrImage" alt="QR code verifikasi" width="88" height="88" style="width:88px;height:88px;border-radius:8px;border:1px solid #E2E8F0;background:#fff">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script>
+lucide.createIcons();
+
+const BASE_URL = 'https://gorigu.my.id/events/google-sheets-apps-script-asesmen/';
+const CW = 1122, CH = 793;
+
+const inputName = document.getElementById('inputName');
+const displayName = document.getElementById('displayName');
+const qrImg = document.getElementById('qrImage');
+const printBtn = document.getElementById('printBtn');
+const printLabel = document.getElementById('printLabel');
+const stage = document.getElementById('stage');
+const scaler = document.getElementById('cert-scale');
+
+/* Pratinjau menyesuaikan lebar layar */
+function fit() {
+  const s = Math.min(1, stage.clientWidth / CW);
+  scaler.style.transform = `scale(${s})`;
+  stage.style.height = Math.round(CH * s) + 'px';
+}
+new ResizeObserver(fit).observe(stage);
+fit();
+
+/* Ukuran huruf nama mengecil untuk nama panjang */
+function fitName(n) {
+  const l = n.length;
+  displayName.style.fontSize = (l <= 28 ? 48 : l <= 40 ? 40 : l <= 56 ? 32 : 26) + 'px';
+}
+
+function qrUrl(name, color) {
+  const target = name ? BASE_URL + '?nama=' + encodeURIComponent(name) : BASE_URL;
+  return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=6&color=${color}&data=${encodeURIComponent(target)}`;
+}
+
+/* Tombol cetak aktif setelah QR selesai dimuat */
+qrImg.addEventListener('load', () => {
+  if (inputName.value.trim()) { printBtn.disabled = false; printLabel.textContent = 'Cetak / simpan PDF'; }
+});
+qrImg.addEventListener('error', () => {
+  printLabel.textContent = 'QR gagal dimuat, cek koneksi';
+});
+
+let qrTimer;
+function update(raw) {
+  const name = raw.trim();
+  if (!name) {
+    displayName.textContent = 'Nama Peserta';
+    displayName.classList.add('empty');
+    fitName('');
+    printBtn.disabled = true;
+    printLabel.textContent = 'Isi nama dulu';
+    clearTimeout(qrTimer);
+    qrImg.src = qrUrl('', '94A3B8');
+    return;
+  }
+  displayName.textContent = name;   /* textContent: aman dari injeksi HTML */
+  displayName.classList.remove('empty');
+  fitName(name);
+  printBtn.disabled = true;
+  printLabel.textContent = 'Menyiapkan QR…';
+  clearTimeout(qrTimer);
+  qrTimer = setTimeout(() => { qrImg.src = qrUrl(name, '1E1B5E'); }, 350);
+}
+
+inputName.addEventListener('input', e => update(e.target.value));
+printBtn.addEventListener('click', () => { if (inputName.value.trim()) window.print(); });
+
+/* Isi otomatis jika ada ?nama= di URL (URLSearchParams sudah men-decode) */
+const pre = (new URLSearchParams(location.search).get('nama') || '').trim().slice(0, 80);
+if (pre) { inputName.value = pre; update(pre); } else { update(''); }
+</script>
+</body>
+</html>
