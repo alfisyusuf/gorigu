@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English Proficiency Score Evidence – ATEPT</title>
+<style>
+  :root { --ink:#1b2a41; --muted:#5b667a; --rule:#c9cfda; --accent:#0f5c4d; --paper:#fff; --desk:#e6e8ec; }
+  @page { size: A4 portrait; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { background: var(--desk); color: var(--ink); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+         -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .toolbar { position: sticky; top: 0; z-index: 5; display: flex; gap: 12px; align-items: center; justify-content: center;
+             padding: 10px 16px; background: #fff; border-bottom: 1px solid var(--rule); font-size: 14px; color: var(--muted); }
+  .toolbar button { font: inherit; font-weight: 600; color: #fff; background: var(--accent); border: 0; border-radius: 6px; padding: 8px 16px; cursor: pointer; }
+  .toolbar button:focus-visible { outline: 3px solid #7fd1bd; outline-offset: 2px; }
+
+  .sheet { width: 210mm; height: 297mm; margin: 18px auto; padding: 12mm 14mm 10mm; background: var(--paper);
+           box-shadow: 0 2px 14px rgba(0,0,0,.18); display: flex; flex-direction: column; overflow: hidden; }
+
+  header { border-bottom: 2px solid var(--ink); padding-bottom: 4mm; }
+  .eyebrow { margin: 0 0 1.5mm; font-size: 9.5pt; color: var(--accent); font-weight: 600; }
+  h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 21pt; line-height: 1.15; }
+  .sub { margin: 1.5mm 0 0; font-size: 9.5pt; color: var(--muted); }
+  .meta { display: grid; grid-template-columns: 1.5fr 1fr 1.2fr; gap: 6mm; margin-top: 4mm; }
+  .field label { display: block; font-size: 8pt; color: var(--muted); margin-bottom: 1mm; }
+  .field .value { border-bottom: 1px solid var(--rule); min-height: 6mm; padding-bottom: 1mm; font-size: 10.5pt; font-weight: 600; outline: none; }
+  .field .value:empty::before { content: attr(data-ph); color: #a7afbd; font-weight: 400; }
+  .field .value:focus { border-bottom-color: var(--accent); }
+
+  main { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 4mm 0 3mm; }
+  .sec-title { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 2mm; padding-left: 3mm; border-left: 3px solid var(--accent); }
+  .sec-title h2 { margin: 0; font-size: 11.5pt; }
+  .sec-title span { font-size: 8.5pt; color: var(--muted); }
+
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+  figure { margin: 0; }
+  .frame { position: relative; aspect-ratio: 1200 / 1240; width: 100%; border: 1px solid var(--rule); border-radius: 2mm; overflow: hidden; background: #f3f4f7; }
+  .frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .frame .missing { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center;
+                    gap: 2mm; text-align: center; padding: 4mm; font-size: 9pt; color: var(--muted); cursor: pointer; }
+  .frame.empty .missing { display: flex; }
+  .frame.empty img { display: none; }
+  .missing b { color: var(--ink); word-break: break-all; font-size: 8pt; }
+  .missing input { display: none; }
+  figcaption { margin-top: 1.5mm; font-size: 8.5pt; text-align: center; line-height: 1.35; }
+  figcaption strong { font-size: 9.5pt; }
+  figcaption span { color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+  th, td { text-align: left; padding: 1.1mm 2mm; border-bottom: 1px solid var(--rule); }
+  th { font-weight: 700; background: #eef1f5; border-bottom: 1px solid var(--ink); }
+  td.num { font-weight: 700; }
+
+  footer { display: flex; justify-content: space-between; gap: 8mm; border-top: 1px solid var(--rule); padding-top: 2.5mm; font-size: 8pt; color: var(--muted); }
+
+  @media print {
+    body { background: #fff; }
+    .toolbar { display: none; }
+    .sheet { margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span>Klik nama untuk mengisi. Saat print: <b>Save as PDF</b>, ukuran <b>A4</b>, margin <b>None</b>.</span>
+  <button type="button" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="sheet">
+  <header>
+    <p class="eyebrow">Al Abidin Teachers’ English Proficiency Test (ATEPT)</p>
+    <h1>English Proficiency Score Evidence</h1>
+    <p class="sub">Core Skills Test and Speaking Test results, taken 20–27 November 2026</p>
+    <div class="meta">
+      <div class="field"><label>Full name</label>
+        <div class="value" contenteditable="true" spellcheck="false" data-ph="Type your full name"></div></div>
+      <div class="field"><label>Test period</label>
+        <div class="value" contenteditable="true" spellcheck="false">20 – 27 November 2026</div></div>
+      <div class="field"><label>Highest level</label>
+        <div class="value" contenteditable="true" spellcheck="false">Core B2 · Speaking B1</div></div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="sec-title"><h2>Core Skills Test</h2><span>Grammar, Vocabulary, Reading, Listening</span></div>
+      <div class="row" id="core"></div>
+    </section>
+    <section>
+      <div class="sec-title"><h2>Speaking Test</h2><span>Pronunciation, Fluency, Communication</span></div>
+      <div class="row" id="speaking"></div>
+    </section>
+    <section>
+      <div class="sec-title"><h2>Score summary</h2><span>Read from the photos above</span></div>
+      <table>
+        <thead><tr><th>Test</th><th>Date</th><th>Level</th><th>Score</th><th>Breakdown</th></tr></thead>
+        <tbody id="summary"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <span>Attachment for ATEPT registration</span>
+    <span>Photos of the test result screens, unedited</span>
+  </footer>
+</div>
+
+<script>
+  /* Taruh file HTML ini satu folder dengan foto (Downloads). */
+  const CORE = [
+    { file:"photo_6073409959770136971_w.jpg", date:"20 Nov 2026", level:"B2 Upper Intermediate", score:468,
+      detail:"Grammar 487 · Vocabulary 503 · Reading 432 · Listening 448" },
+    { file:"photo_6073409959770136973_w.jpg", date:"26 Nov 2026", level:"B2 Upper Intermediate", score:482,
+      detail:"Grammar 398 · Vocabulary 506 · Reading 482 · Listening 541" },
+    { file:"photo_6073409959770136972_w.jpg", date:"26 Nov 2026", level:"B2 Upper Intermediate", score:494,
+      detail:"Grammar 487 · Vocabulary 487 · Reading 461 · Listening 541" }
+  ];
+  const SPEAKING = [
+    { file:"photo_6073409959770136975_w.jpg", date:"26 Nov 2026", level:"B1 Intermediate", score:338,
+      detail:"Pronunciation 394 · Fluency 304 · Communication 316" },
+    { file:"photo_6073409959770136976_w.jpg", date:"26 Nov 2026", level:"B1 Intermediate", score:339,
+      detail:"Pronunciation 391 · Fluency 324 · Communication 302" },
+    { file:"photo_6073409959770136974_w.jpg", date:"27 Nov 2026", level:"B1 Intermediate", score:315,
+      detail:"Pronunciation 328 · Fluency 327 · Communication 292" }
+  ];
+
+  function build(id, items, label) {
+    const row = document.getElementById(id);
+    items.forEach((it, i) => {
+      const fig = document.createElement("figure");
+      const frame = document.createElement("div"); frame.className = "frame";
+      const img = new Image(); img.alt = label + " " + (i + 1);
+      img.onerror = () => frame.classList.add("empty");
+      img.src = it.file;
+
+      const missing = document.createElement("label"); missing.className = "missing";
+      missing.innerHTML = "<span>Foto tidak ditemukan.<br>Klik untuk memilih file:</span><b></b>";
+      missing.querySelector("b").textContent = it.file;
+      const input = document.createElement("input"); input.type = "file"; input.accept = "image/*";
+      input.onchange = () => { const f = input.files[0]; if (f) { img.src = URL.createObjectURL(f); frame.classList.remove("empty"); } };
+      missing.appendChild(input);
+      frame.append(img, missing);
+
+      const cap = document.createElement("figcaption");
+      cap.innerHTML = "<strong></strong><br><span></span>";
+      cap.querySelector("strong").textContent = label + " " + (i + 1) + " · " + it.score;
+      cap.querySelector("span").textContent = it.level + " · " + it.date;
+      fig.append(frame, cap); row.appendChild(fig);
+
+      const tr = document.createElement("tr");
+      [label + " " + (i + 1), it.date, it.level, it.score, it.detail].forEach((t, c) => {
+        const td = document.createElement("td"); td.textContent = t; if (c === 3) td.className = "num"; tr.appendChild(td);
+      });
+      document.getElementById("summary").appendChild(tr);
+    });
+  }
+  build("core", CORE, "Core");
+  build("speaking", SPEAKING, "Speaking");
+</script>
+</body>
+</html>
